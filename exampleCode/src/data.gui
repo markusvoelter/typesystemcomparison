@@ -1,7 +1,8 @@
 entity Person {
-	name: string
-	firstName: string
-	age : int
-	/isAdult = expr
-	weight : float 
+	name: string;
+	firstName: string;
+	age : int; 
+	weight : float; 
+	/isAdult = age > 18;
+	/greeting = "Hallo " + firstName + " " + name;
 }

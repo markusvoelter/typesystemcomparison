@@ -18,11 +18,11 @@ Widget:
 ;
 
 TextWidget:
-	"text" "(" length=INT ")" "->" attr=[Attribute] ("validate" validate=Expr)?
+	{TextWidget} "text" "(" length=DECIMAL_NUMBER ")" "->" attr=[Attribute] ("validate" validate=Expr)? ";"
 ;
 
 CheckBoxWidget:
-	"check" "->" attr=[Attribute] ("validate" validate=Expr)?
+	{CheckBoxWidget} "check" "->" attr=[Attribute] ("validate" validate=Expr)? ";"
 ;
 
 
@@ -35,18 +35,15 @@ Entity:
 ;
 
 Attribute:
-	SimpleAttributed | DerivedAttribute
+	SimpleAttribute | DerivedAttribute
 ;
 
 DerivedAttribute:
-	"/" name=ID "=" expr=Expr
+	{DerivedAttribute} "/" name=ID "=" expr=Expr ";"
 ;
 
-
-
-
-SimpleAttributed:
-	name=ID ":" type=Type
+SimpleAttribute:
+	{SimpleAttribute} name=ID ":" type=Type ";"
 ;
 
 Type:
@@ -83,7 +80,42 @@ StringType:
 
 
 Expr:
-	"expr"
-;
+	ComparisonLevel;
 
+ComparisonLevel returns Expression:
+	AdditionLevel ((({Equals.left=current} "==") |
+					({Unequals.left=current} "!=") |
+					({Greater.left=current} ">") |
+					({GreaterEquals.left=current} ">=") |
+					({SmallerEquals.left=current} "<=") |
+					({LogicalAnd.left=current} "&&") |
+					({Implies.left=current} "=>") |
+					({LogicalOr.left=current} "||") |
+					({Smaller.left=current} "<"))
+											right=AdditionLevel)*;
+
+AdditionLevel returns Expression:
+	MultiplicationLevel ((({Plus.left=current} "+") |
+					     ({Minus.left=current} "-")) right=MultiplicationLevel)*;
+
+MultiplicationLevel returns Expression:
+	PrefixOpLevel ((({Multi.left=current} "*") |
+					({Div.left=current} "/")) right=PrefixOpLevel)*;
+
+PrefixOpLevel returns Expression:
+	({NotExpression} "!" "(" expr=Expr ")") |
+	Atomic;
+
+Atomic returns Expression:
+	({TrueExpr} "true") |
+	({FalseExpr} "false") |
+	({FieldContent} "widgetcontent") |
+	({lenghtOf} "lengthOf" "(" expr=Expr ")" ) |
+	({ParenExpr} "(" expr=Expr ")") |
+	({NumberLiteral} value=DECIMAL_NUMBER) |
+	({StringLiteral} value=STRING) |
+	({AttributeRef} attr=[Attribute|ID]);
+
+terminal DECIMAL_NUMBER:
+	("-")? ('0'..'9')* ('.' ('0'..'9')+)?;
 	

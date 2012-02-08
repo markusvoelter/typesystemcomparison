@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.Scopes;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
+import org.typesys.guidsl.guiDsl.Entity;
 import org.typesys.guidsl.guiDsl.Form;
 
 /**
@@ -20,6 +21,10 @@ public class GuiDslScopeProvider extends AbstractDeclarativeScopeProvider {
 
 	public IScope scope_Attribute(Form f, EReference ref) {
 		return Scopes.scopeFor(f.getEntity().getAttributes());
+	}
+	
+	public IScope scope_Attribute(Entity e, EReference ref) {
+		return Scopes.scopeFor(e.getAttributes());
 	}
 	
 	
