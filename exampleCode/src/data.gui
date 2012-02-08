@@ -1,0 +1,7 @@
+entity Person {
+	name: string
+	firstName: string
+	age : int
+	/isAdult = expr
+	weight : float 
+}

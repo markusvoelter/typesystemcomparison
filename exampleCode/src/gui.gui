@@ -1,0 +1,6 @@
+form PersonForm edits Person {
+	text (10) -> name
+	text (20) -> firstName
+	text (5) -> age
+	check -> isAdult
+}

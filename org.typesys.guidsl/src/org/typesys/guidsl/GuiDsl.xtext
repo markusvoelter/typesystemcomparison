@@ -3,7 +3,87 @@ grammar org.typesys.guidsl.GuiDsl with org.eclipse.xtext.common.Terminals
 generate guiDsl "http://www.typesys.org/guidsl/GuiDsl"
 
 Model:
-	greetings+=Greeting*;
+	(entities+=Entity | 
+	 forms+=Form	
+	)*;
+
+Form:
+	"form" name=ID "edits" entity=[Entity] "{"	
+		(widgets+=Widget)*
+	"}"
+;
+
+Widget:
+	TextWidget | CheckBoxWidget 
+;
+
+TextWidget:
+	"text" "(" length=INT ")" "->" attr=[Attribute] ("validate" validate=Expr)?
+;
+
+CheckBoxWidget:
+	"check" "->" attr=[Attribute] ("validate" validate=Expr)?
+;
+
+
+
+
+Entity:
+	"entity" name=ID "{"
+		(attributes+=Attribute)*
+	"}"
+;
+
+Attribute:
+	SimpleAttributed | DerivedAttribute
+;
+
+DerivedAttribute:
+	"/" name=ID "=" expr=Expr
+;
+
+
+
+
+SimpleAttributed:
+	name=ID ":" type=Type
+;
+
+Type:
+	PrimitiveType | EntityType
+;
+
+EntityType:
+	ref=[Entity]
+;
+
+
+PrimitiveType:
+	IntType | FloatType| BooleanType | StringType
+;
+
+FloatType:
+	{FloatType} "float"
+;
+
+IntType:
+	{IntType} "int"
+;
+
+BooleanType:
+	{BooleanType} "bool"
+;
+
+StringType:
+	{StringType} "string"
+;
+
+
+
+
+
+Expr:
+	"expr"
+;
+
 	
-Greeting:
-	'Hello' name=ID '!';
