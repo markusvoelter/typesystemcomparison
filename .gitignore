@@ -1,3 +1,7 @@
 *.pdf
 *.doc
 temp
+.metadata
+src-gen
+xtend-gen
+bin

@@ -1,0 +1,9 @@
+grammar org.typesys.guidsl.GuiDsl with org.eclipse.xtext.common.Terminals
+
+generate guiDsl "http://www.typesys.org/guidsl/GuiDsl"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
