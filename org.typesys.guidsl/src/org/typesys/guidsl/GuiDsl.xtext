@@ -1,6 +1,8 @@
 grammar org.typesys.guidsl.GuiDsl with org.eclipse.xtext.common.Terminals
 
 generate guiDsl "http://www.typesys.org/guidsl/GuiDsl"
+	
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore	
 
 Model:
 	(entities+=Entity | 
@@ -116,6 +118,6 @@ Atomic returns Expression:
 	({StringLiteral} value=STRING) |
 	({AttributeRef} attr=[Attribute|ID]);
 
-terminal DECIMAL_NUMBER:
-	("-")? ('0'..'9')* ('.' ('0'..'9')+)?;
+DECIMAL_NUMBER returns ecore::EDouble:
+	("-")? (INT)* ('.' (INT)+)?;
 	
