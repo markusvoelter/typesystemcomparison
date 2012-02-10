@@ -5,3 +5,8 @@ temp
 src-gen
 xtend-gen
 bin
+JabRef-2.7.jar
+*.aux
+*.bbl
+*.blg
+*.log

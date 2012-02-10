@@ -1,0 +1,13 @@
+% This file was created with JabRef 2.7.
+% Encoding: UTF-8
+
+@MISC{mvts,
+  author = {Markus V\"olter},
+  title = {{Xtext/TS - A Typesystem Framework for Xtext}},
+  howpublished = {\url{http://code.google.com/a/eclipselabs.org/p/xtext-typesystem/}},
+  month = {May},
+  year = {2011},
+  owner = {ds},
+  timestamp = {2012.02.10}
+}
+

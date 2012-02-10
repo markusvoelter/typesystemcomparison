@@ -1,3 +1,10 @@
 \section{Introduction}
 
-    
+…
+In the following, we use Xtext 2 as an example for a DSL framework.
+DSLs are complex, use type system to avoid writing boilerplate code in validators and scope providers (Xtext classes to specify visibility rules of model elements, e.g. variables)
+...
+The developer of the language may arbitrarily define which of his model elements he considers as types and define arbitrary rules for them. Usually, the language allows to assign types to certain elements (for instance, integer to a variable called a) and build expressions with these elements and the type system constraints make sure that all expressions (such as a = 16) of are free of what the designer considers type errors, e.g. a+ true. 
+
+Xsemantics [LBTS] and Xtext/TS  \cite{mvts} are both Eclipse plug-ins.
+
