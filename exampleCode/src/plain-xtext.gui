@@ -2,7 +2,8 @@ entity Person {
 	name      : string;
 	firstName : string;
 	age       : int; 
-	weight    : float; 
+	weight    : float;
+	likesCake : bool; 
 	/isAdult = age > 18;
 	/greeting = "Hello " + firstName + " " + name;
 }
@@ -22,5 +23,8 @@ form PersonGreeting edits Person {
 form PersonFormWithErrors edits Person {
 	text(10) -> name validate greeting; 
 	text(10) -> isAdult;
+	text(20) -> likesCake;
 	checkbox -> firstName;
+	text(21) -> isAdult;
+	checkbox -> greeting;
 }

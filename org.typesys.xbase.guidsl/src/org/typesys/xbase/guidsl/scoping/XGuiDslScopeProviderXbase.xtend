@@ -8,6 +8,7 @@ import org.typesys.xbase.guidsl.xGuiDsl.Widget
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
 import static extension org.eclipse.xtext.scoping.Scopes.*
+import org.eclipse.xtext.scoping.Scopes
 
 class XGuiDslScopeProviderXbase extends XbaseScopeProvider {
 
