@@ -4,6 +4,7 @@ temp
 .metadata
 bin
 JabRef-2.7.jar
+lit.bib.bak
 *.aux
 *.bbl
 *.blg
