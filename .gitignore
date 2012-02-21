@@ -2,8 +2,6 @@
 *.doc
 temp
 .metadata
-src-gen/*
-xtend-gen/*
 bin
 JabRef-2.7.jar
 *.aux
