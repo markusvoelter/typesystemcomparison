@@ -1,6 +1,15 @@
 % This file was created with JabRef 2.7.
 % Encoding: UTF-8
 
+@MISC{lbts,
+  author = {Lorenzo Bettini},
+  title = {{XTypeS – A DSL for Writing Type Systems for Xtext Languages}},
+  howpublished = {\url{http://xtypes.sourceforge.net/}},
+  year = {2012},
+  owner = {ds},
+  timestamp = {2012.02.21}
+}
+
 @MISC{mvts,
   author = {Markus V\"olter},
   title = {{Xtext/TS - A Typesystem Framework for Xtext}},
