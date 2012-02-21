@@ -27,7 +27,7 @@ TextWidget:
 ;
 
 CheckBoxWidget:
-	"check" "->" attr=[Attribute] ("validate" validate=Expr)? ";"
+	"checkbox" "->" attr=[Attribute] ("validate" validate=Expr)? ";"
 ;
 
 /*

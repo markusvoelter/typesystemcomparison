@@ -14,13 +14,13 @@ entity House {
 
 form PersonFormXB edits PersonX {
 	text (12) -> firstName; 
-	check -> weight;
+	checkbox -> weight;
 }  
 
 form PersonFormWithErrors edits PersonX {
     text(10) -> name validate true; 
 	text(10) -> isAdult;
-	check -> firstName;
+	checkbox -> firstName;
 }
 
 //	 text (10) -> name validate lengthOf(widgetcontent) < 10;
