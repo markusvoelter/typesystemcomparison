@@ -1,6 +1,0 @@
-form PersonForm edits Person {
-	text (10) -> name validate lengthOf(widgetcontent) < 10;
-	text (20) -> firstName;
-	text (5) -> age;
-	check -> isAdult validate age > 18 => widgetcontent == true;
-}

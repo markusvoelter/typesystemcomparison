@@ -1,0 +1,37 @@
+entity PersonX {
+	name      : String;
+	firstName : String;
+	age       : int; 
+	weight    : Float; 
+    /isAdult = age > 18;
+	/greeting = "Hello " + firstName + " " + name;
+}
+
+entity House {
+	floors : int; 
+	street : String;
+}
+
+form PersonFormXB edits PersonX {
+	text (12) -> firstName; 
+	check -> weight;
+}  
+
+form PersonFormWithErrors edits PersonX {
+    text(10) -> name validate true; 
+	text(10) -> isAdult;
+	check -> firstName;
+}
+
+//	 text (10) -> name validate lengthOf(widgetcontent) < 10;
+//	text (20) -> firstName;
+//	text (5) -> age;
+//	check -> isAdult validate age > 18 => widgetcontent == true;
+//}
+//
+//form PersonGreeting edits PersonXB {
+////	text(20) -> firstName;
+////    text(20) -> greeting;
+//}
+//
+ 
