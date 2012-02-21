@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.typesys.xts.guidsl.guiDsl.util;
 
