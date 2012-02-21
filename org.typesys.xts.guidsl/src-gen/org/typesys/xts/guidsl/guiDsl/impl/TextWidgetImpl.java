@@ -6,6 +6,8 @@
  */
 package org.typesys.xts.guidsl.guiDsl.impl;
 
+import java.math.BigDecimal;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
@@ -38,7 +40,7 @@ public class TextWidgetImpl extends WidgetImpl implements TextWidget
    * @generated
    * @ordered
    */
-  protected static final int LENGTH_EDEFAULT = 0;
+  protected static final BigDecimal LENGTH_EDEFAULT = null;
 
   /**
    * The cached value of the '{@link #getLength() <em>Length</em>}' attribute.
@@ -48,7 +50,7 @@ public class TextWidgetImpl extends WidgetImpl implements TextWidget
    * @generated
    * @ordered
    */
-  protected int length = LENGTH_EDEFAULT;
+  protected BigDecimal length = LENGTH_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -76,7 +78,7 @@ public class TextWidgetImpl extends WidgetImpl implements TextWidget
    * <!-- end-user-doc -->
    * @generated
    */
-  public int getLength()
+  public BigDecimal getLength()
   {
     return length;
   }
@@ -86,9 +88,9 @@ public class TextWidgetImpl extends WidgetImpl implements TextWidget
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setLength(int newLength)
+  public void setLength(BigDecimal newLength)
   {
-    int oldLength = length;
+    BigDecimal oldLength = length;
     length = newLength;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, GuiDslPackage.TEXT_WIDGET__LENGTH, oldLength, length));
@@ -121,7 +123,7 @@ public class TextWidgetImpl extends WidgetImpl implements TextWidget
     switch (featureID)
     {
       case GuiDslPackage.TEXT_WIDGET__LENGTH:
-        setLength((Integer)newValue);
+        setLength((BigDecimal)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -155,7 +157,7 @@ public class TextWidgetImpl extends WidgetImpl implements TextWidget
     switch (featureID)
     {
       case GuiDslPackage.TEXT_WIDGET__LENGTH:
-        return length != LENGTH_EDEFAULT;
+        return LENGTH_EDEFAULT == null ? length != null : !LENGTH_EDEFAULT.equals(length);
     }
     return super.eIsSet(featureID);
   }

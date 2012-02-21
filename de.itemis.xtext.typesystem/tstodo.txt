@@ -1,0 +1,21 @@
+* remove Xtext Dependencies
+* parameter listen vergleichen (positionsbasiert)
+* null-tolerantes TCT
+* ggfs. isComOrde auch nur die Typen übergeben
+
+
+
+* constrainFeatureType auch mit Subtypes?
+* compute common type auch mit custom code
+* Ausgeben trace in Test 
+* an ensure that compares to ancestor (für Return Statement, oder Switch Case Cases)						
+* Document StaticCustomTypeChecker und ContextDependentCustomTypeChecker
+  -> soll ich die über nen Poly Dispatcher machen?
+
+
+  
+
+
+
+
+

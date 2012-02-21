@@ -4593,8 +4593,8 @@ rule__TextWidget__LengthAssignment_2
     }
 :
 (
-{ before(grammarAccess.getTextWidgetAccess().getLengthINTTerminalRuleCall_2_0()); }
-	RULE_INT{ after(grammarAccess.getTextWidgetAccess().getLengthINTTerminalRuleCall_2_0()); }
+{ before(grammarAccess.getTextWidgetAccess().getLengthDECIMAL_NUMBERTerminalRuleCall_2_0()); }
+	RULE_DECIMAL_NUMBER{ after(grammarAccess.getTextWidgetAccess().getLengthDECIMAL_NUMBERTerminalRuleCall_2_0()); }
 )
 
 ;
@@ -4875,8 +4875,8 @@ rule__Atomic__ValueAssignment_5_1
     }
 :
 (
-{ before(grammarAccess.getAtomicAccess().getValueINTTerminalRuleCall_5_1_0()); }
-	RULE_INT{ after(grammarAccess.getAtomicAccess().getValueINTTerminalRuleCall_5_1_0()); }
+{ before(grammarAccess.getAtomicAccess().getValueDECIMAL_NUMBERTerminalRuleCall_5_1_0()); }
+	RULE_DECIMAL_NUMBER{ after(grammarAccess.getAtomicAccess().getValueDECIMAL_NUMBERTerminalRuleCall_5_1_0()); }
 )
 
 ;
@@ -4919,9 +4919,11 @@ finally {
 }
 
 
-RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
+RULE_DECIMAL_NUMBER : '-'? ('0'..'9')* ('.' ('0'..'9')+)?;
 
-RULE_INT : ('0'..'9')+;
+RULE_INT : 'this one has been deactivated';
+
+RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 

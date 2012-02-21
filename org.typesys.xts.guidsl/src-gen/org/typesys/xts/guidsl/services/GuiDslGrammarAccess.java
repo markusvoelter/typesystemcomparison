@@ -129,7 +129,7 @@ public class GuiDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTextKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cLengthAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cLengthINTTerminalRuleCall_2_0 = (RuleCall)cLengthAssignment_2.eContents().get(0);
+		private final RuleCall cLengthDECIMAL_NUMBERTerminalRuleCall_2_0 = (RuleCall)cLengthAssignment_2.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Keyword cHyphenMinusGreaterThanSignKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Assignment cAttrAssignment_5 = (Assignment)cGroup.eContents().get(5);
@@ -142,10 +142,10 @@ public class GuiDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//TextWidget:
-		//	"text" "(" length=INT ")" "->" attr=[Attribute] ("validate" validate=Expr)? ";";
+		//	"text" "(" length=DECIMAL_NUMBER ")" "->" attr=[Attribute] ("validate" validate=Expr)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//"text" "(" length=INT ")" "->" attr=[Attribute] ("validate" validate=Expr)? ";"
+		//"text" "(" length=DECIMAL_NUMBER ")" "->" attr=[Attribute] ("validate" validate=Expr)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//"text"
@@ -154,11 +154,11 @@ public class GuiDslGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//length=INT
+		//length=DECIMAL_NUMBER
 		public Assignment getLengthAssignment_2() { return cLengthAssignment_2; }
 
-		//INT
-		public RuleCall getLengthINTTerminalRuleCall_2_0() { return cLengthINTTerminalRuleCall_2_0; }
+		//DECIMAL_NUMBER
+		public RuleCall getLengthDECIMAL_NUMBERTerminalRuleCall_2_0() { return cLengthDECIMAL_NUMBERTerminalRuleCall_2_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
@@ -875,7 +875,7 @@ public class GuiDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
 		private final Action cNumberLiteralAction_5_0 = (Action)cGroup_5.eContents().get(0);
 		private final Assignment cValueAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cValueINTTerminalRuleCall_5_1_0 = (RuleCall)cValueAssignment_5_1.eContents().get(0);
+		private final RuleCall cValueDECIMAL_NUMBERTerminalRuleCall_5_1_0 = (RuleCall)cValueAssignment_5_1.eContents().get(0);
 		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
 		private final Action cStringLiteralAction_6_0 = (Action)cGroup_6.eContents().get(0);
 		private final Assignment cValueAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
@@ -886,28 +886,15 @@ public class GuiDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cAttrAttributeCrossReference_7_1_0 = (CrossReference)cAttrAssignment_7_1.eContents().get(0);
 		private final RuleCall cAttrAttributeIDTerminalRuleCall_7_1_0_1 = (RuleCall)cAttrAttributeCrossReference_7_1_0.eContents().get(1);
 		
-		/// *
-		// * Example for introducing a decimal number
-		//terminal DECIMAL_NUMBER returns ecore::EBigDecimal:
-		//	("-")? ('0'..'9')* ('.' ('0'..'9')+)?;
-		//
-		//terminal INT returns ecore::EInt:
-		//	'this one has been deactivated';
-		// * / Atomic returns Expression:
+		//Atomic returns Expression:
 		//	{TrueExpr} "true" | {FalseExpr} "false" | {FieldContent} "widgetcontent" | {lenghtOf} "lengthOf" "(" expr=Expr ")" |
-		//	{ParenExpr} "(" expr=Expr ")" | {NumberLiteral} value=INT | {StringLiteral} value=STRING | {AttributeRef}
+		//	{ParenExpr} "(" expr=Expr ")" | {NumberLiteral} value=DECIMAL_NUMBER | {StringLiteral} value=STRING | {AttributeRef}
 		//	attr=[Attribute];
 		public ParserRule getRule() { return rule; }
 
-		//{TrueExpr} "true" / *
-		// * Example for introducing a decimal number
-		//terminal DECIMAL_NUMBER returns ecore::EBigDecimal:
-		//	("-")? ('0'..'9')* ('.' ('0'..'9')+)?;
-		//
-		//terminal INT returns ecore::EInt:
-		//	'this one has been deactivated';
-		// * / | {FalseExpr} "false" | {FieldContent} "widgetcontent" | {lenghtOf} "lengthOf" "(" expr=Expr ")" | {ParenExpr} "("
-		//expr=Expr ")" | {NumberLiteral} value=INT | {StringLiteral} value=STRING | {AttributeRef} attr=[Attribute]
+		//{TrueExpr} "true" | {FalseExpr} "false" | {FieldContent} "widgetcontent" | {lenghtOf} "lengthOf" "(" expr=Expr ")" |
+		//{ParenExpr} "(" expr=Expr ")" | {NumberLiteral} value=DECIMAL_NUMBER | {StringLiteral} value=STRING | {AttributeRef}
+		//attr=[Attribute]
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//{TrueExpr} "true"
@@ -976,17 +963,17 @@ public class GuiDslGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_4_3() { return cRightParenthesisKeyword_4_3; }
 
-		//{NumberLiteral} value=INT
+		//{NumberLiteral} value=DECIMAL_NUMBER
 		public Group getGroup_5() { return cGroup_5; }
 
 		//{NumberLiteral}
 		public Action getNumberLiteralAction_5_0() { return cNumberLiteralAction_5_0; }
 
-		//value=INT
+		//value=DECIMAL_NUMBER
 		public Assignment getValueAssignment_5_1() { return cValueAssignment_5_1; }
 
-		//INT
-		public RuleCall getValueINTTerminalRuleCall_5_1_0() { return cValueINTTerminalRuleCall_5_1_0; }
+		//DECIMAL_NUMBER
+		public RuleCall getValueDECIMAL_NUMBERTerminalRuleCall_5_1_0() { return cValueDECIMAL_NUMBERTerminalRuleCall_5_1_0; }
 
 		//{StringLiteral} value=STRING
 		public Group getGroup_6() { return cGroup_6; }
@@ -1000,14 +987,7 @@ public class GuiDslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getValueSTRINGTerminalRuleCall_6_1_0() { return cValueSTRINGTerminalRuleCall_6_1_0; }
 
-		//{AttributeRef} attr=[Attribute] / *
-		// * Example for introducing a decimal number
-		//terminal DECIMAL_NUMBER returns ecore::EBigDecimal:
-		//	("-")? ('0'..'9')* ('.' ('0'..'9')+)?;
-		//
-		//terminal INT returns ecore::EInt:
-		//	'this one has been deactivated';
-		// * /
+		//{AttributeRef} attr=[Attribute]
 		public Group getGroup_7() { return cGroup_7; }
 
 		//{AttributeRef}
@@ -1046,6 +1026,8 @@ public class GuiDslGrammarAccess extends AbstractGrammarElementFinder {
 	private MultiplicationLevelElements pMultiplicationLevel;
 	private PrefixOpLevelElements pPrefixOpLevel;
 	private AtomicElements pAtomic;
+	private TerminalRule tDECIMAL_NUMBER;
+	private TerminalRule tINT;
 	
 	private final GrammarProvider grammarProvider;
 
@@ -1101,7 +1083,7 @@ public class GuiDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TextWidget:
-	//	"text" "(" length=INT ")" "->" attr=[Attribute] ("validate" validate=Expr)? ";";
+	//	"text" "(" length=DECIMAL_NUMBER ")" "->" attr=[Attribute] ("validate" validate=Expr)? ";";
 	public TextWidgetElements getTextWidgetAccess() {
 		return (pTextWidget != null) ? pTextWidget : (pTextWidget = new TextWidgetElements());
 	}
@@ -1286,16 +1268,9 @@ public class GuiDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getPrefixOpLevelAccess().getRule();
 	}
 
-	/// *
-	// * Example for introducing a decimal number
-	//terminal DECIMAL_NUMBER returns ecore::EBigDecimal:
-	//	("-")? ('0'..'9')* ('.' ('0'..'9')+)?;
-	//
-	//terminal INT returns ecore::EInt:
-	//	'this one has been deactivated';
-	// * / Atomic returns Expression:
+	//Atomic returns Expression:
 	//	{TrueExpr} "true" | {FalseExpr} "false" | {FieldContent} "widgetcontent" | {lenghtOf} "lengthOf" "(" expr=Expr ")" |
-	//	{ParenExpr} "(" expr=Expr ")" | {NumberLiteral} value=INT | {StringLiteral} value=STRING | {AttributeRef}
+	//	{ParenExpr} "(" expr=Expr ")" | {NumberLiteral} value=DECIMAL_NUMBER | {StringLiteral} value=STRING | {AttributeRef}
 	//	attr=[Attribute];
 	public AtomicElements getAtomicAccess() {
 		return (pAtomic != null) ? pAtomic : (pAtomic = new AtomicElements());
@@ -1305,16 +1280,22 @@ public class GuiDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getAtomicAccess().getRule();
 	}
 
+	//terminal DECIMAL_NUMBER returns ecore::EBigDecimal:
+	//	"-"? "0".."9"* ("." "0".."9"+)?;
+	public TerminalRule getDECIMAL_NUMBERRule() {
+		return (tDECIMAL_NUMBER != null) ? tDECIMAL_NUMBER : (tDECIMAL_NUMBER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "DECIMAL_NUMBER"));
+	} 
+
+	//terminal INT returns ecore::EInt:
+	//	"this one has been deactivated";
+	public TerminalRule getINTRule() {
+		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
+	} 
+
 	//terminal ID:
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
-	} 
-
-	//terminal INT returns ecore::EInt:
-	//	"0".."9"+;
-	public TerminalRule getINTRule() {
-		return gaTerminals.getINTRule();
 	} 
 
 	//terminal STRING:

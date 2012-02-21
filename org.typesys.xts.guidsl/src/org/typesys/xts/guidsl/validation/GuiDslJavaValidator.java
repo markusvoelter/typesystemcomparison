@@ -1,13 +1,24 @@
 package org.typesys.xts.guidsl.validation;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.validation.Check;
+import org.eclipse.xtext.validation.CheckType;
+
+import com.google.inject.Inject;
+
+import de.itemis.xtext.typesystem.ITypesystem;
  
 
 public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 
-//	@Check
-//	public void checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.getName().charAt(0))) {
-//			warning("Name should start with a capital", MyDslPackage.Literals.GREETING__NAME);
-//		}
-//	}
+	
+	@Inject 
+	private ITypesystem ts;
+	
+	
+	@Check(CheckType.NORMAL)
+	public void validateTypes( EObject m ) {
+		ts.checkTypesystemConstraints( m, this );
+	}	
 
 }

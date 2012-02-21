@@ -664,7 +664,7 @@ public class AbstractGuiDslSemanticSequencer extends AbstractSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     value=INT
+	 *     value=DECIMAL_NUMBER
 	 */
 	protected void sequence_Atomic(EObject context, NumberLiteral semanticObject) {
 		if(errorAcceptor != null) {
@@ -673,7 +673,7 @@ public class AbstractGuiDslSemanticSequencer extends AbstractSemanticSequencer {
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getAtomicAccess().getValueINTTerminalRuleCall_5_1_0(), semanticObject.getValue());
+		feeder.accept(grammarAccess.getAtomicAccess().getValueDECIMAL_NUMBERTerminalRuleCall_5_1_0(), semanticObject.getValue());
 		feeder.finish();
 	}
 	
@@ -1070,7 +1070,7 @@ public class AbstractGuiDslSemanticSequencer extends AbstractSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (length=INT attr=[Attribute|ID] validate=Expr?)
+	 *     (length=DECIMAL_NUMBER attr=[Attribute|ID] validate=Expr?)
 	 */
 	protected void sequence_TextWidget(EObject context, TextWidget semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

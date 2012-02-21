@@ -6,6 +6,7 @@
  */
 package org.typesys.xts.guidsl.guiDsl;
 
+import java.math.BigDecimal;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,12 +35,12 @@ public interface TextWidget extends Widget
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Length</em>' attribute.
-   * @see #setLength(int)
+   * @see #setLength(BigDecimal)
    * @see org.typesys.xts.guidsl.guiDsl.GuiDslPackage#getTextWidget_Length()
    * @model
    * @generated
    */
-  int getLength();
+  BigDecimal getLength();
 
   /**
    * Sets the value of the '{@link org.typesys.xts.guidsl.guiDsl.TextWidget#getLength <em>Length</em>}' attribute.
@@ -49,6 +50,6 @@ public interface TextWidget extends Widget
    * @see #getLength()
    * @generated
    */
-  void setLength(int value);
+  void setLength(BigDecimal value);
 
 } // TextWidget

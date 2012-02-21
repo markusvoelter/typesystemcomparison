@@ -6,6 +6,7 @@
  */
 package org.typesys.xts.guidsl.guiDsl;
 
+import java.math.BigDecimal;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,12 +35,12 @@ public interface NumberLiteral extends Expression
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' attribute.
-   * @see #setValue(int)
+   * @see #setValue(BigDecimal)
    * @see org.typesys.xts.guidsl.guiDsl.GuiDslPackage#getNumberLiteral_Value()
    * @model
    * @generated
    */
-  int getValue();
+  BigDecimal getValue();
 
   /**
    * Sets the value of the '{@link org.typesys.xts.guidsl.guiDsl.NumberLiteral#getValue <em>Value</em>}' attribute.
@@ -49,6 +50,6 @@ public interface NumberLiteral extends Expression
    * @see #getValue()
    * @generated
    */
-  void setValue(int value);
+  void setValue(BigDecimal value);
 
 } // NumberLiteral

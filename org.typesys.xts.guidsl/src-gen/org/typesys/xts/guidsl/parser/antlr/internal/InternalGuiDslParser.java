@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalGuiDslParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'form'", "'edits'", "'{'", "'}'", "'text'", "'('", "')'", "'->'", "'validate'", "';'", "'checkbox'", "'entity'", "'/'", "'='", "':'", "'float'", "'int'", "'bool'", "'string'", "'=='", "'!='", "'>'", "'>='", "'<='", "'&&'", "'=>'", "'||'", "'<'", "'+'", "'-'", "'*'", "'!'", "'true'", "'false'", "'widgetcontent'", "'lengthOf'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_DECIMAL_NUMBER", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'form'", "'edits'", "'{'", "'}'", "'text'", "'('", "')'", "'->'", "'validate'", "';'", "'checkbox'", "'entity'", "'/'", "'='", "':'", "'float'", "'int'", "'bool'", "'string'", "'=='", "'!='", "'>'", "'>='", "'<='", "'&&'", "'=>'", "'||'", "'<'", "'+'", "'-'", "'*'", "'!'", "'true'", "'false'", "'widgetcontent'", "'lengthOf'"
     };
     public static final int RULE_ID=4;
     public static final int T__29=29;
@@ -32,9 +32,10 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
     public static final int T__24=24;
     public static final int T__23=23;
     public static final int T__22=22;
-    public static final int RULE_ANY_OTHER=10;
+    public static final int RULE_ANY_OTHER=11;
     public static final int T__21=21;
     public static final int T__20=20;
+    public static final int RULE_DECIMAL_NUMBER=5;
     public static final int EOF=-1;
     public static final int T__19=19;
     public static final int T__16=16;
@@ -42,19 +43,19 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
     public static final int T__18=18;
     public static final int T__17=17;
     public static final int T__12=12;
-    public static final int T__11=11;
     public static final int T__14=14;
     public static final int T__13=13;
-    public static final int RULE_INT=5;
+    public static final int RULE_INT=7;
     public static final int T__42=42;
     public static final int T__43=43;
     public static final int T__40=40;
     public static final int T__41=41;
     public static final int T__46=46;
+    public static final int T__47=47;
     public static final int T__44=44;
     public static final int T__45=45;
-    public static final int RULE_SL_COMMENT=8;
-    public static final int RULE_ML_COMMENT=7;
+    public static final int RULE_SL_COMMENT=9;
+    public static final int RULE_ML_COMMENT=8;
     public static final int T__30=30;
     public static final int T__31=31;
     public static final int T__32=32;
@@ -66,7 +67,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
     public static final int T__37=37;
     public static final int T__38=38;
     public static final int T__39=39;
-    public static final int RULE_WS=9;
+    public static final int RULE_WS=10;
 
     // delegates
     // delegators
@@ -164,10 +165,10 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
                 int alt1=3;
                 int LA1_0 = input.LA(1);
 
-                if ( (LA1_0==22) ) {
+                if ( (LA1_0==23) ) {
                     alt1=1;
                 }
-                else if ( (LA1_0==11) ) {
+                else if ( (LA1_0==12) ) {
                     alt1=2;
                 }
 
@@ -329,7 +330,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:138:1: (otherlv_0= 'form' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'edits' ( (otherlv_3= RULE_ID ) ) otherlv_4= '{' ( (lv_widgets_5_0= ruleWidget ) )* otherlv_6= '}' )
             // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:138:3: otherlv_0= 'form' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'edits' ( (otherlv_3= RULE_ID ) ) otherlv_4= '{' ( (lv_widgets_5_0= ruleWidget ) )* otherlv_6= '}'
             {
-            otherlv_0=(Token)match(input,11,FOLLOW_11_in_ruleForm242); 
+            otherlv_0=(Token)match(input,12,FOLLOW_12_in_ruleForm242); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getFormAccess().getFormKeyword_0());
                 
@@ -359,7 +360,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,12,FOLLOW_12_in_ruleForm276); 
+            otherlv_2=(Token)match(input,13,FOLLOW_13_in_ruleForm276); 
 
                 	newLeafNode(otherlv_2, grammarAccess.getFormAccess().getEditsKeyword_2());
                 
@@ -384,7 +385,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,13,FOLLOW_13_in_ruleForm308); 
+            otherlv_4=(Token)match(input,14,FOLLOW_14_in_ruleForm308); 
 
                 	newLeafNode(otherlv_4, grammarAccess.getFormAccess().getLeftCurlyBracketKeyword_4());
                 
@@ -394,7 +395,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
                 int alt2=2;
                 int LA2_0 = input.LA(1);
 
-                if ( (LA2_0==15||LA2_0==21) ) {
+                if ( (LA2_0==16||LA2_0==22) ) {
                     alt2=1;
                 }
 
@@ -437,7 +438,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_6=(Token)match(input,14,FOLLOW_14_in_ruleForm342); 
+            otherlv_6=(Token)match(input,15,FOLLOW_15_in_ruleForm342); 
 
                 	newLeafNode(otherlv_6, grammarAccess.getFormAccess().getRightCurlyBracketKeyword_6());
                 
@@ -517,10 +518,10 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             int alt3=2;
             int LA3_0 = input.LA(1);
 
-            if ( (LA3_0==15) ) {
+            if ( (LA3_0==16) ) {
                 alt3=1;
             }
-            else if ( (LA3_0==21) ) {
+            else if ( (LA3_0==22) ) {
                 alt3=2;
             }
             else {
@@ -623,7 +624,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTextWidget"
-    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:260:1: ruleTextWidget returns [EObject current=null] : (otherlv_0= 'text' otherlv_1= '(' ( (lv_length_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= '->' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'validate' ( (lv_validate_7_0= ruleExpr ) ) )? otherlv_8= ';' ) ;
+    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:260:1: ruleTextWidget returns [EObject current=null] : (otherlv_0= 'text' otherlv_1= '(' ( (lv_length_2_0= RULE_DECIMAL_NUMBER ) ) otherlv_3= ')' otherlv_4= '->' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'validate' ( (lv_validate_7_0= ruleExpr ) ) )? otherlv_8= ';' ) ;
     public final EObject ruleTextWidget() throws RecognitionException {
         EObject current = null;
 
@@ -641,29 +642,29 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:263:28: ( (otherlv_0= 'text' otherlv_1= '(' ( (lv_length_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= '->' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'validate' ( (lv_validate_7_0= ruleExpr ) ) )? otherlv_8= ';' ) )
-            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:264:1: (otherlv_0= 'text' otherlv_1= '(' ( (lv_length_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= '->' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'validate' ( (lv_validate_7_0= ruleExpr ) ) )? otherlv_8= ';' )
+            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:263:28: ( (otherlv_0= 'text' otherlv_1= '(' ( (lv_length_2_0= RULE_DECIMAL_NUMBER ) ) otherlv_3= ')' otherlv_4= '->' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'validate' ( (lv_validate_7_0= ruleExpr ) ) )? otherlv_8= ';' ) )
+            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:264:1: (otherlv_0= 'text' otherlv_1= '(' ( (lv_length_2_0= RULE_DECIMAL_NUMBER ) ) otherlv_3= ')' otherlv_4= '->' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'validate' ( (lv_validate_7_0= ruleExpr ) ) )? otherlv_8= ';' )
             {
-            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:264:1: (otherlv_0= 'text' otherlv_1= '(' ( (lv_length_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= '->' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'validate' ( (lv_validate_7_0= ruleExpr ) ) )? otherlv_8= ';' )
-            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:264:3: otherlv_0= 'text' otherlv_1= '(' ( (lv_length_2_0= RULE_INT ) ) otherlv_3= ')' otherlv_4= '->' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'validate' ( (lv_validate_7_0= ruleExpr ) ) )? otherlv_8= ';'
+            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:264:1: (otherlv_0= 'text' otherlv_1= '(' ( (lv_length_2_0= RULE_DECIMAL_NUMBER ) ) otherlv_3= ')' otherlv_4= '->' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'validate' ( (lv_validate_7_0= ruleExpr ) ) )? otherlv_8= ';' )
+            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:264:3: otherlv_0= 'text' otherlv_1= '(' ( (lv_length_2_0= RULE_DECIMAL_NUMBER ) ) otherlv_3= ')' otherlv_4= '->' ( (otherlv_5= RULE_ID ) ) (otherlv_6= 'validate' ( (lv_validate_7_0= ruleExpr ) ) )? otherlv_8= ';'
             {
-            otherlv_0=(Token)match(input,15,FOLLOW_15_in_ruleTextWidget544); 
+            otherlv_0=(Token)match(input,16,FOLLOW_16_in_ruleTextWidget544); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getTextWidgetAccess().getTextKeyword_0());
                 
-            otherlv_1=(Token)match(input,16,FOLLOW_16_in_ruleTextWidget556); 
+            otherlv_1=(Token)match(input,17,FOLLOW_17_in_ruleTextWidget556); 
 
                 	newLeafNode(otherlv_1, grammarAccess.getTextWidgetAccess().getLeftParenthesisKeyword_1());
                 
-            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:272:1: ( (lv_length_2_0= RULE_INT ) )
-            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:273:1: (lv_length_2_0= RULE_INT )
+            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:272:1: ( (lv_length_2_0= RULE_DECIMAL_NUMBER ) )
+            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:273:1: (lv_length_2_0= RULE_DECIMAL_NUMBER )
             {
-            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:273:1: (lv_length_2_0= RULE_INT )
-            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:274:3: lv_length_2_0= RULE_INT
+            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:273:1: (lv_length_2_0= RULE_DECIMAL_NUMBER )
+            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:274:3: lv_length_2_0= RULE_DECIMAL_NUMBER
             {
-            lv_length_2_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleTextWidget573); 
+            lv_length_2_0=(Token)match(input,RULE_DECIMAL_NUMBER,FOLLOW_RULE_DECIMAL_NUMBER_in_ruleTextWidget573); 
 
-            			newLeafNode(lv_length_2_0, grammarAccess.getTextWidgetAccess().getLengthINTTerminalRuleCall_2_0()); 
+            			newLeafNode(lv_length_2_0, grammarAccess.getTextWidgetAccess().getLengthDECIMAL_NUMBERTerminalRuleCall_2_0()); 
             		
 
             	        if (current==null) {
@@ -673,7 +674,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
                    			current, 
                    			"length",
                     		lv_length_2_0, 
-                    		"INT");
+                    		"DECIMAL_NUMBER");
             	    
 
             }
@@ -681,11 +682,11 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,17,FOLLOW_17_in_ruleTextWidget590); 
+            otherlv_3=(Token)match(input,18,FOLLOW_18_in_ruleTextWidget590); 
 
                 	newLeafNode(otherlv_3, grammarAccess.getTextWidgetAccess().getRightParenthesisKeyword_3());
                 
-            otherlv_4=(Token)match(input,18,FOLLOW_18_in_ruleTextWidget602); 
+            otherlv_4=(Token)match(input,19,FOLLOW_19_in_ruleTextWidget602); 
 
                 	newLeafNode(otherlv_4, grammarAccess.getTextWidgetAccess().getHyphenMinusGreaterThanSignKeyword_4());
                 
@@ -714,14 +715,14 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             int alt4=2;
             int LA4_0 = input.LA(1);
 
-            if ( (LA4_0==19) ) {
+            if ( (LA4_0==20) ) {
                 alt4=1;
             }
             switch (alt4) {
                 case 1 :
                     // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:311:4: otherlv_6= 'validate' ( (lv_validate_7_0= ruleExpr ) )
                     {
-                    otherlv_6=(Token)match(input,19,FOLLOW_19_in_ruleTextWidget635); 
+                    otherlv_6=(Token)match(input,20,FOLLOW_20_in_ruleTextWidget635); 
 
                         	newLeafNode(otherlv_6, grammarAccess.getTextWidgetAccess().getValidateKeyword_6_0());
                         
@@ -762,7 +763,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_8=(Token)match(input,20,FOLLOW_20_in_ruleTextWidget670); 
+            otherlv_8=(Token)match(input,21,FOLLOW_21_in_ruleTextWidget670); 
 
                 	newLeafNode(otherlv_8, grammarAccess.getTextWidgetAccess().getSemicolonKeyword_7());
                 
@@ -844,11 +845,11 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:358:1: (otherlv_0= 'checkbox' otherlv_1= '->' ( (otherlv_2= RULE_ID ) ) (otherlv_3= 'validate' ( (lv_validate_4_0= ruleExpr ) ) )? otherlv_5= ';' )
             // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:358:3: otherlv_0= 'checkbox' otherlv_1= '->' ( (otherlv_2= RULE_ID ) ) (otherlv_3= 'validate' ( (lv_validate_4_0= ruleExpr ) ) )? otherlv_5= ';'
             {
-            otherlv_0=(Token)match(input,21,FOLLOW_21_in_ruleCheckBoxWidget753); 
+            otherlv_0=(Token)match(input,22,FOLLOW_22_in_ruleCheckBoxWidget753); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getCheckBoxWidgetAccess().getCheckboxKeyword_0());
                 
-            otherlv_1=(Token)match(input,18,FOLLOW_18_in_ruleCheckBoxWidget765); 
+            otherlv_1=(Token)match(input,19,FOLLOW_19_in_ruleCheckBoxWidget765); 
 
                 	newLeafNode(otherlv_1, grammarAccess.getCheckBoxWidgetAccess().getHyphenMinusGreaterThanSignKeyword_1());
                 
@@ -877,14 +878,14 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             int alt5=2;
             int LA5_0 = input.LA(1);
 
-            if ( (LA5_0==19) ) {
+            if ( (LA5_0==20) ) {
                 alt5=1;
             }
             switch (alt5) {
                 case 1 :
                     // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:379:4: otherlv_3= 'validate' ( (lv_validate_4_0= ruleExpr ) )
                     {
-                    otherlv_3=(Token)match(input,19,FOLLOW_19_in_ruleCheckBoxWidget798); 
+                    otherlv_3=(Token)match(input,20,FOLLOW_20_in_ruleCheckBoxWidget798); 
 
                         	newLeafNode(otherlv_3, grammarAccess.getCheckBoxWidgetAccess().getValidateKeyword_3_0());
                         
@@ -925,7 +926,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_5=(Token)match(input,20,FOLLOW_20_in_ruleCheckBoxWidget833); 
+            otherlv_5=(Token)match(input,21,FOLLOW_21_in_ruleCheckBoxWidget833); 
 
                 	newLeafNode(otherlv_5, grammarAccess.getCheckBoxWidgetAccess().getSemicolonKeyword_4());
                 
@@ -1006,7 +1007,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:426:1: (otherlv_0= 'entity' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_attributes_3_0= ruleAttribute ) )* otherlv_4= '}' )
             // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:426:3: otherlv_0= 'entity' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_attributes_3_0= ruleAttribute ) )* otherlv_4= '}'
             {
-            otherlv_0=(Token)match(input,22,FOLLOW_22_in_ruleEntity916); 
+            otherlv_0=(Token)match(input,23,FOLLOW_23_in_ruleEntity916); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getEntityAccess().getEntityKeyword_0());
                 
@@ -1036,7 +1037,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,13,FOLLOW_13_in_ruleEntity950); 
+            otherlv_2=(Token)match(input,14,FOLLOW_14_in_ruleEntity950); 
 
                 	newLeafNode(otherlv_2, grammarAccess.getEntityAccess().getLeftCurlyBracketKeyword_2());
                 
@@ -1046,7 +1047,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==RULE_ID||LA6_0==23) ) {
+                if ( (LA6_0==RULE_ID||LA6_0==24) ) {
                     alt6=1;
                 }
 
@@ -1089,7 +1090,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_4=(Token)match(input,14,FOLLOW_14_in_ruleEntity984); 
+            otherlv_4=(Token)match(input,15,FOLLOW_15_in_ruleEntity984); 
 
                 	newLeafNode(otherlv_4, grammarAccess.getEntityAccess().getRightCurlyBracketKeyword_4());
                 
@@ -1172,7 +1173,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             if ( (LA7_0==RULE_ID) ) {
                 alt7=1;
             }
-            else if ( (LA7_0==23) ) {
+            else if ( (LA7_0==24) ) {
                 alt7=2;
             }
             else {
@@ -1295,7 +1296,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:535:1: (otherlv_0= '/' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '=' ( (lv_expr_3_0= ruleExpr ) ) otherlv_4= ';' )
             // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:535:3: otherlv_0= '/' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '=' ( (lv_expr_3_0= ruleExpr ) ) otherlv_4= ';'
             {
-            otherlv_0=(Token)match(input,23,FOLLOW_23_in_ruleDerivedAttribute1186); 
+            otherlv_0=(Token)match(input,24,FOLLOW_24_in_ruleDerivedAttribute1186); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getDerivedAttributeAccess().getSolidusKeyword_0());
                 
@@ -1325,7 +1326,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,24,FOLLOW_24_in_ruleDerivedAttribute1220); 
+            otherlv_2=(Token)match(input,25,FOLLOW_25_in_ruleDerivedAttribute1220); 
 
                 	newLeafNode(otherlv_2, grammarAccess.getDerivedAttributeAccess().getEqualsSignKeyword_2());
                 
@@ -1360,7 +1361,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,20,FOLLOW_20_in_ruleDerivedAttribute1253); 
+            otherlv_4=(Token)match(input,21,FOLLOW_21_in_ruleDerivedAttribute1253); 
 
                 	newLeafNode(otherlv_4, grammarAccess.getDerivedAttributeAccess().getSemicolonKeyword_4());
                 
@@ -1466,7 +1467,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,25,FOLLOW_25_in_ruleSimpleAttribute1358); 
+            otherlv_1=(Token)match(input,26,FOLLOW_26_in_ruleSimpleAttribute1358); 
 
                 	newLeafNode(otherlv_1, grammarAccess.getSimpleAttributeAccess().getColonKeyword_1());
                 
@@ -1501,7 +1502,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,20,FOLLOW_20_in_ruleSimpleAttribute1391); 
+            otherlv_3=(Token)match(input,21,FOLLOW_21_in_ruleSimpleAttribute1391); 
 
                 	newLeafNode(otherlv_3, grammarAccess.getSimpleAttributeAccess().getSemicolonKeyword_3());
                 
@@ -1581,7 +1582,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             int alt8=2;
             int LA8_0 = input.LA(1);
 
-            if ( ((LA8_0>=26 && LA8_0<=29)) ) {
+            if ( ((LA8_0>=27 && LA8_0<=30)) ) {
                 alt8=1;
             }
             else if ( (LA8_0==RULE_ID) ) {
@@ -1796,22 +1797,22 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:743:1: (this_IntType_0= ruleIntType | this_FloatType_1= ruleFloatType | this_BooleanType_2= ruleBooleanType | this_StringType_3= ruleStringType )
             int alt9=4;
             switch ( input.LA(1) ) {
-            case 27:
+            case 28:
                 {
                 alt9=1;
                 }
                 break;
-            case 26:
+            case 27:
                 {
                 alt9=2;
                 }
                 break;
-            case 28:
+            case 29:
                 {
                 alt9=3;
                 }
                 break;
-            case 29:
+            case 30:
                 {
                 alt9=4;
                 }
@@ -1979,7 +1980,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,26,FOLLOW_26_in_ruleFloatType1864); 
+            otherlv_1=(Token)match(input,27,FOLLOW_27_in_ruleFloatType1864); 
 
                 	newLeafNode(otherlv_1, grammarAccess.getFloatTypeAccess().getFloatKeyword_1());
                 
@@ -2066,7 +2067,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,27,FOLLOW_27_in_ruleIntType1956); 
+            otherlv_1=(Token)match(input,28,FOLLOW_28_in_ruleIntType1956); 
 
                 	newLeafNode(otherlv_1, grammarAccess.getIntTypeAccess().getIntKeyword_1());
                 
@@ -2153,7 +2154,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,28,FOLLOW_28_in_ruleBooleanType2048); 
+            otherlv_1=(Token)match(input,29,FOLLOW_29_in_ruleBooleanType2048); 
 
                 	newLeafNode(otherlv_1, grammarAccess.getBooleanTypeAccess().getBoolKeyword_1());
                 
@@ -2240,7 +2241,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,29,FOLLOW_29_in_ruleStringType2140); 
+            otherlv_1=(Token)match(input,30,FOLLOW_30_in_ruleStringType2140); 
 
                 	newLeafNode(otherlv_1, grammarAccess.getStringTypeAccess().getStringKeyword_1());
                 
@@ -2425,7 +2426,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
                 int alt11=2;
                 int LA11_0 = input.LA(1);
 
-                if ( ((LA11_0>=30 && LA11_0<=38)) ) {
+                if ( ((LA11_0>=31 && LA11_0<=39)) ) {
                     alt11=1;
                 }
 
@@ -2437,47 +2438,47 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             	    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:966:2: ( ( () otherlv_2= '==' ) | ( () otherlv_4= '!=' ) | ( () otherlv_6= '>' ) | ( () otherlv_8= '>=' ) | ( () otherlv_10= '<=' ) | ( () otherlv_12= '&&' ) | ( () otherlv_14= '=>' ) | ( () otherlv_16= '||' ) | ( () otherlv_18= '<' ) )
             	    int alt10=9;
             	    switch ( input.LA(1) ) {
-            	    case 30:
+            	    case 31:
             	        {
             	        alt10=1;
             	        }
             	        break;
-            	    case 31:
+            	    case 32:
             	        {
             	        alt10=2;
             	        }
             	        break;
-            	    case 32:
+            	    case 33:
             	        {
             	        alt10=3;
             	        }
             	        break;
-            	    case 33:
+            	    case 34:
             	        {
             	        alt10=4;
             	        }
             	        break;
-            	    case 34:
+            	    case 35:
             	        {
             	        alt10=5;
             	        }
             	        break;
-            	    case 35:
+            	    case 36:
             	        {
             	        alt10=6;
             	        }
             	        break;
-            	    case 36:
+            	    case 37:
             	        {
             	        alt10=7;
             	        }
             	        break;
-            	    case 37:
+            	    case 38:
             	        {
             	        alt10=8;
             	        }
             	        break;
-            	    case 38:
+            	    case 39:
             	        {
             	        alt10=9;
             	        }
@@ -2507,7 +2508,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_2=(Token)match(input,30,FOLLOW_30_in_ruleComparisonLevel2346); 
+            	            otherlv_2=(Token)match(input,31,FOLLOW_31_in_ruleComparisonLevel2346); 
 
             	                	newLeafNode(otherlv_2, grammarAccess.getComparisonLevelAccess().getEqualsSignEqualsSignKeyword_1_0_0_1());
             	                
@@ -2534,7 +2535,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_4=(Token)match(input,31,FOLLOW_31_in_ruleComparisonLevel2375); 
+            	            otherlv_4=(Token)match(input,32,FOLLOW_32_in_ruleComparisonLevel2375); 
 
             	                	newLeafNode(otherlv_4, grammarAccess.getComparisonLevelAccess().getExclamationMarkEqualsSignKeyword_1_0_1_1());
             	                
@@ -2561,7 +2562,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_6=(Token)match(input,32,FOLLOW_32_in_ruleComparisonLevel2404); 
+            	            otherlv_6=(Token)match(input,33,FOLLOW_33_in_ruleComparisonLevel2404); 
 
             	                	newLeafNode(otherlv_6, grammarAccess.getComparisonLevelAccess().getGreaterThanSignKeyword_1_0_2_1());
             	                
@@ -2588,7 +2589,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_8=(Token)match(input,33,FOLLOW_33_in_ruleComparisonLevel2433); 
+            	            otherlv_8=(Token)match(input,34,FOLLOW_34_in_ruleComparisonLevel2433); 
 
             	                	newLeafNode(otherlv_8, grammarAccess.getComparisonLevelAccess().getGreaterThanSignEqualsSignKeyword_1_0_3_1());
             	                
@@ -2615,7 +2616,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_10=(Token)match(input,34,FOLLOW_34_in_ruleComparisonLevel2462); 
+            	            otherlv_10=(Token)match(input,35,FOLLOW_35_in_ruleComparisonLevel2462); 
 
             	                	newLeafNode(otherlv_10, grammarAccess.getComparisonLevelAccess().getLessThanSignEqualsSignKeyword_1_0_4_1());
             	                
@@ -2642,7 +2643,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_12=(Token)match(input,35,FOLLOW_35_in_ruleComparisonLevel2491); 
+            	            otherlv_12=(Token)match(input,36,FOLLOW_36_in_ruleComparisonLevel2491); 
 
             	                	newLeafNode(otherlv_12, grammarAccess.getComparisonLevelAccess().getAmpersandAmpersandKeyword_1_0_5_1());
             	                
@@ -2669,7 +2670,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_14=(Token)match(input,36,FOLLOW_36_in_ruleComparisonLevel2520); 
+            	            otherlv_14=(Token)match(input,37,FOLLOW_37_in_ruleComparisonLevel2520); 
 
             	                	newLeafNode(otherlv_14, grammarAccess.getComparisonLevelAccess().getEqualsSignGreaterThanSignKeyword_1_0_6_1());
             	                
@@ -2696,7 +2697,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_16=(Token)match(input,37,FOLLOW_37_in_ruleComparisonLevel2549); 
+            	            otherlv_16=(Token)match(input,38,FOLLOW_38_in_ruleComparisonLevel2549); 
 
             	                	newLeafNode(otherlv_16, grammarAccess.getComparisonLevelAccess().getVerticalLineVerticalLineKeyword_1_0_7_1());
             	                
@@ -2723,7 +2724,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_18=(Token)match(input,38,FOLLOW_38_in_ruleComparisonLevel2578); 
+            	            otherlv_18=(Token)match(input,39,FOLLOW_39_in_ruleComparisonLevel2578); 
 
             	                	newLeafNode(otherlv_18, grammarAccess.getComparisonLevelAccess().getLessThanSignKeyword_1_0_8_1());
             	                
@@ -2871,7 +2872,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
                 int alt13=2;
                 int LA13_0 = input.LA(1);
 
-                if ( ((LA13_0>=39 && LA13_0<=40)) ) {
+                if ( ((LA13_0>=40 && LA13_0<=41)) ) {
                     alt13=1;
                 }
 
@@ -2884,10 +2885,10 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             	    int alt12=2;
             	    int LA12_0 = input.LA(1);
 
-            	    if ( (LA12_0==39) ) {
+            	    if ( (LA12_0==40) ) {
             	        alt12=1;
             	    }
-            	    else if ( (LA12_0==40) ) {
+            	    else if ( (LA12_0==41) ) {
             	        alt12=2;
             	    }
             	    else {
@@ -2914,7 +2915,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_2=(Token)match(input,39,FOLLOW_39_in_ruleAdditionLevel2719); 
+            	            otherlv_2=(Token)match(input,40,FOLLOW_40_in_ruleAdditionLevel2719); 
 
             	                	newLeafNode(otherlv_2, grammarAccess.getAdditionLevelAccess().getPlusSignKeyword_1_0_0_1());
             	                
@@ -2941,7 +2942,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_4=(Token)match(input,40,FOLLOW_40_in_ruleAdditionLevel2748); 
+            	            otherlv_4=(Token)match(input,41,FOLLOW_41_in_ruleAdditionLevel2748); 
 
             	                	newLeafNode(otherlv_4, grammarAccess.getAdditionLevelAccess().getHyphenMinusKeyword_1_0_1_1());
             	                
@@ -3089,7 +3090,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
                 int alt15=2;
                 int LA15_0 = input.LA(1);
 
-                if ( (LA15_0==23||LA15_0==41) ) {
+                if ( (LA15_0==24||LA15_0==42) ) {
                     alt15=1;
                 }
 
@@ -3102,10 +3103,10 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             	    int alt14=2;
             	    int LA14_0 = input.LA(1);
 
-            	    if ( (LA14_0==41) ) {
+            	    if ( (LA14_0==42) ) {
             	        alt14=1;
             	    }
-            	    else if ( (LA14_0==23) ) {
+            	    else if ( (LA14_0==24) ) {
             	        alt14=2;
             	    }
             	    else {
@@ -3132,7 +3133,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_2=(Token)match(input,41,FOLLOW_41_in_ruleMultiplicationLevel2889); 
+            	            otherlv_2=(Token)match(input,42,FOLLOW_42_in_ruleMultiplicationLevel2889); 
 
             	                	newLeafNode(otherlv_2, grammarAccess.getMultiplicationLevelAccess().getAsteriskKeyword_1_0_0_1());
             	                
@@ -3159,7 +3160,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_4=(Token)match(input,23,FOLLOW_23_in_ruleMultiplicationLevel2918); 
+            	            otherlv_4=(Token)match(input,24,FOLLOW_24_in_ruleMultiplicationLevel2918); 
 
             	                	newLeafNode(otherlv_4, grammarAccess.getMultiplicationLevelAccess().getSolidusKeyword_1_0_1_1());
             	                
@@ -3291,10 +3292,10 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
             int alt16=2;
             int LA16_0 = input.LA(1);
 
-            if ( (LA16_0==42) ) {
+            if ( (LA16_0==43) ) {
                 alt16=1;
             }
-            else if ( ((LA16_0>=RULE_ID && LA16_0<=RULE_STRING)||LA16_0==16||(LA16_0>=43 && LA16_0<=46)) ) {
+            else if ( ((LA16_0>=RULE_ID && LA16_0<=RULE_STRING)||LA16_0==17||(LA16_0>=44 && LA16_0<=47)) ) {
                 alt16=2;
             }
             else {
@@ -3321,11 +3322,11 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_1=(Token)match(input,42,FOLLOW_42_in_rulePrefixOpLevel3036); 
+                    otherlv_1=(Token)match(input,43,FOLLOW_43_in_rulePrefixOpLevel3036); 
 
                         	newLeafNode(otherlv_1, grammarAccess.getPrefixOpLevelAccess().getExclamationMarkKeyword_0_1());
                         
-                    otherlv_2=(Token)match(input,16,FOLLOW_16_in_rulePrefixOpLevel3048); 
+                    otherlv_2=(Token)match(input,17,FOLLOW_17_in_rulePrefixOpLevel3048); 
 
                         	newLeafNode(otherlv_2, grammarAccess.getPrefixOpLevelAccess().getLeftParenthesisKeyword_0_2());
                         
@@ -3360,7 +3361,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_4=(Token)match(input,17,FOLLOW_17_in_rulePrefixOpLevel3081); 
+                    otherlv_4=(Token)match(input,18,FOLLOW_18_in_rulePrefixOpLevel3081); 
 
                         	newLeafNode(otherlv_4, grammarAccess.getPrefixOpLevelAccess().getRightParenthesisKeyword_0_4());
                         
@@ -3445,7 +3446,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAtomic"
-    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1304:1: ruleAtomic returns [EObject current=null] : ( ( () otherlv_1= 'true' ) | ( () otherlv_3= 'false' ) | ( () otherlv_5= 'widgetcontent' ) | ( () otherlv_7= 'lengthOf' otherlv_8= '(' ( (lv_expr_9_0= ruleExpr ) ) otherlv_10= ')' ) | ( () otherlv_12= '(' ( (lv_expr_13_0= ruleExpr ) ) otherlv_14= ')' ) | ( () ( (lv_value_16_0= RULE_INT ) ) ) | ( () ( (lv_value_18_0= RULE_STRING ) ) ) | ( () ( (otherlv_20= RULE_ID ) ) ) ) ;
+    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1304:1: ruleAtomic returns [EObject current=null] : ( ( () otherlv_1= 'true' ) | ( () otherlv_3= 'false' ) | ( () otherlv_5= 'widgetcontent' ) | ( () otherlv_7= 'lengthOf' otherlv_8= '(' ( (lv_expr_9_0= ruleExpr ) ) otherlv_10= ')' ) | ( () otherlv_12= '(' ( (lv_expr_13_0= ruleExpr ) ) otherlv_14= ')' ) | ( () ( (lv_value_16_0= RULE_DECIMAL_NUMBER ) ) ) | ( () ( (lv_value_18_0= RULE_STRING ) ) ) | ( () ( (otherlv_20= RULE_ID ) ) ) ) ;
     public final EObject ruleAtomic() throws RecognitionException {
         EObject current = null;
 
@@ -3468,38 +3469,38 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1307:28: ( ( ( () otherlv_1= 'true' ) | ( () otherlv_3= 'false' ) | ( () otherlv_5= 'widgetcontent' ) | ( () otherlv_7= 'lengthOf' otherlv_8= '(' ( (lv_expr_9_0= ruleExpr ) ) otherlv_10= ')' ) | ( () otherlv_12= '(' ( (lv_expr_13_0= ruleExpr ) ) otherlv_14= ')' ) | ( () ( (lv_value_16_0= RULE_INT ) ) ) | ( () ( (lv_value_18_0= RULE_STRING ) ) ) | ( () ( (otherlv_20= RULE_ID ) ) ) ) )
-            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1308:1: ( ( () otherlv_1= 'true' ) | ( () otherlv_3= 'false' ) | ( () otherlv_5= 'widgetcontent' ) | ( () otherlv_7= 'lengthOf' otherlv_8= '(' ( (lv_expr_9_0= ruleExpr ) ) otherlv_10= ')' ) | ( () otherlv_12= '(' ( (lv_expr_13_0= ruleExpr ) ) otherlv_14= ')' ) | ( () ( (lv_value_16_0= RULE_INT ) ) ) | ( () ( (lv_value_18_0= RULE_STRING ) ) ) | ( () ( (otherlv_20= RULE_ID ) ) ) )
+            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1307:28: ( ( ( () otherlv_1= 'true' ) | ( () otherlv_3= 'false' ) | ( () otherlv_5= 'widgetcontent' ) | ( () otherlv_7= 'lengthOf' otherlv_8= '(' ( (lv_expr_9_0= ruleExpr ) ) otherlv_10= ')' ) | ( () otherlv_12= '(' ( (lv_expr_13_0= ruleExpr ) ) otherlv_14= ')' ) | ( () ( (lv_value_16_0= RULE_DECIMAL_NUMBER ) ) ) | ( () ( (lv_value_18_0= RULE_STRING ) ) ) | ( () ( (otherlv_20= RULE_ID ) ) ) ) )
+            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1308:1: ( ( () otherlv_1= 'true' ) | ( () otherlv_3= 'false' ) | ( () otherlv_5= 'widgetcontent' ) | ( () otherlv_7= 'lengthOf' otherlv_8= '(' ( (lv_expr_9_0= ruleExpr ) ) otherlv_10= ')' ) | ( () otherlv_12= '(' ( (lv_expr_13_0= ruleExpr ) ) otherlv_14= ')' ) | ( () ( (lv_value_16_0= RULE_DECIMAL_NUMBER ) ) ) | ( () ( (lv_value_18_0= RULE_STRING ) ) ) | ( () ( (otherlv_20= RULE_ID ) ) ) )
             {
-            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1308:1: ( ( () otherlv_1= 'true' ) | ( () otherlv_3= 'false' ) | ( () otherlv_5= 'widgetcontent' ) | ( () otherlv_7= 'lengthOf' otherlv_8= '(' ( (lv_expr_9_0= ruleExpr ) ) otherlv_10= ')' ) | ( () otherlv_12= '(' ( (lv_expr_13_0= ruleExpr ) ) otherlv_14= ')' ) | ( () ( (lv_value_16_0= RULE_INT ) ) ) | ( () ( (lv_value_18_0= RULE_STRING ) ) ) | ( () ( (otherlv_20= RULE_ID ) ) ) )
+            // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1308:1: ( ( () otherlv_1= 'true' ) | ( () otherlv_3= 'false' ) | ( () otherlv_5= 'widgetcontent' ) | ( () otherlv_7= 'lengthOf' otherlv_8= '(' ( (lv_expr_9_0= ruleExpr ) ) otherlv_10= ')' ) | ( () otherlv_12= '(' ( (lv_expr_13_0= ruleExpr ) ) otherlv_14= ')' ) | ( () ( (lv_value_16_0= RULE_DECIMAL_NUMBER ) ) ) | ( () ( (lv_value_18_0= RULE_STRING ) ) ) | ( () ( (otherlv_20= RULE_ID ) ) ) )
             int alt17=8;
             switch ( input.LA(1) ) {
-            case 43:
+            case 44:
                 {
                 alt17=1;
                 }
                 break;
-            case 44:
+            case 45:
                 {
                 alt17=2;
                 }
                 break;
-            case 45:
+            case 46:
                 {
                 alt17=3;
                 }
                 break;
-            case 46:
+            case 47:
                 {
                 alt17=4;
                 }
                 break;
-            case 16:
+            case 17:
                 {
                 alt17=5;
                 }
                 break;
-            case RULE_INT:
+            case RULE_DECIMAL_NUMBER:
                 {
                 alt17=6;
                 }
@@ -3539,7 +3540,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_1=(Token)match(input,43,FOLLOW_43_in_ruleAtomic3202); 
+                    otherlv_1=(Token)match(input,44,FOLLOW_44_in_ruleAtomic3202); 
 
                         	newLeafNode(otherlv_1, grammarAccess.getAtomicAccess().getTrueKeyword_0_1());
                         
@@ -3566,7 +3567,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_3=(Token)match(input,44,FOLLOW_44_in_ruleAtomic3231); 
+                    otherlv_3=(Token)match(input,45,FOLLOW_45_in_ruleAtomic3231); 
 
                         	newLeafNode(otherlv_3, grammarAccess.getAtomicAccess().getFalseKeyword_1_1());
                         
@@ -3593,7 +3594,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_5=(Token)match(input,45,FOLLOW_45_in_ruleAtomic3260); 
+                    otherlv_5=(Token)match(input,46,FOLLOW_46_in_ruleAtomic3260); 
 
                         	newLeafNode(otherlv_5, grammarAccess.getAtomicAccess().getWidgetcontentKeyword_2_1());
                         
@@ -3620,11 +3621,11 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_7=(Token)match(input,46,FOLLOW_46_in_ruleAtomic3289); 
+                    otherlv_7=(Token)match(input,47,FOLLOW_47_in_ruleAtomic3289); 
 
                         	newLeafNode(otherlv_7, grammarAccess.getAtomicAccess().getLengthOfKeyword_3_1());
                         
-                    otherlv_8=(Token)match(input,16,FOLLOW_16_in_ruleAtomic3301); 
+                    otherlv_8=(Token)match(input,17,FOLLOW_17_in_ruleAtomic3301); 
 
                         	newLeafNode(otherlv_8, grammarAccess.getAtomicAccess().getLeftParenthesisKeyword_3_2());
                         
@@ -3659,7 +3660,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_10=(Token)match(input,17,FOLLOW_17_in_ruleAtomic3334); 
+                    otherlv_10=(Token)match(input,18,FOLLOW_18_in_ruleAtomic3334); 
 
                         	newLeafNode(otherlv_10, grammarAccess.getAtomicAccess().getRightParenthesisKeyword_3_4());
                         
@@ -3686,7 +3687,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_12=(Token)match(input,16,FOLLOW_16_in_ruleAtomic3363); 
+                    otherlv_12=(Token)match(input,17,FOLLOW_17_in_ruleAtomic3363); 
 
                         	newLeafNode(otherlv_12, grammarAccess.getAtomicAccess().getLeftParenthesisKeyword_4_1());
                         
@@ -3721,7 +3722,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_14=(Token)match(input,17,FOLLOW_17_in_ruleAtomic3396); 
+                    otherlv_14=(Token)match(input,18,FOLLOW_18_in_ruleAtomic3396); 
 
                         	newLeafNode(otherlv_14, grammarAccess.getAtomicAccess().getRightParenthesisKeyword_4_3());
                         
@@ -3732,10 +3733,10 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1411:6: ( () ( (lv_value_16_0= RULE_INT ) ) )
+                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1411:6: ( () ( (lv_value_16_0= RULE_DECIMAL_NUMBER ) ) )
                     {
-                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1411:6: ( () ( (lv_value_16_0= RULE_INT ) ) )
-                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1411:7: () ( (lv_value_16_0= RULE_INT ) )
+                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1411:6: ( () ( (lv_value_16_0= RULE_DECIMAL_NUMBER ) ) )
+                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1411:7: () ( (lv_value_16_0= RULE_DECIMAL_NUMBER ) )
                     {
                     // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1411:7: ()
                     // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1412:5: 
@@ -3748,15 +3749,15 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1417:2: ( (lv_value_16_0= RULE_INT ) )
-                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1418:1: (lv_value_16_0= RULE_INT )
+                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1417:2: ( (lv_value_16_0= RULE_DECIMAL_NUMBER ) )
+                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1418:1: (lv_value_16_0= RULE_DECIMAL_NUMBER )
                     {
-                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1418:1: (lv_value_16_0= RULE_INT )
-                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1419:3: lv_value_16_0= RULE_INT
+                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1418:1: (lv_value_16_0= RULE_DECIMAL_NUMBER )
+                    // ../org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/parser/antlr/internal/InternalGuiDsl.g:1419:3: lv_value_16_0= RULE_DECIMAL_NUMBER
                     {
-                    lv_value_16_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleAtomic3430); 
+                    lv_value_16_0=(Token)match(input,RULE_DECIMAL_NUMBER,FOLLOW_RULE_DECIMAL_NUMBER_in_ruleAtomic3430); 
 
-                    			newLeafNode(lv_value_16_0, grammarAccess.getAtomicAccess().getValueINTTerminalRuleCall_5_1_0()); 
+                    			newLeafNode(lv_value_16_0, grammarAccess.getAtomicAccess().getValueDECIMAL_NUMBERTerminalRuleCall_5_1_0()); 
                     		
 
                     	        if (current==null) {
@@ -3766,7 +3767,7 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
                            			current, 
                            			"value",
                             		lv_value_16_0, 
-                            		"INT");
+                            		"DECIMAL_NUMBER");
                     	    
 
                     }
@@ -3899,64 +3900,64 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
 
     public static final BitSet FOLLOW_ruleModel_in_entryRuleModel75 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleModel85 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEntity_in_ruleModel131 = new BitSet(new long[]{0x0000000000400802L});
-    public static final BitSet FOLLOW_ruleForm_in_ruleModel158 = new BitSet(new long[]{0x0000000000400802L});
+    public static final BitSet FOLLOW_ruleEntity_in_ruleModel131 = new BitSet(new long[]{0x0000000000801002L});
+    public static final BitSet FOLLOW_ruleForm_in_ruleModel158 = new BitSet(new long[]{0x0000000000801002L});
     public static final BitSet FOLLOW_ruleForm_in_entryRuleForm195 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleForm205 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_11_in_ruleForm242 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleForm259 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleForm276 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleForm296 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_ruleForm308 = new BitSet(new long[]{0x000000000020C000L});
-    public static final BitSet FOLLOW_ruleWidget_in_ruleForm329 = new BitSet(new long[]{0x000000000020C000L});
-    public static final BitSet FOLLOW_14_in_ruleForm342 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_12_in_ruleForm242 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleForm259 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_13_in_ruleForm276 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleForm296 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_ruleForm308 = new BitSet(new long[]{0x0000000000418000L});
+    public static final BitSet FOLLOW_ruleWidget_in_ruleForm329 = new BitSet(new long[]{0x0000000000418000L});
+    public static final BitSet FOLLOW_15_in_ruleForm342 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleWidget_in_entryRuleWidget378 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleWidget388 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleTextWidget_in_ruleWidget435 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleCheckBoxWidget_in_ruleWidget462 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleTextWidget_in_entryRuleTextWidget497 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleTextWidget507 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_ruleTextWidget544 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_ruleTextWidget556 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleTextWidget573 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_ruleTextWidget590 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_ruleTextWidget602 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleTextWidget622 = new BitSet(new long[]{0x0000000000180000L});
-    public static final BitSet FOLLOW_19_in_ruleTextWidget635 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_ruleExpr_in_ruleTextWidget656 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_ruleTextWidget670 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_ruleTextWidget544 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_ruleTextWidget556 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_DECIMAL_NUMBER_in_ruleTextWidget573 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_ruleTextWidget590 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_19_in_ruleTextWidget602 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleTextWidget622 = new BitSet(new long[]{0x0000000000300000L});
+    public static final BitSet FOLLOW_20_in_ruleTextWidget635 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_ruleExpr_in_ruleTextWidget656 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_ruleTextWidget670 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleCheckBoxWidget_in_entryRuleCheckBoxWidget706 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleCheckBoxWidget716 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_21_in_ruleCheckBoxWidget753 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_ruleCheckBoxWidget765 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleCheckBoxWidget785 = new BitSet(new long[]{0x0000000000180000L});
-    public static final BitSet FOLLOW_19_in_ruleCheckBoxWidget798 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_ruleExpr_in_ruleCheckBoxWidget819 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_ruleCheckBoxWidget833 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_22_in_ruleCheckBoxWidget753 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_19_in_ruleCheckBoxWidget765 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleCheckBoxWidget785 = new BitSet(new long[]{0x0000000000300000L});
+    public static final BitSet FOLLOW_20_in_ruleCheckBoxWidget798 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_ruleExpr_in_ruleCheckBoxWidget819 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_ruleCheckBoxWidget833 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleEntity_in_entryRuleEntity869 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleEntity879 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_22_in_ruleEntity916 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleEntity933 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_ruleEntity950 = new BitSet(new long[]{0x0000000000804010L});
-    public static final BitSet FOLLOW_ruleAttribute_in_ruleEntity971 = new BitSet(new long[]{0x0000000000804010L});
-    public static final BitSet FOLLOW_14_in_ruleEntity984 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_23_in_ruleEntity916 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleEntity933 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_ruleEntity950 = new BitSet(new long[]{0x0000000001008010L});
+    public static final BitSet FOLLOW_ruleAttribute_in_ruleEntity971 = new BitSet(new long[]{0x0000000001008010L});
+    public static final BitSet FOLLOW_15_in_ruleEntity984 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAttribute_in_entryRuleAttribute1020 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAttribute1030 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSimpleAttribute_in_ruleAttribute1077 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDerivedAttribute_in_ruleAttribute1104 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDerivedAttribute_in_entryRuleDerivedAttribute1139 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleDerivedAttribute1149 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_ruleDerivedAttribute1186 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleDerivedAttribute1203 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_ruleDerivedAttribute1220 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_ruleExpr_in_ruleDerivedAttribute1241 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_ruleDerivedAttribute1253 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_24_in_ruleDerivedAttribute1186 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleDerivedAttribute1203 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_25_in_ruleDerivedAttribute1220 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_ruleExpr_in_ruleDerivedAttribute1241 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_ruleDerivedAttribute1253 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSimpleAttribute_in_entryRuleSimpleAttribute1289 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleSimpleAttribute1299 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleSimpleAttribute1341 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_25_in_ruleSimpleAttribute1358 = new BitSet(new long[]{0x000000003C000010L});
-    public static final BitSet FOLLOW_ruleType_in_ruleSimpleAttribute1379 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_ruleSimpleAttribute1391 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleSimpleAttribute1341 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_26_in_ruleSimpleAttribute1358 = new BitSet(new long[]{0x0000000078000010L});
+    public static final BitSet FOLLOW_ruleType_in_ruleSimpleAttribute1379 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_21_in_ruleSimpleAttribute1391 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleType_in_entryRuleType1427 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleType1437 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePrimitiveType_in_ruleType1484 = new BitSet(new long[]{0x0000000000000002L});
@@ -3972,64 +3973,64 @@ public class InternalGuiDslParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleStringType_in_rulePrimitiveType1773 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleFloatType_in_entryRuleFloatType1808 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleFloatType1818 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_26_in_ruleFloatType1864 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_ruleFloatType1864 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleIntType_in_entryRuleIntType1900 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleIntType1910 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_ruleIntType1956 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_ruleIntType1956 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleBooleanType_in_entryRuleBooleanType1992 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleBooleanType2002 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_28_in_ruleBooleanType2048 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_ruleBooleanType2048 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStringType_in_entryRuleStringType2084 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleStringType2094 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_ruleStringType2140 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_ruleStringType2140 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpr_in_entryRuleExpr2176 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleExpr2186 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleComparisonLevel_in_ruleExpr2232 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleComparisonLevel_in_entryRuleComparisonLevel2266 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleComparisonLevel2276 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAdditionLevel_in_ruleComparisonLevel2323 = new BitSet(new long[]{0x0000007FC0000002L});
-    public static final BitSet FOLLOW_30_in_ruleComparisonLevel2346 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_31_in_ruleComparisonLevel2375 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_32_in_ruleComparisonLevel2404 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_33_in_ruleComparisonLevel2433 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_34_in_ruleComparisonLevel2462 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_35_in_ruleComparisonLevel2491 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_36_in_ruleComparisonLevel2520 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_37_in_ruleComparisonLevel2549 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_38_in_ruleComparisonLevel2578 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_ruleAdditionLevel_in_ruleComparisonLevel2601 = new BitSet(new long[]{0x0000007FC0000002L});
+    public static final BitSet FOLLOW_ruleAdditionLevel_in_ruleComparisonLevel2323 = new BitSet(new long[]{0x000000FF80000002L});
+    public static final BitSet FOLLOW_31_in_ruleComparisonLevel2346 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_32_in_ruleComparisonLevel2375 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_33_in_ruleComparisonLevel2404 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_34_in_ruleComparisonLevel2433 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_35_in_ruleComparisonLevel2462 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_36_in_ruleComparisonLevel2491 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_37_in_ruleComparisonLevel2520 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_38_in_ruleComparisonLevel2549 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_39_in_ruleComparisonLevel2578 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_ruleAdditionLevel_in_ruleComparisonLevel2601 = new BitSet(new long[]{0x000000FF80000002L});
     public static final BitSet FOLLOW_ruleAdditionLevel_in_entryRuleAdditionLevel2639 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAdditionLevel2649 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMultiplicationLevel_in_ruleAdditionLevel2696 = new BitSet(new long[]{0x0000018000000002L});
-    public static final BitSet FOLLOW_39_in_ruleAdditionLevel2719 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_40_in_ruleAdditionLevel2748 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_ruleMultiplicationLevel_in_ruleAdditionLevel2771 = new BitSet(new long[]{0x0000018000000002L});
+    public static final BitSet FOLLOW_ruleMultiplicationLevel_in_ruleAdditionLevel2696 = new BitSet(new long[]{0x0000030000000002L});
+    public static final BitSet FOLLOW_40_in_ruleAdditionLevel2719 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_41_in_ruleAdditionLevel2748 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_ruleMultiplicationLevel_in_ruleAdditionLevel2771 = new BitSet(new long[]{0x0000030000000002L});
     public static final BitSet FOLLOW_ruleMultiplicationLevel_in_entryRuleMultiplicationLevel2809 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleMultiplicationLevel2819 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePrefixOpLevel_in_ruleMultiplicationLevel2866 = new BitSet(new long[]{0x0000020000800002L});
-    public static final BitSet FOLLOW_41_in_ruleMultiplicationLevel2889 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_23_in_ruleMultiplicationLevel2918 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_rulePrefixOpLevel_in_ruleMultiplicationLevel2941 = new BitSet(new long[]{0x0000020000800002L});
+    public static final BitSet FOLLOW_rulePrefixOpLevel_in_ruleMultiplicationLevel2866 = new BitSet(new long[]{0x0000040001000002L});
+    public static final BitSet FOLLOW_42_in_ruleMultiplicationLevel2889 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_24_in_ruleMultiplicationLevel2918 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_rulePrefixOpLevel_in_ruleMultiplicationLevel2941 = new BitSet(new long[]{0x0000040001000002L});
     public static final BitSet FOLLOW_rulePrefixOpLevel_in_entryRulePrefixOpLevel2979 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRulePrefixOpLevel2989 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_rulePrefixOpLevel3036 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_rulePrefixOpLevel3048 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_ruleExpr_in_rulePrefixOpLevel3069 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_rulePrefixOpLevel3081 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_43_in_rulePrefixOpLevel3036 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_rulePrefixOpLevel3048 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_ruleExpr_in_rulePrefixOpLevel3069 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_rulePrefixOpLevel3081 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAtomic_in_rulePrefixOpLevel3110 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAtomic_in_entryRuleAtomic3145 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAtomic3155 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_43_in_ruleAtomic3202 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_44_in_ruleAtomic3231 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_45_in_ruleAtomic3260 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_ruleAtomic3289 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_ruleAtomic3301 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_ruleExpr_in_ruleAtomic3322 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_ruleAtomic3334 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_ruleAtomic3363 = new BitSet(new long[]{0x00007C0000010070L});
-    public static final BitSet FOLLOW_ruleExpr_in_ruleAtomic3384 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_ruleAtomic3396 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleAtomic3430 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_44_in_ruleAtomic3202 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_45_in_ruleAtomic3231 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_ruleAtomic3260 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_ruleAtomic3289 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_ruleAtomic3301 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_ruleExpr_in_ruleAtomic3322 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_ruleAtomic3334 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_ruleAtomic3363 = new BitSet(new long[]{0x0000F80000020070L});
+    public static final BitSet FOLLOW_ruleExpr_in_ruleAtomic3384 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_ruleAtomic3396 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_DECIMAL_NUMBER_in_ruleAtomic3430 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleAtomic3469 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleAtomic3511 = new BitSet(new long[]{0x0000000000000002L});
 

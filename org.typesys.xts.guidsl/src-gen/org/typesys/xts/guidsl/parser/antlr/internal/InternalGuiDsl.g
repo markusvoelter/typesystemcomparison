@@ -271,9 +271,9 @@ ruleTextWidget returns [EObject current=null]
     }
 (
 (
-		lv_length_2_0=RULE_INT
+		lv_length_2_0=RULE_DECIMAL_NUMBER
 		{
-			newLeafNode(lv_length_2_0, grammarAccess.getTextWidgetAccess().getLengthINTTerminalRuleCall_2_0()); 
+			newLeafNode(lv_length_2_0, grammarAccess.getTextWidgetAccess().getLengthDECIMAL_NUMBERTerminalRuleCall_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -283,7 +283,7 @@ ruleTextWidget returns [EObject current=null]
        			$current, 
        			"length",
         		lv_length_2_0, 
-        		"INT");
+        		"DECIMAL_NUMBER");
 	    }
 
 )
@@ -1416,9 +1416,9 @@ ruleAtomic returns [EObject current=null]
     }
 )(
 (
-		lv_value_16_0=RULE_INT
+		lv_value_16_0=RULE_DECIMAL_NUMBER
 		{
-			newLeafNode(lv_value_16_0, grammarAccess.getAtomicAccess().getValueINTTerminalRuleCall_5_1_0()); 
+			newLeafNode(lv_value_16_0, grammarAccess.getAtomicAccess().getValueDECIMAL_NUMBERTerminalRuleCall_5_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1428,7 +1428,7 @@ ruleAtomic returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_16_0, 
-        		"INT");
+        		"DECIMAL_NUMBER");
 	    }
 
 )
@@ -1484,9 +1484,11 @@ ruleAtomic returns [EObject current=null]
 
 
 
-RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
+RULE_DECIMAL_NUMBER : '-'? ('0'..'9')* ('.' ('0'..'9')+)?;
 
-RULE_INT : ('0'..'9')+;
+RULE_INT : 'this one has been deactivated';
+
+RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 

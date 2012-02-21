@@ -3,9 +3,18 @@
  */
 package org.typesys.xts.guidsl;
 
+import org.typesys.xts.guidsl.typesys.GuiDlsTypesystem;
+
+import de.itemis.xtext.typesystem.ITypesystem;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class GuiDslRuntimeModule extends org.typesys.xts.guidsl.AbstractGuiDslRuntimeModule {
 
+	
+	public Class<? extends ITypesystem> bindITypestem() {
+		return GuiDlsTypesystem.class;
+	}
+	
 }

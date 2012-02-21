@@ -6,6 +6,8 @@
  */
 package org.typesys.xts.guidsl.guiDsl.impl;
 
+import java.math.BigDecimal;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
@@ -38,7 +40,7 @@ public class NumberLiteralImpl extends ExpressionImpl implements NumberLiteral
    * @generated
    * @ordered
    */
-  protected static final int VALUE_EDEFAULT = 0;
+  protected static final BigDecimal VALUE_EDEFAULT = null;
 
   /**
    * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
@@ -48,7 +50,7 @@ public class NumberLiteralImpl extends ExpressionImpl implements NumberLiteral
    * @generated
    * @ordered
    */
-  protected int value = VALUE_EDEFAULT;
+  protected BigDecimal value = VALUE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -76,7 +78,7 @@ public class NumberLiteralImpl extends ExpressionImpl implements NumberLiteral
    * <!-- end-user-doc -->
    * @generated
    */
-  public int getValue()
+  public BigDecimal getValue()
   {
     return value;
   }
@@ -86,9 +88,9 @@ public class NumberLiteralImpl extends ExpressionImpl implements NumberLiteral
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setValue(int newValue)
+  public void setValue(BigDecimal newValue)
   {
-    int oldValue = value;
+    BigDecimal oldValue = value;
     value = newValue;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, GuiDslPackage.NUMBER_LITERAL__VALUE, oldValue, value));
@@ -121,7 +123,7 @@ public class NumberLiteralImpl extends ExpressionImpl implements NumberLiteral
     switch (featureID)
     {
       case GuiDslPackage.NUMBER_LITERAL__VALUE:
-        setValue((Integer)newValue);
+        setValue((BigDecimal)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -155,7 +157,7 @@ public class NumberLiteralImpl extends ExpressionImpl implements NumberLiteral
     switch (featureID)
     {
       case GuiDslPackage.NUMBER_LITERAL__VALUE:
-        return value != VALUE_EDEFAULT;
+        return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
     }
     return super.eIsSet(featureID);
   }
