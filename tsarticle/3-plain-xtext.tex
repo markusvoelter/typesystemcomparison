@@ -1,0 +1,9 @@
+\section{Plain Xtext}
+
+To fulfill the demonstration tasks, an Xtext validator is implemented which calls a type provider. The validation method for the second task is shown in listing \ref{lst:validation-plain}. A type provider is used infer the type of the attribute (which could be complicated, as it might be an expression for a derived attribute) and checks whether it is boolean. If that is the case, it issues an error message which marks the validation clause of the widget.
+
+\lstinputlisting[label=lst:validation-plain,caption=Xtext validator.,linerange={27-35}]{../org.typesys.guidsl/src/org/typesys/guidsl/validation/GuiDslJavaValidator.java}
+
+Implementing the type provider manually is a tedious task, even when using Xtend 2 with polymorphic dispatch and syntactic sugar to make the code less cluttered. Listing \ref{lst:type-provider-plain} shows parts of it: The type of a primitive type is the type itself, the type of a simple attribute is the type of its type. Apart from that, methods for inferring the types for the different operations have to be implemented.
+
+\lstinputlisting[label=lst:type-provider-plain,caption=Manually implemented type provider (extract from Xtend class).,linerange={14-15,24-50}]{../org.typesys.guidsl/src/org/typesys/guidsl/types/GuiDslTypeProvider.xtend}
