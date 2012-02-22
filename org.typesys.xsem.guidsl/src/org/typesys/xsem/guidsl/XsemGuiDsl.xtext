@@ -23,11 +23,11 @@ Widget:
 ;
 
 TextWidget:
-	"text" "(" length=DECIMAL_NUMBER ")" "->" attr=[Attribute] ("validate" validate=Expr)? ";"
+	"text" "(" length=DECIMAL_NUMBER ")" "->" attr=[Attribute] ("validate" validate=Expression)? ";"
 ;
 
 CheckBoxWidget:
-	"checkbox" "->" attr=[Attribute] ("validate" validate=Expr)? ";"
+	"checkbox" "->" attr=[Attribute] ("validate" validate=Expression)? ";"
 ;
 
 /*
@@ -45,7 +45,7 @@ Attribute:
 ;
 
 DerivedAttribute:
-	"/" name=ID "=" expr=Expr ";"
+	"/" name=ID "=" expr=Expression ";"
 ;
 
 SimpleAttribute:
@@ -85,44 +85,34 @@ StringType:
  * Expressions, used in DSL form and widget
  */
 
-Expr:
-	ComparisonLevel;
+Expression:
+	Addition;
 
-ComparisonLevel returns Expression:
-	AdditionLevel ((({Equals.left=current} "==") |
-					({Unequals.left=current} "!=") |
-					({Greater.left=current} ">") |
-					({GreaterEquals.left=current} ">=") |
-					({SmallerEquals.left=current} "<=") |
-					({LogicalAnd.left=current} "&&") |
-					({Implies.left=current} "=>") |
-					({LogicalOr.left=current} "||") |
-					({Smaller.left=current} "<"))
-											right=AdditionLevel)*;
-AdditionLevel returns Expression:
-	MultiplicationLevel ((({Plus.left=current} "+") |
-					     ({Minus.left=current} "-")) right=MultiplicationLevel)*;
+Addition returns Expression:
+	Multiplication (({Plus.left=current} '+' | {Minus.left=current} '-') right=Multiplication)*;
 
-MultiplicationLevel returns Expression:
-	PrefixOpLevel ((({Multi.left=current} "*") |
-					({Div.left=current} "/")) right=PrefixOpLevel)*;
+Multiplication returns Expression:
+	Comparison (({MultiOrDiv.left=current} op=("*"|"/")) right=Comparison)*; 
 
-PrefixOpLevel returns Expression:
-	({NotExpression} "!" "(" expr=Expr ")") |
-	Atomic;
+Comparison returns Expression:
+	BooleanExpression 
+	(({Comparison.left=current} 
+		op=(">="|"<="|"<"|">"|"=="|"!=")
+	) right=BooleanExpression)*;
+
+BooleanExpression returns Expression:
+	Atomic (({AndOrExpression.left=current} op=("||"|"&&")) right=Atomic)*;
 
 Atomic returns Expression:
-	BooleanLiteral |
+	'(' Expression ')' |
+	{BooleanNegation} =>"!" expression=Atomic | /* right associativity */
+	{ArithmeticSigned} =>"-" expression=Atomic | /* right associativity */
 	({FieldContent} "widgetcontent") |
-	({lenghtOf} "lengthOf" "(" expr=Expr ")" ) |
-	({ParenExpr} "(" expr=Expr ")") |
+	({lenghtOf} "lengthOf" "(" expr=Expression ")" ) |
+	({BooleanLiteral} value=("true"|"false")) |
 	({NumberLiteral} value=DECIMAL_NUMBER) |
 	({StringLiteral} value=STRING) |
-	({AttributeRef} attr=[Attribute|ID]);
-
-BooleanLiteral :
-	({TrueExpr} "true") |
-	({FalseExpr} "false")
+	({AttributeRef} attr=[Attribute|ID])
 ;
 
 terminal DECIMAL_NUMBER returns ecore::EBigDecimal:

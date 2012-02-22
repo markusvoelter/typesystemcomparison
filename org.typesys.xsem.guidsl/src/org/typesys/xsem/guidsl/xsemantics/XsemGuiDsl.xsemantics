@@ -4,7 +4,7 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.*
 
 judgments {
 	attrtype ||- Attribute attribute : output Type
-	exprtype |- Expr expression : output Type
+	exprtype |- Expression expression : output Type
 }
 
 axiom SimpleAttributeType

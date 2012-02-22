@@ -11,7 +11,7 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.Attribute;
 import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanLiteral;
 import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.DerivedAttribute;
-import org.typesys.xsem.guidsl.xsemGuiDsl.Expr;
+import org.typesys.xsem.guidsl.xsemGuiDsl.Expression;
 import org.typesys.xsem.guidsl.xsemGuiDsl.FloatType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.NumberLiteral;
 import org.typesys.xsem.guidsl.xsemGuiDsl.SimpleAttribute;
@@ -56,13 +56,13 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		}
 	}
 	
-	public Result<Type> exprtype(final Expr expression) {
+	public Result<Type> exprtype(final Expression expression) {
 		return exprtype(new RuleEnvironment(),
 			null, expression);
 	}
 	
 	public Result<Type> exprtype(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
-			final Expr expression) {
+			final Expression expression) {
 		try {
 			return exprtypeInternal(_environment_, _trace_, expression);
 		} catch (Exception e) {
@@ -83,7 +83,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	}
 	
 	protected Result<Type> exprtypeInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
-			final Expr expression) {
+			final Expression expression) {
 		try {
 			checkParamsNotNull(expression);
 			return exprtypeDispatcher.invoke(_environment_, _trace_, expression);
@@ -141,7 +141,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		Type attrType = null;
 		
 		/* G |- attr.expr : attrType */
-		Expr _expr = attr.getExpr();
+		Expression _expr = attr.getExpr();
 		Result<Type> result = exprtypeInternal(G, _trace_, _expr);
 		checkAssignableTo(result.getFirst(), Type.class);
 		attrType = (Type) result.getFirst();
