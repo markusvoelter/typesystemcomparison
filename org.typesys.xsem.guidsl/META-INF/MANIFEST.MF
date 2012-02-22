@@ -18,7 +18,7 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0";visibility:=reexport,
  org.eclipse.emf.common,
  org.antlr.runtime,
  org.eclipse.xtext.common.types,
- it.xsemantics.runtime;bundle-version="1.0.0"
+ it.xsemantics.runtime;visibility:=reexport
 Import-Package: org.apache.log4j,
  org.apache.commons.logging,
  org.eclipse.xtext.xbase.lib,
@@ -38,3 +38,4 @@ Export-Package: org.typesys.xsem.guidsl,
  org.typesys.xsem.guidsl.xsemGuiDsl.util,
  org.typesys.xsem.guidsl.xsemantics,
  org.typesys.xsem.guidsl.xsemantics.validation
+
