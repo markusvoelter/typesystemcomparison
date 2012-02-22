@@ -1,4 +1,4 @@
-entity PersonX {
+entity PersonY {
 	name      : String;
 	firstName : String;
 	age       : int; 
@@ -8,11 +8,6 @@ entity PersonX {
 	/greeting = "Hello " + firstName + " " + name;
 }
 
-entity House {
-	floors : int; 
-	street : String;
-}
-
-form PersonFormValidate edits PersonX {
+form PersonYFormValidate edits PersonY {
 	 text(20) -> name validate name.length > 2 ;
 }

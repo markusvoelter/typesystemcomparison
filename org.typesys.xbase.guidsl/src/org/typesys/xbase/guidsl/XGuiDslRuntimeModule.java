@@ -3,7 +3,9 @@
  */
 package org.typesys.xbase.guidsl;
 
+import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
 import org.typesys.xbase.guidsl.scoping.XGuiDslScopeProviderXbase;
+import org.typesys.xbase.guidsl.services.XGuiNameProvider;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
@@ -13,5 +15,10 @@ public class XGuiDslRuntimeModule extends org.typesys.xbase.guidsl.AbstractXGuiD
 	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
 		return XGuiDslScopeProviderXbase.class;
 	}
+	
+	public Class<? extends DefaultDeclarativeQualifiedNameProvider> bindNameProvider() {
+		return XGuiNameProvider.class;
+	}
+	
 
 }

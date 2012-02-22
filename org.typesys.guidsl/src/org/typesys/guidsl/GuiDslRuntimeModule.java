@@ -3,9 +3,16 @@
  */
 package org.typesys.guidsl;
 
+import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
+import org.typesys.guidsl.services.GuiDslNameProvider;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class GuiDslRuntimeModule extends org.typesys.guidsl.AbstractGuiDslRuntimeModule {
 
+	public Class<? extends DefaultDeclarativeQualifiedNameProvider> bindNameProvider() {
+		return GuiDslNameProvider.class;
+	}
+	
 }

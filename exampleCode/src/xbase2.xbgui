@@ -1,0 +1,12 @@
+form PersonForm edits PersonX {
+	text (12) -> firstName validate firstName; 
+	checkbox -> weight;
+	checkbox -> likesCake;
+}  
+
+form PersonFormWithErrors edits PersonX {
+    text(10) -> name validate this; 
+	text(10) -> isAdult;
+	checkbox -> firstName;
+}
+

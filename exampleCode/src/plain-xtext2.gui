@@ -1,29 +1,31 @@
-entity Person {
+entity Person2 {
 	name      : string;
 	firstName : string;
 	age       : int; 
 	weight    : float;
 	likesCake : bool; 
+	/derivedSimple = likesCake;
 	/isAdult = age > 18;
 	/greeting = "Hello " + firstName + " " + name;
 }
 
-form PersonForm edits Person {
+form PersonForm2 edits Person2 {
 	text (10) -> name validate lengthOf(widgetcontent) < 10;
 	text (20) -> firstName;
 	text (5) -> age;
 	checkbox -> isAdult validate age > 18 => widgetcontent == true;
 }
 
-form PersonGreeting edits Person {
+form PersonGreeting2 edits Person2 {
 	text(20) -> firstName;
     text(20) -> greeting;
 }
 
-form PersonFormWithErrors edits Person {
+form PersonFormWithErrors edits Person2 {
 	text(10) -> name validate firstName; 
 	text(10) -> isAdult;
 	text(20) -> likesCake;
 	checkbox -> firstName;
-	checkbox -> greeting validate likesCake;
+	checkbox -> greeting validate derivedSimple;
+	checkbox -> greeting validate derivedSimple;
 }
