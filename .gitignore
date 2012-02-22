@@ -9,3 +9,10 @@ lit.bib.bak
 *.bbl
 *.blg
 *.log
+*.class
+bin/
+*~
+logs.zip
+*.orig
+xtend-gen/
+

@@ -1,0 +1,26 @@
+system org.typesys.xsem.guidsl.xsemantics.TypeSystem
+
+import org.typesys.xsem.guidsl.xsemGuiDsl.*
+
+judgments {
+	attrtype ||- Attribute attribute : output Type
+	exprtype |- Expression expression : output Type
+}
+
+axiom SimpleAttributeType
+	G ||- SimpleAttribute attr : attr.type
+
+rule DerivedAttributeType
+	G ||- DerivedAttribute attr : Type attrType
+from {
+	G |- attr.expr : attrType
+}
+
+axiom BooleanLiteralType
+	G |- BooleanLiteral lit : XsemGuiDslFactory::eINSTANCE.createBooleanType
+
+axiom StringLiteralType
+	G |- StringLiteral lit : XsemGuiDslFactory::eINSTANCE.createStringType
+
+axiom NumberLiteralType
+	G |- NumberLiteral lit : XsemGuiDslFactory::eINSTANCE.createFloatType

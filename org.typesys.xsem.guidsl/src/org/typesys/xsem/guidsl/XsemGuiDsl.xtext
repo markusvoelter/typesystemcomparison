@@ -1,0 +1,122 @@
+grammar org.typesys.xsem.guidsl.XsemGuiDsl with org.eclipse.xtext.common.Terminals
+
+generate xsemGuiDsl "http://www.typesys.org/xsem/guidsl/XsemGuiDsl"
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore	
+
+Model:
+	(entities+=Entity | 
+	 forms+=Form )*;
+
+/*
+ * Form and Widgets 
+ */
+
+Form:
+	"form" name=ID "edits" entity=[Entity] "{"	
+		(widgets+=Widget)*
+	"}"
+;
+
+Widget:
+	TextWidget | CheckBoxWidget 
+;
+
+TextWidget:
+	"text" "(" length=DECIMAL_NUMBER ")" "->" attr=[Attribute] ("validate" validate=Expression)? ";"
+;
+
+CheckBoxWidget:
+	"checkbox" "->" attr=[Attribute] ("validate" validate=Expression)? ";"
+;
+
+/*
+ * Entities and types to be referred by forms
+ */
+
+Entity:
+	"entity" name=ID "{"
+		(attributes+=Attribute)*
+	"}"
+;
+
+Attribute:
+	SimpleAttribute | DerivedAttribute
+;
+
+DerivedAttribute:
+	"/" name=ID "=" expr=Expression ";"
+;
+
+SimpleAttribute:
+	name=ID ":" type=Type ";"
+;
+
+Type:
+	PrimitiveType | EntityType
+;
+
+EntityType:
+	ref=[Entity]
+;
+
+
+PrimitiveType:
+	IntType | FloatType| BooleanType | StringType
+;
+
+FloatType:
+	{FloatType} "float"
+;
+
+IntType:
+	{IntType} "int"
+;
+
+BooleanType:
+	{BooleanType} "bool"
+;
+
+StringType:
+	{StringType} "string"
+;
+
+/*
+ * Expressions, used in DSL form and widget
+ */
+
+Expression:
+	Addition;
+
+Addition returns Expression:
+	Multiplication (({Plus.left=current} '+' | {Minus.left=current} '-') right=Multiplication)*;
+
+Multiplication returns Expression:
+	Comparison (({MultiOrDiv.left=current} op=("*"|"/")) right=Comparison)*; 
+
+Comparison returns Expression:
+	BooleanExpression 
+	(({Comparison.left=current} 
+		op=(">="|"<="|"<"|">"|"=="|"!=")
+	) right=BooleanExpression)*;
+
+BooleanExpression returns Expression:
+	Atomic (({AndOrExpression.left=current} op=("||"|"&&")) right=Atomic)*;
+
+Atomic returns Expression:
+	'(' Expression ')' |
+	{BooleanNegation} =>"!" expression=Atomic | /* right associativity */
+	{ArithmeticSigned} =>"-" expression=Atomic | /* right associativity */
+	({FieldContent} "widgetcontent") |
+	({lenghtOf} "lengthOf" "(" expr=Expression ")" ) |
+	({BooleanLiteral} value=("true"|"false")) |
+	({NumberLiteral} value=DECIMAL_NUMBER) |
+	({StringLiteral} value=STRING) |
+	({AttributeRef} attr=[Attribute|ID])
+;
+
+terminal DECIMAL_NUMBER returns ecore::EBigDecimal:
+	("-")? ('0'..'9')* ('.' ('0'..'9')+)?;
+
+terminal INT returns ecore::EInt:
+	'this one has been deactivated';
