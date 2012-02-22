@@ -17,21 +17,24 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0";visibility:=reexport,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- org.eclipse.xtext.common.types
+ org.eclipse.xtext.common.types,
+ it.xsemantics.runtime;bundle-version="1.0.0"
 Import-Package: org.apache.log4j,
  org.apache.commons.logging,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend2.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.typesys.xsem.guidsl,
+ org.typesys.xsem.guidsl.formatting,
+ org.typesys.xsem.guidsl.generator,
+ org.typesys.xsem.guidsl.parser.antlr,
+ org.typesys.xsem.guidsl.parser.antlr.internal,
+ org.typesys.xsem.guidsl.scoping,
+ org.typesys.xsem.guidsl.serializer,
  org.typesys.xsem.guidsl.services,
+ org.typesys.xsem.guidsl.validation,
  org.typesys.xsem.guidsl.xsemGuiDsl,
  org.typesys.xsem.guidsl.xsemGuiDsl.impl,
  org.typesys.xsem.guidsl.xsemGuiDsl.util,
- org.typesys.xsem.guidsl.serializer,
- org.typesys.xsem.guidsl.parser.antlr,
- org.typesys.xsem.guidsl.parser.antlr.internal,
- org.typesys.xsem.guidsl.validation,
- org.typesys.xsem.guidsl.scoping,
- org.typesys.xsem.guidsl.generator,
- org.typesys.xsem.guidsl.formatting
+ org.typesys.xsem.guidsl.xsemantics,
+ org.typesys.xsem.guidsl.xsemantics.validation
