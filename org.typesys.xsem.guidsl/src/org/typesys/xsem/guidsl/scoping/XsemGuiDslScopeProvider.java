@@ -3,15 +3,27 @@
  */
 package org.typesys.xsem.guidsl.scoping;
 
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.Scopes;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
+import org.typesys.xsem.guidsl.xsemGuiDsl.Entity;
+import org.typesys.xsem.guidsl.xsemGuiDsl.Form;
 
 /**
  * This class contains custom scoping description.
  * 
- * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#scoping
- * on how and when to use it 
- *
+ * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#scoping on
+ * how and when to use it
+ * 
  */
 public class XsemGuiDslScopeProvider extends AbstractDeclarativeScopeProvider {
 
+	public IScope scope_Attribute(Form f, EReference ref) {
+		return Scopes.scopeFor(f.getEntity().getAttributes());
+	}
+
+	public IScope scope_Attribute(Entity e, EReference ref) {
+		return Scopes.scopeFor(e.getAttributes());
+	}
 }
