@@ -6,10 +6,17 @@ import it.xsemantics.runtime.RuleApplicationTrace;
 import it.xsemantics.runtime.RuleEnvironment;
 import it.xsemantics.runtime.RuleFailedException;
 import it.xsemantics.runtime.XsemanticsRuntimeSystem;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.util.PolymorphicDispatcher;
+import org.eclipse.xtext.xbase.lib.BooleanExtensions;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Attribute;
 import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanLiteral;
 import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanType;
+import org.typesys.xsem.guidsl.xsemGuiDsl.CheckBoxWidget;
 import org.typesys.xsem.guidsl.xsemGuiDsl.DerivedAttribute;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Expression;
 import org.typesys.xsem.guidsl.xsemGuiDsl.FloatType;
@@ -17,8 +24,11 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.NumberLiteral;
 import org.typesys.xsem.guidsl.xsemGuiDsl.SimpleAttribute;
 import org.typesys.xsem.guidsl.xsemGuiDsl.StringLiteral;
 import org.typesys.xsem.guidsl.xsemGuiDsl.StringType;
+import org.typesys.xsem.guidsl.xsemGuiDsl.TextWidget;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Type;
+import org.typesys.xsem.guidsl.xsemGuiDsl.Widget;
 import org.typesys.xsem.guidsl.xsemGuiDsl.XsemGuiDslFactory;
+import org.typesys.xsem.guidsl.xsemGuiDsl.XsemGuiDslPackage;
 
 public class TypeSystem extends XsemanticsRuntimeSystem {
 	public final static String SIMPLEATTRIBUTETYPE = "org.typesys.xsem.guidsl.xsemantics.rules.SimpleAttributeType";
@@ -70,7 +80,127 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		}
 	}
 
+	public Result<Boolean> validateMustBeBoolean(final Widget widget) {
+		try {
+			return validateMustBeBooleanInternal(null, widget);
+		} catch (Exception e) {
+			return resultForFailure(e);
+		}
+	}
+	
+	public Result<Boolean> validateMustBeBooleanInternal(final RuleApplicationTrace _trace_, final Widget widget) 
+			throws RuleFailedException {
+		
+		/* widget.validate == null or { empty |- widget.validate : var BooleanType boolType or fail error "validate expression must be boolean" source widget.validate } */
+		try {
+		  Expression _validate = widget.getValidate();
+		  boolean _operator_equals = ObjectExtensions.operator_equals(_validate, null);
+		  /* widget.validate == null */
+		  if (!_operator_equals) {
+		    sneakyThrowRuleFailedException("widget.validate == null");
+		  }
+		} catch (Exception e) {
+		  /* empty |- widget.validate : var BooleanType boolType or fail error "validate expression must be boolean" source widget.validate */
+		  try {
+		    /* empty |- widget.validate : var BooleanType boolType */
+		    Expression _validate_1 = widget.getValidate();
+		    BooleanType boolType = null;
+		    Result<Type> result = exprtypeInternal(emptyEnvironment(), _trace_, _validate_1);
+		    checkAssignableTo(result.getFirst(), BooleanType.class);
+		    boolType = (BooleanType) result.getFirst();
+		    
+		  } catch (Exception e_1) {
+		    /* fail error "validate expression must be boolean" source widget.validate */
+		    String error = "validate expression must be boolean";
+		    Expression _validate_2 = widget.getValidate();
+		    EObject source = _validate_2;
+		    throwForExplicitFail(error, new ErrorInformation(source, null));
+		  }
+		}
+		return new Result<Boolean>(true);
+	}
+	
+	public Result<Boolean> validateTextWidgetAttributeNotBoolean(final TextWidget widget) {
+		try {
+			return validateTextWidgetAttributeNotBooleanInternal(null, widget);
+		} catch (Exception e) {
+			return resultForFailure(e);
+		}
+	}
+	
+	public Result<Boolean> validateTextWidgetAttributeNotBooleanInternal(final RuleApplicationTrace _trace_, final TextWidget widget) 
+			throws RuleFailedException {
+		
+		{
+		  /* empty ||- widget.attr : var Type attrType */
+		  Attribute _attr = widget.getAttr();
+		  Type attrType = null;
+		  Result<Type> result = attrtypeInternal(emptyEnvironment(), _trace_, _attr);
+		  checkAssignableTo(result.getFirst(), Type.class);
+		  attrType = (Type) result.getFirst();
+		  
+		  /* !(attrType instanceof BooleanType) or fail error "text widget attribute must NOT be boolean" source widget feature XsemGuiDslPackage::eINSTANCE.widget_Attr */
+		  try {
+		    boolean _operator_not = BooleanExtensions.operator_not((attrType instanceof BooleanType));
+		    /* !(attrType instanceof BooleanType) */
+		    if (!_operator_not) {
+		      sneakyThrowRuleFailedException("!(attrType instanceof BooleanType)");
+		    }
+		  } catch (Exception e) {
+		    /* fail error "text widget attribute must NOT be boolean" source widget feature XsemGuiDslPackage::eINSTANCE.widget_Attr */
+		    String error = "text widget attribute must NOT be boolean";
+		    EObject source = widget;
+		    EReference _widget_Attr = XsemGuiDslPackage.eINSTANCE.getWidget_Attr();
+		    EStructuralFeature feature = _widget_Attr;
+		    throwForExplicitFail(error, new ErrorInformation(source, feature));
+		  }
+		}
+		return new Result<Boolean>(true);
+	}
+	
+	public Result<Boolean> validateCheckBoxWidgetAttributeBoolean(final CheckBoxWidget widget) {
+		try {
+			return validateCheckBoxWidgetAttributeBooleanInternal(null, widget);
+		} catch (Exception e) {
+			return resultForFailure(e);
+		}
+	}
+	
+	public Result<Boolean> validateCheckBoxWidgetAttributeBooleanInternal(final RuleApplicationTrace _trace_, final CheckBoxWidget widget) 
+			throws RuleFailedException {
+		
+		/* empty ||- widget.attr : var BooleanType attrType or fail error "checkbox widget attribute must be boolean" source widget feature XsemGuiDslPackage::eINSTANCE.widget_Attr */
+		try {
+		  /* empty ||- widget.attr : var BooleanType attrType */
+		  Attribute _attr = widget.getAttr();
+		  BooleanType attrType = null;
+		  Result<Type> result = attrtypeInternal(emptyEnvironment(), _trace_, _attr);
+		  checkAssignableTo(result.getFirst(), BooleanType.class);
+		  attrType = (BooleanType) result.getFirst();
+		  
+		} catch (Exception e) {
+		  /* fail error "checkbox widget attribute must be boolean" source widget feature XsemGuiDslPackage::eINSTANCE.widget_Attr */
+		  String error = "checkbox widget attribute must be boolean";
+		  EObject source = widget;
+		  EReference _widget_Attr = XsemGuiDslPackage.eINSTANCE.getWidget_Attr();
+		  EStructuralFeature feature = _widget_Attr;
+		  throwForExplicitFail(error, new ErrorInformation(source, feature));
+		}
+		return new Result<Boolean>(true);
+	}
 
+	protected void attrtypeThrowException(String _issue, Exception _ex, final Attribute attribute) 
+			throws RuleFailedException {
+		
+		String _stringRep = this.stringRep(attribute);
+		String _operator_plus = StringExtensions.operator_plus("cannot type attribute ", _stringRep);
+		String error = _operator_plus;
+		EObject source = attribute;
+		throwRuleFailedException(error,
+				_issue, _ex,
+				new ErrorInformation(source, null));
+	}
+	
 	protected Result<Type> attrtypeInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
 			final Attribute attribute) {
 		try {
@@ -80,6 +210,18 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			sneakyThrowRuleFailedException(e);
 			return null;
 		}
+	}
+	
+	protected void exprtypeThrowException(String _issue, Exception _ex, final Expression expression) 
+			throws RuleFailedException {
+		
+		String _stringRep = this.stringRep(expression);
+		String _operator_plus = StringExtensions.operator_plus("cannot type expression ", _stringRep);
+		String error = _operator_plus;
+		EObject source = expression;
+		throwRuleFailedException(error,
+				_issue, _ex,
+				new ErrorInformation(source, null));
 	}
 	
 	protected Result<Type> exprtypeInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
@@ -103,9 +245,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleSimpleAttributeType) {
-			throwRuleFailedException(ruleName("SimpleAttributeType") + stringRepForEnv(G) + " ||- " + stringRep(attr) + " : " + "Type",
-				SIMPLEATTRIBUTETYPE,
-				e_applyRuleSimpleAttributeType, new ErrorInformation(attr));
+			attrtypeThrowException(SIMPLEATTRIBUTETYPE,
+				e_applyRuleSimpleAttributeType, attr);
 			return null;
 		}
 	}
@@ -128,9 +269,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleDerivedAttributeType) {
-			throwRuleFailedException(ruleName("DerivedAttributeType") + stringRepForEnv(G) + " ||- " + stringRep(attr) + " : " + "Type",
-				DERIVEDATTRIBUTETYPE,
-				e_applyRuleDerivedAttributeType, new ErrorInformation(attr));
+			attrtypeThrowException(DERIVEDATTRIBUTETYPE,
+				e_applyRuleDerivedAttributeType, attr);
 			return null;
 		}
 	}
@@ -159,9 +299,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleBooleanLiteralType) {
-			throwRuleFailedException(ruleName("BooleanLiteralType") + stringRepForEnv(G) + " |- " + stringRep(lit) + " : " + "BooleanType",
-				BOOLEANLITERALTYPE,
-				e_applyRuleBooleanLiteralType, new ErrorInformation(lit));
+			exprtypeThrowException(BOOLEANLITERALTYPE,
+				e_applyRuleBooleanLiteralType, lit);
 			return null;
 		}
 	}
@@ -184,9 +323,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleStringLiteralType) {
-			throwRuleFailedException(ruleName("StringLiteralType") + stringRepForEnv(G) + " |- " + stringRep(lit) + " : " + "StringType",
-				STRINGLITERALTYPE,
-				e_applyRuleStringLiteralType, new ErrorInformation(lit));
+			exprtypeThrowException(STRINGLITERALTYPE,
+				e_applyRuleStringLiteralType, lit);
 			return null;
 		}
 	}
@@ -209,9 +347,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleNumberLiteralType) {
-			throwRuleFailedException(ruleName("NumberLiteralType") + stringRepForEnv(G) + " |- " + stringRep(lit) + " : " + "FloatType",
-				NUMBERLITERALTYPE,
-				e_applyRuleNumberLiteralType, new ErrorInformation(lit));
+			exprtypeThrowException(NUMBERLITERALTYPE,
+				e_applyRuleNumberLiteralType, lit);
 			return null;
 		}
 	}

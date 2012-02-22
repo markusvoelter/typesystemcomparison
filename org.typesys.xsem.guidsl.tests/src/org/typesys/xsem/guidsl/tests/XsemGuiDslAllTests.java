@@ -13,7 +13,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 	XsemGuiDslParserTests.class,
-	XsemGuiDslTypingTests.class
+	XsemGuiDslTypingTests.class,
+	XsemGuiDslValidatorTests.class
 })
 public class XsemGuiDslAllTests {
 }

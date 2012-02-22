@@ -4,7 +4,11 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.*
 
 judgments {
 	attrtype ||- Attribute attribute : output Type
+		error "cannot type attribute " + stringRep(attribute)
+		source attribute
 	exprtype |- Expression expression : output Type
+		error "cannot type expression " + stringRep(expression)
+		source expression
 }
 
 axiom SimpleAttributeType
@@ -24,3 +28,39 @@ axiom StringLiteralType
 
 axiom NumberLiteralType
 	G |- NumberLiteral lit : XsemGuiDslFactory::eINSTANCE.createFloatType
+
+checkrule ValidateMustBeBoolean for
+	Widget widget
+from {
+	widget.validate == null
+	or {
+		empty |- widget.validate : var BooleanType boolType
+		or
+		fail
+			error "validate expression must be boolean"
+			source widget.validate
+	}
+}
+
+checkrule ValidateTextWidgetAttributeNotBoolean for
+	TextWidget widget
+from {
+	empty ||- widget.attr : var Type attrType
+	!(attrType instanceof BooleanType)
+	or
+	fail
+		error "text widget attribute must NOT be boolean"
+		source widget
+		feature XsemGuiDslPackage::eINSTANCE.widget_Attr
+}
+
+checkrule ValidateCheckBoxWidgetAttributeBoolean for
+	CheckBoxWidget widget
+from {
+	empty ||- widget.attr : var BooleanType attrType
+	or
+	fail
+		error "checkbox widget attribute must be boolean"
+		source widget
+		feature XsemGuiDslPackage::eINSTANCE.widget_Attr
+}
