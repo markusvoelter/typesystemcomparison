@@ -79,12 +79,13 @@ Workflow {
 
             // generator API
             fragment = generator.GeneratorFragment {
-                generateMwe = true
-                generateJavaMain = true
+                generateMwe = false
+                generateJavaMain = false
+                generatorStub = false
             }
 
             // formatter API
-            fragment = formatting.FormatterFragment {}
+//            fragment = formatting.FormatterFragment {}
 
             // labeling API
             fragment = labeling.LabelProviderFragment {}
