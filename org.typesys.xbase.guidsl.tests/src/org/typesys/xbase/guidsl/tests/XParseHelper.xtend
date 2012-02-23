@@ -15,7 +15,7 @@ class XParseHelper<T extends EObject> extends ParseHelper<T> {
     
     @Inject
     new(Provider<XtextResourceSet> resourceSetProvider) {
-       super()
+     //  super()
        xtextResourceSet = resourceSetProvider.get      
     }
 	
