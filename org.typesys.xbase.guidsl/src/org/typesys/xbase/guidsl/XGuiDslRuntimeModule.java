@@ -16,4 +16,5 @@ public class XGuiDslRuntimeModule extends org.typesys.xbase.guidsl.AbstractXGuiD
 	public Class<? extends IScopeProvider> bindIScopeProvider() {
 		return XGuiDslScopeProviderXbase.class;
 	}
+	
 }

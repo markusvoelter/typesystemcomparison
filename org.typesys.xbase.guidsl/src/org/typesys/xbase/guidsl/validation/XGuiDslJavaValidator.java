@@ -1,9 +1,13 @@
 package org.typesys.xbase.guidsl.validation;
 
+import java.util.List;
+
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.common.types.JvmTypeReference;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.xbase.XExpression;
 import org.eclipse.xtext.xbase.typing.ITypeProvider;
+import org.eclipse.xtext.xbase.validation.IssueCodes;
 import org.eclipse.xtext.xbase.validation.XbaseJavaValidator;
 import org.typesys.xbase.guidsl.xGuiDsl.Attribute;
 import org.typesys.xbase.guidsl.xGuiDsl.CheckBoxWidget;
@@ -14,6 +18,8 @@ import org.typesys.xbase.guidsl.xGuiDsl.XGuiDslPackage;
 
 import com.google.inject.Inject;
 
+import static com.google.common.collect.Lists.*;
+
 public class XGuiDslJavaValidator extends XbaseJavaValidator {
 
 	public static int TASK1_ERR = 101;
@@ -23,6 +29,13 @@ public class XGuiDslJavaValidator extends XbaseJavaValidator {
 	@Inject
 	private ITypeProvider typeProvider;
 	
+	@Override
+	protected List<EPackage> getEPackages() {
+		List<EPackage> packages = newArrayList(super.getEPackages());
+		packages.add(XGuiDslPackage.eINSTANCE);
+		return packages;
+	}
+
 	/**
 	 * 1) the expression after "validate" must be boolean
 	 */
@@ -51,12 +64,11 @@ public class XGuiDslJavaValidator extends XbaseJavaValidator {
 		Attribute attr = widget.getAttr();
 		JvmTypeReference jvmTypeReference = getTypeForAttribute(attr);
 		if (jvmTypeReference == null) {
-			error("Textbox reference is missing or a type could not be inferred.",
-					XGuiDslPackage.Literals.WIDGET__ATTR, TASK2_ERR);
+			return;
 		}
 		if (jvmTypeReference.getQualifiedName().equals(Boolean.TYPE.getName())) {
 			error("Textbox may NOT refer to boolean attributes.",
-					XGuiDslPackage.Literals.WIDGET__ATTR, TASK2_ERR);
+					XGuiDslPackage.Literals.WIDGET__ATTR, IssueCodes.INCOMPATIBLE_TYPES);
 		}
 	}
 
@@ -81,13 +93,12 @@ public class XGuiDslJavaValidator extends XbaseJavaValidator {
 		Attribute attr = widget.getAttr();
 		JvmTypeReference jvmTypeReference = getTypeForAttribute(attr);
 		if (jvmTypeReference == null) {
-			error("Checkbox may only refer to boolean attributes.",
-					XGuiDslPackage.Literals.WIDGET__ATTR, TASK3_ERR);
+			return;
 		}
 		if (!jvmTypeReference.getQualifiedName().equals(Boolean.TYPE.getName())) {
 			error("Checkbox may only refer to boolean attributes, but found type "
 					+ jvmTypeReference.getQualifiedName(),
-					XGuiDslPackage.Literals.WIDGET__ATTR, TASK3_ERR);
+					XGuiDslPackage.Literals.WIDGET__ATTR, IssueCodes.INCOMPATIBLE_TYPES);
 		}
 
 	}

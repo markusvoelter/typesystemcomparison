@@ -1,21 +1,20 @@
-package org.typesys.xbase.guidsl.tests
+package org.typesys.guidsl.tests
 
-import com.google.inject.Inject
-import org.eclipse.xtext.junit4.InjectWith
+import org.junit.runner.RunWith
 import org.eclipse.xtext.junit4.XtextRunner
+import org.eclipse.xtext.junit4.InjectWith
+import org.typesys.guidsl.GuiDslInjectorProvider
+import org.junit.Test
+import com.google.inject.Inject
 import org.eclipse.xtext.junit4.util.ParseHelper
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
-import org.eclipse.xtext.xbase.XbasePackage$Literals
-import org.eclipse.xtext.xbase.validation.IssueCodes
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.typesys.xbase.guidsl.XGuiDslInjectorProvider
-import org.typesys.xbase.guidsl.xGuiDsl.Model
-import org.typesys.xbase.guidsl.xGuiDsl.XGuiDslPackage
+import org.typesys.guidsl.guiDsl.Model
+import org.typesys.guidsl.guiDsl.GuiDslPackage
+import org.typesys.guidsl.validation.GuiDslJavaValidator
 
 @RunWith(typeof(XtextRunner))
-@InjectWith(typeof(XGuiDslInjectorProvider))
-class ParsingTests {
+@InjectWith(typeof(GuiDslInjectorProvider))
+class ParserTests {
 	
 	@Inject extension ParseHelper<Model> 
 	@Inject extension ValidationTestHelper
@@ -23,22 +22,22 @@ class ParsingTests {
 	def void simpleTest() {
 		val model = '''
 			entity PersonX {
-				name      : String;
-				firstName : String;
+				name      : string;
+				firstName : string;
 				age       : int; 
-				weight    : Float;
-				likesCake : boolean; 
+				weight    : float;
+				likesCake : bool; 
 			    /isAdult = age > 18;
 				/greeting = "Hello " + firstName + " " + name;
 			}
 			
 			entity House {
 				floors : int; 
-				street : String;
+				street : string;
 			}
 			
 			form PersonFormValidate edits PersonX {
-				 text(20) -> name validate name.length > 2 ;
+				 text(20) -> name validate lengthOf(name) > 2 ;
 			}
 		'''.parse
 		model.assertNoErrors
@@ -48,7 +47,7 @@ class ParsingTests {
 	def void testExpectedReturnTypeOfValidation() {
 		val model = '''
 			entity PersonX {
-				firstName : String;
+				firstName : string;
 			}
 			
 			form PersonForm edits PersonX {
@@ -56,14 +55,14 @@ class ParsingTests {
 			}
 			
 		'''.parse
-		model.assertError(XbasePackage$Literals::XEXPRESSION, IssueCodes::INCOMPATIBLE_RETURN_TYPE, 'boolean','String')
+		model.assertError(GuiDslPackage$Literals::EXPRESSION, GuiDslJavaValidator::INCOMPATIBLE_TYPES, 'bool','string')
 	}
 	
 	@Test
 	def void testCheckBoxMustPointToBooleanAttribute() {
 		val model = '''
 			entity PersonX {
-				firstName : String;
+				firstName : string;
 			}
 			
 			form PersonForm edits PersonX {
@@ -71,14 +70,14 @@ class ParsingTests {
 			}
 			
 		'''.parse
-		model.assertError(XGuiDslPackage$Literals::CHECK_BOX_WIDGET, IssueCodes::INCOMPATIBLE_TYPES, 'boolean','String')
+		model.assertError(GuiDslPackage$Literals::CHECK_BOX_WIDGET, GuiDslJavaValidator::INCOMPATIBLE_TYPES, 'boolean')
 	}
 	
 	@Test
 	def void testTextMustNotPointToBooleanAttribute() {
 		val model = '''
 			entity PersonX {
-				myFlag : boolean;
+				myFlag : bool;
 			}
 			
 			form PersonForm edits PersonX {
@@ -86,6 +85,6 @@ class ParsingTests {
 			}
 			
 		'''.parse
-		model.assertError(XGuiDslPackage$Literals::TEXT_WIDGET, IssueCodes::INCOMPATIBLE_TYPES, 'boolean')
+		model.assertError(GuiDslPackage$Literals::TEXT_WIDGET, GuiDslJavaValidator::INCOMPATIBLE_TYPES, 'boolean')
 	}
 }
