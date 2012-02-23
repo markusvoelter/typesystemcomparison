@@ -1,0 +1,7 @@
+/*
+ *  checkboxes must refer to boolean attributes
+ */
+form PersonForm3 edits PersonT {
+	 checkbox -> likesCake;
+	 checkbox -> isAdult;
+}

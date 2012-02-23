@@ -54,17 +54,19 @@ SimpleAttribute:
 
 /*
  * Expressions, used in DSL form and widget
+ * In the Xbase variant, XExpression is used
  */
 
 Expr:
 	expr=XExpression;
 
 // TODO: override implies operator  
- 
 // ({NotExpression} "!" "(" expr=Expr ")") 
-
 // widgetcontent
 // lengthof? 
+
+// TODO: adapt Xbase by adding DECIMAL_NUMBER? 
+
 //Atomic returns Expression:
 //	({TrueExpr} "true") |
 //	({FalseExpr} "false") |

@@ -1,0 +1,13 @@
+entity APersonYY {
+	name      : String;
+	firstName : String;
+	age       : int; 
+	weight    : Float;
+	likesCake : boolean; 
+    /isAdult =  age <= 18; 
+	/greeting = "Hello " + firstName + " " + name;
+}
+
+form PersonYFormValidate edits APersonYY {
+	 text(20) -> name validate greeting.length > 2 ;
+}

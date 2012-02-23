@@ -1,0 +1,9 @@
+/*
+ *  validate clause must be boolean
+ */
+form PersonForm2Inv edits PersonT {
+	 text(20) -> name validate greetings;
+	 text(20) -> firstName validate firstName;
+	 checkbox -> isAdult validate 1;
+	 checkbox -> likesCake validate firstName;
+}

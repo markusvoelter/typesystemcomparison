@@ -19,9 +19,15 @@ public class XGuiDslJavaValidator extends AbstractXGuiDslJavaValidator {
 
 	@Inject
 	private Xtend2TypeProvider xtend2TypeProvider;
+	
+	public static int TASK1_ERR = 101;
+	public static int TASK2_ERR = 102;
+	public static int TASK3_ERR = 103;
+	
 
 	/**
 	 * 1) the expression after "validate" must be boolean
+	 * This is additionally validated via Xbase
 	 */
 	@Check
 	public void checkValidateIsBoolean(Widget widget) {
@@ -30,12 +36,12 @@ public class XGuiDslJavaValidator extends AbstractXGuiDslJavaValidator {
 			JvmTypeReference type = xtend2TypeProvider.getType(expr);
 			if (type == null) {
 				error("The validation part must be boolean, but it seems to be missing or a type could not be inferred.",
-						XGuiDslPackage.Literals.WIDGET__VALIDATE);
+						XGuiDslPackage.Literals.WIDGET__VALIDATE,TASK1_ERR);
 			}
 			if (!type.getQualifiedName().equals(Boolean.TYPE.getName())) {
 				error("The validation part must boolean, but it was of type "
 						+ type.getQualifiedName(),
-						XGuiDslPackage.Literals.WIDGET__VALIDATE);
+						XGuiDslPackage.Literals.WIDGET__VALIDATE,TASK1_ERR);
 			}
 		}
 	}
@@ -45,24 +51,14 @@ public class XGuiDslJavaValidator extends AbstractXGuiDslJavaValidator {
 	 */
 	@Check
 	public void checkTextWidgetForNonBoolean(TextWidget widget) {
-		Attribute attr = widget.getAttr();
-		JvmTypeReference jvmTypeReference = null;
-		if (attr instanceof SimpleAttribute) {
-			SimpleAttribute simpleAttribute = (SimpleAttribute) attr;
-			jvmTypeReference = simpleAttribute.getType();
-		} else if (attr instanceof DerivedAttribute) {
-			DerivedAttribute derivedAttribute = (DerivedAttribute) attr;
-			Expr exprInGrammar = derivedAttribute.getExpr();
-			jvmTypeReference = xtend2TypeProvider.getType(exprInGrammar
-					.getExpr());
-		}
+		JvmTypeReference jvmTypeReference = getJvmTypeReference(widget);
 		if (jvmTypeReference == null) {
 			error("Textbox reference is missing or a type could not be inferred.",
-					XGuiDslPackage.Literals.WIDGET__ATTR);
+					XGuiDslPackage.Literals.WIDGET__ATTR, TASK2_ERR);
 		}
 		if (jvmTypeReference.getQualifiedName().equals(Boolean.TYPE.getName())) {
 			error("Textbox may NOT refer to boolean attributes.",
-					XGuiDslPackage.Literals.WIDGET__ATTR);
+					XGuiDslPackage.Literals.WIDGET__ATTR, TASK2_ERR);
 		}
 	}
 
@@ -71,6 +67,19 @@ public class XGuiDslJavaValidator extends AbstractXGuiDslJavaValidator {
 	 */
 	@Check
 	public void checkBoxWidgetOnlyBoolean(CheckBoxWidget widget) {
+		JvmTypeReference jvmTypeReference = getJvmTypeReference(widget);
+		if (jvmTypeReference == null) {
+			error("Checkbox may only refer to boolean attributes.",
+					XGuiDslPackage.Literals.WIDGET__ATTR, TASK3_ERR);
+		}
+		if (!jvmTypeReference.getQualifiedName().equals(Boolean.TYPE.getName())) {
+			error("Checkbox may only refer to boolean attributes, but found type "
+					+ jvmTypeReference.getQualifiedName(),
+					XGuiDslPackage.Literals.WIDGET__ATTR, TASK3_ERR);
+		}
+	}
+
+	public JvmTypeReference getJvmTypeReference(Widget widget) {
 		Attribute attr = widget.getAttr();
 		JvmTypeReference jvmTypeReference = null;
 		if (attr instanceof SimpleAttribute) {
@@ -82,16 +91,7 @@ public class XGuiDslJavaValidator extends AbstractXGuiDslJavaValidator {
 			jvmTypeReference = xtend2TypeProvider.getType(exprInGrammar
 					.getExpr());
 		}
-		if (jvmTypeReference == null) {
-			error("Checkbox may only refer to boolean attributes.",
-					XGuiDslPackage.Literals.WIDGET__ATTR);
-		}
-		if (!jvmTypeReference.getQualifiedName().equals(Boolean.TYPE.getName())) {
-			error("Checkbox may only refer to boolean attributes, but found type "
-					+ jvmTypeReference.getQualifiedName(),
-					XGuiDslPackage.Literals.WIDGET__ATTR);
-		}
-
+		return jvmTypeReference;
 	}
 
 }

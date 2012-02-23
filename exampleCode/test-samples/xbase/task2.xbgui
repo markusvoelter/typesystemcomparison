@@ -1,0 +1,7 @@
+/*
+ *  text widgets must not refer to boolean attributes
+ */
+form PersonForm2 edits PersonT {
+	 text(20) -> name;
+	 text(20) -> firstName;
+}

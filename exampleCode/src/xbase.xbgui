@@ -13,6 +13,10 @@ entity House {
 	street : String;
 }
 
+/**
+ * Form11
+ */
 form PersonFormValidate edits PersonX {
-	 text(20) -> name validate name.length > 2 ;
+	 text(20) -> name validate true;
+	 text(20) -> name validate name.length > 2;
 }
