@@ -5,9 +5,11 @@ generate xGuiDsl "http://www.typesys.org/xbase/guidsl/XGuiDsl"
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 Model:
-	(entities+=Entity | 
-	 forms+=Form )*;
+	elements+=AbstractDeclaration*;
 
+AbstractDeclaration :
+	Entity | Form
+;
 /*
  * Form and Widgets 
  */
@@ -23,11 +25,11 @@ Widget:
 ;
 
 TextWidget:
-	"text" "(" length=INT ")" "->" attr=[Attribute|QualifiedName] ("validate" validate=Expr)? ";"
+	"text" "(" length=Number ")" "->" attr=[Attribute|QualifiedName] ("validate" validate=XExpression)? ";"
 ;
 
 CheckBoxWidget:
-	"checkbox" "->" attr=[Attribute|QualifiedName] ("validate" validate=Expr)? ";"
+	"checkbox" "->" attr=[Attribute|QualifiedName] ("validate" validate=XExpression)? ";"
 ;
 
 /*
@@ -45,7 +47,7 @@ Attribute:
 ;
 
 DerivedAttribute:
-	"/" name=ID "=" expr=Expr ";"
+	"/" name=ID "=" expr=XExpression ";"
 ;
 
 SimpleAttribute:
@@ -55,9 +57,6 @@ SimpleAttribute:
 /*
  * Expressions, used in DSL form and widget
  */
-
-Expr:
-	expr=XExpression;
 
 // TODO: override implies operator  
  

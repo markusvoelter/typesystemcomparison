@@ -1,52 +1,61 @@
 package org.typesys.xbase.guidsl.jvmmodel
- 
+
 import com.google.inject.Inject
-import org.eclipse.xtext.common.types.JvmDeclaredType
-import org.eclipse.xtext.util.IAcceptor
+import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.xbase.jvmmodel.AbstractModelInferrer
+import org.eclipse.xtext.xbase.jvmmodel.IJvmDeclaredTypeAcceptor
 import org.eclipse.xtext.xbase.jvmmodel.JvmTypesBuilder
 import org.typesys.xbase.guidsl.xGuiDsl.Entity
-import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.typesys.xbase.guidsl.xGuiDsl.SimpleAttribute
+import org.typesys.xbase.guidsl.xGuiDsl.DerivedAttribute
+import org.eclipse.xtext.xbase.typing.ITypeProvider
+import org.typesys.xbase.guidsl.xGuiDsl.Form
+import org.eclipse.xtext.xbase.jvmmodel.IJvmModelAssociations
+import org.eclipse.xtext.common.types.JvmDeclaredType
 
-/**
- * <p>Infers a JVM model from the source model.</p> 
- *
- * <p>The JVM model should contain all elements that would appear in the Java code 
- * which is generated from the source model. Other models link against the JVM model rather than the source model.</p>     
- */
 class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 
-    /**
-     * conveninence API to build and initialize JvmTypes and their members.
-     */
 	@Inject extension JvmTypesBuilder
 	
+	@Inject IJvmModelAssociations associations
+	
 	@Inject extension IQualifiedNameProvider
+	
+	@Inject ITypeProvider typeProvider
 
-	/**
-	 * Is called for each instance of the first argument's type contained in a resource.
-	 * 
-	 * @param element - the model to create one or more JvmDeclaredTypes from.
-	 * @param acceptor - each created JvmDeclaredType without a container should be passed to the acceptor in order get attached to the
-	 *                   current resource.
-	 * @param isPreLinkingPhase - whether the method is called in a pre linking phase, i.e. when the global index isn't fully updated. You
-	 *        must not rely on linking using the index if iPrelinkingPhase is <code>true</code>
-	 */
-   	def dispatch void infer(Entity element, IAcceptor<JvmDeclaredType> acceptor, boolean isPrelinkingPhase) {
-   		 
-   		 acceptor.accept(element.toClass(element.fullyQualifiedName) [
-		     documentation = element.documentation
-		      for (attribute : element.attributes) {
-		        switch attribute {
-		         SimpleAttribute case true : {
-		            members += attribute.toField(attribute.name, attribute.type)
-		            members += attribute.toSetter(attribute.name, attribute.type)
-		            members += attribute.toGetter(attribute.name, attribute.type)
-		          }
+   	def dispatch void infer(Entity element, IJvmDeclaredTypeAcceptor acceptor, boolean preIndexingPhase) {
+   		acceptor.accept(element.toClass(element.fullyQualifiedName)).initializeLater [
+			documentation = element.documentation
+		    for (attribute : element.attributes) {
+		    	switch attribute {
+		        	SimpleAttribute : {
+		            	members += attribute.toField(attribute.name, attribute.type)
+			            members += attribute.toSetter(attribute.name, attribute.type)
+			            members += attribute.toGetter(attribute.name, attribute.type)
+		        	}
+		        	DerivedAttribute : {
+		        		val method = attribute.toGetter(attribute.name, typeProvider.getType(attribute.expr))
+		        		method.body = attribute.expr
+		        		members += method
+		        	}
 		        }
-		      }   		 	
-   		 ]
-       )
+		    }   		 	
+   		]
+   	}
+   	
+   	def dispatch void infer(Form form, IJvmDeclaredTypeAcceptor acceptor, boolean preIndexingPhase) {
+   		acceptor.accept(form.toClass(form.fullyQualifiedName)).initializeLater [
+			documentation = form.documentation
+			//TODO derived a method creating a real form, e.g. SWT, GWT, or something similar
+		    for (widget: form.widgets) {
+		    	if (widget.validate != null) {
+		    		members += widget.toMethod('validate'+widget.attr.name.toFirstUpper, form.newTypeRef(Boolean::TYPE)) [
+		    			val jvmType = associations.getJvmElements(form.entity).head as JvmDeclaredType
+		    			parameters += widget.toParameter("it", newTypeRef(jvmType))
+		    			body = widget.validate
+		    		]
+		    	}
+		    }   		 	
+   		]
    	}
 }

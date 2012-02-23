@@ -18,25 +18,21 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0";visibility:=reexport,
  org.eclipse.emf.common,
  org.antlr.runtime,
  org.eclipse.xtext.common.types,
- org.eclipse.xtend2.lib,
- org.eclipse.xtext.xtend2;bundle-version="2.2.1",
- org.eclipse.xtext.xtend2.lib;bundle-version="2.2.1"
+ org.eclipse.xtext.xbase.lib
 Import-Package: org.apache.log4j,
  org.apache.commons.logging,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend2.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.typesys.xbase.guidsl; uses:="org.eclipse.xtext,  org.eclipse.xtext.xtype,  org.eclipse.xtext.service,  org.eclipse.xtext.common.types,  com.google.inject",
- org.typesys.xbase.guidsl.formatting;uses:="org.eclipse.xtext.formatting.impl",
- org.typesys.xbase.guidsl.generator;uses:="org.eclipse.emf.ecore.resource,org.eclipse.xtext.generator",
- org.typesys.xbase.guidsl.jvmmodel; uses:="org.typesys.xbase.guidsl.xGuiDsl,  org.eclipse.emf.ecore,  org.eclipse.xtext.util,  org.eclipse.xtext.xbase.jvmmodel",
- org.typesys.xbase.guidsl.parser.antlr;uses:="org.typesys.xbase.guidsl.parser.antlr.internal,org.eclipse.xtext.parser.antlr,org.typesys.xbase.guidsl.services",
- org.typesys.xbase.guidsl.parser.antlr.internal; uses:="org.eclipse.emf.ecore,  org.antlr.runtime,  org.eclipse.xtext.parser.antlr,  org.typesys.xbase.guidsl.services",
- org.typesys.xbase.guidsl.scoping; uses:="org.typesys.xbase.guidsl.xGuiDsl,  org.eclipse.emf.ecore,  org.eclipse.xtext.xbase.scoping,  org.eclipse.xtext.scoping",
- org.typesys.xbase.guidsl.serializer; uses:="org.eclipse.xtext,  org.eclipse.xtext.serializer.sequencer,  org.eclipse.xtext.serializer.analysis,  org.eclipse.xtext.serializer.diagnostic,  org.eclipse.xtext.common.types,  org.eclipse.xtext.xbase.serializer,  org.typesys.xbase.guidsl.services,  org.typesys.xbase.guidsl.xGuiDsl,  org.eclipse.xtext.xbase,  org.eclipse.xtext.xtype,  org.eclipse.emf.ecore,  org.eclipse.xtext.serializer.acceptor,  org.eclipse.xtext.nodemodel,  com.google.inject",
- org.typesys.xbase.guidsl.services;uses:="org.eclipse.xtext,org.eclipse.xtext.xbase.services,org.eclipse.xtext.service",
- org.typesys.xbase.guidsl.validation;uses:="org.eclipse.xtext.xbase.validation",
- org.typesys.xbase.guidsl.xGuiDsl; uses:="org.eclipse.xtext.xbase,  org.eclipse.emf.ecore,  org.eclipse.emf.common.util,  org.eclipse.xtext.common.types",
- org.typesys.xbase.guidsl.xGuiDsl.impl; uses:="org.eclipse.xtext.xbase,  org.typesys.xbase.guidsl.xGuiDsl,  org.eclipse.emf.ecore,  org.eclipse.emf.common.util,  org.eclipse.xtext.common.types,  org.eclipse.emf.ecore.impl,  org.eclipse.emf.common.notify",
- org.typesys.xbase.guidsl.xGuiDsl.util; uses:="org.typesys.xbase.guidsl.xGuiDsl,  org.eclipse.emf.ecore.util,  org.eclipse.emf.ecore,  org.eclipse.emf.common.notify.impl,  org.eclipse.emf.common.notify"
+Export-Package: org.typesys.xbase.guidsl,
+ org.typesys.xbase.guidsl.jvmmodel,
+ org.typesys.xbase.guidsl.parser.antlr,
+ org.typesys.xbase.guidsl.parser.antlr.internal,
+ org.typesys.xbase.guidsl.scoping,
+ org.typesys.xbase.guidsl.serializer,
+ org.typesys.xbase.guidsl.services,
+ org.typesys.xbase.guidsl.validation,
+ org.typesys.xbase.guidsl.xGuiDsl,
+ org.typesys.xbase.guidsl.xGuiDsl.impl,
+ org.typesys.xbase.guidsl.xGuiDsl.util
 

@@ -11,6 +11,7 @@
             default="true"
             extensions="xbgui"
             id="org.typesys.xbase.guidsl.XGuiDsl"
+            matchingStrategy="org.typesys.xbase.guidsl.ui.XGuiDslExecutableExtensionFactory:org.eclipse.xtext.xbase.ui.editor.JavaEditorInputMatcher"
             name="XGuiDsl Editor">
         </editor>
     </extension>
