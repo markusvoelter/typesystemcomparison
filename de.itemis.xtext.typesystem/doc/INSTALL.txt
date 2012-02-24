@@ -1,0 +1,11 @@
+Please install the libraries in the lib/ directory (for example by copying them
+into your Eclipse dropins directory):
+de.itemis.xtext.typesystem.dsl_1.0.0.jar
+de.itemis.xtext.typesystem.dsl.ui_1.0.0.jar
+
+These are necessary for the Xtext TypeSystem projects to work:
+org.typesys.xts.guidsl
+org.typesys.xts.guidsl.tests
+org.typesys.xts.guidsl.ui
+
+Please refer to http://code.google.com/a/eclipselabs.org/p/xtext-typesystem/ for documentation.
