@@ -23,8 +23,6 @@ class TypeConformance {
 		left.ref == right.ref
 	}
 
-	def dispatch isAssignable(IntType left, IntType right) { true }
-
 	def dispatch isAssignable(NumberType left, IntType right) { true }
 	def dispatch isAssignable(NumberType left, FloatType right) { true }
 
