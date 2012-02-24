@@ -21,10 +21,6 @@ import com.google.inject.Inject;
 import static com.google.common.collect.Lists.*;
 
 public class XGuiDslJavaValidator extends XbaseJavaValidator {
-
-	public static int TASK1_ERR = 101;
-	public static int TASK2_ERR = 102;
-	public static int TASK3_ERR = 103;
 	
 	@Inject
 	private ITypeProvider typeProvider;
@@ -37,8 +33,11 @@ public class XGuiDslJavaValidator extends XbaseJavaValidator {
 	}
 
 	/**
-	 * 1) the expression after "validate" must be boolean
+	 * 1) The expression after "validate" must be boolean.
+	 *  This is already covered by the XGuiDslJvmModelInferrer, 
+	 *  otherwise it would look something like this:
 	 */
+	
 //	@Check
 //	public void checkValidateIsBoolean(Widget widget) {
 //		if (widget.getValidate() != null) {
@@ -57,7 +56,7 @@ public class XGuiDslJavaValidator extends XbaseJavaValidator {
 //	}
 
 	/**
-	 * 2) text widgets may only refer to non-boolean attributes
+	 * 2) Text widgets may only refer to non-boolean attributes.
 	 */
 	@Check
 	public void checkTextWidgetForNonBoolean(TextWidget widget) {
@@ -86,7 +85,7 @@ public class XGuiDslJavaValidator extends XbaseJavaValidator {
 	}
 
 	/**
-	 * 3) checkbox widgets may only refer to boolean attributes
+	 * 3) Checkbox widgets may only refer to boolean attributes.
 	 */
 	@Check
 	public void checkBoxWidgetOnlyBoolean(CheckBoxWidget widget) {

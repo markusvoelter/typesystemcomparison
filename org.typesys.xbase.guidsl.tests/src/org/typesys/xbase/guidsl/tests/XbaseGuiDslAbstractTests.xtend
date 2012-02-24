@@ -18,11 +18,11 @@ class XbaseGuiDslAbstractTests {
     protected static String ENTITIES = ROOT + "entities.xbgui"
     
     @Inject
-	protected XParseHelper<Model> modelParser
+	protected XParseHelper<Model> xParseHelper
     
     @Before
 	def void setUp() {
-		modelParser.parse(ENTITIES)
+		xParseHelper.parse(ENTITIES)
 	}
     		
 }

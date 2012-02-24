@@ -9,7 +9,7 @@ class XbaseGuiDslParseTest extends XbaseGuiDslAbstractTests {
 	
     @Test
 	def void parseForm() {
-	  val model = modelParser.parse('''form PersonFormValidate edits PersonT {
+	  val model = xParseHelper.parse('''form PersonFormValidate edits PersonT {
 	 text(20) -> name validate true;
 }''')
       val form = model.elements.head as Form

@@ -72,7 +72,7 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
  	def dispatch void infer(Form form, IJvmDeclaredTypeAcceptor acceptor, boolean preIndexingPhase) {
    		acceptor.accept(form.toClass(form.fullyQualifiedName)).initializeLater [
 			documentation = form.documentation
-			//TODO derived a method creating a real form, e.g. SWT, GWT, or something similar
+			//TODO derive a method creating a real form, e.g. SWT, GWT, or something similar
 		    for (widget: form.widgets) {
 		    	if (widget.validate != null) {
 		    		members += widget.toMethod('validate'+widget.attr.name.toFirstUpper, form.newTypeRef(Boolean::TYPE)) [
