@@ -13,12 +13,20 @@ import org.typesys.guidsl.types.TypeConformance;
 import com.google.inject.Inject;
 
 public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
-	
+
 	public final static String INCOMPATIBLE_TYPES = "incompatible_types";
 
-	@Inject private GuiDslTypeProvider guiDslTypeProvider;
-	@Inject private TypeConformance conformance;
+	@Inject
+	private GuiDslTypeProvider guiDslTypeProvider;
+	@Inject
+	private TypeConformance conformance;
 
+	/**
+	 * 1) The expression after "validate" must be boolean. This covers
+	 * expression validation in general. The {@see GuiDslTypeProvider} decides
+	 * which type the expression should have.
+	 * 
+	 */
 	@Check
 	public void check(Expression expr) {
 		Type expectedType = guiDslTypeProvider.getExpectedType(expr);
@@ -26,13 +34,14 @@ public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 			return;
 		Type actualType = guiDslTypeProvider.getType(expr);
 		if (!conformance.isAssignable(expectedType, actualType)) {
-			error("Incompatible types. Expected '"+expectedType+"' but was '"+actualType+"'", null, INCOMPATIBLE_TYPES);
+			error("Incompatible types. Expected '" + expectedType
+					+ "' but was '" + actualType + "'", null,
+					INCOMPATIBLE_TYPES);
 		}
 	}
+
 	/**
-	 * Warns when a text widget refers to a boolean attribute
-	 * 
-	 * Does not handle derived attributes
+	 * 2) Text widgets may only refer to non-boolean attributes.
 	 * 
 	 * @param widget
 	 */
@@ -46,6 +55,9 @@ public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 		}
 	}
 
+	/**
+	 * 3) Checkbox widgets may only refer to boolean attributes.
+	 */
 	@Check
 	void check(CheckBoxWidget widget) {
 		Attribute attr = widget.getAttr();
