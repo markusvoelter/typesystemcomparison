@@ -6,6 +6,7 @@ import org.typesys.guidsl.guiDsl.NumberType
 import org.typesys.guidsl.guiDsl.IntType
 import org.typesys.guidsl.guiDsl.FloatType
 import org.typesys.guidsl.guiDsl.StringType
+import org.typesys.guidsl.guiDsl.BooleanType
 
 class TypeConformance {
 	
@@ -25,8 +26,12 @@ class TypeConformance {
 
 	def dispatch isAssignable(NumberType left, IntType right) { true }
 	def dispatch isAssignable(NumberType left, FloatType right) { true }
+	def dispatch isAssignable(IntType left, FloatType right) { false }
+	
+	def dispatch isAssignable(FloatType left, IntType right) { true }
 
 	// note that with this rule, lengthOf(int) is also allowed
 	def dispatch isAssignable(StringType left, NumberType right) { true }
+	def dispatch isAssignable(StringType left, BooleanType right) { true }
 
 }

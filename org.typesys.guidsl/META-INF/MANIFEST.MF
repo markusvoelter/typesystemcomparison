@@ -23,14 +23,15 @@ Import-Package: org.apache.log4j,
  org.eclipse.xtend2.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.typesys.guidsl,
- org.typesys.guidsl.services,
+ org.typesys.guidsl.formatting,
+ org.typesys.guidsl.generator,
  org.typesys.guidsl.guiDsl,
  org.typesys.guidsl.guiDsl.impl,
  org.typesys.guidsl.guiDsl.util,
- org.typesys.guidsl.serializer,
  org.typesys.guidsl.parser.antlr,
  org.typesys.guidsl.parser.antlr.internal,
- org.typesys.guidsl.validation,
  org.typesys.guidsl.scoping,
- org.typesys.guidsl.generator,
- org.typesys.guidsl.formatting
+ org.typesys.guidsl.serializer,
+ org.typesys.guidsl.services,
+ org.typesys.guidsl.types,
+ org.typesys.guidsl.validation
