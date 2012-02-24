@@ -1,19 +1,17 @@
 package org.typesys.xbase.guidsl.tests
 
+import com.google.inject.Inject
+import com.google.inject.Injector
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.validation.ValidatorTester
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.typesys.xbase.guidsl.XGuiDslInjectorProvider
+import org.typesys.xbase.guidsl.validation.XGuiDslJavaValidator
 
 import static org.typesys.xbase.guidsl.tests.XbaseGuiDslAbstractTests.*
-import org.junit.Before
-import com.google.inject.Inject
-import org.typesys.xbase.guidsl.validation.XGuiDslJavaValidator
-import com.google.inject.Injector
-import org.typesys.xbase.guidsl.xGuiDsl.Model
-import org.typesys.xbase.guidsl.xGuiDsl.TextWidget
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(XGuiDslInjectorProvider))

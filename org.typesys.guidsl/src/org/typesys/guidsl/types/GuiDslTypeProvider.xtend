@@ -33,6 +33,13 @@ import org.typesys.guidsl.guiDsl.StringType
 
 class GuiDslTypeProvider {
 	
+	// declare the built-in types for easy use
+	Type bool = GuiDslFactory::eINSTANCE.createBooleanType
+	Type _float = GuiDslFactory::eINSTANCE.createFloatType
+	Type _int = GuiDslFactory::eINSTANCE.createIntType
+	Type number = GuiDslFactory::eINSTANCE.createNumberType
+	Type string = GuiDslFactory::eINSTANCE.createStringType
+	
 	/**
 	 * @return the type of an element. Never <code>null</code>
 	 */
@@ -121,22 +128,6 @@ class GuiDslTypeProvider {
 			moreSpecific
 		else 
 			atLeast
-	}
-	
-	def Type bool() {
-		GuiDslFactory::eINSTANCE.createBooleanType
-	}
-	def Type _float() {
-		GuiDslFactory::eINSTANCE.createFloatType
-	}
-	def Type _int() {
-		GuiDslFactory::eINSTANCE.createIntType
-	}
-	def Type number() {
-		GuiDslFactory::eINSTANCE.createNumberType
-	}
-	def Type string() {
-		GuiDslFactory::eINSTANCE.createStringType
 	}
 	
 }
