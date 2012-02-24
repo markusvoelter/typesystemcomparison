@@ -1,8 +1,8 @@
 /*
  *  validate clause must be boolean
  */
-form PersonForm2Inv edits PersonT {
-	 text(20) -> name validate greetings;
+form PersonForm1Inv edits PersonT {
+	 text(20) -> name validate it.greeting;
 	 text(20) -> firstName validate firstName;
 	 checkbox -> isAdult validate 1;
 	 checkbox -> likesCake validate firstName;
