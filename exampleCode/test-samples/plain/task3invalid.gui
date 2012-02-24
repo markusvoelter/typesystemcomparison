@@ -1,0 +1,8 @@
+/*
+ *  checkboxes must refer to boolean attributes
+ */
+form PersonFormP3Inv edits PersonP {
+	 checkbox -> name;
+	 checkbox -> age;
+	 checkbox -> greeting;
+}

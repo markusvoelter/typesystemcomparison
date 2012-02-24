@@ -1,0 +1,10 @@
+/*
+ *  validate clause must be boolean
+ */
+ 
+form PersonFormP1 edits PersonP {
+	 text(20) -> name validate 1 == 1;
+	 text(20) -> firstName validate lengthOf(firstName) > 2;
+	 checkbox -> isAdult validate 1 == 1;
+	 checkbox -> likesCake validate lengthOf(firstName) > 2;
+}

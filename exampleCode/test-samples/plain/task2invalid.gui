@@ -1,0 +1,7 @@
+/*
+ *  text widgets must not refer to boolean attributes
+ */
+form PersonFormP2Inv edits PersonP {
+	 text(20) -> likesCake;
+	 text(20) -> isAdult;
+}
