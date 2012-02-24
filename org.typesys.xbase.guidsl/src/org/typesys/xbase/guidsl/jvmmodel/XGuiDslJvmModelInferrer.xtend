@@ -49,9 +49,9 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 			            members += attribute.toGetter(attribute.name, attribute.type)
 		        	}
 		        	DerivedAttribute : {
-		        		val method = attribute.toGetter(attribute.name, typeProvider.getType(attribute.expr))
-		        		method.body = attribute.expr
-		        		members += method
+						members += attribute.toMethod("get" + attribute.name.toFirstUpper, typeProvider.getType(attribute.expr)) [
+			        		body = attribute.expr
+		        		]
 		        	}
 		        }
 		    }   		 	
