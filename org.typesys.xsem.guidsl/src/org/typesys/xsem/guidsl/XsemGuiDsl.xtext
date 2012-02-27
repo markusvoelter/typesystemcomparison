@@ -60,9 +60,12 @@ EntityType:
 	ref=[Entity]
 ;
 
-
 PrimitiveType:
-	IntType | FloatType| BooleanType | StringType
+	NumberType | BooleanType | StringType
+;
+
+NumberType :
+	FloatType | IntType
 ;
 
 FloatType:
