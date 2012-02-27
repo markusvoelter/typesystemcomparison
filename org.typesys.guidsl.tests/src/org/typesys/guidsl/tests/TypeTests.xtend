@@ -64,7 +64,7 @@ class TypeTests {
 		_float.isAssignable(_int).assertTrue
 		_float.isAssignable(_float).assertTrue
 		
-    }		
+    }
 	
 	
 }

@@ -9,6 +9,9 @@ judgments {
 	exprtype |- Expression expression : output Type
 		error "cannot type expression " + stringRep(expression)
 		source expression
+	// computes whether {@code right} is assignable to {@code left}
+	isAssignable |- Type left <~ Type right
+		error stringRep(right) + " is not assignable to " + stringRep(left)
 }
 
 axiom SimpleAttributeType
@@ -28,6 +31,21 @@ axiom StringLiteralType
 
 axiom NumberLiteralType
 	G |- NumberLiteral lit : XsemGuiDslFactory::eINSTANCE.createFloatType
+
+rule IsAssignableBase
+	G |- Type left <~ Type right
+from {
+	left.eClass == right.eClass
+}
+
+axiom BooleanAssignableToString
+	G |- StringType left <~ BooleanType right
+
+axiom IntAssignableToString
+	G |- StringType left <~ NumberType right
+
+axiom IntAssignableToFloat
+	G |- FloatType left <~ IntType right
 
 checkrule ValidateMustBeBoolean for
 	Widget widget

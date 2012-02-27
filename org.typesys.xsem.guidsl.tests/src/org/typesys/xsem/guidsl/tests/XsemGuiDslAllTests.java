@@ -14,6 +14,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 	XsemGuiDslParserTests.class,
 	XsemGuiDslTypingTests.class,
+	XsemGuiDslConformanceTests.class,
 	XsemGuiDslValidatorTests.class
 })
 public class XsemGuiDslAllTests {

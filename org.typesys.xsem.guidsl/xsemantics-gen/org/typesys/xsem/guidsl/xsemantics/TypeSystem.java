@@ -6,6 +6,7 @@ import it.xsemantics.runtime.RuleApplicationTrace;
 import it.xsemantics.runtime.RuleEnvironment;
 import it.xsemantics.runtime.RuleFailedException;
 import it.xsemantics.runtime.XsemanticsRuntimeSystem;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -20,7 +21,9 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.CheckBoxWidget;
 import org.typesys.xsem.guidsl.xsemGuiDsl.DerivedAttribute;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Expression;
 import org.typesys.xsem.guidsl.xsemGuiDsl.FloatType;
+import org.typesys.xsem.guidsl.xsemGuiDsl.IntType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.NumberLiteral;
+import org.typesys.xsem.guidsl.xsemGuiDsl.NumberType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.SimpleAttribute;
 import org.typesys.xsem.guidsl.xsemGuiDsl.StringLiteral;
 import org.typesys.xsem.guidsl.xsemGuiDsl.StringType;
@@ -36,10 +39,16 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	public final static String BOOLEANLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.BooleanLiteralType";
 	public final static String STRINGLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.StringLiteralType";
 	public final static String NUMBERLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.NumberLiteralType";
+	public final static String ISASSIGNABLEBASE = "org.typesys.xsem.guidsl.xsemantics.rules.IsAssignableBase";
+	public final static String BOOLEANASSIGNABLETOSTRING = "org.typesys.xsem.guidsl.xsemantics.rules.BooleanAssignableToString";
+	public final static String INTASSIGNABLETOSTRING = "org.typesys.xsem.guidsl.xsemantics.rules.IntAssignableToString";
+	public final static String INTASSIGNABLETOFLOAT = "org.typesys.xsem.guidsl.xsemantics.rules.IntAssignableToFloat";
 
 	protected PolymorphicDispatcher<Result<Type>> attrtypeDispatcher;
 	
 	protected PolymorphicDispatcher<Result<Type>> exprtypeDispatcher;
+	
+	protected PolymorphicDispatcher<Result<Boolean>> isAssignableDispatcher;
 
 	public TypeSystem() {
 		init();
@@ -50,6 +59,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			"attrtypeImpl", 3, "||-", ":");
 		exprtypeDispatcher = buildPolymorphicDispatcher1(
 			"exprtypeImpl", 3, "|-", ":");
+		isAssignableDispatcher = buildPolymorphicDispatcher1(
+			"isAssignableImpl", 4, "|-", "<~");
 	}
 
 	public Result<Type> attrtype(final Attribute attribute) {
@@ -75,6 +86,20 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			final Expression expression) {
 		try {
 			return exprtypeInternal(_environment_, _trace_, expression);
+		} catch (Exception e) {
+			return resultForFailure(e);
+		}
+	}
+	
+	public Result<Boolean> isAssignable(final Type left, final Type right) {
+		return isAssignable(new RuleEnvironment(),
+			null, left, right);
+	}
+	
+	public Result<Boolean> isAssignable(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
+			final Type left, final Type right) {
+		try {
+			return isAssignableInternal(_environment_, _trace_, left, right);
 		} catch (Exception e) {
 			return resultForFailure(e);
 		}
@@ -235,6 +260,30 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		}
 	}
 	
+	protected void isAssignableThrowException(String _issue, Exception _ex, final Type left, final Type right) 
+			throws RuleFailedException {
+		
+		String _stringRep = this.stringRep(right);
+		String _operator_plus = StringExtensions.operator_plus(_stringRep, " is not assignable to ");
+		String _stringRep_1 = this.stringRep(left);
+		String _operator_plus_1 = StringExtensions.operator_plus(_operator_plus, _stringRep_1);
+		String error = _operator_plus_1;
+		throwRuleFailedException(error,
+				_issue, _ex,
+				new ErrorInformation(null, null));
+	}
+	
+	protected Result<Boolean> isAssignableInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
+			final Type left, final Type right) {
+		try {
+			checkParamsNotNull(left, right);
+			return isAssignableDispatcher.invoke(_environment_, _trace_, left, right);
+		} catch (Exception e) {
+			sneakyThrowRuleFailedException(e);
+			return null;
+		}
+	}
+	
 	protected Result<Type> attrtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final SimpleAttribute attr) 
 			throws RuleFailedException {
@@ -359,5 +408,101 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		
 		FloatType _createFloatType = XsemGuiDslFactory.eINSTANCE.createFloatType();
 		return new Result<Type>(_createFloatType);
+	}
+	
+	protected Result<Boolean> isAssignableImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final Type left, final Type right) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Boolean> _result_ = applyRuleIsAssignableBase(G, _subtrace_, left, right);
+			addToTrace(_trace_, ruleName("IsAssignableBase") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleIsAssignableBase) {
+			isAssignableThrowException(ISASSIGNABLEBASE,
+				e_applyRuleIsAssignableBase, left, right);
+			return null;
+		}
+	}
+	
+	protected Result<Boolean> applyRuleIsAssignableBase(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final Type left, final Type right) 
+			throws RuleFailedException {
+		
+		EClass _eClass = left.eClass();
+		EClass _eClass_1 = right.eClass();
+		boolean _operator_equals = ObjectExtensions.operator_equals(_eClass, _eClass_1);
+		/* left.eClass == right.eClass */
+		if (!_operator_equals) {
+		  sneakyThrowRuleFailedException("left.eClass == right.eClass");
+		}
+		return new Result<Boolean>(true);
+	}
+	
+	protected Result<Boolean> isAssignableImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final StringType left, final BooleanType right) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Boolean> _result_ = applyRuleBooleanAssignableToString(G, _subtrace_, left, right);
+			addToTrace(_trace_, ruleName("BooleanAssignableToString") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleBooleanAssignableToString) {
+			isAssignableThrowException(BOOLEANASSIGNABLETOSTRING,
+				e_applyRuleBooleanAssignableToString, left, right);
+			return null;
+		}
+	}
+	
+	protected Result<Boolean> applyRuleBooleanAssignableToString(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final StringType left, final BooleanType right) 
+			throws RuleFailedException {
+		return new Result<Boolean>(true);
+	}
+	
+	protected Result<Boolean> isAssignableImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final StringType left, final NumberType right) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Boolean> _result_ = applyRuleIntAssignableToString(G, _subtrace_, left, right);
+			addToTrace(_trace_, ruleName("IntAssignableToString") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleIntAssignableToString) {
+			isAssignableThrowException(INTASSIGNABLETOSTRING,
+				e_applyRuleIntAssignableToString, left, right);
+			return null;
+		}
+	}
+	
+	protected Result<Boolean> applyRuleIntAssignableToString(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final StringType left, final NumberType right) 
+			throws RuleFailedException {
+		return new Result<Boolean>(true);
+	}
+	
+	protected Result<Boolean> isAssignableImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final FloatType left, final IntType right) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Boolean> _result_ = applyRuleIntAssignableToFloat(G, _subtrace_, left, right);
+			addToTrace(_trace_, ruleName("IntAssignableToFloat") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleIntAssignableToFloat) {
+			isAssignableThrowException(INTASSIGNABLETOFLOAT,
+				e_applyRuleIntAssignableToFloat, left, right);
+			return null;
+		}
+	}
+	
+	protected Result<Boolean> applyRuleIntAssignableToFloat(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final FloatType left, final IntType right) 
+			throws RuleFailedException {
+		return new Result<Boolean>(true);
 	}
 }
