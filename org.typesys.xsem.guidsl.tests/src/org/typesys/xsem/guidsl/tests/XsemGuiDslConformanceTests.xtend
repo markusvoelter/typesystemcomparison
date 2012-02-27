@@ -58,11 +58,13 @@ class XsemGuiDslConformanceTests extends XsemGuiDslAbstractTests {
 		_int.isAssignable(_int).assertTrue
 		_int.isAssignable(_float).assertFalse
 	
+		number.isAssignable(_int).assertTrue
+		number.isAssignable(_float).assertTrue
+	
 		_float.isAssignable(bool).assertFalse
 		_float.isAssignable(string).assertFalse
 		_float.isAssignable(_int).assertTrue
 		_float.isAssignable(_float).assertTrue
-		
     }
     
     def isAssignable(Type left, Type right) {

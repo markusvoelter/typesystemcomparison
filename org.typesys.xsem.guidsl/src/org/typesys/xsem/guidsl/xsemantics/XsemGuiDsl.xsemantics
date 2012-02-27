@@ -35,7 +35,7 @@ axiom NumberLiteralType
 rule IsAssignableBase
 	G |- Type left <~ Type right
 from {
-	left.eClass == right.eClass
+	left.eClass.isSuperTypeOf(right.eClass)
 }
 
 axiom BooleanAssignableToString

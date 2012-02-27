@@ -432,10 +432,10 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		
 		EClass _eClass = left.eClass();
 		EClass _eClass_1 = right.eClass();
-		boolean _operator_equals = ObjectExtensions.operator_equals(_eClass, _eClass_1);
-		/* left.eClass == right.eClass */
-		if (!_operator_equals) {
-		  sneakyThrowRuleFailedException("left.eClass == right.eClass");
+		boolean _isSuperTypeOf = _eClass.isSuperTypeOf(_eClass_1);
+		/* left.eClass.isSuperTypeOf(right.eClass) */
+		if (!_isSuperTypeOf) {
+		  sneakyThrowRuleFailedException("left.eClass.isSuperTypeOf(right.eClass)");
 		}
 		return new Result<Boolean>(true);
 	}
