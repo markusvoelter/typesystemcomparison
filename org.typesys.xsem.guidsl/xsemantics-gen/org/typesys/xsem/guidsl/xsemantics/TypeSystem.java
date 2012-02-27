@@ -14,16 +14,24 @@ import org.eclipse.xtext.util.PolymorphicDispatcher;
 import org.eclipse.xtext.xbase.lib.BooleanExtensions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
+import org.typesys.xsem.guidsl.xsemGuiDsl.AndOrExpression;
+import org.typesys.xsem.guidsl.xsemGuiDsl.ArithmeticSigned;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Attribute;
+import org.typesys.xsem.guidsl.xsemGuiDsl.AttributeRef;
 import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanLiteral;
+import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanNegation;
 import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.CheckBoxWidget;
+import org.typesys.xsem.guidsl.xsemGuiDsl.Comparison;
 import org.typesys.xsem.guidsl.xsemGuiDsl.DerivedAttribute;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Expression;
 import org.typesys.xsem.guidsl.xsemGuiDsl.FloatType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.IntType;
+import org.typesys.xsem.guidsl.xsemGuiDsl.Minus;
+import org.typesys.xsem.guidsl.xsemGuiDsl.MultiOrDiv;
 import org.typesys.xsem.guidsl.xsemGuiDsl.NumberLiteral;
 import org.typesys.xsem.guidsl.xsemGuiDsl.NumberType;
+import org.typesys.xsem.guidsl.xsemGuiDsl.Plus;
 import org.typesys.xsem.guidsl.xsemGuiDsl.SimpleAttribute;
 import org.typesys.xsem.guidsl.xsemGuiDsl.StringLiteral;
 import org.typesys.xsem.guidsl.xsemGuiDsl.StringType;
@@ -32,6 +40,7 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.Type;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Widget;
 import org.typesys.xsem.guidsl.xsemGuiDsl.XsemGuiDslFactory;
 import org.typesys.xsem.guidsl.xsemGuiDsl.XsemGuiDslPackage;
+import org.typesys.xsem.guidsl.xsemGuiDsl.lenghtOf;
 
 public class TypeSystem extends XsemanticsRuntimeSystem {
 	public final static String SIMPLEATTRIBUTETYPE = "org.typesys.xsem.guidsl.xsemantics.rules.SimpleAttributeType";
@@ -39,6 +48,15 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	public final static String BOOLEANLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.BooleanLiteralType";
 	public final static String STRINGLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.StringLiteralType";
 	public final static String NUMBERLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.NumberLiteralType";
+	public final static String ATTRIBUTEREFTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.AttributeRefType";
+	public final static String MULTIORDIVTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.MultiOrDivType";
+	public final static String MINUSTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.MinusType";
+	public final static String PLUSTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.PlusType";
+	public final static String COMPARISONTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.ComparisonType";
+	public final static String ANDORTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.AndOrType";
+	public final static String BOOLEANNEGATIONTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.BooleanNegationType";
+	public final static String ARITHMETICSIGNEDTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.ArithmeticSignedType";
+	public final static String LENGTHOFTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.LengthOfType";
 	public final static String ISASSIGNABLEBASE = "org.typesys.xsem.guidsl.xsemantics.rules.IsAssignableBase";
 	public final static String BOOLEANASSIGNABLETOSTRING = "org.typesys.xsem.guidsl.xsemantics.rules.BooleanAssignableToString";
 	public final static String INTASSIGNABLETOSTRING = "org.typesys.xsem.guidsl.xsemantics.rules.IntAssignableToString";
@@ -124,6 +142,25 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		}
 	}
 
+	public Result<Boolean> attributeTypeChecks(final Attribute attribute) {
+		try {
+			return attributeTypeChecksInternal(null, attribute);
+		} catch (Exception e) {
+			return resultForFailure(e);
+		}
+	}
+	
+	public Result<Boolean> attributeTypeChecksInternal(final RuleApplicationTrace _trace_, final Attribute attribute) 
+			throws RuleFailedException {
+		
+		/* empty ||- attribute : var Type type */
+		Type type = null;
+		Result<Type> result = attrtypeInternal(emptyEnvironment(), _trace_, attribute);
+		checkAssignableTo(result.getFirst(), Type.class);
+		type = (Type) result.getFirst();
+		return new Result<Boolean>(true);
+	}
+	
 	public Result<Boolean> validateMustBeBoolean(final Widget widget) {
 		try {
 			return validateMustBeBooleanInternal(null, widget);
@@ -438,6 +475,365 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		
 		FloatType _createFloatType = XsemGuiDslFactory.eINSTANCE.createFloatType();
 		return new Result<Type>(_createFloatType);
+	}
+	
+	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final AttributeRef attrRef) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRuleAttributeRefType(G, _subtrace_, attrRef);
+			addToTrace(_trace_, ruleName("AttributeRefType") + stringRepForEnv(G) + " |- " + stringRep(attrRef) + " : " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleAttributeRefType) {
+			exprtypeThrowException(ATTRIBUTEREFTYPE,
+				e_applyRuleAttributeRefType, attrRef);
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRuleAttributeRefType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final AttributeRef attrRef) 
+			throws RuleFailedException {
+		Type type = null;
+		
+		/* G ||- attrRef.attr : type */
+		Attribute _attr = attrRef.getAttr();
+		Result<Type> result = attrtypeInternal(G, _trace_, _attr);
+		checkAssignableTo(result.getFirst(), Type.class);
+		type = (Type) result.getFirst();
+		
+		return new Result<Type>(type);
+	}
+	
+	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final MultiOrDiv multiOrDiv) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRuleMultiOrDivType(G, _subtrace_, multiOrDiv);
+			addToTrace(_trace_, ruleName("MultiOrDivType") + stringRepForEnv(G) + " |- " + stringRep(multiOrDiv) + " : " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleMultiOrDivType) {
+			exprtypeThrowException(MULTIORDIVTYPE,
+				e_applyRuleMultiOrDivType, multiOrDiv);
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRuleMultiOrDivType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final MultiOrDiv multiOrDiv) 
+			throws RuleFailedException {
+		NumberType type = null;
+		
+		{
+		  /* G |- multiOrDiv.left : var NumberType leftType */
+		  Expression _left = multiOrDiv.getLeft();
+		  NumberType leftType = null;
+		  Result<Type> result = exprtypeInternal(G, _trace_, _left);
+		  checkAssignableTo(result.getFirst(), NumberType.class);
+		  leftType = (NumberType) result.getFirst();
+		  
+		  /* G |- multiOrDiv.right : var NumberType rightType */
+		  Expression _right = multiOrDiv.getRight();
+		  NumberType rightType = null;
+		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _right);
+		  checkAssignableTo(result_1.getFirst(), NumberType.class);
+		  rightType = (NumberType) result_1.getFirst();
+		  
+		  /* G |- leftType ~~ rightType |> type */
+		  Result<Type> result_2 = mostGeneralInternal(G, _trace_, leftType, rightType);
+		  checkAssignableTo(result_2.getFirst(), NumberType.class);
+		  type = (NumberType) result_2.getFirst();
+		  
+		}
+		return new Result<Type>(type);
+	}
+	
+	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final Minus minus) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRuleMinusType(G, _subtrace_, minus);
+			addToTrace(_trace_, ruleName("MinusType") + stringRepForEnv(G) + " |- " + stringRep(minus) + " : " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleMinusType) {
+			exprtypeThrowException(MINUSTYPE,
+				e_applyRuleMinusType, minus);
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRuleMinusType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final Minus minus) 
+			throws RuleFailedException {
+		NumberType type = null;
+		
+		{
+		  /* G |- minus.left : var NumberType leftType */
+		  Expression _left = minus.getLeft();
+		  NumberType leftType = null;
+		  Result<Type> result = exprtypeInternal(G, _trace_, _left);
+		  checkAssignableTo(result.getFirst(), NumberType.class);
+		  leftType = (NumberType) result.getFirst();
+		  
+		  /* G |- minus.right : var NumberType rightType */
+		  Expression _right = minus.getRight();
+		  NumberType rightType = null;
+		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _right);
+		  checkAssignableTo(result_1.getFirst(), NumberType.class);
+		  rightType = (NumberType) result_1.getFirst();
+		  
+		  /* G |- leftType ~~ rightType |> type */
+		  Result<Type> result_2 = mostGeneralInternal(G, _trace_, leftType, rightType);
+		  checkAssignableTo(result_2.getFirst(), NumberType.class);
+		  type = (NumberType) result_2.getFirst();
+		  
+		}
+		return new Result<Type>(type);
+	}
+	
+	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final Plus plus) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRulePlusType(G, _subtrace_, plus);
+			addToTrace(_trace_, ruleName("PlusType") + stringRepForEnv(G) + " |- " + stringRep(plus) + " : " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRulePlusType) {
+			exprtypeThrowException(PLUSTYPE,
+				e_applyRulePlusType, plus);
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRulePlusType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final Plus plus) 
+			throws RuleFailedException {
+		Type type = null;
+		
+		{
+		  /* G |- plus.left : var Type leftType */
+		  Expression _left = plus.getLeft();
+		  Type leftType = null;
+		  Result<Type> result = exprtypeInternal(G, _trace_, _left);
+		  checkAssignableTo(result.getFirst(), Type.class);
+		  leftType = (Type) result.getFirst();
+		  
+		  /* G |- plus.right : var Type rightType */
+		  Expression _right = plus.getRight();
+		  Type rightType = null;
+		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _right);
+		  checkAssignableTo(result_1.getFirst(), Type.class);
+		  rightType = (Type) result_1.getFirst();
+		  
+		  /* G |- leftType ~~ rightType |> type */
+		  Result<Type> result_2 = mostGeneralInternal(G, _trace_, leftType, rightType);
+		  checkAssignableTo(result_2.getFirst(), Type.class);
+		  type = (Type) result_2.getFirst();
+		  
+		}
+		return new Result<Type>(type);
+	}
+	
+	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final Comparison comparison) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRuleComparisonType(G, _subtrace_, comparison);
+			addToTrace(_trace_, ruleName("ComparisonType") + stringRepForEnv(G) + " |- " + stringRep(comparison) + " : " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleComparisonType) {
+			exprtypeThrowException(COMPARISONTYPE,
+				e_applyRuleComparisonType, comparison);
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRuleComparisonType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final Comparison comparison) 
+			throws RuleFailedException {
+		
+		{
+		  /* G |- comparison.left : var Type leftType */
+		  Expression _left = comparison.getLeft();
+		  Type leftType = null;
+		  Result<Type> result = exprtypeInternal(G, _trace_, _left);
+		  checkAssignableTo(result.getFirst(), Type.class);
+		  leftType = (Type) result.getFirst();
+		  
+		  /* G |- comparison.right : var Type rightType */
+		  Expression _right = comparison.getRight();
+		  Type rightType = null;
+		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _right);
+		  checkAssignableTo(result_1.getFirst(), Type.class);
+		  rightType = (Type) result_1.getFirst();
+		  
+		  boolean _operator_or = false;
+		  boolean _operator_and = false;
+		  if (!(leftType instanceof StringType)) {
+		    _operator_and = false;
+		  } else {
+		    _operator_and = BooleanExtensions.operator_and((leftType instanceof StringType), (rightType instanceof StringType));
+		  }
+		  if (_operator_and) {
+		    _operator_or = true;
+		  } else {
+		    boolean _operator_and_1 = false;
+		    if (!(leftType instanceof NumberType)) {
+		      _operator_and_1 = false;
+		    } else {
+		      _operator_and_1 = BooleanExtensions.operator_and((leftType instanceof NumberType), (rightType instanceof NumberType));
+		    }
+		    _operator_or = BooleanExtensions.operator_or(_operator_and, _operator_and_1);
+		  }
+		  /* (leftType instanceof StringType && rightType instanceof StringType) || (leftType instanceof NumberType && rightType instanceof NumberType) */
+		  if (!_operator_or) {
+		    sneakyThrowRuleFailedException("(leftType instanceof StringType && rightType instanceof StringType) || (leftType instanceof NumberType && rightType instanceof NumberType)");
+		  }
+		}
+		BooleanType _createBooleanType = XsemGuiDslFactory.eINSTANCE.createBooleanType();
+		return new Result<Type>(_createBooleanType);
+	}
+	
+	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final AndOrExpression andOr) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRuleAndOrType(G, _subtrace_, andOr);
+			addToTrace(_trace_, ruleName("AndOrType") + stringRepForEnv(G) + " |- " + stringRep(andOr) + " : " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleAndOrType) {
+			exprtypeThrowException(ANDORTYPE,
+				e_applyRuleAndOrType, andOr);
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRuleAndOrType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final AndOrExpression andOr) 
+			throws RuleFailedException {
+		
+		{
+		  /* G |- andOr.left : var BooleanType leftType */
+		  Expression _left = andOr.getLeft();
+		  BooleanType leftType = null;
+		  Result<Type> result = exprtypeInternal(G, _trace_, _left);
+		  checkAssignableTo(result.getFirst(), BooleanType.class);
+		  leftType = (BooleanType) result.getFirst();
+		  
+		  /* G |- andOr.right : var BooleanType rightType */
+		  Expression _right = andOr.getRight();
+		  BooleanType rightType = null;
+		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _right);
+		  checkAssignableTo(result_1.getFirst(), BooleanType.class);
+		  rightType = (BooleanType) result_1.getFirst();
+		  
+		}
+		BooleanType _createBooleanType = XsemGuiDslFactory.eINSTANCE.createBooleanType();
+		return new Result<Type>(_createBooleanType);
+	}
+	
+	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final BooleanNegation neg) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRuleBooleanNegationType(G, _subtrace_, neg);
+			addToTrace(_trace_, ruleName("BooleanNegationType") + stringRepForEnv(G) + " |- " + stringRep(neg) + " : " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleBooleanNegationType) {
+			exprtypeThrowException(BOOLEANNEGATIONTYPE,
+				e_applyRuleBooleanNegationType, neg);
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRuleBooleanNegationType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final BooleanNegation neg) 
+			throws RuleFailedException {
+		
+		/* G |- neg.expression : var BooleanType expType */
+		Expression _expression = neg.getExpression();
+		BooleanType expType = null;
+		Result<Type> result = exprtypeInternal(G, _trace_, _expression);
+		checkAssignableTo(result.getFirst(), BooleanType.class);
+		expType = (BooleanType) result.getFirst();
+		
+		BooleanType _createBooleanType = XsemGuiDslFactory.eINSTANCE.createBooleanType();
+		return new Result<Type>(_createBooleanType);
+	}
+	
+	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final ArithmeticSigned signed) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRuleArithmeticSignedType(G, _subtrace_, signed);
+			addToTrace(_trace_, ruleName("ArithmeticSignedType") + stringRepForEnv(G) + " |- " + stringRep(signed) + " : " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleArithmeticSignedType) {
+			exprtypeThrowException(ARITHMETICSIGNEDTYPE,
+				e_applyRuleArithmeticSignedType, signed);
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRuleArithmeticSignedType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final ArithmeticSigned signed) 
+			throws RuleFailedException {
+		NumberType numType = null;
+		
+		/* G |- signed.expression : numType */
+		Expression _expression = signed.getExpression();
+		Result<Type> result = exprtypeInternal(G, _trace_, _expression);
+		checkAssignableTo(result.getFirst(), NumberType.class);
+		numType = (NumberType) result.getFirst();
+		
+		return new Result<Type>(numType);
+	}
+	
+	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final lenghtOf len) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRuleLengthOfType(G, _subtrace_, len);
+			addToTrace(_trace_, ruleName("LengthOfType") + stringRepForEnv(G) + " |- " + stringRep(len) + " : " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleLengthOfType) {
+			exprtypeThrowException(LENGTHOFTYPE,
+				e_applyRuleLengthOfType, len);
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRuleLengthOfType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final lenghtOf len) 
+			throws RuleFailedException {
+		
+		/* G |- len.expr : var StringType stringType */
+		Expression _expr = len.getExpr();
+		StringType stringType = null;
+		Result<Type> result = exprtypeInternal(G, _trace_, _expr);
+		checkAssignableTo(result.getFirst(), StringType.class);
+		stringType = (StringType) result.getFirst();
+		
+		IntType _createIntType = XsemGuiDslFactory.eINSTANCE.createIntType();
+		return new Result<Type>(_createIntType);
 	}
 	
 	protected Result<Boolean> isAssignableImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
