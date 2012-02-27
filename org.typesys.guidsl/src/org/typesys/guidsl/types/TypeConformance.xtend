@@ -17,6 +17,7 @@ class TypeConformance {
 	 * is correct.
 	 */
 	def dispatch isAssignable(Type left, Type right) {
+		println(right.eClass)
 		left.eClass == right.eClass
 	}
 
@@ -24,14 +25,16 @@ class TypeConformance {
 		left.ref == right.ref
 	}
 
-	def dispatch isAssignable(NumberType left, IntType right) { true }
 	def dispatch isAssignable(NumberType left, FloatType right) { true }
-	def dispatch isAssignable(IntType left, FloatType right) { false }
-	
+	def dispatch isAssignable(NumberType left, IntType right) { true }
+
 	def dispatch isAssignable(FloatType left, IntType right) { true }
+
+	def dispatch isAssignable(IntType left, FloatType right) { false }
 
 	// note that with this rule, lengthOf(int) is also allowed
 	def dispatch isAssignable(StringType left, NumberType right) { true }
-	def dispatch isAssignable(StringType left, BooleanType right) { true }
+//  with this, a boolean would be allowed to be assigned to a string
+//	def dispatch isAssignable(StringType left, BooleanType right) { false }
 
 }

@@ -112,8 +112,8 @@ class GuiDslTypeProvider {
 		switch e {
 			// A widget only holds a reference to a validate clause
 			// otherwise one would check if it was the right feature wih
-			// feature == GuiDslPackage$Literals::WIDGET__VALIDATE 
-			Widget case feature == GuiDslPackage$Literals::WIDGET__VALIDATE : bool
+			// case feature == GuiDslPackage$Literals::WIDGET__VALIDATE 
+			Widget : bool
 			
 			// according to the following definition,
 			// an object contained (i.e. left or right side) 
@@ -134,7 +134,7 @@ class GuiDslTypeProvider {
 			
 			Plus : {
 				// everything can be added, it might end up as string
-				mostGeneral(e.left.type, e.right.type)
+				mostGeneral(e.left.type, e.right.type).mostSpecific(string)
 			}
 			Minus : number
 			Multi : number
@@ -157,6 +157,13 @@ class GuiDslTypeProvider {
 		    one
 		 else 
 		    two
+	}
+	
+	def Type mostSpecific(Type one, Type two) {
+		if (conformance.isAssignable(one, two)) 
+		    two
+		 else
+		    one
 	}
 	
 }
