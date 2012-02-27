@@ -12,6 +12,7 @@ judgments {
 	// computes whether {@code right} is assignable to {@code left}
 	isAssignable |- Type left <~ Type right
 		error stringRep(right) + " is not assignable to " + stringRep(left)
+	mostGeneral |- Type first ~~ Type second |> output Type
 }
 
 axiom SimpleAttributeType
@@ -46,6 +47,16 @@ axiom IntAssignableToString
 
 axiom IntAssignableToFloat
 	G |- FloatType left <~ IntType right
+
+rule MostGeneral
+	G |- Type first ~~ Type second |> Type mostGeneral
+from {
+	{
+		G |- first <~ second
+		mostGeneral = first
+	} or
+		mostGeneral = second
+}
 
 checkrule ValidateMustBeBoolean for
 	Widget widget

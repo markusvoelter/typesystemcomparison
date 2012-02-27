@@ -43,12 +43,15 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	public final static String BOOLEANASSIGNABLETOSTRING = "org.typesys.xsem.guidsl.xsemantics.rules.BooleanAssignableToString";
 	public final static String INTASSIGNABLETOSTRING = "org.typesys.xsem.guidsl.xsemantics.rules.IntAssignableToString";
 	public final static String INTASSIGNABLETOFLOAT = "org.typesys.xsem.guidsl.xsemantics.rules.IntAssignableToFloat";
+	public final static String MOSTGENERAL = "org.typesys.xsem.guidsl.xsemantics.rules.MostGeneral";
 
 	protected PolymorphicDispatcher<Result<Type>> attrtypeDispatcher;
 	
 	protected PolymorphicDispatcher<Result<Type>> exprtypeDispatcher;
 	
 	protected PolymorphicDispatcher<Result<Boolean>> isAssignableDispatcher;
+	
+	protected PolymorphicDispatcher<Result<Type>> mostGeneralDispatcher;
 
 	public TypeSystem() {
 		init();
@@ -61,6 +64,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			"exprtypeImpl", 3, "|-", ":");
 		isAssignableDispatcher = buildPolymorphicDispatcher1(
 			"isAssignableImpl", 4, "|-", "<~");
+		mostGeneralDispatcher = buildPolymorphicDispatcher1(
+			"mostGeneralImpl", 4, "|-", "~~", "|>");
 	}
 
 	public Result<Type> attrtype(final Attribute attribute) {
@@ -100,6 +105,20 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			final Type left, final Type right) {
 		try {
 			return isAssignableInternal(_environment_, _trace_, left, right);
+		} catch (Exception e) {
+			return resultForFailure(e);
+		}
+	}
+	
+	public Result<Type> mostGeneral(final Type first, final Type second) {
+		return mostGeneral(new RuleEnvironment(),
+			null, first, second);
+	}
+	
+	public Result<Type> mostGeneral(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
+			final Type first, final Type second) {
+		try {
+			return mostGeneralInternal(_environment_, _trace_, first, second);
 		} catch (Exception e) {
 			return resultForFailure(e);
 		}
@@ -278,6 +297,17 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		try {
 			checkParamsNotNull(left, right);
 			return isAssignableDispatcher.invoke(_environment_, _trace_, left, right);
+		} catch (Exception e) {
+			sneakyThrowRuleFailedException(e);
+			return null;
+		}
+	}
+	
+	protected Result<Type> mostGeneralInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
+			final Type first, final Type second) {
+		try {
+			checkParamsNotNull(first, second);
+			return mostGeneralDispatcher.invoke(_environment_, _trace_, first, second);
 		} catch (Exception e) {
 			sneakyThrowRuleFailedException(e);
 			return null;
@@ -504,5 +534,42 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			final FloatType left, final IntType right) 
 			throws RuleFailedException {
 		return new Result<Boolean>(true);
+	}
+	
+	protected Result<Type> mostGeneralImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final Type first, final Type second) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRuleMostGeneral(G, _subtrace_, first, second);
+			addToTrace(_trace_, ruleName("MostGeneral") + stringRepForEnv(G) + " |- " + stringRep(first) + " ~~ " + stringRep(second) + " |> " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleMostGeneral) {
+			throwRuleFailedException(ruleName("MostGeneral") + stringRepForEnv(G) + " |- " + stringRep(first) + " ~~ " + stringRep(second) + " |> " + "Type",
+				MOSTGENERAL,
+				e_applyRuleMostGeneral, new ErrorInformation(first), new ErrorInformation(second));
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRuleMostGeneral(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final Type first, final Type second) 
+			throws RuleFailedException {
+		Type mostGeneral = null;
+		
+		/* { G |- first <~ second mostGeneral = first } or mostGeneral = second */
+		try {
+		  Type _xblockexpression = null;
+		  {
+		    /* G |- first <~ second */
+		    isAssignableInternal(G, _trace_, first, second);
+		    Type _mostGeneral = mostGeneral = first;
+		    _xblockexpression = (_mostGeneral);
+		  }
+		} catch (Exception e) {
+		  mostGeneral = second;
+		}
+		return new Result<Type>(mostGeneral);
 	}
 }

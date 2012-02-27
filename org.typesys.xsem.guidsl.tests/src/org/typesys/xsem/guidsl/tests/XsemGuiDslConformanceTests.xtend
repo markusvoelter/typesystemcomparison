@@ -67,6 +67,18 @@ class XsemGuiDslConformanceTests extends XsemGuiDslAbstractTests {
 		_float.isAssignable(_float).assertTrue
     }
     
+    @Test
+	def void mostGeneral() {
+		assertMostGeneral(number, _float, number)
+		assertMostGeneral(number, number, _float)
+	}
+	
+	@Test
+	def void mostGeneralInt() {
+	  	assertMostGeneral(_float, _float, _int)
+	  	assertMostGeneral(_float, _int, _float)
+	}
+    
     def isAssignable(Type left, Type right) {
     	trace = new RuleApplicationTrace()
     	typesystem.isAssignable(null, trace, left, right)
@@ -88,6 +100,10 @@ class XsemGuiDslConformanceTests extends XsemGuiDslAbstractTests {
 			)
     	}
     	Assert::assertTrue(result.failed)
+    }
+    
+    def void assertMostGeneral(Type expected, Type first, Type second) {
+    	Assert::assertEquals(expected, typesystem.mostGeneral(first, second).value)
     }
 	
 	def void assertAttributeType(CharSequence input, String attrName, 
