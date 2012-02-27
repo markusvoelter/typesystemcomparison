@@ -4,6 +4,7 @@ import org.junit.Test
 import org.typesys.xbase.guidsl.xGuiDsl.Form
 
 import static org.junit.Assert.*
+import org.typesys.xbase.guidsl.xGuiDsl.Widget
 
 class XbaseGuiDslParseTest extends XbaseGuiDslAbstractTests {
 	
@@ -17,9 +18,8 @@ class XbaseGuiDslParseTest extends XbaseGuiDslAbstractTests {
       assertEquals("PersonT", form.entity.name)
       assertEquals("name", form.entity.attributes.head.name)
       assertEquals("firstName", form.entity.attributes.get(1).name )
-// TODO
-//      val widget = model.elements.head.widgets.head
-//      assertNotNull(widget.validate)
+      assertEquals(form.widgets.head.attr, form.entity.attributes.head)
+      assertNotNull(form.widgets.head.validate)
 	}
 	
 }
