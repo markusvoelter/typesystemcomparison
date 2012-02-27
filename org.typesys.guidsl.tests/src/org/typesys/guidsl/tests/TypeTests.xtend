@@ -68,10 +68,7 @@ class TypeTests {
 		assertTrue("int <- bool", _int.isAssignable(_int))
 		assertFalse("int <- bool", _int.isAssignable(_float))
 		
-		assertFalse("float <- bool", _float.isAssignable(bool))
-		assertFalse("float <- string", _float.isAssignable(string))
-		assertTrue("float <- int", _float.isAssignable(_int))
-		assertTrue("float <- float", _float.isAssignable(_float))
     }
+
 	
 }
