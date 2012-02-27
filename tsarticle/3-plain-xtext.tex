@@ -1,9 +1,24 @@
 \section{Plain Xtext}
 
-To fulfill the demonstration tasks, an Xtext validator is implemented which calls a type provider. The validation method for the second task is shown in listing \ref{lst:validation-plain}. A type provider is used infer the type of the attribute (which could be complicated, as it might be an expression for a derived attribute) and checks whether it is boolean. If that is the case, it issues an error message which marks the validation clause of the widget.
+To infer types, the plain Xtext scenario implements an operation which determines the actual type of an expression, one for the expected type (which depends on the context the expression is in), and operations which check whether a type is assignable to another type. The Xtext validator in listing \ref{lst:validation-plain} uses these operations. The first check operates on any expression. If the expression is in a context where a certain type is expected, the helper methods are used to check whether the acutal type is assignable to the expected type, for instance \emph{boolean} for the \emph{validate} clause of a widget. 
+Otherwise it just returns, e.g. in the case of a derived attribute, whose type is only defined by the derivation expression.
 
-\lstinputlisting[label=lst:validation-plain,caption=Xtext validator.,linerange={27-35}]{../org.typesys.guidsl/src/org/typesys/guidsl/validation/GuiDslJavaValidator.java}
+The validations operating on widgets just checks whether the type of the attribute the widget refers to is \emph{boolean}.
 
-Implementing the type provider manually is a tedious task, even when using Xtend 2 with polymorphic dispatch and syntactic sugar to make the code less cluttered. Listing \ref{lst:type-provider-plain} shows parts of it: The type of a primitive type is the type itself, the type of a simple attribute is the type of its type. Apart from that, methods for inferring the types for the different operations have to be implemented.
+\lstinputlisting[label=lst:validation-plain,caption=Xtext validator.,linerange={15-23,31-42,49-57}]{../org.typesys.guidsl/src/org/typesys/guidsl/validation/GuiDslJavaValidator.java}
 
-\lstinputlisting[label=lst:type-provider-plain,caption=Manually implemented type provider (extract from Xtend class).,linerange={14-15,24-50}]{../org.typesys.guidsl/src/org/typesys/guidsl/types/GuiDslTypeProvider.xtend}
+
+Xtend 2 
+
+polymorphic dispatch
+
+switch statement
+
+Listing \ref{lst:plain-type-provider} 
+
+The type of a primitive type is the type itself, the type of a simple attribute is the type of its type.
+
+\lstinputlisting[label=lst:plain-type-provider,caption=Type provider in Xtend.,linerange={36-37,46-76}]{../org.typesys.guidsl/src/org/typesys/guidsl/types/GuiDslTypeProvider.xtend}
+
+\lstinputlisting[label=lst:plain-type-conformance,caption=Type conformance specification (Xtend code).,linerange={9-10,15-29}]{../org.typesys.guidsl/src/org/typesys/guidsl/types/TypeConformance.xtend}
+

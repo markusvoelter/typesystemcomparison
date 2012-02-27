@@ -1,11 +1,18 @@
 \section{Case Study}
 
-In order to compare the different approaches for type systems, we implement the same case study in each variant.
+In order to compare the different approaches for type systems, the same case study is implemented using the following configuration.
+
+\begin{itemize}
+\item Plain Xtext/Xtend
+\item Xtext with Xbase
+\item Xtext with XSemantics
+\item Xtext with Xtext/TS
+\end{itemize}
 
 \subsection{The Scenario}
 In the case study, entities and forms with widgets for GUIs are modeled. The idea is to model user interfaces for manipulating entities which are, for instance, stored in a database. An entity may have simple attributes of base types like \emph{boolean}, \emph{string}, \emph{int} and \emph{float} and derived attributes with a specification on how to derive them, which may refer to other attributes. The widget of the forms are wired to attributes of the entities and may contain a \emph{validate} clause, which verifies for example the length of the input.
 
-Listing \ref{lst:example-plain} shows an example of the DSL with a \emph{Person} entity and a \emph{PersonForm} to edit it. The attributes \emph{isAdult} and \emph{greeting} are derived. Their type should also be derived.
+Listing \ref{lst:example-plain} shows an example of the DSL with a \emph{Person} entity and a \emph{PersonForm} to edit it. The attributes \emph{isAdult} and \emph{greeting} are derived. As their type can be derived, it is not specified explicitly.
 
 \lstinputlisting[language=bash,label=lst:example-plain,caption=Forms and Entities DSL,linerange={1-16}]{..//exampleCode/src/plain-xtext.gui}
 
@@ -13,15 +20,16 @@ The Xtext grammar part used by all variants is shown in listing \ref{lst:grammar
 
 \lstinputlisting[label=lst:grammar-plain,caption=Grammar with plain Xtext,linerange={7-53}]{../org.typesys.guidsl/src/org/typesys/guidsl/GuiDsl.xtext}
 
-The type and expressions definition part of the grammar is listed in \ref{lst:grammar-plain-types-and-ex}. It is the same for the Xtext/TS and XSemantics grammars. As Xbase already has support for Java types and expressions, in the Xbase variant, these rules are replaced.
+The type and expressions definition part of the grammar shown in listing \ref{lst:grammar-plain-types-and-ex}. It is the same for the the plain Xtext grammar and the XSemantics and Xtext/TS grammars. In the Xbase, the rule \emph{Expr} is replaced with the Xbase \emph{XExpression} rule, which maps Java types and expressions.
 
 \lstinputlisting[label=lst:grammar-plain-types-and-ex,caption=Grammar with plain Xtext,linerange={54-120}]{../org.typesys.guidsl/src/org/typesys/guidsl/GuiDsl.xtext}
 
 \subsection{Demonstration Tasks}
-To compare the different type system variants, each of them will show its type checking ability by demonstrating how it solves the following tasks. 
+To compare the different type system variants, each of them will show its type checking ability by demonstrating how it solves the following tasks.
 \begin{enumerate}
 \item Ensure that the expression after \emph{validate} is boolean.
 \item Show an error message when text widgets refer to boolean entity attributes.
 \item Validate that checkbox widgets may only refer to boolean attributes.
 \end{enumerate}
-All tasks imply being able to infer the type of expressions, as widgets may refer to derived attributes, which are defined with expressions.
+
+All tasks imply being able to infer the type of expressions: The \emph{validated} clause is an expression, and widgets and checkboxes may refer to derived attributes, which are defined with expressions. Test cases for the projects are online at []%TODO
