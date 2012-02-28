@@ -8,18 +8,21 @@ The validations operating on widgets just check whether the type of the attribut
 \lstinputlisting[label=lst:validation-plain,caption=Xtext validator.,linerange={15-23,31-42,49-57}]{../org.typesys.guidsl/src/org/typesys/guidsl/validation/GuiDslJavaValidator.java}
 
 
-Xtend 2
+Listing \ref{lst:plain-type-provider1} shows the recursive computation of types, written in Xtend. The method \emph{getType()} determines the actual type of an expression. The type of a primitive type is defined to be the type itself. The type of an attribute is the type it refers to. In case of a simple attribute, it is the type reference and in case of a derived attribute the type of the derivation expression. References to attributes have the type of the referenced attribute. Note that \verb|e.type| is the reference to a (primitive) type while \verb|e.expr.type| and \verb|e.attr.type| recursively call \emph{getType()}. They use the Xtend 2 syntax shortcut to \verb|getType(e.expr.type)| and \verb|getType(e.attr.type)|.
 
-polymorphic dispatch
+\lstinputlisting[label=lst:plain-type-provider1,caption=Type provider in Xtend.,linerange={34-34,36-86}]{../org.typesys.guidsl/src/org/typesys/guidsl/types/GuiDslTypeProvider.xtend}
 
-switch statement
+The operation \emph{getExpectedType()} in listing \ref{lst:plain-type-provider2} returns the expected type of an expression by checking its context, i.e. the container of the expression. It calls another operation with the container of the expression and the feature of the container pointing to the expression. If the container of an expression is a \emph{Widget}, the expected type is always boolean, as a widget so far has only one feature with an expression, called \emph{validate} which must be boolean. If it had another, then a guard like
 
-Listing \ref{lst:plain-type-provider} shows the recursive computation of types, written in Xtend. The method \emph{getType()} determines the actual type of an expression. The type of a primitive type is defined to be the type itself. The type of an attribute is the type it refers to. In case of a simple attribute it is the type reference and in case of a derived attribute the type of its expression. References to attributes have the type of the referenced attribute. Note that \verb|e.type| is the reference to a (primitive) type while \verb|e.expr.type| and \verb|e.attr.type| use the Xtend 2 syntax shortcut to recursively call \verb|getType(e.expr.type)| and \verb|getType(e.attr.type)|.
+\verb|case feature == GuiDslPackage$Literals::WIDGET__VALIDATE| %$
 
-The operation \verb|getExpectedType()| calls another operation with the container of the expression under consideration and the 
-An example: 
+\noindent would have to be added in the \emph{Widget} clause. The guard would check whether the expression for which the method \emph{internalGetExpectedType()} was called was the \emph{validate} feature of \emph{Widget} and not another feature of \emph{Widget} (possibly added in future versions of the grammar) which might have a different expected type. The expected type of a subtraction, multiplication and division is a \emph{NumberType}. For an addition, it is a string, unless there is a common type of the summands that is more specific. The method returns \emph{null} to indicate if there is no expected type.
 
-\lstinputlisting[label=lst:plain-type-provider,caption=Type provider in Xtend.,linerange={34-34,36-86,96-98,114-146}]{../org.typesys.guidsl/src/org/typesys/guidsl/types/GuiDslTypeProvider.xtend}
+\lstinputlisting[label=lst:plain-type-provider2,caption=Calculating the expected type.,linerange={96-98,114-146}]{../org.typesys.guidsl/src/org/typesys/guidsl/types/GuiDslTypeProvider.xtend}
 
-\lstinputlisting[label=lst:plain-type-conformance,caption=Type conformance specification (Xtend code).,linerange={9-10,15-29}]{../org.typesys.guidsl/src/org/typesys/guidsl/types/TypeConformance.xtend}
+Listing \ref{lst:plain-type-conformance} shows the code to compute whether a type is assignable to another, making use of polymorphic dispatch. The method \emph{isAssignable(left, right)} returns true if one can use an element of type \emph{right} where an element of type \emph{left} is expected. A type can always be assigned to itself. The \emph{eClass()} method is used to get the EMF \emph{EClass} of a type for comparison (parentheses may be omitted in Xtend 2 if there is no parameter), as there could be multiple type instances of the same type, e.g. of an \emph{Entity} type.
+The following methods specify that the number type expects either a \emph{float} or an \emph{int}, that an \emph{int} can be used where a \emph{float} is expected, but not the other way round. The other cases are dealt with the polymorphic dispatch, for instance \emph{isAssignable(int, int)} would be dispatched to the method in line 8, \emph{isAssignable(float, float)} to line 6, \emph{isAssignable(float, number)} to line 2.
 
+\lstinputlisting[label=lst:plain-type-conformance,caption=Type conformance specification (Xtend code).,linerange={9-10,15-29,42-47}]{../org.typesys.guidsl/src/org/typesys/guidsl/types/TypeConformance.xtend}
+
+% Summary
