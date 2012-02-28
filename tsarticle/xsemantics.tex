@@ -1,18 +1,107 @@
 \section{Xsemantics}
 \label{sec:xsemantics}
 
-Lorenzo Bettini's type system Xsemantics, formerly called XtypeS~\cite{Bet11},
-uses an Xtext metamodel and a set of rules and premises as input and returns a set of generated Java methods that can be used in Xtext's scoping and validator classes.
+Xsemantics~\cite{lbts} (the successor of Xtypes~\cite{Bet11}) is a DSL (written
+in Xtext) for writing type systems, reduction rules, interpreters (and in
+general relation rules) for languages implemented in Xtext.
+A system definition in Xsemantics is a set of judgment rules which have a
+conclusion and a set of premises; these rules can act on any Java object,
+though, typically, they will act on EObjects which are elements of the metamodel
+of the language implemented in Xtext.  Indeed, Xsemantics relies on Xbase to
+provide a rich syntax for defining rules (and premises of rule), thus giving
+full access to Java types.
+
+Xsemantics is thought to be used by people who are at least a little familiar
+with formal type systems and operational semantics: it aims at providing
+a syntax which is close to the way deduction rules are written in a formal
+setting~\cite{hindley:1997a,Pierce02}.
+Actually, Xsemantics rules are written in the other direction with respect
+to standard deduction rules: the conclusion come before the premises; this is just
+to make IDE tooling work better, and to give a more "programming" style to rules.
+
+Starting from the definitions of these rules, Xsemantics generates Java code
+that can be used in your language implemented in Xtext for scoping and
+validation (it also generates a validator in Java).  Xsemantics aims at
+providing a rich syntax for defining any kind of rules: relations among elements
+(e.g., \emph{subtyping}), \emph{static semantics} (i.e., type systems) and
+\emph{dynamic semantics} (i.e., reduction rules that can be used for
+interpreting a program).  In this paper, we will use it for writing the rules of
+the type system of the case study we are considering
+(Section~\ref{sec:casestudy}).
+
 \subsection{Type System Specification}
-Xsemantics offers a declarative specification of type rules by using
-Judgements
-rules declaratively specify statements that must hold for the type system, example
 
-checking rules
+The first thing to do in a system defined in Xsemantics is to declare the
+\emph{judgments} of your system; a judgment consists of
 
-axioms
+\begin{itemize}
+\item 
+a name, which has to be unique in the system;
+\item 
+a \textit{judgment symbol} that can be chosen from some predefined symbols;
+\item 
+the \textit{parameters} of the judgment; parameters of a judgments are separated by
+	a \textit{relation symbol} that can be chosen from some predefined symbols;
+\end{itemize}
 
-predefined operations
+\noindent
+The parameters can be
+
+\begin{itemize}
+\item 
+input parameters, in that case they are declared as Java parameters;
+\item 
+output parameters, in that case you use the keyword
+\lstinline[breakatwhitespace=false,breaklines=true]|output| followed by the Java
+type of the output parameter.
+\end{itemize}
+
+\begin{lstlisting}[language=xsemantics,float,label=lst:xsemantics-judgments,caption=Judgment
+definitions in Xsemantics]
+judgments {
+	attrtype ||- Attribute attribute : output Type
+	exprtype |- Expression expression : output Type
+	// whether {@code right} is assignable to {@code left}
+	isAssignable |- Type left <~ Type right
+	// computes the most general type between {@code first} and {@code second}
+	mostGeneral |- Type first ~~  Type second |> output Type
+}
+\end{lstlisting}
+
+\noindent
+The judgment definitions for our case study are shown in
+Listing~\ref{lst:xsemantics-judgments}.
+
+Once the judgments of the system are declared, we can start declaring the
+rules.  Each rule consists of
+
+\begin{itemize}
+\item
+a name, which has to be unique in the system;
+\item
+a \textit{rule conclusion};
+\item
+the \textit{premises} of the rule;
+\end{itemize}
+
+\noindent
+The rule conclusion consists of
+
+\begin{itemize}
+\item
+the name of the \textit{environment} of a rule;
+\item
+a \textit{judgment symbol};
+\item
+the \textit{parameters} of the rules, which are separated by
+a \textit{relation symbol} that can be chosen from some predefined symbols;
+\end{itemize}
+
+The things that make a rule belong to a specific judgment are the judgment
+symbol, the relation symbols (which separate the parameters); moreover the types
+of the parameters of a rule must be (Java) subtypes of the corresponding types
+of the judgment (or exactly the same Java types).  Two rules belonging to the
+same judgment must differ for at least one input parameter's type.
 
 \subsection{Usage in Xtext}
 

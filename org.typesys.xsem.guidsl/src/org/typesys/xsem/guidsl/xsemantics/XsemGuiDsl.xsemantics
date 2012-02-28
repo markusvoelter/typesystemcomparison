@@ -12,6 +12,7 @@ judgments {
 	// computes whether {@code right} is assignable to {@code left}
 	isAssignable |- Type left <~ Type right
 		error stringRep(right) + " is not assignable to " + stringRep(left)
+	// computes the most general type between {@code first} and {@code second}
 	mostGeneral |- Type first ~~ Type second |> output Type
 }
 
