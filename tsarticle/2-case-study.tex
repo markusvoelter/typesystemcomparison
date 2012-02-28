@@ -14,7 +14,30 @@ In the case study, entities and forms with widgets for GUIs are modeled. The ide
 
 Listing \ref{lst:example-plain} shows an example of the DSL with a \emph{Person} entity and a \emph{PersonForm} to edit it. The attributes \emph{isAdult} and \emph{greeting} are derived. As their type can be derived, it is not specified explicitly.
 
-\lstinputlisting[language=bash,label=lst:example-plain,caption=Forms and Entities DSL,linerange={1-16}]{..//exampleCode/src/plain-xtext.gui}
+%\lstinputlisting[language=bash,label=lst:example-plain,caption=Forms and
+% Entities DSL,linerange={1-16}]{..//exampleCode/src/plain-xtext.gui}
+
+\begin{lstlisting}[language=bash,float,label=lst:example-plain,caption=Forms and Entities DSL]
+entity Person {
+	name      : string;
+	firstName : string;
+	age       : int; 
+	weight    : float;
+	likesCake : bool; 
+	/isAdult = age > 18;
+	/greeting = "Hello " + firstName + " " + name;
+	/testExpr = 2 - 2;
+}
+
+form PersonForm edits Person {
+	text (10) -> name validate lengthOf(widgetcontent) < 10;
+	text (20) -> firstName;
+	text (5) -> age;
+	checkbox -> isAdult validate age > 18 => widgetcontent == true;
+	text(5) -> weight validate 12.5 > age;
+}
+\end{lstlisting}
+
 
 The Xtext grammar part used by all variants is shown in listing \ref{lst:grammar-plain}. 
 
