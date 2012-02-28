@@ -9,6 +9,10 @@ judgments {
 	exprtype |- Expression expression : output Type
 		error "cannot type expression " + stringRep(expression)
 		source expression
+	// computes whether {@code right} is assignable to {@code left}
+	isAssignable |- Type left <~ Type right
+		error stringRep(right) + " is not assignable to " + stringRep(left)
+	mostGeneral |- Type first ~~ Type second |> output Type
 }
 
 axiom SimpleAttributeType
@@ -28,6 +32,113 @@ axiom StringLiteralType
 
 axiom NumberLiteralType
 	G |- NumberLiteral lit : XsemGuiDslFactory::eINSTANCE.createFloatType
+
+rule AttributeRefType
+	G |- AttributeRef attrRef : Type type
+from {
+	G ||- attrRef.attr : type
+}
+
+rule MultiOrDivType
+	G |- MultiOrDiv multiOrDiv : NumberType type
+from {
+	// require number types
+	G |- multiOrDiv.left : var NumberType leftType
+	G |- multiOrDiv.right : var NumberType rightType
+	// get the most general
+	G |- leftType ~~ rightType |> type
+}
+
+rule MinusType
+	G |- Minus minus : NumberType type
+from {
+	// require number types
+	G |- minus.left : var NumberType leftType
+	G |- minus.right : var NumberType rightType
+	// get the most general
+	G |- leftType ~~ rightType |> type
+}
+
+rule PlusType
+	G |- Plus plus : Type type
+from {
+	// deal with any type
+	G |- plus.left : var Type leftType
+	G |- plus.right : var Type rightType
+	// get the most general (which can also be string)
+	G |- leftType ~~ rightType |> type
+}
+
+rule ComparisonType
+	G |- Comparison comparison : XsemGuiDslFactory::eINSTANCE.createBooleanType
+from {
+	// deal with any type
+	G |- comparison.left : var Type leftType
+	G |- comparison.right : var Type rightType
+	// can only compare numbers and strings
+	(leftType instanceof StringType && rightType instanceof StringType)
+	||
+	(leftType instanceof NumberType && rightType instanceof NumberType)
+}
+
+rule AndOrType
+	G |- AndOrExpression andOr : XsemGuiDslFactory::eINSTANCE.createBooleanType
+from {
+	// require boolean types
+	G |- andOr.left : var BooleanType leftType
+	G |- andOr.right : var BooleanType rightType
+}
+
+rule BooleanNegationType
+	G |- BooleanNegation neg : XsemGuiDslFactory::eINSTANCE.createBooleanType
+from {
+	// require boolean types
+	G |- neg.expression : var BooleanType expType
+}
+
+rule ArithmeticSignedType
+	G |- ArithmeticSigned signed : NumberType numType
+from {
+	// require number types
+	G |- signed.expression : numType
+}
+
+rule LengthOfType
+	G |- lenghtOf len : XsemGuiDslFactory::eINSTANCE.createIntType
+from {
+	G |- len.expr : var StringType stringType
+}
+
+rule IsAssignableBase
+	G |- Type left <~ Type right
+from {
+	left.eClass.isSuperTypeOf(right.eClass)
+}
+
+axiom BooleanAssignableToString
+	G |- StringType left <~ BooleanType right
+
+axiom IntAssignableToString
+	G |- StringType left <~ NumberType right
+
+axiom IntAssignableToFloat
+	G |- FloatType left <~ IntType right
+
+rule MostGeneral
+	G |- Type first ~~ Type second |> Type mostGeneral
+from {
+	{
+		G |- first <~ second
+		mostGeneral = first
+	} or
+		mostGeneral = second
+}
+
+checkrule AttributeTypeChecks for
+	Attribute attribute
+from {
+	empty ||- attribute : var Type type
+}
 
 checkrule ValidateMustBeBoolean for
 	Widget widget
