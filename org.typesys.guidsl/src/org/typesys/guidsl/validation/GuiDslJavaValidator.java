@@ -18,6 +18,7 @@ public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 
 	@Inject
 	private GuiDslTypeProvider guiDslTypeProvider;
+
 	@Inject
 	private TypeConformance conformance;
 

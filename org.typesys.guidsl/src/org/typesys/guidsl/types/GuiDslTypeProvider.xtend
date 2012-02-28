@@ -30,9 +30,10 @@ import org.typesys.guidsl.guiDsl.Type
 import org.typesys.guidsl.guiDsl.Unequals
 import org.typesys.guidsl.guiDsl.Widget
 import org.typesys.guidsl.guiDsl.lenghtOf
-import org.typesys.guidsl.guiDsl.GuiDslPackage
 
 class GuiDslTypeProvider {
+
+	@Inject extension TypeConformance conformance
 	
 	// declare the built-in types for easy use
 	Type bool = GuiDslFactory::eINSTANCE.createBooleanType
@@ -48,7 +49,7 @@ class GuiDslTypeProvider {
 	def Type getType(EObject e) {
 		switch e {
 			SimpleAttribute : e.type
-			DerivedAttribute : e.expr.type 
+			DerivedAttribute : e.expr.type
 			AttributeRef : e.attr.type
 			
 			Equals : bool
@@ -64,8 +65,7 @@ class GuiDslTypeProvider {
 			Implies : bool
 			NotExpression : bool
 			
-			// if two ints are added, the type is an int
-			// if an int and a float are added, it is a float
+			// type is the most general, e.g. int + float => float
 			Plus : mostGeneral(e.left.type, e.right.type)
 			Minus : mostGeneral(e.left.type, e.right.type)
 			Multi : mostGeneral(e.left.type, e.right.type)
@@ -101,35 +101,34 @@ class GuiDslTypeProvider {
 	 * @param e - The container of an EObject of which to compute the expected type
 	 * @param feature - The feature of {@code e} which holds the object for which
 	 *  this function should tell what type it expects it to be. Currently, it is
-	 *  not needed.
+	 *  not needed. <br>Example: The only reference to an expression a widget holds is the one 
+	 * to the part after "validate", thus no checking needed. Otherwise one would add<br>
+	 * {@code case feature == GuiDslPackage$Literals::WIDGET__VALIDATE} to the case statement.
 	 * 
 	 * @return the expected type, {@code null} if no particular type is expected.
 	 * 
 	 * Example: A widget is a container with a feature called "validate". The expected type is
 	 * for this feature is boolean.
+	 * 
 	 */
 	def protected Type internalGetExpectedType(EObject e, EStructuralFeature feature) {
 		switch e {
-			// A widget only holds a reference to a validate clause
-			// otherwise one would check if it was the right feature wih
-			// case feature == GuiDslPackage$Literals::WIDGET__VALIDATE 
 			Widget : bool
 			
-			// according to the following definition,
 			// an object contained (i.e. left or right side) 
 			// in one of the following operators is expected to always be a number 
-			Greater : number
+			Greater       : number
 			GreaterEquals : number
-			Smaller : number
+			Smaller       : number
 			SmallerEquals : number
-			// and here, to always be a boolean
-			LogicalAnd : bool
-			LogicalOr : bool
-			Implies : bool
+
+			LogicalAnd    : bool
+			LogicalOr     : bool
+			Implies       : bool
 			NotExpression : bool
 			
 			// the left side of these operators determines the expected type 
-			Equals : e.left.type
+			Equals   : e.left.type
 			Unequals : e.left.type
 			
 			Plus : {
@@ -145,25 +144,5 @@ class GuiDslTypeProvider {
 			default : null
 		}
 	}
-	
-	@Inject TypeConformance conformance
 
-	/**
-	 * Returns the most general type of two arguments
-	 * 
-	 */
-	def Type mostGeneral(Type one, Type two) {
-		if (conformance.isAssignable(one, two)) 
-		    one
-		 else 
-		    two
-	}
-	
-	def Type mostSpecific(Type one, Type two) {
-		if (conformance.isAssignable(one, two)) 
-		    two
-		 else
-		    one
-	}
-	
 }

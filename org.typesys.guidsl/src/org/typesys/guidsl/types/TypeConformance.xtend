@@ -1,40 +1,56 @@
 package org.typesys.guidsl.types
 
-import org.typesys.guidsl.guiDsl.EntityType
-import org.typesys.guidsl.guiDsl.Type
-import org.typesys.guidsl.guiDsl.NumberType
-import org.typesys.guidsl.guiDsl.IntType
 import org.typesys.guidsl.guiDsl.FloatType
+import org.typesys.guidsl.guiDsl.IntType
+import org.typesys.guidsl.guiDsl.NumberType
 import org.typesys.guidsl.guiDsl.StringType
-import org.typesys.guidsl.guiDsl.BooleanType
+import org.typesys.guidsl.guiDsl.Type
 
 class TypeConformance {
 	
 	/**
-	 * Dispatch method, computes whether {@code right} is assignable to {@code left}, i.e.
-	 * whether 
-	 * {@code instanceOfLeft = instanceOfRight}
-	 * is correct.
+	 * Computes whether {@code right} can be used where {@code left}
+     * is expected.
 	 */
 	def dispatch isAssignable(Type left, Type right) {
-		println(right.eClass)
 		left.eClass == right.eClass
 	}
 
-	def dispatch isAssignable(EntityType left, EntityType right) {
-		left.ref == right.ref
-	}
-
 	def dispatch isAssignable(NumberType left, FloatType right) { true }
+	
 	def dispatch isAssignable(NumberType left, IntType right) { true }
 
 	def dispatch isAssignable(FloatType left, IntType right) { true }
 
 	def dispatch isAssignable(IntType left, FloatType right) { false }
 
-	// note that with this rule, lengthOf(int) is also allowed
+	// allow numbers where strings are expected
 	def dispatch isAssignable(StringType left, NumberType right) { true }
-//  with this, a boolean would be allowed to be assigned to a string
-//	def dispatch isAssignable(StringType left, BooleanType right) { false }
+
+//  uncomment to allow booleans to be assigned to strings
+//	def dispatch isAssignable(StringType left, BooleanType right) { true }
+
+//  uncomment for entity assignments
+//	def dispatch isAssignable(EntityType left, EntityType right) {
+//		left.ref == right.ref
+//	}
+
+	/**
+	 * Returns the most general type of two arguments
+	 * 
+	 */
+	def Type mostGeneral(Type one, Type two) {
+		if (isAssignable(one, two)) 
+		    one
+		 else 
+		    two
+	}
+	
+	def Type mostSpecific(Type one, Type two) {
+		if (isAssignable(one, two)) 
+		    two
+		 else
+		    one
+	}
 
 }
