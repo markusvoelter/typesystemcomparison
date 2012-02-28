@@ -17,7 +17,8 @@ Listing \ref{lst:example-plain} shows an example of the DSL with a \emph{Person}
 %\lstinputlisting[language=bash,label=lst:example-plain,caption=Forms and
 % Entities DSL,linerange={1-16}]{..//exampleCode/src/plain-xtext.gui}
 
-\begin{lstlisting}[language=bash,float,label=lst:example-plain,caption=Forms and Entities DSL]
+\begin{lstlisting}[language=guidsl,float,label=lst:example-plain,caption=Forms
+and Entities DSL] 
 entity Person {
 	name      : string;
 	firstName : string;
@@ -41,11 +42,84 @@ form PersonForm edits Person {
 
 The Xtext grammar part used by all variants is shown in listing \ref{lst:grammar-plain}. 
 
-\lstinputlisting[label=lst:grammar-plain,caption=Grammar with plain Xtext,linerange={7-53}]{../org.typesys.guidsl/src/org/typesys/guidsl/GuiDsl.xtext}
+%\lstinputlisting[label=lst:grammar-plain,caption=Grammar with plain
+% Xtext,linerange={7-53}]{../org.typesys.guidsl/src/org/typesys/guidsl/GuiDsl.xtext}
+
+\begin{lstlisting}[language=xtext,float,label=lst:grammar-plain,caption=Grammar with plain Xtext] 
+Model: (entities+=Entity | forms+=Form )*;
+
+Entity:
+	"entity" name=ID "{"
+		(attributes+=Attribute)*
+	"}";
+
+Attribute: SimpleAttribute | DerivedAttribute;
+
+DerivedAttribute: "/" name=ID "=" expr=Expression ";" ;
+
+SimpleAttribute: name=ID ":" type=Type ";" ;
+
+Form:
+	"form" name=ID "edits" entity=[Entity] "{"	
+		(widgets+=Widget)*
+	"}";
+
+Widget: TextWidget | CheckBoxWidget;
+
+TextWidget:
+	"text" "(" length=DECIMAL_NUMBER ")" 
+	"->" attr=[Attribute] ("validate" validate=Expression)? ";" ;
+
+CheckBoxWidget:
+	"checkbox" "->" attr=[Attribute] ("validate" validate=Expression)? ";" ;
+\end{lstlisting}
 
 The type and expressions definition part of the grammar shown in listing \ref{lst:grammar-plain-types-and-ex}. It is the same for the the plain Xtext grammar and the XSemantics and Xtext/TS grammars. In the Xbase, the rule \emph{Expr} is replaced with the Xbase \emph{XExpression} rule, which maps Java types and expressions.
 
-\lstinputlisting[label=lst:grammar-plain-types-and-ex,caption=Grammar with plain Xtext,linerange={54-120}]{../org.typesys.guidsl/src/org/typesys/guidsl/GuiDsl.xtext}
+\begin{lstlisting}[language=xtext,float,label=lst:grammar-plain-types-and-ex,caption=Type and Expression grammar] 
+Type: PrimitiveType | EntityType ;
+
+EntityType: ref=[Entity];
+PrimitiveType: NumberType | BooleanType | StringType;
+NumberType : FloatType | IntType ;
+FloatType: {FloatType} "float" ;
+IntType: {IntType} "int" ;
+BooleanType: {BooleanType} "bool" ;
+StringType: {StringType} "string" ;
+
+Expression: Addition;
+
+Addition returns Expression:
+	Multiplication (({Plus.left=current} '+' | {Minus.left=current} '-') right=Multiplication)*;
+
+Multiplication returns Expression:
+	Comparison (({MultiOrDiv.left=current} op=("*"|"/")) right=Comparison)*; 
+
+Comparison returns Expression:
+	BooleanExpression 
+	(({Comparison.left=current} 
+		op=(">="|"<="|"<"|">"|"=="|"!=")
+	) right=BooleanExpression)*;
+
+BooleanExpression returns Expression:
+	Atomic (({AndOrExpression.left=current} op=("||"|"&&")) right=Atomic)*;
+
+Atomic returns Expression:
+	'(' Expression ')' |
+	{BooleanNegation} =>"!" expression=Atomic | /* right associativity */
+	{ArithmeticSigned} =>"-" expression=Atomic | /* right associativity */
+	({FieldContent} "widgetcontent") |
+	({lenghtOf} "lengthOf" "(" expr=Expression ")" ) |
+	({BooleanLiteral} value=("true"|"false")) |
+	({NumberLiteral} value=DECIMAL_NUMBER) |
+	({StringLiteral} value=STRING) |
+	({AttributeRef} attr=[Attribute|ID]) ;
+\end{lstlisting}
+
+
+
+%\lstinputlisting[label=lst:grammar-plain-types-and-ex,caption=Grammar with
+% plain Xtext,linerange={54-120}]{../org.typesys.guidsl/src/org/typesys/guidsl/GuiDsl.xtext}
 
 \subsection{Demonstration Tasks}
 To compare the different type system variants, each of them will show its type checking ability by demonstrating how it solves the following tasks.
