@@ -70,14 +70,107 @@ class XsemGuiDslTypingTests extends XsemGuiDslAbstractTests {
 		assertAttributeType(inputs.testEntity, "myBooleanDerived", "BooleanType")
 	}
 	
+	@Test
+	def void testMultiIntType() {
+		assertAttributeType(inputs.testEntityForExpressions, "MultiInt", "int")
+	}
+	
+	@Test
+	def void testMultiFloatMostGeneralType() {
+		assertAttributeType(inputs.testEntityForExpressions, "MultiFloatMostGeneral", "FloatType")
+	}
+	
+	@Test
+	def void testMultiFloatType() {
+		assertAttributeType(inputs.testEntityForExpressions, "MultiFloat", "FloatType")
+	}
+	
+	@Test
+	def void testDivFloatType() {
+		assertAttributeType(inputs.testEntityForExpressions, "Div", "FloatType")
+	}
+	
+	@Test
+	def void testMinusFloatType() {
+		assertAttributeType(inputs.testEntityForExpressions, "Minus", "FloatType")
+	}
+	
+	@Test
+	def void testPlusFloatType() {
+		assertAttributeType(inputs.testEntityForExpressions, "PlusNum", "FloatType")
+	}
+	
+	@Test
+	def void testPlusStringType() {
+		assertAttributeType(inputs.testEntityForExpressions, "PlusString", "StringType")
+	}
+	
+	@Test
+	def void testPlusMixedType() {
+		assertAttributeType(inputs.testEntityForExpressions, "PlusMixed", "StringType")
+	}
+	
+	@Test
+	def void testCompareNumType() {
+		assertAttributeType(inputs.testEntityForExpressions, "CompareNum", "BooleanType")
+	}
+
+	@Test
+	def void testCompareStringType() {
+		assertAttributeType(inputs.testEntityForExpressions, "CompareString", "BooleanType")
+	}
+	
+	@Test
+	def void testCompareMixedType() {
+		assertAttributeType(inputs.testEntityForExpressions, "CompareMixed", null)
+	}
+	
+	@Test
+	def void testAndType() {
+		assertAttributeType(inputs.testEntityForExpressions, "And", "BooleanType")
+	}
+	
+	@Test
+	def void testOrType() {
+		assertAttributeType(inputs.testEntityForExpressions, "Or", "BooleanType")
+	}
+	
+	@Test
+	def void testBooleanNegationType() {
+		assertAttributeType(inputs.testEntityForExpressions, "BooleanNegation", "BooleanType")
+	}
+	
+	@Test
+	def void testSignedIntType() {
+		assertAttributeType(inputs.testEntityForExpressions, "SignedInt", "int")
+	}
+	
+	@Test
+	def void testSignedFloatType() {
+		assertAttributeType(inputs.testEntityForExpressions, "SignedFloat", "FloatType")
+	}
+	
+	@Test
+	def void testLengthOfType() {
+		assertAttributeType(inputs.testEntityForExpressions, "LengthOf", "IntType")
+	}
+	
 	def void assertAttributeType(CharSequence input, String attrName, 
 			CharSequence expectedType) {
 		val result = typesystem.attrtype(null, trace, input.attribute(attrName))
-		if (result.failed) {
-			Assert::fail("unexpected failure: " +
-				result.ruleFailedException.failureTraceAsString
-			)
+		if (expectedType != null) {
+			if (result.failed) {
+				Assert::fail("unexpected failure: " +
+					result.ruleFailedException.failureTraceAsString
+				)
+			}
+			Assert::assertEquals(expectedType.toString, result.value.string)
+		} else {
+			if (!result.failed) {
+				Assert::fail("unexpected success: " +
+					trace.traceAsString
+				)
+			}
 		}
-		Assert::assertEquals(expectedType.toString, result.value.string)
 	}
 }
