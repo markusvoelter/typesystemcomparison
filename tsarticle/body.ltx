@@ -6,34 +6,7 @@
 
 \input{4-xbase.tex}
 
-\section{Xsemantics}
-
-Lorenzo Bettini's type system Xsemantics, formerly called XtypeS~\cite{Bet11},
-uses an Xtext metamodel and a set of rules and premises as input and returns a set of generated Java methods that can be used in Xtext's scoping and validator classes.
-\subsection{Type System Specification}
-Xsemantics offers a declarative specification of type rules by using
-Judgements
-rules declaratively specify statements that must hold for the type system, example
-
-checking rules
-
-axioms
-
-predefined operations
-
-\subsection{Usage in Xtext}
-
-With the declarative specification (written in the Xsemantics DSL), Java methods are generated that can be used in the SopeProvider or Validators. 
-
-If the declarative rules are marked with […], Xtext validator classes are directly created and no further work is necessary.
-
-Example output for reusable methods
-
-\begin{lstlisting}
-TypeSystemResult<MyOtherGrammarElement> typeAsMyOtherGrammarElement(MyGrammarElement left); 
-TypeSystemResult<MyGrammarElement, MyOtherGrammarElement> type(MyGrammarElement left, MyOtherGrammarElement right); 
-TypeSystemResult<Boolean> checkType(MyGrammarElement left, MyOtherGrammarElement right); 
-\end{lstlisting}
+\input{xsemantics}
 
 \section{Xtext Type System}
 
