@@ -31,8 +31,8 @@ the type system of the case study we are considering
 
 \subsection{Type System Specification}
 
-The first thing to do in a system defined in Xsemantics is to declare the
-\emph{judgments} of your system; a judgment consists of
+The first thing to do in a system defined in Xsemantics, after giving it a name,
+is to declare the \emph{judgments} of your system; a judgment consists of
 
 \begin{itemize}
 \item 
@@ -52,12 +52,16 @@ The parameters can be
 input parameters, in that case they are declared as Java parameters;
 \item 
 output parameters, in that case you use the keyword
-\lstinline[breakatwhitespace=false,breaklines=true]|output| followed by the Java
+\verb|output| followed by the Java
 type of the output parameter.
 \end{itemize}
 
 \begin{lstlisting}[language=xsemantics,float,label=lst:xsemantics-judgments,caption=Judgment
 definitions in Xsemantics]
+system org.typesys.xsem.guidsl.xsemantics.TypeSystem
+
+import org.typesys.xsem.guidsl.xsemGuiDsl.*
+
 judgments {
 	attrtype ||- Attribute attribute : output Type
 	exprtype |- Expression expression : output Type
@@ -102,6 +106,39 @@ symbol, the relation symbols (which separate the parameters); moreover the types
 of the parameters of a rule must be (Java) subtypes of the corresponding types
 of the judgment (or exactly the same Java types).  Two rules belonging to the
 same judgment must differ for at least one input parameter's type.
+
+The premises of a rule which are specified in a \verb|from| block can be any
+Xbase expression, or a rule invocation.  If you think of a rule declaration as a
+function declaration, then a rule invocation corresponds to function invocation,
+thus you must specify the environment to pass to the rule, and the arguments,
+both input and output arguments.
+Moreover, if a rule does not require any premise, we can use a special form of
+rules, called indeed \textit{axiom}s, which only have a conclusion, without
+premises.
+
+At runtime, the system will select the most appropriate rule according
+to the runtime types of the passed argument (similar to
+\textit{polymorphic dispatch} mechanism).
+
+In the premises you can assign values to the output parameters; and
+when you invoke another rule, upon return, the output arguments will have
+the values assigned in the invoked rule.
+
+If one of the premises fails, then the whole rule will fail, and in turn all the
+stack of rule invocation will fail.  If the premise is a boolean expression, it
+will fail if the expression evaluates to false.  If the premise is a rule
+invocation, it will fail if the invoked rule fails.
+
+\begin{lstlisting}[language=xsemantics]
+axiom SimpleAttributeType
+	G ||- SimpleAttribute attr : attr.type
+
+rule DerivedAttributeType
+	G ||- DerivedAttribute attr : Type attrType
+from {
+	G |- attr.expr : attrType
+}
+\end{lstlisting}
 
 \subsection{Usage in Xtext}
 
