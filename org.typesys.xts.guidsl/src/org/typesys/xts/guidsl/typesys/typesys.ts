@@ -10,7 +10,7 @@ section "Expressions"
 	characteristic COMPARABLE {
 		IntType, FloatType, BooleanType, StringType
 	}  
- 
+  
 	characteristic NUMERIC {
 		IntType, FloatType
 	} 
@@ -21,64 +21,26 @@ section "Expressions"
 	typeof Expr -> abstract
 	typeof Expression -> abstract
 
- 	typeof Equals -> BooleanType {
+ 	typeof Comparison -> BooleanType {
  		ensureType left :<=: char(COMPARABLE)
  		ensureType right :<=: char(COMPARABLE)
  		ensureCompatibility left :<=>: right
  	}
- 	typeof Unequals -> BooleanType {
- 		ensureType left :<=: char(COMPARABLE)
- 		ensureType right :<=: char(COMPARABLE)
- 		ensureCompatibility left :<=>: right
- 	}
- 	typeof Greater -> BooleanType {
- 		ensureType left :<=: char(COMPARABLE)
- 		ensureType right :<=: char(COMPARABLE)
- 		ensureCompatibility left :<=>: right
- 	}
- 	typeof Smaller -> BooleanType {
- 		ensureType left :<=: char(COMPARABLE)
- 		ensureType right :<=: char(COMPARABLE)
- 		ensureCompatibility left :<=>: right
- 	}
- 	typeof GreaterEquals -> BooleanType {
- 		ensureType left :<=: char(COMPARABLE)
- 		ensureType right :<=: char(COMPARABLE)
- 		ensureCompatibility left :<=>: right
- 	}
- 	typeof SmallerEquals -> BooleanType {
- 		ensureType left :<=: char(COMPARABLE)
- 		ensureType right :<=: char(COMPARABLE)
- 		ensureCompatibility left :<=>: right
- 	}
- 	typeof LogicalAnd -> BooleanType {
+ 	typeof AndOrExpression -> BooleanType {
  		ensureType left :<=: BooleanType
- 		ensureType right :<=: BooleanType
- 	}
- 	typeof LogicalOr -> BooleanType {
- 		ensureType left :<=: BooleanType
- 		ensureType right :<=: BooleanType
- 	}
- 	typeof Plus -> common left right {
+ 		ensureType right :<=: BooleanType 
+ 	}  
+ 	typeof PlusOrMinus -> common left right {
  		ensureType left :<=: StringType, char(NUMERIC)
  		ensureType right :<=: StringType, char(NUMERIC)
  	} 
- 	typeof Minus -> common left right {
+ 	typeof MultiOrDiv -> common left right { 
  		ensureType left :<=: char(NUMERIC)
  		ensureType right :<=: char(NUMERIC)
  	} 
- 	typeof Multi -> common left right { 
- 		ensureType left :<=: char(NUMERIC)
- 		ensureType right :<=: char(NUMERIC)
- 	} 
- 	typeof Div -> IntType {
- 		ensureType left :<=: char(NUMERIC)
- 		ensureType right :<=: char(NUMERIC)
- 	}
  	typeof NotExpression -> BooleanType {
  		ensureType expr :<=: BooleanType
  	}
-	typeof Implies -> BooleanType
 	typeof ParenExpr -> feature expr 
 
 

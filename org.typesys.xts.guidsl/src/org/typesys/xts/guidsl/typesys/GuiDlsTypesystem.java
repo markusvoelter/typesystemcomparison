@@ -7,6 +7,7 @@ import org.typesys.xts.guidsl.guiDsl.NumberLiteral;
 import org.typesys.xts.guidsl.guiDsl.Widget;
 
 import de.itemis.xtext.typesystem.trace.TypeCalculationTrace;
+import de.itemis.xtext.typesystem.util.Utils;
 
 public class GuiDlsTypesystem extends GuiDlsTypesystemGenerated {
 
@@ -36,7 +37,7 @@ public class GuiDlsTypesystem extends GuiDlsTypesystemGenerated {
 
 	@Override
 	protected EObject type(FieldContent element, TypeCalculationTrace trace) {
-		Widget w = (Widget) element.eContainer();
+		Widget w = (Widget) Utils.ancestor(element, Widget.class);
 		return typeof(w.getAttr(), trace);
 	}
 		

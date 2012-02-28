@@ -86,26 +86,24 @@ StringType:
  */
 
 Expr:
-	ComparisonLevel;
+	BooleanExpression;
 
-ComparisonLevel returns Expression:
-	AdditionLevel ((({Equals.left=current} "==") |
-					({Unequals.left=current} "!=") |
-					({Greater.left=current} ">") |
-					({GreaterEquals.left=current} ">=") |
-					({SmallerEquals.left=current} "<=") |
-					({LogicalAnd.left=current} "&&") |
-					({Implies.left=current} "=>") |
-					({LogicalOr.left=current} "||") |
-					({Smaller.left=current} "<"))
-											right=AdditionLevel)*;
-AdditionLevel returns Expression:
-	MultiplicationLevel ((({Plus.left=current} "+") |
-					     ({Minus.left=current} "-")) right=MultiplicationLevel)*;
+BooleanExpression returns Expression:
+	Comparison (({AndOrExpression.left=current} op=("||"|"&&")) right=Comparison)*;
 
-MultiplicationLevel returns Expression:
-	PrefixOpLevel ((({Multi.left=current} "*") |
-					({Div.left=current} "/")) right=PrefixOpLevel)*;
+
+Comparison returns Expression:
+	Addition 
+	(({Comparison.left=current} 
+		op=(">="|"<="|"<"|">"|"=="|"!="|"=>")
+	) right=Addition)*;
+ 
+Addition returns Expression:
+	Multiplication (({PlusOrMinus.left=current} op=("+"|"-")) right=Multiplication)*; 
+
+Multiplication returns Expression:
+	PrefixOpLevel (({MultiOrDiv.left=current} op=("*"|"/")) right=PrefixOpLevel)*; 
+
 
 PrefixOpLevel returns Expression:
 	({NotExpression} "!" "(" expr=Expr ")") |
