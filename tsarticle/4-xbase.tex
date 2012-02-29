@@ -1,5 +1,17 @@
 \section{Xbase}
 
-Listing \ref{lst:xbase-jvm-inferrer}
+In the Xbase scenario, the \emph{Expression} rule in the grammar is replaced with the Xbase \emph{XExpression} and \emph{JvmTypes} are inferred for \emph{Entities} and \emph{Forms} to leverage type checking and scoping of Xbase.
 
-\lstinputlisting[label=lst:xbase-jvm-inferrer,caption=Type provider in Xtend.,linerange={34-34,36-86}]{../org.typesys.xbase.guidsl/src/org/typesys/xbase/guidsl/jvmmodel/XGuiDslJvmModelInferrer.xtend}
+The validator in the Xbase scenario is shown in listing \ref{lst:xbase-jvm-inferrer}. The package from the DSL has to be added explicitly (\emph{getEPackages()}. The validation methods (e.g. the one for a \emph{TextWidget}) look similar to the plain Xtext scenario, with the difference that now \emph{JvmTypes} are compared, which are supplied by an \emph{ITypeProvider} for expressions.
+
+\lstinputlisting[label=lst:xbase-validator,caption=Xtext validator in the Xbase scenario.,linerange={24-36,46-70}]	{..//org.typesys.xbase.guidsl/src/org/typesys/xbase/guidsl/validation/XGuiDslJavaValidator.java}
+
+Listing \ref{lst:xbase-jvm-inferrer} features the \emph{JvmModelInferrer}. For each entity, a Java class is inferred with a field and getter and setters for each simple attribute. Two Xtend syntax shortcuts are used in this class: The extension syntax with the dot after the first argument of an operation (\verb|attribute.toField(...)| instead of \verb|toField(attribute, ...)|, and the closure after the parenthesis, if it is the last argument of an operation (\verb|toMethod(...)[body = attribute.expr]| instead of \verb|toMethod(..., [ body = ...])|.
+
+To get scoping and type checking of the \emph{validate} clause inside a \emph{Form} from Xbase, a method is inferred for each validate clause. The method's name is derived from the attribute's name the widget refers to. It takes the entity to which the form refers to as a parameter, so that the entity is on the scope and may be referred to in the expression the parameter name of the method. The parameter name \emph{it} has a special meaning in Xtend - it may be omitted in an expression, so that in a validate clause, one could either write
+\verb|it.name.length > 2| or, the desired notation, \verb|name.length > 2|.
+
+\lstinputlisting[label=lst:xbase-jvm-inferrer,caption=JvmModelInferrer written in Xtend.,linerange={17-25,41-59,72-85}]	{../org.typesys.xbase.guidsl/src/org/typesys/xbase/guidsl/jvmmodel/XGuiDslJvmModelInferrer.xtend}
+
+\subsection{Summary}
+The Xbase approach uses the \emph{JvmModelInferrer} to infer and generate Java classes with appropriate operations for entities and forms, in order to make use of Xbase for scoping and validation (e.g. for the \emph{validate} clause of a widget). The Xtext validator uses the Xbase type provider to check widgets.

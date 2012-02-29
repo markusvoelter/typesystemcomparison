@@ -7,6 +7,7 @@ The validations operating on widgets just check whether the type of the attribut
 
 \lstinputlisting[label=lst:validation-plain,caption=Xtext validator.,linerange={15-23,31-42,49-57}]{../org.typesys.guidsl/src/org/typesys/guidsl/validation/GuiDslJavaValidator.java}
 
+\subsection{Recursive type computation}
 
 Listing \ref{lst:plain-type-provider1} shows the recursive computation of types, written in Xtend. The method \emph{getType()} determines the actual type of an expression. The type of a primitive type is defined to be the type itself. The type of an attribute is the type it refers to. In case of a simple attribute, it is the type reference and in case of a derived attribute the type of the derivation expression. References to attributes have the type of the referenced attribute. Note that \verb|e.type| is the reference to a (primitive) type while \verb|e.expr.type| and \verb|e.attr.type| recursively call \emph{getType()}. They use the Xtend 2 syntax shortcut to \verb|getType(e.expr.type)| and \verb|getType(e.attr.type)|.
 
@@ -20,9 +21,18 @@ The operation \emph{getExpectedType()} in listing \ref{lst:plain-type-provider2}
 
 \lstinputlisting[label=lst:plain-type-provider2,caption=Calculating the expected type.,linerange={96-98,114-146}]{../org.typesys.guidsl/src/org/typesys/guidsl/types/GuiDslTypeProvider.xtend}
 
-Listing \ref{lst:plain-type-conformance} shows the code to compute whether a type is assignable to another, making use of polymorphic dispatch. The method \emph{isAssignable(left, right)} returns true if one can use an element of type \emph{right} where an element of type \emph{left} is expected. A type can always be assigned to itself. The \emph{eClass()} method is used to get the EMF \emph{EClass} of a type for comparison (parentheses may be omitted in Xtend 2 if there is no parameter), as there could be multiple type instances of the same type, e.g. of an \emph{Entity} type.
+\subsection{Type conformance}
+Listing \ref{lst:plain-type-conformance} shows the Xtend code to compute whether a type is assignable to another, using polymorphic dispatch. The method \emph{isAssignable(left, right)} returns true if one can use an element of type \emph{right} where an element of type \emph{left} is expected. A type can always be assigned to itself. The \emph{eClass()} method is used to get the EMF \emph{EClass} of a type for comparison (parentheses may be omitted in Xtend 2 if there is no parameter), as there could be multiple type instances of the same type, e.g. of an \emph{Entity} type.
 The following methods specify that the number type expects either a \emph{float} or an \emph{int}, that an \emph{int} can be used where a \emph{float} is expected, but not the other way round. The other cases are dealt with the polymorphic dispatch, for instance \emph{isAssignable(int, int)} would be dispatched to the method in line 8, \emph{isAssignable(float, float)} to line 6, \emph{isAssignable(float, number)} to line 2.
 
 \lstinputlisting[label=lst:plain-type-conformance,caption=Type conformance specification (Xtend code).,linerange={9-10,15-29,42-47}]{../org.typesys.guidsl/src/org/typesys/guidsl/types/TypeConformance.xtend}
 
-% Summary
+\subsection{Summary}
+The plain xtext approach makes use of polymorphic dispatch and the Xtend syntax to keep the code concise, for instance with the Xtend \emph{switch} statement. It consists of four main parts:
+\begin{itemize}
+\item Xtend code to compute actual types recursively, written in Xtend.
+\item An Xtend operation to compute expected types of expressions based on the container they are in.
+\item A type conformance specification, written in Xtend.
+\item The Xtext validator using the first three.
+\end{itemize}
+

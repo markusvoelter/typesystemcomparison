@@ -1,11 +1,14 @@
 package org.typesys.xbase.guidsl.validation;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.common.types.JvmTypeReference;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.xbase.XExpression;
+import org.eclipse.xtext.xbase.jvmmodel.JvmTypesBuilder;
 import org.eclipse.xtext.xbase.typing.ITypeProvider;
 import org.eclipse.xtext.xbase.validation.IssueCodes;
 import org.eclipse.xtext.xbase.validation.XbaseJavaValidator;
@@ -18,12 +21,12 @@ import org.typesys.xbase.guidsl.xGuiDsl.XGuiDslPackage;
 
 import com.google.inject.Inject;
 
-import static com.google.common.collect.Lists.*;
-
 public class XGuiDslJavaValidator extends XbaseJavaValidator {
 	
 	@Inject
 	private ITypeProvider typeProvider;
+	
+	@Inject JvmTypesBuilder jvmTypesBuilder;
 	
 	@Override
 	protected List<EPackage> getEPackages() {
@@ -34,27 +37,9 @@ public class XGuiDslJavaValidator extends XbaseJavaValidator {
 
 	/**
 	 * 1) The expression after "validate" must be boolean.
-	 *  This is already covered by the XGuiDslJvmModelInferrer, 
-	 *  otherwise it would look something like this:
+	 *  This is already covered by the XGuiDslJvmModelInferrer.
 	 */
 	
-//	@Check
-//	public void checkValidateIsBoolean(Widget widget) {
-//		if (widget.getValidate() != null) {
-//			XExpression expr = widget.getValidate();
-//			JvmTypeReference type = typeProvider.getType(expr);
-//			if (type == null) {
-//				error("The validation part must be boolean, but it seems to be missing or a type could not be inferred.",
-//						XGuiDslPackage.Literals.WIDGET__VALIDATE);
-//			}
-//			if (!type.getQualifiedName().equals(Boolean.TYPE.getName())) {
-//				error("The validation part must boolean, but it was of type "
-//						+ type.getQualifiedName(),
-//						XGuiDslPackage.Literals.WIDGET__VALIDATE);
-//			}
-//		}
-//	}
-
 	/**
 	 * 2) Text widgets may only refer to non-boolean attributes.
 	 */
@@ -94,6 +79,8 @@ public class XGuiDslJavaValidator extends XbaseJavaValidator {
 		if (jvmTypeReference == null) {
 			return;
 		}
+		jvmTypeReference.getType();
+		
 		if (!jvmTypeReference.getQualifiedName().equals(Boolean.TYPE.getName())) {
 			error("Checkbox may only refer to boolean attributes, but found type "
 					+ jvmTypeReference.getQualifiedName(),
