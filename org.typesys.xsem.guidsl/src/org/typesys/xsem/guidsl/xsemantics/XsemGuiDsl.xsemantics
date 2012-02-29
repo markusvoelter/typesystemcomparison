@@ -82,6 +82,18 @@ from {
 	(leftType instanceof NumberType && rightType instanceof NumberType)
 }
 
+rule EqualsType
+	G |- Equals equals : XsemGuiDslFactory::eINSTANCE.createBooleanType
+from {
+	// deal with any type
+	G |- equals.left : var Type leftType
+	G |- equals.right : var Type rightType
+	// the subexpressions must be compatible
+	(leftType instanceof NumberType && rightType instanceof NumberType)
+	or
+	leftType.eClass == rightType.eClass
+}
+
 rule AndOrType
 	G |- AndOrExpression andOr : XsemGuiDslFactory::eINSTANCE.createBooleanType
 from {

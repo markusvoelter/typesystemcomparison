@@ -28,6 +28,8 @@ form MyForm edits MyEntity {
 '''
 entity MyEntity {
 	/CompareMixed = '10' <= 20; // WRONG!
+	/CompareBool = true <= false; // WRONG!
+	/EqualsMixed = '10' == 20; // WRONG!
 
 	myString : string;
 	myBool : bool;
@@ -45,6 +47,10 @@ entity MyEntity {
 	
 	/CompareNum = myInt <= 20;
 	/CompareString = '10' <= '20';
+	
+	/EqualsNum = myInt == 20;
+	/EqualsString = '10' != '20';
+	/EqualsBool = true != false;
 	
 	/And = (myInt <= 20) && ('10' <= '20');
 	/Or = (myInt <= 20) || ('10' <= '20');

@@ -121,6 +121,21 @@ class XsemGuiDslTypingTests extends XsemGuiDslAbstractTests {
 	}
 	
 	@Test
+	def void testEqualsNumType() {
+		assertAttributeType(inputs.testEntityForExpressions, "EqualsNum", "BooleanType")
+	}
+
+	@Test
+	def void testEqualsStringType() {
+		assertAttributeType(inputs.testEntityForExpressions, "EqualsString", "BooleanType")
+	}
+	
+	@Test
+	def void testEqualsBoolType() {
+		assertAttributeType(inputs.testEntityForExpressions, "EqualsBool", "BooleanType")
+	}
+	
+	@Test
 	def void testCompareMixedType() {
 		assertAttributeType(inputs.testEntityForExpressions, "CompareMixed", null)
 	}

@@ -103,7 +103,7 @@ Comparison returns Expression:
 
 Equals returns Expression:
        Addition 
-       (({Equality.left=current}
+       (({Equals.left=current}
                op=("=="|"!=")
        ) right=Addition)*;
  

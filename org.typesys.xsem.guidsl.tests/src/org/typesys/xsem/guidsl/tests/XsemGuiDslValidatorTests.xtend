@@ -51,7 +51,9 @@ Diagnostic ERROR "checkbox widget attribute must be boolean" at Model.forms[1]->
 	def void testCompareMixedWrong() {
 		assertAll(inputs.testEntityForExpressions,
 '''
-Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.ComparisonType "failed: cannot type expression '10' <= 20" at Model.entities[0]->Entity'MyEntity'.attributes[0]->DerivedAttribute'CompareMixed'.expr->Comparison'''
+Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.ComparisonType "failed: cannot type expression '10' <= 20" at Model.entities[0]->Entity'MyEntity'.attributes[0]->DerivedAttribute'CompareMixed'.expr->Comparison
+Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.ComparisonType "failed: cannot type expression true <= false" at Model.entities[0]->Entity'MyEntity'.attributes[1]->DerivedAttribute'CompareBool'.expr->Comparison
+Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.EqualsType "failed: cannot type expression '10' == 20" at Model.entities[0]->Entity'MyEntity'.attributes[2]->DerivedAttribute'EqualsMixed'.expr->Equals'''
 		)
 	}
 	

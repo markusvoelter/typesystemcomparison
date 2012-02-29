@@ -24,6 +24,7 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.CheckBoxWidget;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Comparison;
 import org.typesys.xsem.guidsl.xsemGuiDsl.DerivedAttribute;
+import org.typesys.xsem.guidsl.xsemGuiDsl.Equals;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Expression;
 import org.typesys.xsem.guidsl.xsemGuiDsl.FloatType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.IntType;
@@ -53,6 +54,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	public final static String MINUSTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.MinusType";
 	public final static String PLUSTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.PlusType";
 	public final static String COMPARISONTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.ComparisonType";
+	public final static String EQUALSTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.EqualsType";
 	public final static String ANDORTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.AndOrType";
 	public final static String BOOLEANNEGATIONTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.BooleanNegationType";
 	public final static String ARITHMETICSIGNEDTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.ArithmeticSignedType";
@@ -698,6 +700,67 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		  /* (leftType instanceof StringType && rightType instanceof StringType) || (leftType instanceof NumberType && rightType instanceof NumberType) */
 		  if (!_operator_or) {
 		    sneakyThrowRuleFailedException("(leftType instanceof StringType && rightType instanceof StringType) || (leftType instanceof NumberType && rightType instanceof NumberType)");
+		  }
+		}
+		BooleanType _createBooleanType = XsemGuiDslFactory.eINSTANCE.createBooleanType();
+		return new Result<Type>(_createBooleanType);
+	}
+	
+	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final Equals equals) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRuleEqualsType(G, _subtrace_, equals);
+			addToTrace(_trace_, ruleName("EqualsType") + stringRepForEnv(G) + " |- " + stringRep(equals) + " : " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleEqualsType) {
+			exprtypeThrowException(EQUALSTYPE,
+				e_applyRuleEqualsType, equals);
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRuleEqualsType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final Equals equals) 
+			throws RuleFailedException {
+		
+		{
+		  /* G |- equals.left : var Type leftType */
+		  Expression _left = equals.getLeft();
+		  Type leftType = null;
+		  Result<Type> result = exprtypeInternal(G, _trace_, _left);
+		  checkAssignableTo(result.getFirst(), Type.class);
+		  leftType = (Type) result.getFirst();
+		  
+		  /* G |- equals.right : var Type rightType */
+		  Expression _right = equals.getRight();
+		  Type rightType = null;
+		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _right);
+		  checkAssignableTo(result_1.getFirst(), Type.class);
+		  rightType = (Type) result_1.getFirst();
+		  
+		  /* (leftType instanceof NumberType && rightType instanceof NumberType) or leftType.eClass == rightType.eClass */
+		  try {
+		    boolean _operator_and = false;
+		    if (!(leftType instanceof NumberType)) {
+		      _operator_and = false;
+		    } else {
+		      _operator_and = BooleanExtensions.operator_and((leftType instanceof NumberType), (rightType instanceof NumberType));
+		    }
+		    /* leftType instanceof NumberType && rightType instanceof NumberType */
+		    if (!_operator_and) {
+		      sneakyThrowRuleFailedException("leftType instanceof NumberType && rightType instanceof NumberType");
+		    }
+		  } catch (Exception e) {
+		    EClass _eClass = leftType.eClass();
+		    EClass _eClass_1 = rightType.eClass();
+		    boolean _operator_equals = ObjectExtensions.operator_equals(_eClass, _eClass_1);
+		    /* leftType.eClass == rightType.eClass */
+		    if (!_operator_equals) {
+		      sneakyThrowRuleFailedException("leftType.eClass == rightType.eClass");
+		    }
 		  }
 		}
 		BooleanType _createBooleanType = XsemGuiDslFactory.eINSTANCE.createBooleanType();
