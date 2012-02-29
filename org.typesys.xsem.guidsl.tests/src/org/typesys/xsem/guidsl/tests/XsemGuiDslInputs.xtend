@@ -61,6 +61,18 @@ entity MyEntity {
 }
 '''
 
+	def testEntityForExpressionParsing()
+'''
+entity MyEntity {
+	myString : string;
+	myBool : bool;
+	myInt : int;
+	myDecimal : float;
+	
+	/Exp = 1 * 10 + -2 / 3 < 1
+}
+'''
+
 	def testWrongWidgets()
 '''
 «testEntity»
