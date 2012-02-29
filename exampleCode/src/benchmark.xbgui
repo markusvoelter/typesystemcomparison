@@ -8,11 +8,11 @@ entity Person {
 	/greeting = "Hello " + firstName + " " + name;
 	/testExpr = 2 - 2;
 }
-
+ 
 form PersonForm edits Person {
 	text (10) -> name validate lengthOf(widgetcontent) < 10;
 	text (20) -> firstName;
-	text (5) -> age validate widgetcontent == true;
+	text (5) -> age validate (widgetcontent > 0) && (widgetcontent < 130);
 	checkbox -> isAdult validate age > 18 => widgetcontent == true;
 	text(5) -> weight validate 12.5 > age;
 }
