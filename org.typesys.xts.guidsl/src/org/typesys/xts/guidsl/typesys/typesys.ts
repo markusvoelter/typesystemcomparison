@@ -29,6 +29,11 @@ section "Expressions"
  		ensureType left :<=: char(COMPARABLE)
  		ensureType right :<=: char(COMPARABLE)
  		ensureCompatibility left :<=>: right
+ 	} 
+ 	typeof Equality -> BooleanType {
+ 		ensureType left :<=: char(COMPARABLE), BooleanType
+ 		ensureType right :<=: char(COMPARABLE), BooleanType
+ 		ensureCompatibility left :<=>: right
  	}
  	typeof AndOrExpression -> BooleanType {
  		ensureType left :<=: BooleanType

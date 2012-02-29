@@ -94,10 +94,15 @@ BooleanExpression returns Expression:
        (({AndOrExpression.left=current} op=("||"|"&&")) right=Comparison)*;
 
 Comparison returns Expression:
-       Addition
+       EqualsStuff
        (({Comparison.left=current}
-               op=(">="|"<="|"<"|">"|"=="|"!="|"=>")
+               op=(">="|"<="|"<"|">"|"=>")
+       ) right=EqualsStuff)*;
 
+EqualsStuff returns Expression:
+       Addition 
+       (({Equality.left=current}
+               op=("=="|"!=")
        ) right=Addition)*;
 
 Addition returns Expression:
