@@ -1,6 +1,8 @@
 package org.typesys.xts.guidsl.typesys;
 
 import org.eclipse.emf.ecore.EObject;
+import org.typesys.xts.guidsl.guiDsl.Entity;
+import org.typesys.xts.guidsl.guiDsl.EntityType;
 import org.typesys.xts.guidsl.guiDsl.FieldContent;
 import org.typesys.xts.guidsl.guiDsl.GuiDslPackage;
 import org.typesys.xts.guidsl.guiDsl.NumberLiteral;
@@ -41,5 +43,11 @@ public class GuiDlsTypesystem extends GuiDlsTypesystemGenerated {
 		return typeof(w.getAttr(), trace);
 	}
 		
+	@Override
+	protected EObject type(Entity element, TypeCalculationTrace trace) {
+		EntityType et = (EntityType)create(cl.getEntityType());
+		et.setRef(element);
+		return et;
+	}
 	
 }

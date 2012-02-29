@@ -17,9 +17,13 @@ section "Expressions"
  
  	subtype FloatType base IntType
 
-
-	typeof Expr -> abstract
 	typeof Expression -> abstract
+
+	typeof EntityType -> clone {
+		recurse ref
+	}
+	
+	typeof Entity -> javacode
 
  	typeof Comparison -> BooleanType {
  		ensureType left :<=: char(COMPARABLE)
@@ -29,20 +33,24 @@ section "Expressions"
  	typeof AndOrExpression -> BooleanType {
  		ensureType left :<=: BooleanType
  		ensureType right :<=: BooleanType 
- 	}  
- 	typeof PlusOrMinus -> common left right {
+ 	}   
+ 	typeof Plus -> common left right {
  		ensureType left :<=: StringType, char(NUMERIC)
  		ensureType right :<=: StringType, char(NUMERIC)
+ 		ensureCompatibility left :<=>: right
+ 	} 
+ 	typeof Minus -> common left right {
+ 		ensureType left :<=: char(NUMERIC)
+ 		ensureType right :<=: char(NUMERIC)
+ 		ensureCompatibility left :<=>: right
  	} 
  	typeof MultiOrDiv -> common left right { 
  		ensureType left :<=: char(NUMERIC)
  		ensureType right :<=: char(NUMERIC)
  	} 
- 	typeof NotExpression -> BooleanType {
- 		ensureType expr :<=: BooleanType
+ 	typeof BooleanNegation -> BooleanType {
+ 		ensureType expression :<=: BooleanType
  	}
-	typeof ParenExpr -> feature expr 
-
 
  
  	
@@ -50,13 +58,12 @@ section "Literals"
   
   	typeof StringLiteral -> StringType
   	typeof NumberLiteral -> javacode
- 	typeof TrueExpr -> BooleanType
- 	typeof FalseExpr -> BooleanType
+ 	typeof BooleanLiteral -> BooleanType
 	
 section "Special Stuff"
 
  	typeof AttributeRef -> feature attr
-	typeof lenghtOf -> IntType
+	typeof LenghtOf -> IntType
 	
 	typeof Attribute -> abstract
 	 

@@ -17,7 +17,7 @@ form PersonForm edits Person {
 form PersonGreeting edits Person {
 	text(20) -> firstName;
     text(20) -> greeting;
-} 
+}  
 
 form PersonFormWithErrors edits Person {
 	text(10) -> name validate greeting; 

@@ -23,11 +23,11 @@ Widget:
 ;
 
 TextWidget:
-	"text" "(" length=DECIMAL_NUMBER ")" "->" attr=[Attribute] ("validate" validate=Expr)? ";"
+	"text" "(" length=DECIMAL_NUMBER ")" "->" attr=[Attribute] ("validate" validate=Expression)? ";"
 ;
 
 CheckBoxWidget:
-	"checkbox" "->" attr=[Attribute] ("validate" validate=Expr)? ";"
+	"checkbox" "->" attr=[Attribute] ("validate" validate=Expression)? ";"
 ;
 
 /*
@@ -45,7 +45,7 @@ Attribute:
 ;
 
 DerivedAttribute:
-	"/" name=ID "=" expr=Expr ";"
+	"/" name=ID "=" expr=Expression ";"
 ;
 
 SimpleAttribute:
@@ -85,43 +85,45 @@ StringType:
  * Expressions, used in DSL form and widget
  */
 
-Expr:
-	BooleanExpression;
+Expression:
+       BooleanExpression;
+
 
 BooleanExpression returns Expression:
-	Comparison (({AndOrExpression.left=current} op=("||"|"&&")) right=Comparison)*;
-
+       Comparison
+       (({AndOrExpression.left=current} op=("||"|"&&")) right=Comparison)*;
 
 Comparison returns Expression:
-	Addition 
-	(({Comparison.left=current} 
-		op=(">="|"<="|"<"|">"|"=="|"!="|"=>")
-	) right=Addition)*;
- 
+       Addition
+       (({Comparison.left=current}
+               op=(">="|"<="|"<"|">"|"=="|"!="|"=>")
+
+       ) right=Addition)*;
+
 Addition returns Expression:
-	Multiplication (({PlusOrMinus.left=current} op=("+"|"-")) right=Multiplication)*; 
+       Multiplication (({Plus.left=current} '+' | {Minus.left=current} '-') right=Multiplication)*;
 
 Multiplication returns Expression:
-	PrefixOpLevel (({MultiOrDiv.left=current} op=("*"|"/")) right=PrefixOpLevel)*; 
+       Prefixed (({MultiOrDiv.left=current} op=("*"|"/")) right=Prefixed)*;
 
-
-PrefixOpLevel returns Expression:
-	({NotExpression} "!" "(" expr=Expr ")") |
-	Atomic;
+Prefixed returns Expression:
+       {BooleanNegation} =>"!" expression=Atomic | /* right associativity */
+       {ArithmeticSigned} =>"-" expression=Atomic | /* right associativity */
+       Atomic
+;
 
 Atomic returns Expression:
-	({TrueExpr} "true") |
-	({FalseExpr} "false") |
-	({FieldContent} "widgetcontent") |
-	({lenghtOf} "lengthOf" "(" expr=Expr ")" ) |
-	({ParenExpr} "(" expr=Expr ")") |
-	({NumberLiteral} value=DECIMAL_NUMBER) |
-	({StringLiteral} value=STRING) |
-	({AttributeRef} attr=[Attribute|ID]);
-
+       '(' Expression ')' |
+       ({FieldContent} "widgetcontent") |
+       ({LenghtOf} "lengthOf" "(" expr=Expression ")" ) |
+       ({BooleanLiteral} value=("true"|"false")) |
+       ({NumberLiteral} value=DECIMAL_NUMBER) |
+       ({StringLiteral} value=STRING) |
+       ({AttributeRef} attr=[Attribute|ID])
+;
 
 terminal DECIMAL_NUMBER returns ecore::EBigDecimal:
-	("-")? ('0'..'9')* ('.' ('0'..'9')+)?;
-
+       ('0'..'9')* ('.' ('0'..'9')+)?;
+       
 terminal INT returns ecore::EInt:
 	'this one has been deactivated';
