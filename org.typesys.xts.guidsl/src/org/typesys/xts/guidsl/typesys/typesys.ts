@@ -83,7 +83,7 @@ section "Special Stuff"
 	
 	// 2) text widgets may only refer to non-boolean attributes
 	typeof TextWidget -> none {
-//		ensureType length :<=: IntType
+		ensureType length :<=: IntType
 		ensureType attr :<=: StringType, IntType, FloatType
 		ensureType validate :<=: BooleanType
 	}
