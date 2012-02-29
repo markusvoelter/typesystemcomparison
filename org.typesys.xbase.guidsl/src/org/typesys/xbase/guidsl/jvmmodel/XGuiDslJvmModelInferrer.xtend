@@ -73,10 +73,12 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
    		acceptor.accept(form.toClass(form.fullyQualifiedName)).initializeLater [
 			documentation = form.documentation
 		    for (widget: form.widgets) {
-		    	if (widget.validate != null) {
+		    	if (widget.validate != null && widget.attr != null) {
 		    		members += widget.toMethod('validate'+widget.attr.name.toFirstUpper, form.newTypeRef(Boolean::TYPE)) [
-		    			val jvmType = associations.getJvmElements(form.entity).head as JvmDeclaredType
-		    			parameters += widget.toParameter("it", newTypeRef(jvmType))
+		    			val entityType = associations.getJvmElements(form.entity).head as JvmDeclaredType
+		    			parameters += widget.toParameter("it", newTypeRef(entityType))
+		    			// val widgetType = associations.getJvmElements(widget.attr) as JvmDeclaredType
+		    			// parameters += widget.toParameter("widgetcontent", newTypeRef(widgetType))
 		    			body = widget.validate
 		    		]
 		    	}

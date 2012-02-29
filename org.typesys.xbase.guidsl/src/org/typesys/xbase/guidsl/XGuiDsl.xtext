@@ -55,29 +55,10 @@ SimpleAttribute:
 ;
 
 /*
- * Expressions, used in DSL form and widget
  * In the Xbase variant, XExpression is used
+ * for expressions
  */
 
-// TODO: override implies operator  
-// ({NotExpression} "!" "(" expr=Expr ")") 
-// widgetcontent
-// lengthof? 
-
-// TODO: adapt Xbase by adding DECIMAL_NUMBER? 
-
-//Atomic returns Expression:
-//	({TrueExpr} "true") |
-//	({FalseExpr} "false") |
-//	({FieldContent} "widgetcontent") |
-//	({lenghtOf} "lengthOf" "(" expr=Expr ")" ) |
-//	({ParenExpr} "(" expr=Expr ")") |
-//	({NumberLiteral} value=DECIMAL_NUMBER) |
-//	({StringLiteral} value=STRING) |
-//	({AttributeRef} attr=[Attribute|ID]);
-
-//terminal DECIMAL_NUMBER returns ecore::EBigDecimal:
-//	("-")? ('0'..'9')* ('.' ('0'..'9')+)?;
-//
-//terminal INT returns ecore::EInt:
-//	'this one has been deactivated';
+// TODO: 
+// add widgetcontent
+// add lengthOf 
