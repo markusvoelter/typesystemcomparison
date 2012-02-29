@@ -105,12 +105,16 @@ Addition returns Expression:
 	Multiplication (({Plus.left=current} '+' | {Minus.left=current} '-') right=Multiplication)*; 
 
 Multiplication returns Expression:
-	Atomic (({MultiOrDiv.left=current} op=("*"|"/")) right=Atomic)*;
+	Prefixed (({MultiOrDiv.left=current} op=("*"|"/")) right=Prefixed)*;
+
+Prefixed returns Expression:
+	{BooleanNegation} =>"!" expression=Atomic | /* right associativity */
+	{ArithmeticSigned} =>"-" expression=Atomic | /* right associativity */
+	Atomic
+;
 
 Atomic returns Expression:
 	'(' Expression ')' |
-	{BooleanNegation} =>"!" expression=Atomic | /* right associativity */
-	{ArithmeticSigned} =>"-" expression=Atomic | /* right associativity */
 	({FieldContent} "widgetcontent") |
 	({lenghtOf} "lengthOf" "(" expr=Expression ")" ) |
 	({BooleanLiteral} value=("true"|"false")) |
