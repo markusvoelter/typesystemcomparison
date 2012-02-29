@@ -12,6 +12,8 @@ import it.xsemantics.runtime.RuleApplicationTrace
 import it.xsemantics.runtime.util.TraceUtils
 import junit.framework.Assert
 import it.xsemantics.runtime.StringRepresentation
+import org.typesys.xsem.guidsl.xsemGuiDsl.Expression
+import it.xsemantics.runtime.RuleEnvironment
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(XsemGuiDslInjectorProvider))
@@ -170,9 +172,37 @@ class XsemGuiDslTypingTests extends XsemGuiDslAbstractTests {
 		assertAttributeType(inputs.testEntityForExpressions, "LengthOf", "IntType")
 	}
 	
+	@Test
+	def void testFieldContentType() {
+		val widget = inputs.testEntity.textwidget(0)
+		assertExpressionType(
+			typesystem.environmentEntry('widgetcontent', widget.attr),
+			widget.validate, 
+			"BooleanType")
+	}
+	
 	def void assertAttributeType(CharSequence input, String attrName, 
 			CharSequence expectedType) {
 		val result = typesystem.attrtype(null, trace, input.attribute(attrName))
+		if (expectedType != null) {
+			if (result.failed) {
+				Assert::fail("unexpected failure: " +
+					result.ruleFailedException.failureTraceAsString
+				)
+			}
+			Assert::assertEquals(expectedType.toString, result.value.string)
+		} else {
+			if (!result.failed) {
+				Assert::fail("unexpected success: " +
+					trace.traceAsString
+				)
+			}
+		}
+	}
+	
+	def void assertExpressionType(RuleEnvironment env, Expression expression, 
+			CharSequence expectedType) {
+		val result = typesystem.exprtype(env, trace, expression)
 		if (expectedType != null) {
 			if (result.failed) {
 				Assert::fail("unexpected failure: " +

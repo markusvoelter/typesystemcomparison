@@ -26,6 +26,7 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.Comparison;
 import org.typesys.xsem.guidsl.xsemGuiDsl.DerivedAttribute;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Equals;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Expression;
+import org.typesys.xsem.guidsl.xsemGuiDsl.FieldContent;
 import org.typesys.xsem.guidsl.xsemGuiDsl.FloatType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.IntType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.LenghtOf;
@@ -49,6 +50,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	public final static String BOOLEANLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.BooleanLiteralType";
 	public final static String STRINGLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.StringLiteralType";
 	public final static String NUMBERLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.NumberLiteralType";
+	public final static String FIELDCONTENTTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.FieldContentType";
+	public final static String LENGTHOFTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.LengthOfType";
 	public final static String ATTRIBUTEREFTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.AttributeRefType";
 	public final static String MULTIORDIVTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.MultiOrDivType";
 	public final static String MINUSTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.MinusType";
@@ -58,7 +61,6 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	public final static String ANDORTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.AndOrType";
 	public final static String BOOLEANNEGATIONTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.BooleanNegationType";
 	public final static String ARITHMETICSIGNEDTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.ArithmeticSignedType";
-	public final static String LENGTHOFTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.LengthOfType";
 	public final static String ISASSIGNABLEBASE = "org.typesys.xsem.guidsl.xsemantics.rules.IsAssignableBase";
 	public final static String BOOLEANASSIGNABLETOSTRING = "org.typesys.xsem.guidsl.xsemantics.rules.BooleanAssignableToString";
 	public final static String INTASSIGNABLETOSTRING = "org.typesys.xsem.guidsl.xsemantics.rules.IntAssignableToString";
@@ -174,7 +176,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	public Result<Boolean> validateMustBeBooleanInternal(final RuleApplicationTrace _trace_, final Widget widget) 
 			throws RuleFailedException {
 		
-		/* widget.validate == null or { empty |- widget.validate : var BooleanType boolType or fail error "validate expression must be boolean" source widget.validate } */
+		/* widget.validate == null or { 'widgetcontent' <- widget.attr |- widget.validate : var BooleanType boolType or fail error "validate expression must be boolean" source widget.validate } */
 		try {
 		  Expression _validate = widget.getValidate();
 		  boolean _operator_equals = ObjectExtensions.operator_equals(_validate, null);
@@ -183,12 +185,13 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		    sneakyThrowRuleFailedException("widget.validate == null");
 		  }
 		} catch (Exception e) {
-		  /* empty |- widget.validate : var BooleanType boolType or fail error "validate expression must be boolean" source widget.validate */
+		  /* 'widgetcontent' <- widget.attr |- widget.validate : var BooleanType boolType or fail error "validate expression must be boolean" source widget.validate */
 		  try {
-		    /* empty |- widget.validate : var BooleanType boolType */
+		    /* 'widgetcontent' <- widget.attr |- widget.validate : var BooleanType boolType */
 		    Expression _validate_1 = widget.getValidate();
 		    BooleanType boolType = null;
-		    Result<Type> result = exprtypeInternal(emptyEnvironment(), _trace_, _validate_1);
+		    Attribute _attr = widget.getAttr();
+		    Result<Type> result = exprtypeInternal(environmentEntry("widgetcontent", _attr), _trace_, _validate_1);
 		    checkAssignableTo(result.getFirst(), BooleanType.class);
 		    boolType = (BooleanType) result.getFirst();
 		    
@@ -215,10 +218,11 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			throws RuleFailedException {
 		
 		{
-		  /* empty ||- widget.attr : var Type attrType */
+		  /* 'widgetcontent' <- widget.attr ||- widget.attr : var Type attrType */
 		  Attribute _attr = widget.getAttr();
 		  Type attrType = null;
-		  Result<Type> result = attrtypeInternal(emptyEnvironment(), _trace_, _attr);
+		  Attribute _attr_1 = widget.getAttr();
+		  Result<Type> result = attrtypeInternal(environmentEntry("widgetcontent", _attr_1), _trace_, _attr);
 		  checkAssignableTo(result.getFirst(), Type.class);
 		  attrType = (Type) result.getFirst();
 		  
@@ -477,6 +481,68 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		
 		FloatType _createFloatType = XsemGuiDslFactory.eINSTANCE.createFloatType();
 		return new Result<Type>(_createFloatType);
+	}
+	
+	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final FieldContent fieldContent) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRuleFieldContentType(G, _subtrace_, fieldContent);
+			addToTrace(_trace_, ruleName("FieldContentType") + stringRepForEnv(G) + " |- " + stringRep(fieldContent) + " : " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleFieldContentType) {
+			exprtypeThrowException(FIELDCONTENTTYPE,
+				e_applyRuleFieldContentType, fieldContent);
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRuleFieldContentType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final FieldContent fieldContent) 
+			throws RuleFailedException {
+		Type type = null;
+		
+		/* G ||- env(G, 'widgetcontent', Attribute) : type */
+		/* env(G, 'widgetcontent', Attribute) */
+		Attribute _environmentaccess = environmentAccess(G, "widgetcontent", Attribute.class);
+		Result<Type> result = attrtypeInternal(G, _trace_, _environmentaccess);
+		checkAssignableTo(result.getFirst(), Type.class);
+		type = (Type) result.getFirst();
+		
+		return new Result<Type>(type);
+	}
+	
+	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final LenghtOf len) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRuleLengthOfType(G, _subtrace_, len);
+			addToTrace(_trace_, ruleName("LengthOfType") + stringRepForEnv(G) + " |- " + stringRep(len) + " : " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleLengthOfType) {
+			exprtypeThrowException(LENGTHOFTYPE,
+				e_applyRuleLengthOfType, len);
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRuleLengthOfType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final LenghtOf len) 
+			throws RuleFailedException {
+		
+		/* G |- len.expr : var StringType stringType */
+		Expression _expr = len.getExpr();
+		StringType stringType = null;
+		Result<Type> result = exprtypeInternal(G, _trace_, _expr);
+		checkAssignableTo(result.getFirst(), StringType.class);
+		stringType = (StringType) result.getFirst();
+		
+		IntType _createIntType = XsemGuiDslFactory.eINSTANCE.createIntType();
+		return new Result<Type>(_createIntType);
 	}
 	
 	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
@@ -866,37 +932,6 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		numType = (NumberType) result.getFirst();
 		
 		return new Result<Type>(numType);
-	}
-	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
-			final LenghtOf len) 
-			throws RuleFailedException {
-		try {
-			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-			Result<Type> _result_ = applyRuleLengthOfType(G, _subtrace_, len);
-			addToTrace(_trace_, ruleName("LengthOfType") + stringRepForEnv(G) + " |- " + stringRep(len) + " : " + stringRep(_result_.getFirst()));
-			addAsSubtrace(_trace_, _subtrace_);
-			return _result_;
-		} catch (Exception e_applyRuleLengthOfType) {
-			exprtypeThrowException(LENGTHOFTYPE,
-				e_applyRuleLengthOfType, len);
-			return null;
-		}
-	}
-	
-	protected Result<Type> applyRuleLengthOfType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
-			final LenghtOf len) 
-			throws RuleFailedException {
-		
-		/* G |- len.expr : var StringType stringType */
-		Expression _expr = len.getExpr();
-		StringType stringType = null;
-		Result<Type> result = exprtypeInternal(G, _trace_, _expr);
-		checkAssignableTo(result.getFirst(), StringType.class);
-		stringType = (StringType) result.getFirst();
-		
-		IntType _createIntType = XsemGuiDslFactory.eINSTANCE.createIntType();
-		return new Result<Type>(_createIntType);
 	}
 	
 	protected Result<Boolean> isAssignableImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,

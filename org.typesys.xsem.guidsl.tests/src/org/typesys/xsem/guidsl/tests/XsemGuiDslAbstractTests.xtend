@@ -11,6 +11,7 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.Model
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
 import org.typesys.xsem.guidsl.xsemGuiDsl.DerivedAttribute
+import org.typesys.xsem.guidsl.xsemGuiDsl.TextWidget
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(XsemGuiDslInjectorProvider))
@@ -34,5 +35,10 @@ class XsemGuiDslAbstractTests {
 		input.parse.
 			getAllContentsOfType(typeof(DerivedAttribute)).
 				findFirst [ it.name == attrName ]
+	}
+	
+	def textwidget(CharSequence input, int index) {
+		input.parse.
+			getAllContentsOfType(typeof(TextWidget)).get(index)
 	}
 }

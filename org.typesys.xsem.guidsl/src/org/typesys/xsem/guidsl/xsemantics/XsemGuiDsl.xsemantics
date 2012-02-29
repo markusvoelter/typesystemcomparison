@@ -34,6 +34,18 @@ axiom StringLiteralType
 axiom NumberLiteralType
 	G |- NumberLiteral lit : XsemGuiDslFactory::eINSTANCE.createFloatType
 
+rule FieldContentType
+	G |- FieldContent fieldContent : Type type
+from {
+	G ||- env(G, 'widgetcontent', Attribute) : type
+}
+
+rule LengthOfType
+	G |- LenghtOf len : XsemGuiDslFactory::eINSTANCE.createIntType
+from {
+	G |- len.expr : var StringType stringType
+}
+
 rule AttributeRefType
 	G |- AttributeRef attrRef : Type type
 from {
@@ -116,12 +128,6 @@ from {
 	G |- signed.expression : numType
 }
 
-rule LengthOfType
-	G |- LenghtOf len : XsemGuiDslFactory::eINSTANCE.createIntType
-from {
-	G |- len.expr : var StringType stringType
-}
-
 rule IsAssignableBase
 	G |- Type left <~ Type right
 from {
@@ -158,7 +164,7 @@ checkrule ValidateMustBeBoolean for
 from {
 	widget.validate == null
 	or {
-		empty |- widget.validate : var BooleanType boolType
+		'widgetcontent' <- widget.attr |- widget.validate : var BooleanType boolType
 		or
 		fail
 			error "validate expression must be boolean"
@@ -169,7 +175,7 @@ from {
 checkrule ValidateTextWidgetAttributeNotBoolean for
 	TextWidget widget
 from {
-	empty ||- widget.attr : var Type attrType
+	'widgetcontent' <- widget.attr ||- widget.attr : var Type attrType
 	!(attrType instanceof BooleanType)
 	or
 	fail

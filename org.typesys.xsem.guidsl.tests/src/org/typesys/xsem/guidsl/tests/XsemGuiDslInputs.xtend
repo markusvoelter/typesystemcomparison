@@ -19,7 +19,7 @@ entity MyOtherEntity {
 }
 
 form MyForm edits MyEntity {
-	text(10) -> myString validate true;
+	text(10) -> myString validate lengthOf(widgetcontent) > 0;
 	checkbox -> myBool ;
 }
 '''
@@ -64,18 +64,6 @@ entity MyEntity {
 	
 	/myDecimalDerived = 10.54;
 	/myBooleanDerived = true;
-}
-'''
-
-	def testEntityForExpressionParsing()
-'''
-entity MyEntity {
-	myString : string;
-	myBool : bool;
-	myInt : int;
-	myDecimal : float;
-	
-	/Exp = 1 * 10 + -2 / 3 < 1
 }
 '''
 
