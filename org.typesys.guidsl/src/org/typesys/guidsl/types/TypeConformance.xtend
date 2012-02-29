@@ -26,6 +26,10 @@ class TypeConformance {
 
 	// allow numbers where strings are expected
 	def dispatch isAssignable(StringType left, NumberType right) { true }
+	
+	// don't allow null types
+	def dispatch isAssignable(Type left, Void right) { false }
+	def dispatch isAssignable(Void left, Type right) { false }
 
 //  uncomment to allow booleans to be assigned to strings
 //	def dispatch isAssignable(StringType left, BooleanType right) { true }

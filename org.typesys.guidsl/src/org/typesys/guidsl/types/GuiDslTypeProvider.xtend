@@ -3,33 +3,30 @@ package org.typesys.guidsl.types
 import com.google.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
+import org.typesys.guidsl.guiDsl.AndOrExpression
+import org.typesys.guidsl.guiDsl.ArithmeticSigned
 import org.typesys.guidsl.guiDsl.AttributeRef
+import org.typesys.guidsl.guiDsl.BooleanLiteral
+import org.typesys.guidsl.guiDsl.BooleanNegation
+import org.typesys.guidsl.guiDsl.Comparison
 import org.typesys.guidsl.guiDsl.DerivedAttribute
-import org.typesys.guidsl.guiDsl.Div
-import org.typesys.guidsl.guiDsl.Equals
+import org.typesys.guidsl.guiDsl.Equality
 import org.typesys.guidsl.guiDsl.Expression
-import org.typesys.guidsl.guiDsl.FalseExpr
+import org.typesys.guidsl.guiDsl.FieldContent
 import org.typesys.guidsl.guiDsl.FloatLiteral
-import org.typesys.guidsl.guiDsl.Greater
-import org.typesys.guidsl.guiDsl.GreaterEquals
 import org.typesys.guidsl.guiDsl.GuiDslFactory
-import org.typesys.guidsl.guiDsl.Implies
 import org.typesys.guidsl.guiDsl.IntLiteral
-import org.typesys.guidsl.guiDsl.LogicalAnd
-import org.typesys.guidsl.guiDsl.LogicalOr
+import org.typesys.guidsl.guiDsl.LengthOf
 import org.typesys.guidsl.guiDsl.Minus
-import org.typesys.guidsl.guiDsl.Multi
-import org.typesys.guidsl.guiDsl.NotExpression
-import org.typesys.guidsl.guiDsl.Plus
+import org.typesys.guidsl.guiDsl.MultiOrDiv
 import org.typesys.guidsl.guiDsl.SimpleAttribute
-import org.typesys.guidsl.guiDsl.Smaller
-import org.typesys.guidsl.guiDsl.SmallerEquals
 import org.typesys.guidsl.guiDsl.StringLiteral
-import org.typesys.guidsl.guiDsl.TrueExpr
 import org.typesys.guidsl.guiDsl.Type
-import org.typesys.guidsl.guiDsl.Unequals
 import org.typesys.guidsl.guiDsl.Widget
-import org.typesys.guidsl.guiDsl.lenghtOf
+import org.typesys.guidsl.guiDsl.Plus
+
+import static extension org.eclipse.xtext.EcoreUtil2.*
+
 
 class GuiDslTypeProvider {
 
@@ -44,44 +41,39 @@ class GuiDslTypeProvider {
 	
 	/**
 	 * 
-	 * @return the type of an element, never <code>null</code>.
+	 * @return the type of an element, {@ code null} if it cannot be determined.
 	 */
 	def Type getType(EObject e) {
 		switch e {
+			Widget : e.attr.type
 			SimpleAttribute : e.type
 			DerivedAttribute : e.expr.type
 			AttributeRef : e.attr.type
-			
-			Equals : bool
-			Unequals : bool
 
-			Greater : bool
-			GreaterEquals : bool
-			Smaller : bool
-			SmallerEquals : bool
-
-			LogicalAnd : bool
-			LogicalOr : bool
-			Implies : bool
-			NotExpression : bool
-			
+	        AndOrExpression : bool 
+			Comparison : bool
+			Equality : bool
+		
 			// type is the most general, e.g. int + float => float
 			Plus : mostGeneral(e.left.type, e.right.type)
 			Minus : mostGeneral(e.left.type, e.right.type)
-			Multi : mostGeneral(e.left.type, e.right.type)
+			MultiOrDiv case e.op.equals("*"): mostGeneral(e.left.type, e.right.type)
 			// as in Java
-			Div : e.left.type
+			MultiOrDiv case e.op.equals("/"): e.left.type
 			
-			TrueExpr : bool
-			FalseExpr : bool
+			BooleanNegation : bool
+			ArithmeticSigned : number
+			
+			// return type of attribute referenced by the widget
+			FieldContent : return e.getContainerOfType(typeof(Widget))?.attr?.type
+			LengthOf : _int
+			BooleanLiteral : bool
 			FloatLiteral : _float
 			IntLiteral: _int
 			StringLiteral : string
 			
-			// 'functions'
-			lenghtOf : _int
-			
-			default : throw new IllegalArgumentException("unsupported element : "+e)
+			// default : throw new IllegalArgumentException("unsupported element : "+e)
+			default: null
 		}
 	}
 	
@@ -115,31 +107,21 @@ class GuiDslTypeProvider {
 		switch e {
 			Widget : bool
 			
+			AndOrExpression : bool 
 			// an object contained (i.e. left or right side) 
-			// in one of the following operators is expected to always be a number 
-			Greater       : number
-			GreaterEquals : number
-			Smaller       : number
-			SmallerEquals : number
+			// in the following operator is expected to always be a number 
+			Comparison : number
+			// the left side of the operator determines the expected type 
+			Equality   : e.left.type
+			// everything can be added, it might end up as string
+			Plus :	mostGeneral(e.left.type, e.right.type).mostSpecific(string)
+			Minus      : number
+			MultiOrDiv : number
 
-			LogicalAnd    : bool
-			LogicalOr     : bool
-			Implies       : bool
-			NotExpression : bool
+			BooleanNegation : bool
+			ArithmeticSigned : number 
 			
-			// the left side of these operators determines the expected type 
-			Equals   : e.left.type
-			Unequals : e.left.type
-			
-			Plus : {
-				// everything can be added, it might end up as string
-				mostGeneral(e.left.type, e.right.type).mostSpecific(string)
-			}
-			Minus : number
-			Multi : number
-			Div : number
-			
-			lenghtOf : string
+			LengthOf : string
 			
 			default : null
 		}
