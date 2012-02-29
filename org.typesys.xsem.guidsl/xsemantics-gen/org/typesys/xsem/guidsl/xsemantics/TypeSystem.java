@@ -27,6 +27,7 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.DerivedAttribute;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Expression;
 import org.typesys.xsem.guidsl.xsemGuiDsl.FloatType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.IntType;
+import org.typesys.xsem.guidsl.xsemGuiDsl.LenghtOf;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Minus;
 import org.typesys.xsem.guidsl.xsemGuiDsl.MultiOrDiv;
 import org.typesys.xsem.guidsl.xsemGuiDsl.NumberLiteral;
@@ -40,7 +41,6 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.Type;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Widget;
 import org.typesys.xsem.guidsl.xsemGuiDsl.XsemGuiDslFactory;
 import org.typesys.xsem.guidsl.xsemGuiDsl.XsemGuiDslPackage;
-import org.typesys.xsem.guidsl.xsemGuiDsl.lenghtOf;
 
 public class TypeSystem extends XsemanticsRuntimeSystem {
 	public final static String SIMPLEATTRIBUTETYPE = "org.typesys.xsem.guidsl.xsemantics.rules.SimpleAttributeType";
@@ -806,7 +806,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	}
 	
 	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
-			final lenghtOf len) 
+			final LenghtOf len) 
 			throws RuleFailedException {
 		try {
 			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
@@ -822,7 +822,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	}
 	
 	protected Result<Type> applyRuleLengthOfType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
-			final lenghtOf len) 
+			final LenghtOf len) 
 			throws RuleFailedException {
 		
 		/* G |- len.expr : var StringType stringType */

@@ -105,7 +105,7 @@ from {
 }
 
 rule LengthOfType
-	G |- lenghtOf len : XsemGuiDslFactory::eINSTANCE.createIntType
+	G |- LenghtOf len : XsemGuiDslFactory::eINSTANCE.createIntType
 from {
 	G |- len.expr : var StringType stringType
 }
