@@ -26,6 +26,10 @@ import org.typesys.guidsl.guiDsl.Widget
 import org.typesys.guidsl.guiDsl.Plus
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
+import java.util.Collection
+import org.typesys.guidsl.guiDsl.impl.CyclicDependencyTypeImpl
+import org.typesys.guidsl.guiDsl.util.GuiDslAdapterFactory
+import org.typesys.guidsl.guiDsl.Attribute
 
 
 class GuiDslTypeProvider {
@@ -44,28 +48,34 @@ class GuiDslTypeProvider {
 	 * @return the type of an element, {@ code null} if it cannot be determined.
 	 */
 	def Type getType(EObject e) {
+		getType(e, newHashSet())
+	}
+	
+	def Type getType(EObject e, Collection<EObject> visited) {
+		if (visited.contains(e)) return new CyclicDependencyTypeImpl; // cycle detected
+		visited.add(e)
 		switch e {
-			Widget : e.attr.type
+			Widget : e.attr.getType(visited)
 			SimpleAttribute : e.type
-			DerivedAttribute : e.expr.type
-			AttributeRef : e.attr.type
+			DerivedAttribute : e.expr.getType(visited)
+			AttributeRef : e.attr.getType(visited)
 
 	        AndOrExpression : bool 
 			Comparison : bool
 			Equality : bool
 		
 			// type is the most general, e.g. int + float => float
-			Plus : mostGeneral(e.left.type, e.right.type)
-			Minus : mostGeneral(e.left.type, e.right.type)
-			MultiOrDiv case e.op.equals("*"): mostGeneral(e.left.type, e.right.type)
+			Plus : mostGeneral(e.left.getType(visited), e.right.getType(visited))
+			Minus : mostGeneral(e.left.getType(visited), e.right.getType(visited))
+			MultiOrDiv case e.op.equals("*"): mostGeneral(e.left.getType(visited), e.right.getType(visited))
 			// as in Java
-			MultiOrDiv case e.op.equals("/"): e.left.type
+			MultiOrDiv case e.op.equals("/"): e.left.getType(visited)
 			
 			BooleanNegation : bool
 			ArithmeticSigned : number
 			
 			// return type of attribute referenced by the widget
-			FieldContent : return e.getContainerOfType(typeof(Widget))?.attr?.type
+			FieldContent : return e.getContainerOfType(typeof(Widget))?.attr?.getType(visited)
 			LengthOf : _int
 			BooleanLiteral : bool
 			FloatLiteral : _float

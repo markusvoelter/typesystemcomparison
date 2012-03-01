@@ -3,6 +3,7 @@ package org.typesys.guidsl.validation;
 import org.eclipse.xtext.validation.Check;
 import org.typesys.guidsl.guiDsl.Attribute;
 import org.typesys.guidsl.guiDsl.CheckBoxWidget;
+import org.typesys.guidsl.guiDsl.CyclicDependencyType;
 import org.typesys.guidsl.guiDsl.Expression;
 import org.typesys.guidsl.guiDsl.GuiDslPackage;
 import org.typesys.guidsl.guiDsl.TextWidget;
@@ -31,9 +32,13 @@ public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 	@Check
 	public void check(Expression expr) {
 		Type expectedType = guiDslTypeProvider.getExpectedType(expr);
+		Type actualType = guiDslTypeProvider.getType(expr);
+		if (actualType instanceof CyclicDependencyType) {
+			error("Type is part of a cyclic dependency.", null,
+					INCOMPATIBLE_TYPES); return;
+		}
 		if (expectedType == null)
 			return;
-		Type actualType = guiDslTypeProvider.getType(expr);
 		if (!conformance.isAssignable(expectedType, actualType)) {
 			error("Incompatible types. Expected '" + expectedType
 					+ "' but was '" + actualType + "'", null,
