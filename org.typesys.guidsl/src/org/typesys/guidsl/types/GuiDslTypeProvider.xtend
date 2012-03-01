@@ -1,6 +1,7 @@
 package org.typesys.guidsl.types
 
 import com.google.inject.Inject
+import java.util.Collection
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.typesys.guidsl.guiDsl.AndOrExpression
@@ -9,32 +10,32 @@ import org.typesys.guidsl.guiDsl.AttributeRef
 import org.typesys.guidsl.guiDsl.BooleanLiteral
 import org.typesys.guidsl.guiDsl.BooleanNegation
 import org.typesys.guidsl.guiDsl.Comparison
-import org.typesys.guidsl.guiDsl.DerivedAttribute
+import org.typesys.guidsl.guiDsl.CyclicDependencyType
+import org.typesys.guidsl.guiDsl.Entity
+import org.typesys.guidsl.guiDsl.EntityType
 import org.typesys.guidsl.guiDsl.Equality
 import org.typesys.guidsl.guiDsl.Expression
 import org.typesys.guidsl.guiDsl.FieldContent
 import org.typesys.guidsl.guiDsl.FloatLiteral
 import org.typesys.guidsl.guiDsl.GuiDslFactory
+import org.typesys.guidsl.guiDsl.InitializedAttribute
 import org.typesys.guidsl.guiDsl.IntLiteral
 import org.typesys.guidsl.guiDsl.LengthOf
 import org.typesys.guidsl.guiDsl.Minus
 import org.typesys.guidsl.guiDsl.MultiOrDiv
+import org.typesys.guidsl.guiDsl.Plus
 import org.typesys.guidsl.guiDsl.SimpleAttribute
 import org.typesys.guidsl.guiDsl.StringLiteral
 import org.typesys.guidsl.guiDsl.Type
 import org.typesys.guidsl.guiDsl.Widget
-import org.typesys.guidsl.guiDsl.Plus
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
-import java.util.Collection
-import org.typesys.guidsl.guiDsl.impl.CyclicDependencyTypeImpl
-import org.typesys.guidsl.guiDsl.util.GuiDslAdapterFactory
-import org.typesys.guidsl.guiDsl.Attribute
 
 
 class GuiDslTypeProvider {
 
 	@Inject extension TypeConformance conformance
+	
 	
 	// declare the built-in types for easy use
 	Type bool = GuiDslFactory::eINSTANCE.createBooleanType
@@ -42,6 +43,7 @@ class GuiDslTypeProvider {
 	Type _int = GuiDslFactory::eINSTANCE.createIntType
 	Type number = GuiDslFactory::eINSTANCE.createNumberType
 	Type string = GuiDslFactory::eINSTANCE.createStringType
+	@Inject CyclicDependencyType cyclicType
 	
 	/**
 	 * 
@@ -52,12 +54,13 @@ class GuiDslTypeProvider {
 	}
 	
 	def Type getType(EObject e, Collection<EObject> visited) {
-		if (visited.contains(e)) return new CyclicDependencyTypeImpl; // cycle detected
+		if (visited.contains(e)) return cyclicType; // cycle detected
 		visited.add(e)
 		switch e {
 			Widget : e.attr.getType(visited)
+			Entity : { GuiDslFactory::eINSTANCE.createEntityType.ref = e } 
 			SimpleAttribute : e.type
-			DerivedAttribute : e.expr.getType(visited)
+			InitializedAttribute : e.expr.getType(visited)
 			AttributeRef : e.attr.getType(visited)
 
 	        AndOrExpression : bool 
@@ -76,7 +79,9 @@ class GuiDslTypeProvider {
 			
 			// return type of attribute referenced by the widget
 			FieldContent : return e.getContainerOfType(typeof(Widget))?.attr?.getType(visited)
+			
 			LengthOf : _int
+			EntityType : e
 			BooleanLiteral : bool
 			FloatLiteral : _float
 			IntLiteral: _int
@@ -116,13 +121,14 @@ class GuiDslTypeProvider {
 	def protected Type internalGetExpectedType(EObject e, EStructuralFeature feature) {
 		switch e {
 			Widget : bool
+			InitializedAttribute case e.type != null : e.type
 			
 			AndOrExpression : bool 
 			// an object contained (i.e. left or right side) 
 			// in the following operator is expected to always be a number 
 			Comparison : number
 			// the left side of the operator determines the expected type 
-			Equality   : e.left.type
+			Equality : e.left.type
 			// everything can be added, it might end up as string
 			Plus :	mostGeneral(e.left.type, e.right.type).mostSpecific(string)
 			Minus      : number

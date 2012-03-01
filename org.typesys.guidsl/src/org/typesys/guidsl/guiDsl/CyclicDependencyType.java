@@ -1,7 +1,10 @@
 package org.typesys.guidsl.guiDsl;
 
-import org.eclipse.emf.ecore.EObject;
+import org.typesys.guidsl.guiDsl.impl.CyclicDependencyTypeImpl;
 
-public interface CyclicDependencyType extends EObject
+import com.google.inject.ImplementedBy;
+
+@ImplementedBy(CyclicDependencyTypeImpl.class)
+public interface CyclicDependencyType extends Type
 {
 }

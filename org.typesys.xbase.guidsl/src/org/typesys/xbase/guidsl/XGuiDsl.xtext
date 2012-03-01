@@ -3,6 +3,7 @@ grammar org.typesys.xbase.guidsl.XGuiDsl with org.eclipse.xtext.xbase.Xbase
 generate xGuiDsl "http://www.typesys.org/xbase/guidsl/XGuiDsl"
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://www.eclipse.org/xtext/common/JavaVMTypes"
 
 Model:
 	elements+=AbstractDeclaration*;
@@ -37,22 +38,29 @@ CheckBoxWidget:
  */
 
 Entity:
-	"entity" name=ID "{"
+	"entity" name=ID ('extends' superType=JvmParameterizedTypeReference)? "{"
 		(attributes+=Attribute)*
 	"}"
 ;
 
 Attribute:
-	SimpleAttribute | DerivedAttribute
+	SimpleAttribute | InitializedAttribute
 ;
 
-DerivedAttribute:
-	"/" name=ID "=" expr=XExpression ";"
+InitializedAttribute:
+	(derived?="/")? name=ID (":" type=JvmParameterizedTypeReference)? "=" expr=XExpression ";"
 ;
 
 SimpleAttribute:
-	name=ID ":" type=JvmTypeReference ";"
+	name=ID ":" type=JvmParameterizedTypeReference ";"
 ;
+
+JvmParameterizedTypeReference: 
+	type=[JvmType|QualifiedName]
+;
+
+// TODO JvmParameterizedTypeReference: error if not overridden
+// error(211): ../org.typesys.xbase.guidsl/src-gen/org/typesys/xbase/guidsl/parser/antlr/internal/InternalXGuiDsl.g:544:1: [fatal] rule ruleAttribute has non-LL(*) decision due to recursive rule invocations reachable from alts 1,2.  Resolve by left-factoring or using syntactic predicates or using backtrack=true option.
 
 /*
  * In the Xbase variant, XExpression is used
@@ -60,3 +68,5 @@ SimpleAttribute:
  */
 // widgetcontent -> added to JvmModelInferrer
 // lengthOf -> covered with String.length()
+
+// TODO remove make "/" optional, derived?="/"? 

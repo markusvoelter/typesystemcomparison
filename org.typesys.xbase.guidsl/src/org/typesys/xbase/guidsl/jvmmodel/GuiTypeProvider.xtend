@@ -1,16 +1,16 @@
 package org.typesys.xbase.guidsl.jvmmodel
 
-import org.eclipse.xtext.common.types.JvmTypeReference
-import org.typesys.xbase.guidsl.xGuiDsl.Attribute
-import org.typesys.xbase.guidsl.xGuiDsl.SimpleAttribute
-import org.typesys.xbase.guidsl.xGuiDsl.DerivedAttribute
 import com.google.inject.Inject
-import org.eclipse.xtext.xbase.typing.ITypeProvider
+import org.eclipse.xtext.common.types.JvmDeclaredType
+import org.eclipse.xtext.common.types.JvmTypeReference
 import org.eclipse.xtext.xbase.XExpression
-import org.typesys.xbase.guidsl.xGuiDsl.Entity
 import org.eclipse.xtext.xbase.jvmmodel.IJvmModelAssociations
 import org.eclipse.xtext.xbase.jvmmodel.JvmTypesBuilder
-import org.eclipse.xtext.common.types.JvmDeclaredType
+import org.eclipse.xtext.xbase.typing.ITypeProvider
+import org.typesys.xbase.guidsl.xGuiDsl.Attribute
+import org.typesys.xbase.guidsl.xGuiDsl.Entity
+import org.typesys.xbase.guidsl.xGuiDsl.InitializedAttribute
+import org.typesys.xbase.guidsl.xGuiDsl.SimpleAttribute
 
 class GuiTypeProvider {
 	
@@ -23,7 +23,8 @@ class GuiTypeProvider {
    	def JvmTypeReference getJvmType(Attribute attr) {
 		switch attr {
 			SimpleAttribute : attr.getType()
-			DerivedAttribute : getJvmType(attr.getExpr())
+			InitializedAttribute case attr.type != null : attr.type
+			InitializedAttribute : getJvmType(attr.getExpr())
 			default: null
 		}
 	}

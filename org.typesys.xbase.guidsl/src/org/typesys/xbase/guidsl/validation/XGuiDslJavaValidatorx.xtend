@@ -10,13 +10,13 @@ import org.eclipse.xtext.xbase.validation.IssueCodes
 import org.eclipse.xtext.xbase.validation.XbaseJavaValidator
 import org.typesys.xbase.guidsl.xGuiDsl.Attribute
 import org.typesys.xbase.guidsl.xGuiDsl.CheckBoxWidget
-import org.typesys.xbase.guidsl.xGuiDsl.DerivedAttribute
+import org.typesys.xbase.guidsl.xGuiDsl.InitializedAttribute
 import org.typesys.xbase.guidsl.xGuiDsl.SimpleAttribute
 import org.typesys.xbase.guidsl.xGuiDsl.TextWidget
 import org.typesys.xbase.guidsl.xGuiDsl.XGuiDslPackage
 import org.typesys.xbase.guidsl.xGuiDsl.XGuiDslPackage$Literals
 
-class XGuiDslJavaValidator extends XbaseJavaValidator {
+class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 	
 	@Inject
 	private ITypeProvider typeProvider;
@@ -51,7 +51,7 @@ class XGuiDslJavaValidator extends XbaseJavaValidator {
 	def protected JvmTypeReference getTypeForAttribute(Attribute attr) {
 		switch attr {
 			SimpleAttribute : attr.getType()
-			DerivedAttribute : typeProvider.getType(attr.getExpr())
+			InitializedAttribute : typeProvider.getType(attr.getExpr())
 			default: null
 		}
 	}

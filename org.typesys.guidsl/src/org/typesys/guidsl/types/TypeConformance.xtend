@@ -5,6 +5,9 @@ import org.typesys.guidsl.guiDsl.IntType
 import org.typesys.guidsl.guiDsl.NumberType
 import org.typesys.guidsl.guiDsl.StringType
 import org.typesys.guidsl.guiDsl.Type
+import org.typesys.guidsl.guiDsl.Entity
+import java.util.Collection
+import org.typesys.guidsl.guiDsl.EntityType
 
 class TypeConformance {
 	
@@ -14,6 +17,17 @@ class TypeConformance {
 	 */
 	def dispatch isAssignable(Type left, Type right) {
 		left.eClass == right.eClass
+	}
+	
+	def dispatch isAssignable(EntityType left, EntityType right) {
+		internalIsAssignable(left.ref, right.ref, newHashSet())
+	}
+	
+	def internalIsAssignable(Entity left, Entity right, Collection<Entity> visited) {
+		if (visited.contains(right)) return false; // cycle detected
+		visited.add(right)
+		left == right || (right.superType != null && 
+			internalIsAssignable(left, right.superType, visited) )
 	}
 
 	def dispatch isAssignable(NumberType left, FloatType right) { true }

@@ -17,4 +17,9 @@ public class XGuiDslRuntimeModule extends org.typesys.xbase.guidsl.AbstractXGuiD
 		return XGuiDslScopeProviderXbase.class;
 	}
 	
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends org.typesys.xbase.guidsl.validation.XGuiDslJavaValidatorx> bindXGuiDslJavaValidatorX() {
+		return org.typesys.xbase.guidsl.validation.XGuiDslJavaValidatorx.class;
+	}
+	
+	
 }

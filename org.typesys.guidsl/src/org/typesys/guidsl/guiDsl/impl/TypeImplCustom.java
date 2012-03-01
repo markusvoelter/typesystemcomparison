@@ -1,5 +1,8 @@
 package org.typesys.guidsl.guiDsl.impl;
 
+import org.typesys.guidsl.guiDsl.Entity;
+import org.typesys.guidsl.guiDsl.EntityType;
+
 public class TypeImplCustom extends org.typesys.guidsl.guiDsl.impl.TypeImpl {
 
 	/**
@@ -7,6 +10,12 @@ public class TypeImplCustom extends org.typesys.guidsl.guiDsl.impl.TypeImpl {
 	 */
 	@Override
 	public String toString() {
+		if (this instanceof EntityType) {
+			Entity ref = ((EntityType) this).getRef();
+			if (ref != null) {
+				return ref.getName() + " (Entity)";
+			}
+		}
 		return eClass().getName();
 	}
 

@@ -35,17 +35,17 @@ CheckBoxWidget:
  */
 
 Entity:
-	"entity" name=ID "{"
+	"entity" name=ID ('extends' superType=[Entity])? "{"
 		(attributes+=Attribute)*
 	"}"
 ;
 
 Attribute:
-	SimpleAttribute | DerivedAttribute
+	SimpleAttribute | InitializedAttribute
 ;
 
-DerivedAttribute:
-	"/" name=ID "=" expr=Expression ";"
+InitializedAttribute:
+	derived?="/"? name=ID (":" type=Type)? "=" expr=Expression ";"
 ;
 
 SimpleAttribute:
@@ -125,6 +125,7 @@ Atomic returns Expression:
        '(' Expression ')' |
        ({FieldContent} "widgetcontent") |
        ({LengthOf} "lengthOf" "(" expr=Expression ")" ) |
+       ({EntityType} "new" ref=[Entity]) | 
        ({BooleanLiteral} value=("true"|"false")) |
        ({FloatLiteral} value=Float) |
        ({IntLiteral} value=INT) |

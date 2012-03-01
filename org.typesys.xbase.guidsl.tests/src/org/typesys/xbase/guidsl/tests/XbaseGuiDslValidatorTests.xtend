@@ -13,7 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.typesys.xbase.guidsl.XGuiDslInjectorProvider
 import org.typesys.xbase.guidsl.validation.XGuiDslJavaValidator
-import org.typesys.xbase.guidsl.xGuiDsl.XGuiDslPackage$Literals
+import org.typesys.xbase.guidsl.xGuiDsl.XGuiDslPackage
 
 import static org.typesys.xbase.guidsl.tests.XbaseGuiDslAbstractTests.*
 

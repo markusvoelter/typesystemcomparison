@@ -4,7 +4,10 @@ import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
 @RunWith(typeof(Suite))
-@Suite$SuiteClasses({typeof(XbaseGuiDslParseTest), typeof(XbaseGuiDslValidatorTests)})
+@Suite$SuiteClasses({typeof(XbaseGuiDslParseTest), 
+	typeof(XbaseGuiDslValidatorTests), 
+	typeof(InheritanceTests)
+})
 class XbaseGuiDslAllTests {
 	
 }

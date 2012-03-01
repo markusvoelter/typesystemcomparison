@@ -4,16 +4,11 @@ import com.google.inject.Inject
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.xbase.jvmmodel.AbstractModelInferrer
 import org.eclipse.xtext.xbase.jvmmodel.IJvmDeclaredTypeAcceptor
-import org.eclipse.xtext.xbase.jvmmodel.IJvmModelAssociations
 import org.eclipse.xtext.xbase.jvmmodel.JvmTypesBuilder
-import org.eclipse.xtext.xbase.typing.ITypeProvider
-import org.typesys.xbase.guidsl.xGuiDsl.DerivedAttribute
 import org.typesys.xbase.guidsl.xGuiDsl.Entity
-import org.typesys.xbase.guidsl.xGuiDsl.SimpleAttribute
 import org.typesys.xbase.guidsl.xGuiDsl.Form
-import org.eclipse.xtext.common.types.JvmDeclaredType
-import org.eclipse.xtext.common.types.JvmTypeReference
-import org.typesys.xbase.guidsl.xGuiDsl.Attribute
+import org.typesys.xbase.guidsl.xGuiDsl.InitializedAttribute
+import org.typesys.xbase.guidsl.xGuiDsl.SimpleAttribute
 
 
 class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
@@ -42,6 +37,8 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
    	def dispatch void infer(Entity element, IJvmDeclaredTypeAcceptor acceptor, boolean preIndexingPhase) {
    		acceptor.accept(element.toClass(element.fullyQualifiedName)).initializeLater [
 			documentation = element.documentation
+			if (element.superType != null)
+				superTypes += element.superType.cloneWithProxies
 		    for (attribute : element.attributes) {
 		    	switch attribute {
 		        	SimpleAttribute : {
@@ -49,7 +46,7 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 			            members += attribute.toSetter(attribute.name, attribute.getJvmType)
 			            members += attribute.toGetter(attribute.name, attribute.getJvmType)
 		        	}
-		        	DerivedAttribute : {
+		        	InitializedAttribute : {
 						members += attribute.toMethod("get" + attribute.name.toFirstUpper, attribute.getJvmType) [
 			        		body = attribute.expr
 		        		]
