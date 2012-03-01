@@ -10,7 +10,7 @@ entity Person {
 }
 
 entity Teacher extends Person {
-	subject : String;
+	subject : string;
 }
 
 entity Gym {}
