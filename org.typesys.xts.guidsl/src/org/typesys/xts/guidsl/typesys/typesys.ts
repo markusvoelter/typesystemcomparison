@@ -19,9 +19,9 @@ section "Expressions"
 
 	typeof Expression -> abstract
 
-	typeof EntityType -> clone {
-		recurse ref
-	}
+	typeof NewExpr -> javacode
+
+	typeof EntityType -> clone 
 	
 	typeof Entity -> javacode
 
@@ -72,21 +72,26 @@ section "Special Stuff"
 	
 	typeof Attribute -> abstract
 	 
-	typeof SimpleAttribute -> feature type
-	typeof DerivedAttribute -> feature expr 
+	typeof SimpleAttribute -> common expr type {
+		ensureCompatibility expr :<=: type 
+	}
+	
+	typeof DerivedAttribute -> common expr type {
+		ensureCompatibility expr :<=: type 
+	}
  		
 	typeof FieldContent -> javacode
- 
+  
 
 	// 1) the expression after "validate" must be boolean
 	typeof Widget -> abstract
 	
-	// 2) text widgets may only refer to non-boolean attributes
+	// 2) text widgets may only refer to non-boolean attributes 
 	typeof TextWidget -> none {
-		ensureType length :<=: IntType
+//		ensureType length :<=: IntType
 		ensureType attr :<=: StringType, IntType, FloatType
 		ensureType validate :<=: BooleanType
-	}
+	} 
 	
 	// 3) checkbox widgets may only refer to boolean attributes
 	typeof CheckBoxWidget -> none {

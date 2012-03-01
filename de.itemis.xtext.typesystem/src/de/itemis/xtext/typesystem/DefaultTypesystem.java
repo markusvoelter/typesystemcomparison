@@ -84,7 +84,9 @@ public abstract class DefaultTypesystem implements ITypesystem {
 					return useDeclarativeRules((EObject)params[0], (TypeCalculationTrace)params[1]);
 				}
 			});
-
+    
+	
+	
 	private final PolymorphicDispatcher<Boolean> compareTypeDispatcher = new PolymorphicDispatcher<Boolean>("compareTypes", 4, 4,
 			Collections.singletonList(this), new ErrorHandler<Boolean>() {
 				public Boolean handle(Object[] params, Throwable e) {
@@ -142,21 +144,21 @@ public abstract class DefaultTypesystem implements ITypesystem {
 
 	public EObject computeCommonType(EObject element1, EObject type1, EObject element2, EObject type2, TypeCalculationTrace trace) {
 		if ( isSameType(element1, type1, element2, type2, trace)) return type1;
-		if ( isSubtype(type1.eClass(), type2.eClass())) return type2;
-		if ( isSubtype(type2.eClass(), type1.eClass())) return type1;
+		if ( isSubtype(element1, type1, element2, type2, trace)) return type2;
+		if ( isSubtype(element2, type2, element1, type1, trace)) return type1;
 		
 		EObject coercedType1 = tryToCoerceType(element1, type1, type2, trace);
 		if ( coercedType1 != null ) {
 			if ( isSameType(element1, coercedType1, element2, type2, trace)) return type1;
-			if ( isSubtype(coercedType1.eClass(), type2.eClass())) return type2;
-			if ( isSubtype(type2.eClass(), coercedType1.eClass())) return type1;
+			if ( isSubtype(element1, coercedType1, element2, type2, trace)) return type2;
+			if ( isSubtype(element2, type2, element1, coercedType1, trace)) return type1;
 		}
 
 		EObject coercedType2 = tryToCoerceType(element2, type2, type1, trace);
 		if ( coercedType2 != null ) {
 			if ( isSameType(element1, type1, element2, coercedType2, trace)) return type1;
-			if ( isSubtype(type1.eClass(), coercedType2.eClass())) return type2;
-			if ( isSubtype(coercedType2.eClass(), type1.eClass())) return type1;
+			if ( isSubtype(element1, type1, element2, coercedType2, trace)) return type2;
+			if ( isSubtype(element2, coercedType2, element1, type1, trace)) return type1;
 		}
 		
 		
@@ -430,9 +432,7 @@ public abstract class DefaultTypesystem implements ITypesystem {
 		Boolean manual = compareTypeDispatcher.invoke(type1, type2, CheckKind.unordered, trace);
 		if ( manual != null && manual ) return true;
 		if ( isSameType(element1, type1, element2, type2, trace)) return true;
-		EClass type1Class = type1.eClass();
-		EClass type2Class = type2.eClass();
-		if ( (isSubtype( type1Class, type2Class) || isSubtype( type2Class, type1Class)) && handleComparisonAndRecursionFeatures(type1, type2, CheckKind.unordered, trace)) return true;
+		if ( (isSubtype( element1, type1, element2, type2, trace) || isSubtype( element2, type2, element1, type1, trace)) && handleComparisonAndRecursionFeatures(type1, type2, CheckKind.unordered, trace)) return true;
 		EObject coercedType1 = tryToCoerceType(element1, type1, type2, trace);
 		if ( coercedType1 != null && isCompatibleTypeUnordered(element1, coercedType1, element2, type2, trace)) return true;
 		EObject coercedType2 = tryToCoerceType(element2, type2, type1, trace);
@@ -448,9 +448,7 @@ public abstract class DefaultTypesystem implements ITypesystem {
 		Boolean manual = compareTypeDispatcher.invoke(type1, type2, CheckKind.ordered, trace);
 		if ( manual != null && manual ) return true;
 		if ( isSameType(element1, type1, element2, type2, trace)) return true;
-		EClass type1Class = type1.eClass();
-		EClass type2Class = type2.eClass();
-		if ( isSameOrSubtype( type2Class, type1Class, trace)  && handleComparisonAndRecursionFeatures(type1, type2, CheckKind.ordered, trace)) return true;
+		if ( isSameOrSubtype( element1, type1, element2, type2, trace)  && handleComparisonAndRecursionFeatures(type1, type2, CheckKind.ordered, trace)) return true;
 		EObject coercedType1 = tryToCoerceType(element1, type1, type2, trace);
 		if ( coercedType1 != null && isCompatibleTypeOrdered(element1, coercedType1, element2, type2, trace)) return true;
 		EObject coercedType2 = tryToCoerceType(element2, type2, type1, trace);
@@ -458,10 +456,21 @@ public abstract class DefaultTypesystem implements ITypesystem {
 		return false;
 	}
 
+	
+	private boolean isSameOrSubtype(EObject element1, EObject subtype, EObject element2, EObject supertype, TypeCalculationTrace trace) {
+		if ( isSameType(element1, subtype, element2, supertype, trace)) return true;
+		return isSubtype(element1, subtype.eClass(), element2, supertype.eClass(), trace);
+	}
+
+	private boolean isSubtype(EObject element1, EObject subtype, EObject element2, EObject supertype, TypeCalculationTrace trace) {
+		return isSubtypeWithClasses(subtype.eClass(), supertype.eClass());
+	}
+
+	
 	/**
 	 * determines whether subtypeClass is a subtype of supertypeClass
 	 */
-	private boolean isSubtype(EClass subtypeClass, EClass supertypeClass) {
+	private boolean isSubtypeWithClasses(EClass subtypeClass, EClass supertypeClass) {
 		List<EClass> subtypeSupertypes = allSupertypes( subtypeClass );
 		if ( subtypeSupertypes.contains(supertypeClass) ) return true;
 		return false;
@@ -470,10 +479,9 @@ public abstract class DefaultTypesystem implements ITypesystem {
 	/**
 	 * determines whether subtypeClass is a subtype of supertypeClass
 	 */
-	private boolean isSameOrSubtype(EClass subtypeClass, EClass supertypeClass, TypeCalculationTrace trace) {
-		List<EClass> subtypeSupertypes = allSupertypes( subtypeClass );
-		if ( subtypeSupertypes.contains(supertypeClass) || subtypeClass == supertypeClass) return true;
-		return false;
+	private boolean isSameOrSubtypeWithClasses(EClass subtypeClass, EClass supertypeClass, TypeCalculationTrace trace) {
+		if ( isSubtypeWithClasses(subtypeClass, supertypeClass)) return true;
+		return subtypeClass == supertypeClass;
 	}
 
 

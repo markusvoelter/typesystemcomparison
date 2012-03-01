@@ -5,6 +5,7 @@ import org.typesys.xts.guidsl.guiDsl.Entity;
 import org.typesys.xts.guidsl.guiDsl.EntityType;
 import org.typesys.xts.guidsl.guiDsl.FieldContent;
 import org.typesys.xts.guidsl.guiDsl.GuiDslPackage;
+import org.typesys.xts.guidsl.guiDsl.NewExpr;
 import org.typesys.xts.guidsl.guiDsl.NumberLiteral;
 import org.typesys.xts.guidsl.guiDsl.Widget;
 
@@ -49,5 +50,19 @@ public class GuiDlsTypesystem extends GuiDlsTypesystemGenerated {
 		et.setRef(element);
 		return et;
 	}
+	
+	protected boolean compareTypes( EntityType t1, EntityType t2, CheckKind k, TypeCalculationTrace trace ) {
+		if ( k == CheckKind.same ) return t1.getRef() == t2.getRef();
+		if ( k == CheckKind.ordered ) return t1.getRef().getExtends() == t2.getRef();
+		return false;
+	}
+	
+	@Override
+	protected EObject type(NewExpr element, TypeCalculationTrace trace) {
+		EntityType et = (EntityType)create(cl.getEntityType());
+		et.setRef(element.getEntity());
+		return et;
+	}
+	
 	
 }

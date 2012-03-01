@@ -20,8 +20,15 @@ public class ComputeCommonTCRule extends TCRule {
 
 	@Override
 	public EObject calculateType(TypeCalculationTrace trace, EObject element) {
+		
 		EObject val1 = (EObject) element.eGet(f1);
 		EObject val2 = (EObject) element.eGet(f2);
+		if ( val1 == null ) {
+			return ts.typeof( val2, trace.child("val2", val2) );
+		}
+		if ( val2 == null ) {
+			return ts.typeof( val1, trace.child("val1", val2) );
+		}
 		EObject type1 = ts.typeof( val1, trace.child("val1", val1) );
 		EObject type2 = ts.typeof( val2, trace.child("val2", val2) );
 		if ( type1 == null ) {
