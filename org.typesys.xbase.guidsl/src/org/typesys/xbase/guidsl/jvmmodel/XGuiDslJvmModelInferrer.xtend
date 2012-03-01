@@ -4,25 +4,26 @@ import com.google.inject.Inject
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.xbase.jvmmodel.AbstractModelInferrer
 import org.eclipse.xtext.xbase.jvmmodel.IJvmDeclaredTypeAcceptor
+import org.eclipse.xtext.xbase.jvmmodel.IJvmModelAssociations
 import org.eclipse.xtext.xbase.jvmmodel.JvmTypesBuilder
+import org.eclipse.xtext.xbase.typing.ITypeProvider
+import org.typesys.xbase.guidsl.xGuiDsl.DerivedAttribute
 import org.typesys.xbase.guidsl.xGuiDsl.Entity
 import org.typesys.xbase.guidsl.xGuiDsl.SimpleAttribute
-import org.typesys.xbase.guidsl.xGuiDsl.DerivedAttribute
-import org.eclipse.xtext.xbase.typing.ITypeProvider
 import org.typesys.xbase.guidsl.xGuiDsl.Form
-import org.eclipse.xtext.xbase.jvmmodel.IJvmModelAssociations
 import org.eclipse.xtext.common.types.JvmDeclaredType
+import org.eclipse.xtext.common.types.JvmTypeReference
+import org.typesys.xbase.guidsl.xGuiDsl.Attribute
 
 
 class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 
 	@Inject extension JvmTypesBuilder
 	
-	@Inject IJvmModelAssociations associations
-	
 	@Inject extension IQualifiedNameProvider
+	
+    @Inject extension GuiTypeProvider guiTypeProvider
 
-	@Inject ITypeProvider typeProvider
 	
 	/**
 	 * This methode infers a Java class for each entity with a field, getters and setters for
@@ -44,12 +45,12 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 		    for (attribute : element.attributes) {
 		    	switch attribute {
 		        	SimpleAttribute : {
-		            	members += attribute.toField(attribute.name, attribute.type)
-			            members += attribute.toSetter(attribute.name, attribute.type)
-			            members += attribute.toGetter(attribute.name, attribute.type)
+		            	members += attribute.toField(attribute.name, attribute.getJvmType)
+			            members += attribute.toSetter(attribute.name, attribute.getJvmType)
+			            members += attribute.toGetter(attribute.name, attribute.getJvmType)
 		        	}
 		        	DerivedAttribute : {
-						members += attribute.toMethod("get" + attribute.name.toFirstUpper, typeProvider.getType(attribute.expr)) [
+						members += attribute.toMethod("get" + attribute.name.toFirstUpper, attribute.getJvmType) [
 			        		body = attribute.expr
 		        		]
 		        	}
@@ -57,6 +58,8 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 		    }
    		]
    	}
+   	
+   	
 
    	/**
    	 * Infers a Java class for each Form with a validate method with the Entity (that the Form refers to)
@@ -75,14 +78,14 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 		    for (widget: form.widgets) {
 		    	if (widget.validate != null && widget.attr != null) {
 		    		members += widget.toMethod('validate'+widget.attr.name.toFirstUpper, form.newTypeRef(Boolean::TYPE)) [
-		    			val entityType = associations.getJvmElements(form.entity).head as JvmDeclaredType
-		    			parameters += widget.toParameter("it", newTypeRef(entityType))
-		    			// val widgetType = associations.getJvmElements(widget.attr) as JvmDeclaredType
-		    			// parameters += widget.toParameter("widgetcontent", newTypeRef(widgetType))
+		    			parameters += widget.toParameter("it", form.entity.getJvmType)
+		    			parameters += widget.toParameter("widgetcontent", widget.attr.getJvmType)
 		    			body = widget.validate
 		    		]
 		    	}
 		    }   		 	
    		]
    	}
+   	
+
 }

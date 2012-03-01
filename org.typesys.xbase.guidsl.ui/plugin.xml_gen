@@ -303,6 +303,36 @@
 			</command>
 		</menuContribution>
 	</extension>
+	<extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory class="org.typesys.xbase.guidsl.ui.XGuiDslExecutableExtensionFactory:org.eclipse.xtext.builder.smap.StratumBreakpointAdapterFactory"
+         adaptableType="org.eclipse.xtext.ui.editor.XtextEditor">
+         <adapter type="org.eclipse.debug.ui.actions.IToggleBreakpointsTarget"/>
+      </factory> 
+   </extension>
+   <extension point="org.eclipse.ui.editorActions">
+      <editorContribution targetID="org.typesys.xbase.guidsl.XGuiDsl" 
+                          id="org.typesys.xbase.guidsl.XGuiDsl.ide.rulerActions">
+	     <action
+	             label="Not Used"
+	             class="org.typesys.xbase.guidsl.ui.XGuiDslExecutableExtensionFactory:org.eclipse.debug.ui.actions.RulerToggleBreakpointActionDelegate"
+	             style="push"
+	             actionID="RulerDoubleClick"
+	             id="org.typesys.xbase.guidsl.XGuiDsl.doubleClickBreakpointAction"/>
+	  </editorContribution>
+   </extension>
+   <extension point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+         targetID="example.rulerContextMenuId"
+         id="org.typesys.xbase.guidsl.XGuiDsl.ide.RulerPopupActions">
+         <action
+            label="Toggle Breakpoint"
+            class="org.typesys.xbase.guidsl.ui.XGuiDslExecutableExtensionFactory:org.eclipse.debug.ui.actions.RulerToggleBreakpointActionDelegate"
+            menubarPath="additions"
+            id="org.typesys.xbase.guidsl.XGuiDsl.ide.rulerContextMenu.toggleBreakpointAction">
+         </action>
+      </viewerContribution>
+   </extension>
 
   <extension point="org.eclipse.compare.contentViewers">
     <viewer id="org.typesys.xbase.guidsl.XGuiDsl.compare.contentViewers"

@@ -58,7 +58,5 @@ SimpleAttribute:
  * In the Xbase variant, XExpression is used
  * for expressions
  */
-
-// TODO: 
-// add widgetcontent
-// add lengthOf 
+// widgetcontent -> added to JvmModelInferrer
+// lengthOf -> covered with String.length()
