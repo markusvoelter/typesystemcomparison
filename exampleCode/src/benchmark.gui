@@ -40,7 +40,7 @@ form PersonGreeting edits Person {
 }
 
 form PersonFormWithErrors edits Person {
-	text(10) -> name validate widgetcontent; // expect error for widgetcontent
+	text(10) -> name validate widgetcontent; // error for widgetcontent
 	text(10) -> isAdult;
 	text(20) -> likesCake;
 	checkbox -> firstName;

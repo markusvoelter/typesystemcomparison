@@ -22,13 +22,16 @@ entity School {
 	gym2 : Gym = new Gym;
 }
 
+form SchoolForm edits School {
+	text(10) -> head validate widgetcontent; // error
+}
  
  
 form PersonForm edits Person {
 	text (10) -> name validate lengthOf(widgetcontent) < 10;
 	text (20) -> firstName;
 	text (5) -> age validate widgetcontent > 0 && widgetcontent < 130;
-	checkbox -> isAdult validate age > 18 => widgetcontent == true;
+	checkbox -> isAdult validate age > 18 && widgetcontent == true;
 	text(5) -> weight validate 12.5 > age;
 }
 
@@ -38,7 +41,7 @@ form PersonGreeting edits Person {
 } 
 
 form PersonFormWithErrors edits Person {
-	text(10) -> name validate widgetcontent; // expect error for widgetcontent
+	text(10) -> name validate widgetcontent; // error for widgetcontent
 	text(10) -> isAdult;
 	text(20) -> likesCake;
 	checkbox -> firstName;
