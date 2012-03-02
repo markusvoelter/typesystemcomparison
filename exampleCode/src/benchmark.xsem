@@ -4,9 +4,9 @@ entity Person {
 	age       : int; 
 	weight    : float;
 	likesCake : bool; 
-	/isAdult = age > 18;
-	/greeting = "Hello " + firstName + " " + name;
-	/testExpr = 2 - 2;
+	isAdult = age > 18;
+	greeting = "Hello " + firstName + " " + name;
+	testExpr = 2 - 2;
 }
 
 entity Teacher extends Person {
@@ -16,10 +16,10 @@ entity Teacher extends Person {
 entity Gym {}
 
 entity School {
-	/janitor: Person = new Gym; // error
+	janitor: Person = new Gym; // error
 	head : Person = new Teacher;
 	gym  = new Gym;
-	/gym2 : Gym = new Gym;
+	gym2 : Gym = new Gym;
 }
  
 form PersonForm edits Person {

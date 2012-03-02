@@ -4,8 +4,8 @@ entity PersonT {
 	age       : int; 
 	weight    : Float;
 	likesCake : boolean; 
-    /isAdult =  age >= 18;
-	/greeting = "Hello " + firstName + " " + name ;
+    isAdult =  age >= 18;
+	greeting = "Hello " + firstName + " " + name ;
 }
 
 entity House {
