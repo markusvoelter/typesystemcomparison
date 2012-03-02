@@ -27,9 +27,9 @@ class InheritanceTests {
 					age       : int; 
 					weight    : Float;
 					likesCake : boolean; 
-					/isAdult = age > 18;
-					/greeting = "Hello " + firstName + " " + name;
-					/testExpr = 2 - 2;
+					isAdult = age > 18;
+					greeting = "Hello " + firstName + " " + name;
+					testExpr = 2 - 2;
 				}
 				
 				entity Teacher extends Person {
@@ -44,9 +44,9 @@ class InheritanceTests {
 		val model = '''
 				«base»
 				entity School {
-					/head : Person = new Teacher; // correct
-					/gym  = new Gym;
-					/gym2 : Gym = new Gym;
+					head : Person = new Teacher; // correct
+					gym  = new Gym;
+					gym2 : Gym = new Gym;
 				}
 		'''.parse
 		model.assertNoErrors
@@ -57,7 +57,7 @@ class InheritanceTests {
 		val model = '''
 				«base»
 				entity School {
-					/janitor: Person = new Gym; // error 
+					janitor: Person = new Gym; // error 
 				}
 		'''.parse
 		model.assertError(XbasePackage$Literals::XEXPRESSION, IssueCodes::INCOMPATIBLE_RETURN_TYPE, "Person", "Gym")

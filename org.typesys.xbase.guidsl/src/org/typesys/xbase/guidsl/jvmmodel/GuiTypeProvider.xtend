@@ -9,8 +9,6 @@ import org.eclipse.xtext.xbase.jvmmodel.JvmTypesBuilder
 import org.eclipse.xtext.xbase.typing.ITypeProvider
 import org.typesys.xbase.guidsl.xGuiDsl.Attribute
 import org.typesys.xbase.guidsl.xGuiDsl.Entity
-import org.typesys.xbase.guidsl.xGuiDsl.InitializedAttribute
-import org.typesys.xbase.guidsl.xGuiDsl.SimpleAttribute
 
 class GuiTypeProvider {
 	
@@ -22,9 +20,8 @@ class GuiTypeProvider {
 	
    	def JvmTypeReference getJvmType(Attribute attr) {
 		switch attr {
-			SimpleAttribute : attr.getType()
-			InitializedAttribute case attr.type != null : attr.type
-			InitializedAttribute : getJvmType(attr.getExpr())
+			Attribute case attr.type != null : attr.type
+			Attribute case attr.expr != null : getJvmType(attr.getExpr())
 			default: null
 		}
 	}

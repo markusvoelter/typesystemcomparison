@@ -3,15 +3,11 @@ package org.typesys.xbase.guidsl.validation
 import com.google.inject.Inject
 import java.util.List
 import org.eclipse.emf.ecore.EPackage
-import org.eclipse.xtext.common.types.JvmTypeReference
 import org.eclipse.xtext.validation.Check
-import org.eclipse.xtext.xbase.typing.ITypeProvider
 import org.eclipse.xtext.xbase.validation.IssueCodes
 import org.eclipse.xtext.xbase.validation.XbaseJavaValidator
-import org.typesys.xbase.guidsl.xGuiDsl.Attribute
+import org.typesys.xbase.guidsl.jvmmodel.GuiTypeProvider
 import org.typesys.xbase.guidsl.xGuiDsl.CheckBoxWidget
-import org.typesys.xbase.guidsl.xGuiDsl.InitializedAttribute
-import org.typesys.xbase.guidsl.xGuiDsl.SimpleAttribute
 import org.typesys.xbase.guidsl.xGuiDsl.TextWidget
 import org.typesys.xbase.guidsl.xGuiDsl.XGuiDslPackage
 import org.typesys.xbase.guidsl.xGuiDsl.XGuiDslPackage$Literals
@@ -19,7 +15,7 @@ import org.typesys.xbase.guidsl.xGuiDsl.XGuiDslPackage$Literals
 class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 	
 	@Inject
-	private ITypeProvider typeProvider;
+	private extension GuiTypeProvider typeProvider;
 	
 	override List<EPackage> getEPackages() {
 		val List<EPackage> packages = newArrayList() 
@@ -38,7 +34,7 @@ class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 	 */
 	@Check
 	def public void checkTextWidgetForNonBoolean(TextWidget widget) {
-		val JvmTypeReference jvmTypeReference = widget.attr.getTypeForAttribute
+		val jvmTypeReference = widget.attr.getJvmType
 		if (jvmTypeReference == null) {
 			return
 		}
@@ -48,22 +44,14 @@ class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 		}
 	}
 
-	def protected JvmTypeReference getTypeForAttribute(Attribute attr) {
-		switch attr {
-			SimpleAttribute : attr.getType()
-			InitializedAttribute : typeProvider.getType(attr.getExpr())
-			default: null
-		}
-	}
-
 	/**
 	 * 3) Checkbox widgets may only refer to boolean attributes.
 	 */
 	@Check
 	def public void checkBoxWidgetOnlyBoolean(CheckBoxWidget widget) {
-		val jvmTypeReference = widget.attr.getTypeForAttribute
+		val jvmTypeReference = widget.attr.getJvmType
 		if (jvmTypeReference == null) {
-			return;
+			return
 		}
 		if (!jvmTypeReference.getQualifiedName().equals(Boolean::TYPE.getName())) {
 			error("Checkbox may only refer to boolean attributes, but found type "

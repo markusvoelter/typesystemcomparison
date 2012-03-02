@@ -6,6 +6,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.typesys.guidsl.guiDsl.AndOrExpression
 import org.typesys.guidsl.guiDsl.ArithmeticSigned
+import org.typesys.guidsl.guiDsl.Attribute
 import org.typesys.guidsl.guiDsl.AttributeRef
 import org.typesys.guidsl.guiDsl.BooleanLiteral
 import org.typesys.guidsl.guiDsl.BooleanNegation
@@ -18,13 +19,11 @@ import org.typesys.guidsl.guiDsl.Expression
 import org.typesys.guidsl.guiDsl.FieldContent
 import org.typesys.guidsl.guiDsl.FloatLiteral
 import org.typesys.guidsl.guiDsl.GuiDslFactory
-import org.typesys.guidsl.guiDsl.InitializedAttribute
 import org.typesys.guidsl.guiDsl.IntLiteral
 import org.typesys.guidsl.guiDsl.LengthOf
 import org.typesys.guidsl.guiDsl.Minus
 import org.typesys.guidsl.guiDsl.MultiOrDiv
 import org.typesys.guidsl.guiDsl.Plus
-import org.typesys.guidsl.guiDsl.SimpleAttribute
 import org.typesys.guidsl.guiDsl.StringLiteral
 import org.typesys.guidsl.guiDsl.Type
 import org.typesys.guidsl.guiDsl.Widget
@@ -59,8 +58,11 @@ class GuiDslTypeProvider {
 		switch e {
 			Widget : e.attr.getType(visited)
 			Entity : { GuiDslFactory::eINSTANCE.createEntityType.ref = e } 
-			SimpleAttribute : e.type
-			InitializedAttribute : e.expr.getType(visited)
+			Attribute case e.expr != null && e.type != null 
+			   && e.type.isAssignable(e.expr.getType(visited)) : e.type
+			Attribute case e.expr != null : e.expr.getType(visited)
+			Attribute case e.type != null : e.type
+			
 			AttributeRef : e.attr.getType(visited)
 
 	        AndOrExpression : bool 
@@ -121,8 +123,9 @@ class GuiDslTypeProvider {
 	def protected Type internalGetExpectedType(EObject e, EStructuralFeature feature) {
 		switch e {
 			Widget : bool
-			InitializedAttribute case e.type != null : e.type
 			
+			Attribute case e.type != null : e.type
+		
 			AndOrExpression : bool 
 			// an object contained (i.e. left or right side) 
 			// in the following operator is expected to always be a number 

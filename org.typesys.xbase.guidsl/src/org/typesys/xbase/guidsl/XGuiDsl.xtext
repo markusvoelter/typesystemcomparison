@@ -43,16 +43,10 @@ Entity:
 	"}"
 ;
 
+
 Attribute:
-	SimpleAttribute | InitializedAttribute
-;
-
-InitializedAttribute:
-	(derived?="/")? name=ID (":" type=JvmParameterizedTypeReference)? "=" expr=XExpression ";"
-;
-
-SimpleAttribute:
-	name=ID ":" type=JvmParameterizedTypeReference ";"
+	name=ID ( ((":" type=JvmParameterizedTypeReference)? "=" expr=XExpression) | 
+               (":" type=JvmParameterizedTypeReference) )";"
 ;
 
 JvmParameterizedTypeReference: 
@@ -67,6 +61,4 @@ JvmParameterizedTypeReference:
  * for expressions
  */
 // widgetcontent -> added to JvmModelInferrer
-// lengthOf -> covered with String.length()
-
-// TODO remove make "/" optional, derived?="/"? 
+// lengthOf -> Xbase builtin String.length()

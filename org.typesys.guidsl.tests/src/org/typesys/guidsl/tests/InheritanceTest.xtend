@@ -26,9 +26,9 @@ class InheritanceTest {
 					age       : int; 
 					weight    : float;
 					likesCake : bool; 
-					/isAdult = age > 18;
-					/greeting = "Hello " + firstName + " " + name;
-					/testExpr = 2 - 2;
+					isAdult = age > 18;
+					greeting = "Hello " + firstName + " " + name;
+					testExpr = 2 - 2;
 				}
 				
 				entity Teacher extends Person {
@@ -43,7 +43,7 @@ class InheritanceTest {
 		val model = '''
 				«base»
 				entity School {
-					/head : Person = new Teacher; // correct
+					head : Person = new Teacher; // correct
 					gym  = new Gym;
 					gym2 : Gym = new Gym;
 				}

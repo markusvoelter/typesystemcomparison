@@ -41,15 +41,8 @@ Entity:
 ;
 
 Attribute:
-	SimpleAttribute | InitializedAttribute
-;
-
-InitializedAttribute:
-	derived?="/"? name=ID (":" type=Type)? "=" expr=Expression ";"
-;
-
-SimpleAttribute:
-	name=ID ":" type=Type ";"
+	name=ID ( ((":" type=Type)? "=" expr=Expression) | 
+               (":" type=Type) )";"
 ;
 
 Type:

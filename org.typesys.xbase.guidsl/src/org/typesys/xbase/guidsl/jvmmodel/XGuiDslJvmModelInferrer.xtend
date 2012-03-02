@@ -7,8 +7,6 @@ import org.eclipse.xtext.xbase.jvmmodel.IJvmDeclaredTypeAcceptor
 import org.eclipse.xtext.xbase.jvmmodel.JvmTypesBuilder
 import org.typesys.xbase.guidsl.xGuiDsl.Entity
 import org.typesys.xbase.guidsl.xGuiDsl.Form
-import org.typesys.xbase.guidsl.xGuiDsl.InitializedAttribute
-import org.typesys.xbase.guidsl.xGuiDsl.SimpleAttribute
 
 
 class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
@@ -40,17 +38,14 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 			if (element.superType != null)
 				superTypes += element.superType.cloneWithProxies
 		    for (attribute : element.attributes) {
-		    	switch attribute {
-		        	SimpleAttribute : {
 		            	members += attribute.toField(attribute.name, attribute.getJvmType)
-			            members += attribute.toSetter(attribute.name, attribute.getJvmType)
-			            members += attribute.toGetter(attribute.name, attribute.getJvmType)
-		        	}
-		        	InitializedAttribute : {
+		    	if (attribute.expr != null) {
 						members += attribute.toMethod("get" + attribute.name.toFirstUpper, attribute.getJvmType) [
 			        		body = attribute.expr
 		        		]
-		        	}
+		        } else  {
+			            members += attribute.toGetter(attribute.name, attribute.getJvmType)
+			            members += attribute.toSetter(attribute.name, attribute.getJvmType)
 		        }
 		    }
    		]

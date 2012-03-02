@@ -27,8 +27,8 @@ class ParserTests {
 				age       : int; 
 				weight    : float;
 				likesCake : bool; 
-			    /isAdult = age > 18;
-				/greeting = "Hello " + firstName + " " + name;
+			    isAdult = age > 18;
+				greeting = "Hello " + firstName + " " + name;
 			}
 			
 			entity House {
