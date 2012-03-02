@@ -11,11 +11,21 @@ import org.typesys.xbase.guidsl.xGuiDsl.CheckBoxWidget
 import org.typesys.xbase.guidsl.xGuiDsl.TextWidget
 import org.typesys.xbase.guidsl.xGuiDsl.XGuiDslPackage
 import org.typesys.xbase.guidsl.xGuiDsl.XGuiDslPackage$Literals
+import org.typesys.xbase.guidsl.xGuiDsl.Widget
+import org.eclipse.xtext.common.types.util.TypeConformanceComputer
+import org.eclipse.xtext.xbase.jvmmodel.JvmTypesBuilder
+import org.eclipse.xtext.common.types.util.Primitives
 
 class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 	
 	@Inject
 	private extension GuiTypeProvider typeProvider;
+	
+	@Inject TypeConformanceComputer typeConformanceComputer;
+	
+	@Inject Primitives primitives
+	
+	@Inject extension JvmTypesBuilder
 	
 	override List<EPackage> getEPackages() {
 		val List<EPackage> packages = newArrayList() 
@@ -33,7 +43,7 @@ class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 	 * 2) Text widgets may only refer to non-boolean attributes.
 	 */
 	@Check
-	def public void checkTextWidgetForNonBoolean(TextWidget widget) {
+	def void checkTextWidgetForNonBoolean(TextWidget widget) {
 		val jvmTypeReference = widget.attr.getJvmType
 		if (jvmTypeReference == null) {
 			return
@@ -48,7 +58,7 @@ class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 	 * 3) Checkbox widgets may only refer to boolean attributes.
 	 */
 	@Check
-	def public void checkBoxWidgetOnlyBoolean(CheckBoxWidget widget) {
+	def void checkBoxWidgetOnlyBoolean(CheckBoxWidget widget) {
 		val jvmTypeReference = widget.attr.getJvmType
 		if (jvmTypeReference == null) {
 			return
@@ -60,4 +70,19 @@ class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 		}
 	}
 	
+ 	/**
+	 * Widgets may only refer to primitive types (or Strings)
+	 */
+	@Check
+	def void check(Widget widget) {
+		val jvmTypeReference = widget.getJvmType
+		if (jvmTypeReference == null) return;
+		val stringRef = widget.newTypeRef(typeof(String).canonicalName)
+		if (primitives.isPrimitive(jvmTypeReference) ||
+			jvmTypeReference.identifier.equals(stringRef.identifier) 
+		) 
+		 {return;}
+		error("Widgets may only refer to primitive types, but found type " + jvmTypeReference.qualifiedName,
+			XGuiDslPackage$Literals::WIDGET__ATTR, IssueCodes::INCOMPATIBLE_TYPES)
+	}
 }

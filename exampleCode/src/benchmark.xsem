@@ -6,7 +6,7 @@ entity Person {
 	likesCake : bool; 
 	isAdult = age > 18;
 	greeting = "Hello " + firstName + " " + name;
-	testExpr = 2 - 2;
+	testExpr = -2 - 2;
 }
 
 entity Teacher extends Person {
@@ -23,8 +23,10 @@ entity School {
 }
 
 form SchoolForm edits School {
-	text(10) -> head validate widgetcontent; // error
+	text(10) -> head; // error
+	text(10) -> head validate widgetcontent; // two errors
 }
+
  
 form PersonForm edits Person {
 	text (10) -> name validate lengthOf(widgetcontent) < 10;

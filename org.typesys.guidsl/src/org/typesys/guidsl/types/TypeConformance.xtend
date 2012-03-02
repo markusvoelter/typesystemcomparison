@@ -8,15 +8,23 @@ import org.typesys.guidsl.guiDsl.Type
 import org.typesys.guidsl.guiDsl.Entity
 import java.util.Collection
 import org.typesys.guidsl.guiDsl.EntityType
+import org.typesys.guidsl.guiDsl.PrimitiveType
+import org.typesys.guidsl.guiDsl.BooleanType
+import com.sun.xml.internal.bind.v2.runtime.reflect.PrimitiveArrayListerBoolean
+import org.typesys.guidsl.guiDsl.GuiDslFactory
 
 class TypeConformance {
+	
+     Type primitive = GuiDslFactory::eINSTANCE.createPrimitiveType
 	
 	/**
 	 * Computes whether {@code right} can be used where {@code left}
      * is expected.
 	 */
 	def dispatch isAssignable(Type left, Type right) {
-		left.eClass == right.eClass
+		print(left.eClass)
+		print(" ") println (right.eClass) 
+		left.eClass == right.eClass || right.eClass.ESuperTypes.contains(left.eClass) 
 	}
 	
 	def dispatch isAssignable(EntityType left, EntityType right) {
@@ -29,6 +37,11 @@ class TypeConformance {
 		left == right || (right.superType != null && 
 			internalIsAssignable(left, right.superType, visited) )
 	}
+
+//	def dispatch isAssignable(PrimitiveType left, PrimitiveType right) { 
+//		if (left.eClass == primitive.eClass) return true;
+//		false
+//	}
 
 	def dispatch isAssignable(NumberType left, FloatType right) { true }
 	

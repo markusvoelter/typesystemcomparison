@@ -37,7 +37,7 @@ class ParserTests {
 			}
 			
 			form PersonFormValidate edits PersonX {
-				 text(20) -> name validate lengthOf(name) > 2 ;
+				text(20) -> name validate lengthOf(name) > -2 ;
 			}
 		'''.parse
 		model.assertNoErrors

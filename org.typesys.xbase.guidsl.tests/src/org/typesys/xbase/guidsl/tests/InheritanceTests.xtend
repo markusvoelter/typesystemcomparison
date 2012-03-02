@@ -40,7 +40,7 @@ class InheritanceTests {
 	'''	
 	
 	@Test
-	def void simpleTest() {// TODO test without "/" for initialized attributes
+	def void simpleTest() {
 		val model = '''
 				«base»
 				entity School {
@@ -61,6 +61,33 @@ class InheritanceTests {
 				}
 		'''.parse
 		model.assertError(XbasePackage$Literals::XEXPRESSION, IssueCodes::INCOMPATIBLE_RETURN_TYPE, "Person", "Gym")
-	}	
+	}
+	
+	@Test
+	def void widgetEditsEntity() {
+		val model = '''
+		«base»
+		entity School {
+			gym: Gym = new Gym; 
+		}
+		form SchoolForm edits School {
+		text(10) -> gym; // error
+		}
+		'''.parse
+	 model.assertError(XGuiDslPackage$Literals::WIDGET, IssueCodes::INCOMPATIBLE_TYPES, "Gym")
+	}
+	
+	@Test
+	def void widgetEditsString() {
+		val model = '''
+		«base»
+		form PersForm edits Person {
+			text(10) -> name;
+		}
+		'''.parse
+		model.assertNoErrors
+	}
+	
+	
 	
 }

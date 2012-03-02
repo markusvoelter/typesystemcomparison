@@ -28,7 +28,7 @@ class InheritanceTest {
 					likesCake : bool; 
 					isAdult = age > 18;
 					greeting = "Hello " + firstName + " " + name;
-					testExpr = 2 - 2;
+					testExpr = -2 - 2;
 				}
 				
 				entity Teacher extends Person {
@@ -62,4 +62,34 @@ class InheritanceTest {
 		model.assertError(GuiDslPackage$Literals::EXPRESSION, GuiDslJavaValidator::INCOMPATIBLE_TYPES, "Person", "Gym")
 	}
 	
+	@Test
+	def void widgetEditsEntity() {
+		val model = '''
+		«base»
+		entity School {
+			gym: Gym = new Gym; 
+		}
+		form SchoolForm edits School {
+		text(10) -> gym; // error
+		}
+		'''.parse
+	 model.assertError(GuiDslPackage$Literals::WIDGET, GuiDslJavaValidator::INCOMPATIBLE_TYPES, "Primitive", "Gym")
+	}
+	
+	
+	@Test
+	def void entityInValidateClause() {
+		val model = '''
+		«base»
+		entity School {
+			name : string
+			gym: Gym = new Gym; 
+		}
+		form SchoolForm edits School {
+			text(10) -> name validate gym;
+		}
+		'''.parse
+	    model.assertError(GuiDslPackage$Literals::EXPRESSION, GuiDslJavaValidator::INCOMPATIBLE_TYPES, "bool", "Gym")
+	}
+
 }

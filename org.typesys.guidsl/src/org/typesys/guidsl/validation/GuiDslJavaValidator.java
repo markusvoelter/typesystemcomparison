@@ -1,13 +1,17 @@
 package org.typesys.guidsl.validation;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.validation.Check;
 import org.typesys.guidsl.guiDsl.Attribute;
 import org.typesys.guidsl.guiDsl.CheckBoxWidget;
 import org.typesys.guidsl.guiDsl.CyclicDependencyType;
 import org.typesys.guidsl.guiDsl.Expression;
+import org.typesys.guidsl.guiDsl.GuiDslFactory;
 import org.typesys.guidsl.guiDsl.GuiDslPackage;
+import org.typesys.guidsl.guiDsl.PrimitiveType;
 import org.typesys.guidsl.guiDsl.TextWidget;
 import org.typesys.guidsl.guiDsl.Type;
+import org.typesys.guidsl.guiDsl.Widget;
 import org.typesys.guidsl.types.GuiDslTypeProvider;
 import org.typesys.guidsl.types.TypeConformance;
 
@@ -33,17 +37,7 @@ public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 	public void check(Expression expr) {
 		Type expectedType = guiDslTypeProvider.getExpectedType(expr);
 		Type actualType = guiDslTypeProvider.getType(expr);
-		if (actualType instanceof CyclicDependencyType) {
-			error("Type is part of a cyclic dependency.", null,
-					INCOMPATIBLE_TYPES); return;
-		}
-		if (expectedType == null)
-			return;
-		if (!conformance.isAssignable(expectedType, actualType)) {
-			error("Incompatible types. Expected '" + expectedType
-					+ "' but was '" + actualType + "'", null,
-					INCOMPATIBLE_TYPES);
-		}
+		checkTypeCompatibility(expectedType, actualType);
 	}
 
 	/**
@@ -73,4 +67,37 @@ public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 					GuiDslPackage.Literals.WIDGET__ATTR, INCOMPATIBLE_TYPES);
 		}
 	}
+	
+
+	
+	protected void checkTypeCompatibility(Type expectedType, Type actualType) {
+		checkTypeCompatibility(expectedType, actualType, null);
+	}
+	
+	protected void checkTypeCompatibility(Type expectedType, Type actualType, EStructuralFeature feature) {
+		if (actualType instanceof CyclicDependencyType) {
+			error("Type is part of a cyclic dependency.", feature,
+					INCOMPATIBLE_TYPES); return;
+		}
+		if (expectedType == null)
+			return;
+		if (!conformance.isAssignable(expectedType, actualType)) {
+			error("Incompatible types. Expected '" + expectedType
+					+ "' but was '" + actualType + "'", feature,
+					INCOMPATIBLE_TYPES);
+		}
+	}
+
+	/**
+	 * Widgets may only refer to primitive types
+	 */
+	@Check
+	void check(Widget widget) {
+		Type expectedType = guiDslTypeProvider.getExpectedType(widget);
+		Type actualType = guiDslTypeProvider.getType(widget);
+		if (actualType instanceof PrimitiveType) {return;}
+		checkTypeCompatibility(expectedType, actualType, GuiDslPackage.Literals.WIDGET__ATTR);
+	}	
+
+	
 }

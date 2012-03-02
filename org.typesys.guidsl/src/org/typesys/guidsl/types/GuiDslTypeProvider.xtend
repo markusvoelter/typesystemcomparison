@@ -29,6 +29,8 @@ import org.typesys.guidsl.guiDsl.Type
 import org.typesys.guidsl.guiDsl.Widget
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
+import org.typesys.guidsl.guiDsl.GuiDslPackage
+import org.typesys.guidsl.guiDsl.Form
 
 
 class GuiDslTypeProvider {
@@ -42,6 +44,7 @@ class GuiDslTypeProvider {
 	Type _int = GuiDslFactory::eINSTANCE.createIntType
 	Type number = GuiDslFactory::eINSTANCE.createNumberType
 	Type string = GuiDslFactory::eINSTANCE.createStringType
+	Type primitive = GuiDslFactory::eINSTANCE.createPrimitiveType
 	@Inject CyclicDependencyType cyclicType
 	
 	/**
@@ -95,22 +98,27 @@ class GuiDslTypeProvider {
 	}
 	
 	/**
-	 * @param e - Expression for which to compute an expected type. 
+	 * @param e - EObject for which to compute an expected type. 
 	 * 
-	 * @return the expected type of the expression. <code>null</code> indicates no expectation.
+	 * @return the expected type of {@code e}. {@code null} indicates no expectation.
 	 * 
-	 * The expected type is computed by checking the context, i.e. the container.
-	 * Example: If the container is a logical function, a boolean type is expected
+	 * The expected type is computed by checking the context (if necessary),
+	 * i.e. the container. Example: If the container is a logical function, 
+	 * a boolean type is expected
 	 */
-	def Type getExpectedType(Expression e) {
-		return internalGetExpectedType(e.eContainer, e.eContainingFeature)
+	def Type getExpectedType(EObject e) {
+		switch e {
+			Widget : primitive
+			Attribute case e.type != null : e.type
+			default: internalGetExpectedType(e.eContainer, e.eContainingFeature) 
+		}
 	}
 	
 	/**
 	 * @param e - The container of an EObject of which to compute the expected type
 	 * @param feature - The feature of {@code e} which holds the object for which
-	 *  this function should tell what type it expects it to be. Currently, it is
-	 *  not needed. <br>Example: The only reference to an expression a widget holds is the one 
+	 *  this function should tell what type it expects it to be. <br>Example: 
+	 * The only reference to an expression a widget holds is the one 
 	 * to the part after "validate", thus no checking needed. Otherwise one would add<br>
 	 * {@code case feature == GuiDslPackage$Literals::WIDGET__VALIDATE} to the case statement.
 	 * 
@@ -122,7 +130,8 @@ class GuiDslTypeProvider {
 	 */
 	def protected Type internalGetExpectedType(EObject e, EStructuralFeature feature) {
 		switch e {
-			Widget : bool
+			Widget case feature == GuiDslPackage$Literals::WIDGET__VALIDATE : bool
+			Widget case feature == GuiDslPackage$Literals::WIDGET__ATTR : primitive
 			
 			Attribute case e.type != null : e.type
 		
