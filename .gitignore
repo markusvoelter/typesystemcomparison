@@ -1,18 +1,26 @@
+# LaTeX
+# =====
 *.pdf
 *.doc
-temp
-.metadata
-bin
 JabRef-2.7.jar
 lit.bib.bak
 *.aux
 *.bbl
 *.blg
 *.log
+
+# Code / Eclipse
+# ==============
+.metadata
+xtend-gen/
+plugin.xml_gen
+bin
 *.class
-bin/
+
+# Other
+# =====
+temp
 *~
 logs.zip
 *.orig
-xtend-gen/
 
