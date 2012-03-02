@@ -41,15 +41,8 @@ Entity:
 ;
 
 Attribute:
-	SimpleAttribute | DerivedAttribute
-;
-
-DerivedAttribute:
-	"/" name=ID (":" type=Type)? "=" expr=Expression ";"
-;
-
-SimpleAttribute:
-	name=ID (":" type=Type)? ("=" expr=Expression)? ";"
+	name=ID ( ((":" type=Type)? "=" expr=Expression) | 
+               (":" type=Type) )";"
 ;
 
 Type:

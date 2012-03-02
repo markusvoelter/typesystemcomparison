@@ -24,6 +24,8 @@ section "Expressions"
 	typeof EntityType -> clone 
 	
 	typeof Entity -> javacode
+	
+	typeof ArithmeticSigned -> feature expression
 
  	typeof Comparison -> BooleanType {
  		ensureType left :<=: char(COMPARABLE)
@@ -70,18 +72,11 @@ section "Special Stuff"
  	typeof AttributeRef -> feature attr
 	typeof LenghtOf -> IntType
 	
-	typeof Attribute -> abstract
-	 
-	typeof SimpleAttribute -> common expr type {
+	typeof Attribute -> common expr type {
 		ensureCompatibility expr :<=: type 
 	}
 	
-	typeof DerivedAttribute -> common expr type {
-		ensureCompatibility expr :<=: type 
-	}
- 		
 	typeof FieldContent -> javacode
-  
 
 	// 1) the expression after "validate" must be boolean
 	typeof Widget -> abstract
