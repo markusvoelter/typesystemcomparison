@@ -16,13 +16,15 @@ import org.eclipse.xtext.common.types.util.TypeConformanceComputer
 import org.eclipse.xtext.xbase.jvmmodel.JvmTypesBuilder
 import org.eclipse.xtext.common.types.util.Primitives
 
+//tex
 class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 	
 	@Inject
 	private extension GuiTypeProvider typeProvider;
 	
 	@Inject TypeConformanceComputer typeConformanceComputer;
-	
+
+//tex	
 	@Inject Primitives primitives
 	
 	@Inject extension JvmTypesBuilder
@@ -38,21 +40,21 @@ class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 	 * 1) The expression after "validate" must be boolean.
 	 *  This is already covered by the XGuiDslJvmModelInferrer.
 	 */
-	
+
+//tex	
 	/**
 	 * 2) Text widgets may only refer to non-boolean attributes.
 	 */
 	@Check
 	def void checkTextWidgetForNonBoolean(TextWidget widget) {
 		val jvmTypeReference = widget.attr.getJvmType
-		if (jvmTypeReference == null) {
-			return
-		}
+		if (jvmTypeReference == null) return;
 		if (jvmTypeReference.getQualifiedName().equals(Boolean::TYPE.getName())) {
 			error("Textbox may NOT refer to boolean attributes.",
 					XGuiDslPackage$Literals::WIDGET__ATTR, IssueCodes::INCOMPATIBLE_TYPES);
 		}
 	}
+//tex
 
 	/**
 	 * 3) Checkbox widgets may only refer to boolean attributes.

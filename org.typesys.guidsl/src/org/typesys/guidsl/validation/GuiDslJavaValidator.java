@@ -16,9 +16,9 @@ import org.typesys.guidsl.types.GuiDslTypeProvider;
 import org.typesys.guidsl.types.TypeConformance;
 
 import com.google.inject.Inject;
-
+//tex
 public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
-
+//tex
 	public final static String INCOMPATIBLE_TYPES = "incompatible_types";
 
 	@Inject
@@ -27,10 +27,11 @@ public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 	@Inject
 	private TypeConformance conformance;
 
+	//tex
 	/**
 	 * 1) The expression after "validate" must be boolean. This covers
-	 * expression validation in general. The {@see GuiDslTypeProvider} decides
-	 * which type the expression should have.
+	 * expression validation in general. The {@link GuiDslTypeProvider} decides
+	 * which type the expression has and which type it should have.
 	 * 
 	 */
 	@Check
@@ -54,6 +55,7 @@ public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 					GuiDslPackage.Literals.WIDGET__ATTR, INCOMPATIBLE_TYPES);
 		}
 	}
+	//tex
 
 	/**
 	 * 3) Checkbox widgets may only refer to boolean attributes.
@@ -67,8 +69,6 @@ public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 					GuiDslPackage.Literals.WIDGET__ATTR, INCOMPATIBLE_TYPES);
 		}
 	}
-	
-
 	
 	protected void checkTypeCompatibility(Type expectedType, Type actualType) {
 		checkTypeCompatibility(expectedType, actualType, null);
@@ -95,7 +95,6 @@ public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 	void check(Widget widget) {
 		Type expectedType = guiDslTypeProvider.getExpectedType(widget);
 		Type actualType = guiDslTypeProvider.getType(widget);
-		if (actualType instanceof PrimitiveType) {return;}
 		checkTypeCompatibility(expectedType, actualType, GuiDslPackage.Literals.WIDGET__ATTR);
 	}	
 

@@ -15,7 +15,7 @@ entity Teacher extends Person {
 
 entity Gym {}
 
-entity School {      
+entity School {       
 	janitor: Person = new Gym; // error
 	head : Person = new Teacher;
 	gym  = new Gym;

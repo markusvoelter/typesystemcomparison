@@ -8,15 +8,16 @@ import org.eclipse.xtext.xbase.jvmmodel.JvmTypesBuilder
 import org.typesys.xbase.guidsl.xGuiDsl.Entity
 import org.typesys.xbase.guidsl.xGuiDsl.Form
 
-
+//tex
 class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 
 	@Inject extension JvmTypesBuilder
 	
 	@Inject extension IQualifiedNameProvider
 	
-    @Inject extension GuiTypeProvider guiTypeProvider
+	@Inject extension GuiTypeProvider guiTypeProvider
 
+//tex
 	
 	/**
 	 * This methode infers a Java class for each entity with a field, getters and setters for
@@ -32,26 +33,27 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 	 * 
 	 * 
 	 */
+//tex
    	def dispatch void infer(Entity element, IJvmDeclaredTypeAcceptor acceptor, boolean preIndexingPhase) {
    		acceptor.accept(element.toClass(element.fullyQualifiedName)).initializeLater [
 			documentation = element.documentation
 			if (element.superType != null)
 				superTypes += element.superType.cloneWithProxies
 		    for (attribute : element.attributes) {
-		            	members += attribute.toField(attribute.name, attribute.getJvmType)
 		    	if (attribute.expr != null) {
 						members += attribute.toMethod("get" + attribute.name.toFirstUpper, attribute.getJvmType) [
 			        		body = attribute.expr
 		        		]
 		        } else  {
+		            	members += attribute.toField(attribute.name, attribute.getJvmType)
 			            members += attribute.toGetter(attribute.name, attribute.getJvmType)
 			            members += attribute.toSetter(attribute.name, attribute.getJvmType)
 		        }
 		    }
    		]
    	}
-   	
-   	
+
+//tex
 
    	/**
    	 * Infers a Java class for each Form with a validate method with the Entity (that the Form refers to)
@@ -64,6 +66,7 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
    	 * Alternative:
      * text(20) -> firstName validate it.firstName.length > 2;     
    	 */
+//tex
  	def dispatch void infer(Form form, IJvmDeclaredTypeAcceptor acceptor, boolean preIndexingPhase) {
    		acceptor.accept(form.toClass(form.fullyQualifiedName)).initializeLater [
 			documentation = form.documentation
@@ -78,6 +81,7 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 		    }   		 	
    		]
    	}
+//tex
    	
 
 }
