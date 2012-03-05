@@ -1,0 +1,28 @@
+public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
+	/**
+	 * 1) The expression after "validate" must be boolean. This covers
+	 * expression validation in general. The {@link GuiDslTypeProvider} decides
+	 * which type the expression has and which type it should have.
+	 * 
+	 */
+	@Check
+	public void check(Expression expr) {
+		Type expectedType = guiDslTypeProvider.getExpectedType(expr);
+		Type actualType = guiDslTypeProvider.getType(expr);
+		checkTypeCompatibility(expectedType, actualType);
+	}
+
+	/**
+	 * 2) Text widgets may only refer to non-boolean attributes.
+	 * 
+	 * @param widget
+	 */
+	@Check
+	public void check(TextWidget widget) {
+		Attribute attr = widget.getAttr();
+		Type type = guiDslTypeProvider.getType(attr);
+		if (type.eClass() == GuiDslPackage.Literals.BOOLEAN_TYPE) {
+			error("A text widget may not refer to a boolean attribute.",
+					GuiDslPackage.Literals.WIDGET__ATTR, INCOMPATIBLE_TYPES);
+		}
+	}
