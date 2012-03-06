@@ -5,8 +5,7 @@ generate guiDsl "http://www.typesys.org/guidsl/GuiDsl"
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore	
 
 Model:
-	(entities+=Entity | 
-	 forms+=Form )*;
+	(entities+=Entity | forms+=Form )*;
 
 /*
  * Form and Widgets 
@@ -15,20 +14,18 @@ Model:
 Form:
 	"form" name=ID "edits" entity=[Entity] "{"	
 		(widgets+=Widget)*
-	"}"
-;
+	"}";
 
 Widget:
-	TextWidget | CheckBoxWidget 
-;
+	TextWidget | CheckBoxWidget;
 
 TextWidget:
-	"text" "(" length=Number ")" "->" attr=[Attribute] ("validate" validate=Expression)? ";"
-;
+	"text" "(" length=Number ")" "->" attr=[Attribute] 
+	("validate" validate=Expression)? ";";
 
 CheckBoxWidget:
-	"checkbox" "->" attr=[Attribute] ("validate" validate=Expression)? ";"
-;
+	"checkbox" "->" attr=[Attribute] 
+	("validate" validate=Expression)? ";";
 
 /*
  * Entities and types to be referred by forms
@@ -37,46 +34,26 @@ CheckBoxWidget:
 Entity:
 	"entity" name=ID ('extends' superType=[Entity])? "{"
 		(attributes+=Attribute)*
-	"}"
-;
+	"}";
 
 Attribute:
 	name=ID ( ((":" type=Type)? "=" expr=Expression) | 
-               (":" type=Type) )";"
-;
+               (":" type=Type) )";";
 
 Type:
-	PrimitiveType | EntityType
-;
+	PrimitiveType | EntityType;
 
 EntityType:
-	ref=[Entity]
-;
+	ref=[Entity];
 
+PrimitiveType: NumberType | BooleanType | StringType;
 
-PrimitiveType:
-	NumberType| BooleanType | StringType
-;
+NumberType: FloatType | IntType;
 
-NumberType :
-	FloatType | IntType
-;
-
-FloatType:
-	{FloatType} "float"
-;
-
-IntType:
-	{IntType} "int"
-;
-
-BooleanType:
-	{BooleanType} "bool"
-;
-
-StringType:
-	{StringType} "string"
-;
+FloatType:   {FloatType}   "float";
+IntType:     {IntType}     "int";
+BooleanType: {BooleanType} "bool";
+StringType:	 {StringType}  "string";
 
 /*
  * Expressions, used in DSL form and widget
@@ -85,25 +62,21 @@ StringType:
 Expression:
        BooleanExpression;
 
-
 BooleanExpression returns Expression:
        Comparison
        (({AndOrExpression.left=current} op=("||"|"&&")) right=Comparison)*;
 
 Comparison returns Expression:
-       EqualsStuff
-       (({Comparison.left=current}
-               op=(">="|"<="|"<"|">")
+       EqualsStuff (({Comparison.left=current} op=(">="|"<="|"<"|">")
        ) right=EqualsStuff)*;
 
 EqualsStuff returns Expression:
        Addition 
-       (({Equality.left=current}
-               op=("=="|"!=")
-       ) right=Addition)*;
+       (({Equality.left=current} op=("=="|"!=")) right=Addition)*;
 
 Addition returns Expression:
-       Multiplication (({Plus.left=current} '+' | {Minus.left=current} '-') right=Multiplication)*;
+       Multiplication (({Plus.left=current} '+' | {Minus.left=current} '-') 
+        right=Multiplication)*;
 
 Multiplication returns Expression:
        Prefixed (({MultiOrDiv.left=current} op=("*"|"/")) right=Prefixed)*;
@@ -111,8 +84,7 @@ Multiplication returns Expression:
 Prefixed returns Expression:
        {BooleanNegation} =>"!" expression=Atomic | /* right associativity */
        {ArithmeticSigned} =>"-" expression=Atomic | /* right associativity */
-       Atomic
-;
+       Atomic;
 
 Atomic returns Expression:
        '(' Expression ')' |
@@ -123,15 +95,11 @@ Atomic returns Expression:
        ({FloatLiteral} value=Float) |
        ({IntLiteral} value=INT) |
        ({StringLiteral} value=STRING) |
-       ({AttributeRef} attr=[Attribute|ID])
-;
+       ({AttributeRef} attr=[Attribute|ID]);
 
-Float returns ecore::EBigDecimal:
-	INT? ('.' INT) 
-;
+Float returns ecore::EBigDecimal:   INT? ('.' INT);
 
-Number returns ecore::EBigDecimal hidden():
-	INT ('.' INT)?;
+Number returns ecore::EBigDecimal:	INT ('.' INT)?;
 
 //terminal DECIMAL_NUMBER returns ecore::EBigDecimal:
 //	("-")? ('0'..'9')* ('.' ('0'..'9')+)?;

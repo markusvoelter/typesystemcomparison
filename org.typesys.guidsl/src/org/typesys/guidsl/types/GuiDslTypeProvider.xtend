@@ -62,7 +62,7 @@ class GuiDslTypeProvider {
 			Attribute case e.type != null : e.type
 			AttributeRef : e.attr.getType(visited)
 
-	        AndOrExpression : bool 
+			AndOrExpression : bool 
 			Comparison : bool
 			Equality : bool
 			

@@ -12,12 +12,12 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 			if (element.superType != null)
 				superTypes += element.superType.cloneWithProxies
 		    for (attribute : element.attributes) {
-		            	members += attribute.toField(attribute.name, attribute.getJvmType)
 		    	if (attribute.expr != null) {
 						members += attribute.toMethod("get" + attribute.name.toFirstUpper, attribute.getJvmType) [
 			        		body = attribute.expr
 		        		]
 		        } else  {
+		            	members += attribute.toField(attribute.name, attribute.getJvmType)
 			            members += attribute.toGetter(attribute.name, attribute.getJvmType)
 			            members += attribute.toSetter(attribute.name, attribute.getJvmType)
 		        }
