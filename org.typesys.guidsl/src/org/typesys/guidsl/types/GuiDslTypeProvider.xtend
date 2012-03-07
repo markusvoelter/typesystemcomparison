@@ -29,6 +29,7 @@ import org.typesys.guidsl.guiDsl.Type
 import org.typesys.guidsl.guiDsl.Widget
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
+import org.typesys.guidsl.guiDsl.Form
 
 	//tex
 class GuiDslTypeProvider {
@@ -95,15 +96,12 @@ class GuiDslTypeProvider {
 	 * 
 	 * @return the expected type of {@code e}. {@code null} indicates no expectation.
 	 * 
-	 * The expected type is computed by checking the context (if necessary),
+	 * The expected type is computed by checking the context,
 	 * i.e. the container. Example: If the container is a logical function, 
 	 * a boolean type is expected
 	 **///tex
 	def Type getExpectedType(EObject e) { 
-		switch e {
-			Widget : primitive
-			default: internalGetExpectedType(e.eContainer, e.eContainingFeature) 
-		}
+			internalGetExpectedType(e.eContainer, e.eContainingFeature) 
 	} 
 	
 //tex
@@ -121,7 +119,7 @@ class GuiDslTypeProvider {
 	def protected Type internalGetExpectedType(EObject e, EStructuralFeature feature) {
 		switch e {
 			Widget case feature == GuiDslPackage$Literals::WIDGET__VALIDATE: bool
-			
+			Form case feature == GuiDslPackage$Literals::FORM__WIDGETS: primitive
 			Attribute case e.type != null : e.type
 		
 			AndOrExpression : bool 
