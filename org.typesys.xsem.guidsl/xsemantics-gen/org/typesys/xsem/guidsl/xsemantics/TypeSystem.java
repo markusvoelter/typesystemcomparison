@@ -23,6 +23,7 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanNegation;
 import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.CheckBoxWidget;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Comparison;
+import org.typesys.xsem.guidsl.xsemGuiDsl.EntityType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Equals;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Expression;
 import org.typesys.xsem.guidsl.xsemGuiDsl.FieldContent;
@@ -48,6 +49,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	public final static String STRINGLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.StringLiteralType";
 	public final static String NUMBERLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.NumberLiteralType";
 	public final static String FIELDCONTENTTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.FieldContentType";
+	public final static String NEWENTITYTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.NewEntityType";
 	public final static String LENGTHOFTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.LengthOfType";
 	public final static String ATTRIBUTEREFTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.AttributeRefType";
 	public final static String MULTIORDIVTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.MultiOrDivType";
@@ -501,6 +503,28 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		type = (Type) result.getFirst();
 		
 		return new Result<Type>(type);
+	}
+	
+	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final EntityType newEntity) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Type> _result_ = applyRuleNewEntityType(G, _subtrace_, newEntity);
+			addToTrace(_trace_, ruleName("NewEntityType") + stringRepForEnv(G) + " |- " + stringRep(newEntity) + " : " + stringRep(_result_.getFirst()));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleNewEntityType) {
+			exprtypeThrowException(NEWENTITYTYPE,
+				e_applyRuleNewEntityType, newEntity);
+			return null;
+		}
+	}
+	
+	protected Result<Type> applyRuleNewEntityType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final EntityType newEntity) 
+			throws RuleFailedException {
+		return new Result<Type>(newEntity);
 	}
 	
 	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,

@@ -64,6 +64,8 @@ entity MyEntity {
 	
 	myDecimalDerived = 10.54;
 	myBooleanDerived = true;
+	
+	myEntity = new MyEntity;
 }
 '''
 

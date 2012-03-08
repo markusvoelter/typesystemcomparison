@@ -3,9 +3,18 @@
  */
 package org.typesys.xsem.guidsl;
 
-/**
- * Use this class to register components to be used at runtime / without the Equinox extension registry.
- */
-public class XsemGuiDslRuntimeModule extends org.typesys.xsem.guidsl.AbstractXsemGuiDslRuntimeModule {
+import org.typesys.xsem.guidsl.xsemantics.XsemGuiDslStringRepresentation;
 
+import it.xsemantics.runtime.StringRepresentation;
+
+/**
+ * Use this class to register components to be used at runtime / without the
+ * Equinox extension registry.
+ */
+public class XsemGuiDslRuntimeModule extends
+		org.typesys.xsem.guidsl.AbstractXsemGuiDslRuntimeModule {
+
+	public Class<? extends StringRepresentation> bindStringRepresentation() {
+		return XsemGuiDslStringRepresentation.class;
+	}
 }

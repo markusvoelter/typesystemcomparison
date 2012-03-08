@@ -42,6 +42,9 @@ from {
 	G ||- env(G, 'widgetcontent', Attribute) : type
 }
 
+axiom NewEntityType
+	G |- EntityType newEntity : newEntity
+
 rule LengthOfType
 	G |- LenghtOf len : XsemGuiDslFactory::eINSTANCE.createIntType
 from {

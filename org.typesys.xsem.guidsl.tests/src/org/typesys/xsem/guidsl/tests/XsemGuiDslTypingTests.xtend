@@ -173,6 +173,11 @@ class XsemGuiDslTypingTests extends XsemGuiDslAbstractTests {
 	}
 	
 	@Test
+	def void testNewEntityType() {
+		assertAttributeType(inputs.testEntityForExpressions, "myEntity", "MyEntity")
+	}
+	
+	@Test
 	def void testFieldContentType() {
 		val widget = inputs.testEntity.textwidget(0)
 		assertExpressionType(
