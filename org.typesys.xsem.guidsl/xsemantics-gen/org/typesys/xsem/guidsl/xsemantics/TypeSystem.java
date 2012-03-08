@@ -23,7 +23,6 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanNegation;
 import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.CheckBoxWidget;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Comparison;
-import org.typesys.xsem.guidsl.xsemGuiDsl.DerivedAttribute;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Equals;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Expression;
 import org.typesys.xsem.guidsl.xsemGuiDsl.FieldContent;
@@ -35,7 +34,6 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.MultiOrDiv;
 import org.typesys.xsem.guidsl.xsemGuiDsl.NumberLiteral;
 import org.typesys.xsem.guidsl.xsemGuiDsl.NumberType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Plus;
-import org.typesys.xsem.guidsl.xsemGuiDsl.SimpleAttribute;
 import org.typesys.xsem.guidsl.xsemGuiDsl.StringLiteral;
 import org.typesys.xsem.guidsl.xsemGuiDsl.StringType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.TextWidget;
@@ -45,8 +43,7 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.XsemGuiDslFactory;
 import org.typesys.xsem.guidsl.xsemGuiDsl.XsemGuiDslPackage;
 
 public class TypeSystem extends XsemanticsRuntimeSystem {
-	public final static String SIMPLEATTRIBUTETYPE = "org.typesys.xsem.guidsl.xsemantics.rules.SimpleAttributeType";
-	public final static String DERIVEDATTRIBUTETYPE = "org.typesys.xsem.guidsl.xsemantics.rules.DerivedAttributeType";
+	public final static String ATTRIBUTETYPE = "org.typesys.xsem.guidsl.xsemantics.rules.AttributeType";
 	public final static String BOOLEANLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.BooleanLiteralType";
 	public final static String STRINGLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.StringLiteralType";
 	public final static String NUMBERLITERALTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.NumberLiteralType";
@@ -358,56 +355,48 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	}
 	
 	protected Result<Type> attrtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
-			final SimpleAttribute attr) 
+			final Attribute attr) 
 			throws RuleFailedException {
 		try {
 			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-			Result<Type> _result_ = applyRuleSimpleAttributeType(G, _subtrace_, attr);
-			addToTrace(_trace_, ruleName("SimpleAttributeType") + stringRepForEnv(G) + " ||- " + stringRep(attr) + " : " + stringRep(_result_.getFirst()));
+			Result<Type> _result_ = applyRuleAttributeType(G, _subtrace_, attr);
+			addToTrace(_trace_, ruleName("AttributeType") + stringRepForEnv(G) + " ||- " + stringRep(attr) + " : " + stringRep(_result_.getFirst()));
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
-		} catch (Exception e_applyRuleSimpleAttributeType) {
-			attrtypeThrowException(SIMPLEATTRIBUTETYPE,
-				e_applyRuleSimpleAttributeType, attr);
+		} catch (Exception e_applyRuleAttributeType) {
+			attrtypeThrowException(ATTRIBUTETYPE,
+				e_applyRuleAttributeType, attr);
 			return null;
 		}
 	}
 	
-	protected Result<Type> applyRuleSimpleAttributeType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
-			final SimpleAttribute attr) 
-			throws RuleFailedException {
-		
-		Type _type = attr.getType();
-		return new Result<Type>(_type);
-	}
-	
-	protected Result<Type> attrtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
-			final DerivedAttribute attr) 
-			throws RuleFailedException {
-		try {
-			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
-			Result<Type> _result_ = applyRuleDerivedAttributeType(G, _subtrace_, attr);
-			addToTrace(_trace_, ruleName("DerivedAttributeType") + stringRepForEnv(G) + " ||- " + stringRep(attr) + " : " + stringRep(_result_.getFirst()));
-			addAsSubtrace(_trace_, _subtrace_);
-			return _result_;
-		} catch (Exception e_applyRuleDerivedAttributeType) {
-			attrtypeThrowException(DERIVEDATTRIBUTETYPE,
-				e_applyRuleDerivedAttributeType, attr);
-			return null;
-		}
-	}
-	
-	protected Result<Type> applyRuleDerivedAttributeType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
-			final DerivedAttribute attr) 
+	protected Result<Type> applyRuleAttributeType(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final Attribute attr) 
 			throws RuleFailedException {
 		Type attrType = null;
 		
-		/* G |- attr.expr : attrType */
-		Expression _expr = attr.getExpr();
-		Result<Type> result = exprtypeInternal(G, _trace_, _expr);
-		checkAssignableTo(result.getFirst(), Type.class);
-		attrType = (Type) result.getFirst();
-		
+		/* { attr.type != null attrType = attr.type } or G |- attr.expr : attrType */
+		try {
+		  Type _xblockexpression = null;
+		  {
+		    Type _type = attr.getType();
+		    boolean _operator_notEquals = ObjectExtensions.operator_notEquals(_type, null);
+		    /* attr.type != null */
+		    if (!_operator_notEquals) {
+		      sneakyThrowRuleFailedException("attr.type != null");
+		    }
+		    Type _type_1 = attr.getType();
+		    Type _attrType = attrType = _type_1;
+		    _xblockexpression = (_attrType);
+		  }
+		} catch (Exception e) {
+		  /* G |- attr.expr : attrType */
+		  Expression _expr = attr.getExpr();
+		  Result<Type> result = exprtypeInternal(G, _trace_, _expr);
+		  checkAssignableTo(result.getFirst(), Type.class);
+		  attrType = (Type) result.getFirst();
+		  
+		}
 		return new Result<Type>(attrType);
 	}
 	

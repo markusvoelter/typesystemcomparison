@@ -13,9 +13,9 @@ entity MyEntity {
 
 entity MyOtherEntity {
 	myEntity : MyEntity;
-	/myStringDerived = 'foo';
-	/myDecimalDerived = 10.54;
-	/myBooleanDerived = true;
+	myStringDerived = 'foo';
+	myDecimalDerived = 10.54;
+	myBooleanDerived = true;
 }
 
 form MyForm edits MyEntity {
@@ -27,43 +27,43 @@ form MyForm edits MyEntity {
 	def testEntityForExpressions()
 '''
 entity MyEntity {
-	/CompareMixed = '10' <= 20; // WRONG!
-	/CompareBool = true <= false; // WRONG!
-	/EqualsMixed = '10' == 20; // WRONG!
+	CompareMixed = '10' <= 20; // WRONG!
+	CompareBool = true <= false; // WRONG!
+	EqualsMixed = '10' == 20; // WRONG!
 
 	myString : string;
 	myBool : bool;
 	myInt : int;
 	myDecimal : float;
 	
-	/MultiInt = myInt * myInt;
-	/MultiFloatMostGeneral = myInt * 1;
-	/MultiFloat = 5 * 1;
-	/Div = myInt / 1;
-	/Minus = myInt - 1;
-	/PlusNum = myInt + 5;
-	/PlusString = 'foo' + 'bar';
-	/PlusMixed = 10 + 'bar';
+	MultiInt = myInt * myInt;
+	MultiFloatMostGeneral = myInt * 1;
+	MultiFloat = 5 * 1;
+	Div = myInt / 1;
+	Minus = myInt - 1;
+	PlusNum = myInt + 5;
+	PlusString = 'foo' + 'bar';
+	PlusMixed = 10 + 'bar';
 	
-	/CompareNum = myInt <= 20;
-	/CompareString = '10' <= '20';
+	CompareNum = myInt <= 20;
+	CompareString = '10' <= '20';
 	
-	/EqualsNum = myInt == 20;
-	/EqualsString = '10' != '20';
-	/EqualsBool = true != false;
+	EqualsNum = myInt == 20;
+	EqualsString = '10' != '20';
+	EqualsBool = true != false;
 	
-	/And = (myInt <= 20) && ('10' <= '20');
-	/Or = (myInt <= 20) || ('10' <= '20');
+	And = (myInt <= 20) && ('10' <= '20');
+	Or = (myInt <= 20) || ('10' <= '20');
 	
-	/BooleanNegation = !myBool;
+	BooleanNegation = !myBool;
 	
-	/LengthOf = lengthOf('foo' + 'bar');
+	LengthOf = lengthOf('foo' + 'bar');
 	
-	/SignedInt = -myInt;
-	/SignedFloat = -10;
+	SignedInt = -myInt;
+	SignedFloat = -10;
 	
-	/myDecimalDerived = 10.54;
-	/myBooleanDerived = true;
+	myDecimalDerived = 10.54;
+	myBooleanDerived = true;
 }
 '''
 

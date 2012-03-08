@@ -16,13 +16,15 @@ judgments {
 	mostGeneral |- Type first ~~ Type second |> output Type
 }
 
-axiom SimpleAttributeType
-	G ||- SimpleAttribute attr : attr.type
-
-rule DerivedAttributeType
-	G ||- DerivedAttribute attr : Type attrType
+rule AttributeType
+	G ||- Attribute attr : Type attrType
 from {
-	G |- attr.expr : attrType
+	{
+		attr.type != null
+		attrType = attr.type
+	}
+	or
+		G |- attr.expr : attrType
 }
 
 axiom BooleanLiteralType

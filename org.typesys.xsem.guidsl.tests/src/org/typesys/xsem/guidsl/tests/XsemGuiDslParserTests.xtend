@@ -53,10 +53,10 @@ entity MyEntity {
 	myInt : int;
 	myDecimal : float;
 	
-	/Exp = 1 * 10 + -2 / 3 < 1 && !myBool
+	Exp = 1 * 10 + -2 / 3 < 1 && !myBool
 }
 '''.
-				derivedAttribute("Exp").expr.expressionToString
+				attribute("Exp").expr.expressionToString
 		)
 	}
 	

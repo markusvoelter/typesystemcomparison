@@ -8,10 +8,9 @@ import org.junit.runner.RunWith
 import org.typesys.xsem.guidsl.XsemGuiDslInjectorProvider
 import org.typesys.xsem.guidsl.xsemGuiDsl.Attribute
 import org.typesys.xsem.guidsl.xsemGuiDsl.Model
+import org.typesys.xsem.guidsl.xsemGuiDsl.TextWidget
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
-import org.typesys.xsem.guidsl.xsemGuiDsl.DerivedAttribute
-import org.typesys.xsem.guidsl.xsemGuiDsl.TextWidget
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(XsemGuiDslInjectorProvider))
@@ -28,12 +27,6 @@ class XsemGuiDslAbstractTests {
 	def attribute(CharSequence input, String attrName) {
 		input.parse.
 			getAllContentsOfType(typeof(Attribute)).
-				findFirst [ it.name == attrName ]
-	}
-	
-	def derivedAttribute(CharSequence input, String attrName) {
-		input.parse.
-			getAllContentsOfType(typeof(DerivedAttribute)).
 				findFirst [ it.name == attrName ]
 	}
 	
