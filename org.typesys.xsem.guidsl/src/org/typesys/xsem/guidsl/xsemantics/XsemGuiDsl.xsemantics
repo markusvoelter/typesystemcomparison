@@ -139,6 +139,19 @@ from {
 	left.eClass.isSuperTypeOf(right.eClass)
 }
 
+rule EntityTypeAssignable
+	G |- EntityType left <~ EntityType right
+from {
+	left.ref == right.ref
+	or
+	getAll(right.ref, 
+		XsemGuiDslPackage::eINSTANCE.entity_SuperType,
+		XsemGuiDslPackage::eINSTANCE.entity_SuperType,
+		typeof(Entity)
+	).contains(left.ref)
+	// if left is in the supertypes of right
+}
+
 axiom BooleanAssignableToString
 	G |- StringType left <~ BooleanType right
 

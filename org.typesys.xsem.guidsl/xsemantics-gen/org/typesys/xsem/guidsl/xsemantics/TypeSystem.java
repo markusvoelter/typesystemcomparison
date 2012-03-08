@@ -6,6 +6,7 @@ import it.xsemantics.runtime.RuleApplicationTrace;
 import it.xsemantics.runtime.RuleEnvironment;
 import it.xsemantics.runtime.RuleFailedException;
 import it.xsemantics.runtime.XsemanticsRuntimeSystem;
+import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -23,6 +24,7 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanNegation;
 import org.typesys.xsem.guidsl.xsemGuiDsl.BooleanType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.CheckBoxWidget;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Comparison;
+import org.typesys.xsem.guidsl.xsemGuiDsl.Entity;
 import org.typesys.xsem.guidsl.xsemGuiDsl.EntityType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Equals;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Expression;
@@ -61,6 +63,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	public final static String BOOLEANNEGATIONTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.BooleanNegationType";
 	public final static String ARITHMETICSIGNEDTYPE = "org.typesys.xsem.guidsl.xsemantics.rules.ArithmeticSignedType";
 	public final static String ISASSIGNABLEBASE = "org.typesys.xsem.guidsl.xsemantics.rules.IsAssignableBase";
+	public final static String ENTITYTYPEASSIGNABLE = "org.typesys.xsem.guidsl.xsemantics.rules.EntityTypeAssignable";
 	public final static String BOOLEANASSIGNABLETOSTRING = "org.typesys.xsem.guidsl.xsemantics.rules.BooleanAssignableToString";
 	public final static String INTASSIGNABLETOSTRING = "org.typesys.xsem.guidsl.xsemantics.rules.IntAssignableToString";
 	public final static String INTASSIGNABLETOFLOAT = "org.typesys.xsem.guidsl.xsemantics.rules.IntAssignableToFloat";
@@ -973,6 +976,50 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		/* left.eClass.isSuperTypeOf(right.eClass) */
 		if (!_isSuperTypeOf) {
 		  sneakyThrowRuleFailedException("left.eClass.isSuperTypeOf(right.eClass)");
+		}
+		return new Result<Boolean>(true);
+	}
+	
+	protected Result<Boolean> isAssignableImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final EntityType left, final EntityType right) 
+			throws RuleFailedException {
+		try {
+			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
+			Result<Boolean> _result_ = applyRuleEntityTypeAssignable(G, _subtrace_, left, right);
+			addToTrace(_trace_, ruleName("EntityTypeAssignable") + stringRepForEnv(G) + " |- " + stringRep(left) + " <~ " + stringRep(right));
+			addAsSubtrace(_trace_, _subtrace_);
+			return _result_;
+		} catch (Exception e_applyRuleEntityTypeAssignable) {
+			isAssignableThrowException(ENTITYTYPEASSIGNABLE,
+				e_applyRuleEntityTypeAssignable, left, right);
+			return null;
+		}
+	}
+	
+	protected Result<Boolean> applyRuleEntityTypeAssignable(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+			final EntityType left, final EntityType right) 
+			throws RuleFailedException {
+		
+		/* left.ref == right.ref or getAll(right.ref, XsemGuiDslPackage::eINSTANCE.entity_SuperType, XsemGuiDslPackage::eINSTANCE.entity_SuperType, typeof(Entity) ).contains(left.ref) */
+		try {
+		  Entity _ref = left.getRef();
+		  Entity _ref_1 = right.getRef();
+		  boolean _operator_equals = ObjectExtensions.operator_equals(_ref, _ref_1);
+		  /* left.ref == right.ref */
+		  if (!_operator_equals) {
+		    sneakyThrowRuleFailedException("left.ref == right.ref");
+		  }
+		} catch (Exception e) {
+		  Entity _ref_2 = right.getRef();
+		  EReference _entity_SuperType = XsemGuiDslPackage.eINSTANCE.getEntity_SuperType();
+		  EReference _entity_SuperType_1 = XsemGuiDslPackage.eINSTANCE.getEntity_SuperType();
+		  List<Entity> _all = this.<Entity>getAll(_ref_2, _entity_SuperType, _entity_SuperType_1, org.typesys.xsem.guidsl.xsemGuiDsl.Entity.class);
+		  Entity _ref_3 = left.getRef();
+		  boolean _contains = _all.contains(_ref_3);
+		  /* getAll(right.ref, XsemGuiDslPackage::eINSTANCE.entity_SuperType, XsemGuiDslPackage::eINSTANCE.entity_SuperType, typeof(Entity) ).contains(left.ref) */
+		  if (!_contains) {
+		    sneakyThrowRuleFailedException("getAll(right.ref, XsemGuiDslPackage::eINSTANCE.entity_SuperType, XsemGuiDslPackage::eINSTANCE.entity_SuperType, typeof(Entity) ).contains(left.ref)");
+		  }
 		}
 		return new Result<Boolean>(true);
 	}

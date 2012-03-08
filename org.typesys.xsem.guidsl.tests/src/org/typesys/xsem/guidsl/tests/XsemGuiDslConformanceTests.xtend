@@ -1,6 +1,7 @@
 package org.typesys.xsem.guidsl.tests
 
 import com.google.inject.Inject
+import it.xsemantics.runtime.Result
 import it.xsemantics.runtime.RuleApplicationTrace
 import it.xsemantics.runtime.StringRepresentation
 import it.xsemantics.runtime.util.TraceUtils
@@ -8,14 +9,13 @@ import junit.framework.Assert
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.typesys.xsem.guidsl.XsemGuiDslInjectorProvider
-import org.typesys.xsem.guidsl.xsemantics.TypeSystem
+import org.typesys.xsem.guidsl.xsemGuiDsl.Entity
 import org.typesys.xsem.guidsl.xsemGuiDsl.Type
 import org.typesys.xsem.guidsl.xsemGuiDsl.XsemGuiDslFactory
-
-import org.junit.Test
-import it.xsemantics.runtime.Result
+import org.typesys.xsem.guidsl.xsemantics.TypeSystem
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(XsemGuiDslInjectorProvider))
@@ -77,6 +77,31 @@ class XsemGuiDslConformanceTests extends XsemGuiDslAbstractTests {
 	def void mostGeneralInt() {
 	  	assertMostGeneral(_float, _float, _int)
 	  	assertMostGeneral(_float, _int, _float)
+	}
+	
+	@Test
+	def void sameEntityIsAssignable() {
+		val testEntityType = entityType("foo", null)
+		testEntityType.isAssignable(testEntityType).assertTrue
+	}
+	
+	@Test
+	def void superEntityIsAssignable() {
+		val t1 = entityType("foo1", null)
+		val t2 = entityType("foo2", t1.ref)
+		val t3 = entityType("foo3", t2.ref)
+		t1.isAssignable(t3).assertTrue
+		t3.isAssignable(t1).assertFalse
+		entityType("unrelated", null).isAssignable(t1).assertFalse
+	}
+	
+	def entityType(String name, Entity superEntity) {
+		val entity = XsemGuiDslFactory::eINSTANCE.createEntity
+		entity.name = name
+		entity.superType = superEntity
+		val type = XsemGuiDslFactory::eINSTANCE.createEntityType
+		type.ref = entity
+		type
 	}
     
     def isAssignable(Type left, Type right) {
