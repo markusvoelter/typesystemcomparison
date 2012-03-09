@@ -4,6 +4,14 @@ typesystem org.typesys.xts.guidsl.typesys.GuiDlsTypesystem
 	
 section "Types"
  	typeof Type+ -> clone
+	typeof EntityType -> clone 
+	
+ 	subtype FloatType base IntType
+
+section "Literals"
+  	typeof StringLiteral -> StringType
+ 	typeof BooleanLiteral -> BooleanType
+  	typeof NumberLiteral -> javacode
 
 section "Expressions" 
 
@@ -14,17 +22,9 @@ section "Expressions"
 	characteristic NUMERIC {
 		IntType, FloatType
 	} 
- 
- 	subtype FloatType base IntType
 
 	typeof Expression -> abstract
 
-	typeof NewExpr -> javacode
-
-	typeof EntityType -> clone 
-	
-	typeof Entity -> javacode
-	
 	typeof ArithmeticSigned -> feature expression
 
  	typeof Comparison -> BooleanType {
@@ -32,11 +32,13 @@ section "Expressions"
  		ensureType right :<=: char(COMPARABLE)
  		ensureCompatibility left :<=>: right
  	} 
+
  	typeof Equality -> BooleanType {
  		ensureType left :<=: char(COMPARABLE), BooleanType
  		ensureType right :<=: char(COMPARABLE), BooleanType
  		ensureCompatibility left :<=>: right
  	}
+
  	typeof AndOrExpression -> BooleanType {
  		ensureType left :<=: BooleanType
  		ensureType right :<=: BooleanType 
@@ -61,36 +63,34 @@ section "Expressions"
 
  
  	
-section "Literals"
-  
-  	typeof StringLiteral -> StringType
-  	typeof NumberLiteral -> javacode
- 	typeof BooleanLiteral -> BooleanType
-	
-section "Special Stuff"
 
  	typeof AttributeRef -> feature attr
 	typeof LenghtOf -> IntType
 	
 	typeof Attribute -> common expr type {
-		ensureCompatibility expr :<=: type 
+		ensureCompatibility type :<=: expr
 	}
 	
-	typeof FieldContent -> javacode
-
 	// 1) the expression after "validate" must be boolean
 	typeof Widget -> abstract
 	
 	// 2) text widgets may only refer to non-boolean attributes 
-	typeof TextWidget -> none {
+	typeof TextWidget -> feature attr {
 //		ensureType length :<=: IntType
 		ensureType attr :<=: StringType, IntType, FloatType
 		ensureType validate :<=: BooleanType
-	} 
+	}  
 	
 	// 3) checkbox widgets may only refer to boolean attributes
-	typeof CheckBoxWidget -> none {
+	typeof CheckBoxWidget -> feature attr {
 		ensureType attr :<=: BooleanType
 		ensureType validate :<=: BooleanType
 	}
+	
+	typeof FieldContent -> ancestor Widget
+
+	typeof NewExpr -> feature entity
+
+	typeof Entity -> javacode
+	
 	

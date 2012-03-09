@@ -1,8 +1,17 @@
 \section{Case Study}
 \label{sec:casestudy}
 
-As a practial example where type inference and validation is useful, we present a language for modeling forms in a GUI to edit entities in a database. The forms are wired to entities and have widgets like text fields and checkboxes. An entity may have simple attributes of base types like \emph{boolean}, \emph{string}, \emph{int} and \emph{float} and derived attributes. The latter have a specification on how to derive them, which may refer to other attributes. Widgets of forms may contain a \emph{validate} clause, which verifies for example the length of the input. 
-In order to compare the different approaches for type systems, the case study is implemented for each of the following variants.
+As a practial example where type inference and validation is useful, we prqesent
+a language for modeling forms in a GUI to edit entities in a database. The forms
+are wired to entities and have widgets like text fields and checkboxes. An
+entity may have simple attributes of base types like \emph{boolean},
+\emph{string}, \emph{int} and \emph{float} and derived attributes. The latter
+have a specification on how to derive them, which may refer to other attributes.
+Widgets of forms may contain a \emph{validate} clause, which verifies for
+example the length of the input.
+
+In order to compare the different approaches for type systems, the case study is
+implemented for each of the following variants.
 
 \begin{itemize}
 \item Plain Xtext/Xtend
@@ -11,7 +20,10 @@ In order to compare the different approaches for type systems, the case study is
 \item Xtext with Xtext/TS
 \end{itemize}
 
-Listing \ref{lst:example-plain} shows an example of the DSL with a \emph{Person} entity and a \emph{PersonForm} to edit it. The attributes \emph{isAdult} and \emph{greeting} are derived, thus it is not necessary to specify their type explicitly. They could be read-only widgets in forms.
+Listing \ref{lst:example-plain} shows an example of the DSL with a \emph{Person}
+entity and a \emph{PersonForm} to edit it. The attributes \emph{isAdult} and
+\emph{greeting} are derived, thus it is not necessary to specify their type
+explicitly. They could be read-only widgets in forms.
 
 %\lstinputlisting[language=bash,label=lst:example-plain,caption=Forms and
 % Entities DSL,linerange={1-16}]{..//exampleCode/src/plain-xtext.gui}
@@ -73,11 +85,19 @@ Attribute:
                (":" type=Type) )";";
 \end{lstlisting}
 
-The Xtext grammar part used by all variants is shown in listing \ref{lst:grammar-plain}. The type and expressions definition part of the grammar in listing \ref{lst:grammar-plain-types-and-ex} is the same for the the plain Xtext grammar and the XSemantics and Xtext/TS grammars. The rule order reflects the precedence hierarchy of the operators, from lowest (\emph{BooleanExpression}) to highest (\emph{Atomic}). The rules use \emph{assigned actions} to produce an appropriate abstract syntax tree (cf. Xtext documentation \cite{xtextdoc}), which is used when checking types.
-In the Xbase scenario, the rule \emph{Expression} is replaced with the Xbase \emph{XExpression} rule, which maps to Java types and expressions.
-%float,
-\begin{lstlisting}[language=xtext,label=lst:grammar-plain-types-and-ex,caption=Types and Expressions.] 
-Type: PrimitiveType | EntityType;
+The Xtext grammar part used by all variants is shown in listing
+\ref{lst:grammar-plain}. The type and expressions definition part of the grammar
+in listing \ref{lst:grammar-plain-types-and-ex} is the same for the the plain
+Xtext grammar and the XSemantics and Xtext/TS grammars. The rule order reflects
+the precedence hierarchy of the operators, from lowest
+(\emph{BooleanExpression}) to highest (\emph{Atomic}). The rules use
+\emph{assigned actions} to produce an appropriate abstract syntax tree (cf.
+Xtext documentation \cite{xtextdoc}), which is used when checking types.
+In the Xbase scenario, the rule \emph{Expression} is replaced with the Xbase
+\emph{XExpression} rule, which maps to Java types and expressions.
+% float,
+\begin{lstlisting}[language=xtext,label=lst:grammar-plain-types-and-ex,caption=Types
+and Expressions.] Type: PrimitiveType | EntityType;
 
 EntityType: ref=[Entity];
 
@@ -135,11 +155,15 @@ Number returns ecore::EBigDecimal: INT ('.' INT)?;
 % plain Xtext,linerange={54-120}]{../org.typesys.guidsl/src/org/typesys/guidsl/GuiDsl.xtext}
 
 \subsection{Demonstration Tasks}
-To compare the different type system variants, each of them will show its type checking ability by demonstrating how it solves the following tasks.
+To compare the different type system variants, each of them will show its type
+checking ability by demonstrating how it solves the following tasks.
 \begin{enumerate}
 \item Ensure that the expression after the \emph{validate} clause is boolean.
 \item Show an error message when text widgets refer to boolean entity attributes.
 \item Validate that checkbox widgets may only refer to boolean attributes.
 \end{enumerate}
 
-All tasks imply being able to infer the type of expressions: The \emph{validate} clause is an expression, and widgets and checkboxes may refer to derived attributes, which are defined with expressions. Test cases for the projects are online at []%TODO
+All tasks imply being able to infer the type of expressions: The \emph{validate}
+clause is an expression, and widgets and checkboxes may refer to derived
+attributes, which are defined with expressions. Test cases for the projects are
+online at []%TODO

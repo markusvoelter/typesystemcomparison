@@ -1,0 +1,296 @@
+\section{XTS}
+
+\subsection{Introduction}
+
+XTS was originally developed as a framework. The type system rules  had been
+specified declaratively via a Java API. Later, the DSL was put on top of the
+framework. The DSL simply generates the Java code you would have written
+manually without the DSL. For some aspects of type systems you still have to
+write procedural Java code, because no suitable declarative abstraction is
+available, either in the framework or in the DSL.
+
+At the center of XTS is the ITypesystem interface. It has various methods for
+calculating the type of model elements, and for comparing types for
+compatibility and subtyping relationships. In principle, you can implement this
+interface anyway you like. however, to benefit from the framework, you should
+use the declarative APIs used in the DefaultTypesystem implementation.
+
+\subsection{Hooking up the type checker}
+
+To enable type checks, you have to hook up the type system framework  with the
+validation  framework provided by Xtext. Here is the code you have to write in
+the validator:
+
+\begin{code}
+@Inject 
+private ITypesystem ts;
+
+@Check(CheckType.NORMAL)
+public void validateTypes( EObject m ) {
+    ts.checkTypesystemConstraints( m, this );
+}    
+\end{code}
+
+Also the type system is used mostly in the way shown above, from the validator,
+it can be used in any other place in an Xtext DSL. For example it has been used
+as part of scope implementations.. In this case, you simply inject the type
+system into the scope provider and use it from there.
+
+\subsection{Setting up}
+
+Note: to be able to use the type system DSL you have to download and install the
+type system plug-ins from \todo
+
+We start with the header of the type system file.
+
+\begin{code}
+typesystem org.typesys.xts.guidsl.typesys.GuiDlsTypesystem 
+    ecore file "platform:/resource/org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/GuiDsl.ecore"
+    language package org.typesys.xts.guidsl.guiDsl.GuiDslPackage 
+\end{code}
+
+The header of the type system file specifies the fully qualified class name of
+the type system implementation file generated from this specification file. We
+also have to provide the platform URI for the Ecore file that contains the
+metaclasses for which we want to specify the type system rules. Finally, we have
+to provide the the fully qualified name  to the package class  generated from
+that Ecore file.
+
+\subsection{The type of types}
+
+Type system specifications  are structured into sections. They have no meaning
+beyond structuring the overall file. Within this section we can define typeof
+clauses. A typeof clause defines how the type for a given metaclass is
+calculated, and can optionally specify constraints on the types of properties of
+these metaclasses.
+
+In the initial section in the following piece of code we specify  that the type
+of the Type metaclass and all its subclasses (hence the +) is a clone of itself.
+In other words, types of their own types.
+
+\begin{code}
+section "Types"
+    typeof Type+ -> clone
+    subtype IntType base FloatTyoe
+\end{code}
+
+We also specify the subtyping relationship between FloatType and IntType. This
+means that, wherever a FloatType is expected, an IntType can also be used.  But
+not the other way around. In other words, IntType is more specialized.
+
+\subsection{Literals}
+
+The type of string literals and Boolean literals is always the same, it can be
+fixed  to specific type. The contrast specifie that type after the arrow.
+however, for number literals it is more complicated. it depends on the value
+whether it is an integer or float type. This cannot be expressed declaratively
+in the DSL. So we declare the type for NumberLiteral to be calculated with Java
+code.
+
+\begin{code}
+section "Literals"
+      typeof StringLiteral -> StringType
+     typeof BooleanLiteral -> BooleanType
+      typeof NumberLiteral -> javacode
+\end{code}
+ 
+ This specification leads to the generation of an abstract method into the
+ generated type system class, which we have to override in the manually written
+ subclass. The respective method looks as follows:
+ 
+\begin{code}
+public EObject type( NumberLiteral s, TypeCalculationTrace trace ) {
+    if ( s.getValue().equals(s.getValue().intValue())) {
+        return create(cl.getIntType());
+    }
+    return create(cl.getFloatType());
+} 
+\end{code} 
+
+
+
+\subsection{Expressions}
+
+Before we define the type system rules for on the various expressions,  we first
+define two characteristics. A characteristic is essentially a set of types.
+instead of listing the set of types over and over again, you can use the
+characteristic the shortcut.
+
+\begin{code}
+characteristic COMPARABLE {
+    IntType, FloatType, BooleanType, StringType
+}  
+  
+    characteristic NUMERIC {
+    IntType, FloatType
+} 
+\end{code}
+
+Next up is the definition of the type fully abstract expression class. of course
+this thing has no type, since is abstract, and all it subclasses have different
+types. However, it makes sense to declare this fact explicitly, because the type
+system DSL editor can then check that all subclasses of expression are actually
+covered by type system rules.
+
+\begin{code}
+    typeof Expression -> abstract
+\end{code}
+
+We can now take a look at some of the more interesting cases. For comparisons,
+the left and right argument  have to be comparable (see above). in addition, the
+left and right argument has to be compatible. so, while Boolean and string are
+both comparable,  they cannot be compaired to each other. This is why we need
+this explicit compatibility check:
+
+\begin{code}
+ typeof Comparison -> BooleanType {
+     ensureType left :<=: char(COMPARABLE)
+     ensureType right :<=: char(COMPARABLE)
+     ensureCompatibility left :<=>: right
+ } 
+\end{code}
+
+
+Note the tool strange symbols. The first one is called ordered compatibility. It
+means that the type on the left must be the same or a subtype of the type
+specified on the right. The second arrow represents unordered compatibility.
+this means that the left must be the same or a subtype of the right, or vice
+versa. 
+
+the remainder of the binary expressions is essentially more of the same. the
+only thing worth mentioning is the common keyword. Using common in the type for
+a meta class means that the type is going to be the common supertype of the two
+arguments. This only works, if the two types are either the same or top of a
+subtype relationship (such as float and int).
+
+
+\begin{code}
+typeof Equality -> BooleanType {
+    ensureType left :<=: char(COMPARABLE), BooleanType
+    ensureType right :<=: char(COMPARABLE), BooleanType
+    ensureCompatibility left :<=>: right
+}
+
+typeof AndOrExpression -> BooleanType {
+    ensureType left :<=: BooleanType
+    ensureType right :<=: BooleanType 
+}   
+
+typeof Plus -> common left right {
+    ensureType left :<=: StringType, char(NUMERIC)
+    ensureType right :<=: StringType, char(NUMERIC)
+    ensureCompatibility left :<=>: right
+} 
+
+typeof Minus -> common left right {
+    ensureType left :<=: char(NUMERIC)
+    ensureType right :<=: char(NUMERIC)
+    ensureCompatibility left :<=>: right
+} 
+
+typeof MultiOrDiv -> common left right { 
+    ensureType left :<=: char(NUMERIC)
+    ensureType right :<=: char(NUMERIC)
+} 
+
+typeof BooleanNegation -> BooleanType {
+    ensureType expression :<=: BooleanType
+}
+\end{code}
+
+
+New things here are some more special cases: the type of the attribute reference
+is the type of the referenced attribute. In other words, we have to follow the 
+attr reference to find out the type:
+
+\begin{code}
+     typeof AttributeRef -> feature attr
+\end{code}
+
+The type of the widgets (yes,  they are not expressions, but as we will see
+below, it is useful if they have a type) should also be relatively obvious. This
+is also where  the type system rules for our  test case are  finally
+implemented.
+
+\begin{code}
+    // 1) the expression after "validate" must be boolean
+    typeof Widget -> abstract
+    
+    // 2) text widgets may only refer to non-boolean attributes 
+    typeof TextWidget -> feature attr {
+        ensureType length :<=: IntType
+        ensureType attr :<=: StringType, IntType, FloatType
+        ensureType validate :<=: BooleanType
+    }  
+    
+    // 3) checkbox widgets may only refer to boolean attributes
+    typeof CheckBoxWidget -> feature attr {
+        ensureType attr :<=: BooleanType
+        ensureType validate :<=: BooleanType
+    }
+\end{code}
+
+
+We can now calculate the type of the field content expression, which has to have
+the same type as  the attribute to which the owning widget points. ssince we
+have defined the type of the widget to be the type of the reference attribute,
+we can now use the following type specification for FieldContent:
+
+\begin{code}
+    typeof FieldContent -> ancestor Widget
+\end{code}
+
+The type of NewExpr is the type of the new'ed entity:
+
+\begin{code}
+    typeof NewExpr -> feature entity
+\end{code} 
+
+Finally, the type of an Entity also has to be calculated with Java code, because
+it has to be an entity type that references the respective entity:
+
+\begin{code}
+    protected boolean compareTypes( EntityType t1, EntityType t2, CheckKind k, TypeCalculationTrace trace ) {
+        if ( k == CheckKind.same ) return t1.getRef() == t2.getRef();
+        if ( k == CheckKind.ordered ) return t1.getRef().getExtends() == t2.getRef();
+        return false;
+    }
+\end{code}
+
+
+There is one more interesting open issue. We have to implement the subtyping
+relationship between entities. This is not so simple, because we will compare 
+EntityTypes, but it depends on whether there respective referenced entities are
+subtypes of each other. So instead of declaring a subtype relationship
+in the DSL, we can implement a type comparison function in Java:
+
+\begin{code}
+    protected boolean compareTypes( EntityType t1, EntityType t2, CheckKind k, TypeCalculationTrace trace ) {
+        if ( k == CheckKind.same ) return t1.getRef() == t2.getRef();
+        if ( k == CheckKind.ordered ) return extends( t1.getRef(), t2.getRef() );
+        return false; 
+    }
+\end{code}
+
+
+
+
+
+
+
+
+The type of the FieldContent expression also has to be calculated with Java
+code, because it involves relatively complicated model navigation that cannot be
+expressed declaratively.
+
+
+
+
+
+
+
+
+\subsection{Learn more}
+
+XTS docs
+  

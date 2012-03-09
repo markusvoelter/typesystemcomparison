@@ -38,12 +38,7 @@ public class GuiDlsTypesystem extends GuiDlsTypesystemGenerated {
 		return create(cl.getFloatType());
 	} 
 
-	@Override
-	protected EObject type(FieldContent element, TypeCalculationTrace trace) {
-		Widget w = (Widget) Utils.ancestor(element, Widget.class);
-		return typeof(w.getAttr(), trace);
-	}
-		
+	
 	@Override
 	protected EObject type(Entity element, TypeCalculationTrace trace) {
 		EntityType et = (EntityType)create(cl.getEntityType());
@@ -56,13 +51,7 @@ public class GuiDlsTypesystem extends GuiDlsTypesystemGenerated {
 		if ( k == CheckKind.ordered ) return t1.getRef().getExtends() == t2.getRef();
 		return false;
 	}
-	
-	@Override
-	protected EObject type(NewExpr element, TypeCalculationTrace trace) {
-		EntityType et = (EntityType)create(cl.getEntityType());
-		et.setRef(element.getEntity());
-		return et;
-	}
+
 	
 	
 }
