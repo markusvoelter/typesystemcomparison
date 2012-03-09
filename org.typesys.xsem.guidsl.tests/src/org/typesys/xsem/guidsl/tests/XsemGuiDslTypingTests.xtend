@@ -174,7 +174,12 @@ class XsemGuiDslTypingTests extends XsemGuiDslAbstractTests {
 	
 	@Test
 	def void testNewEntityType() {
-		assertAttributeType(inputs.testEntityForExpressions, "myEntity", "MyEntity")
+		assertAttributeType(inputs.testEntityForExpressions, "myEntity", "MyDerivedEntity")
+	}
+
+	@Test
+	def void testTypedEntityType() {
+		assertAttributeType(inputs.testEntityForExpressions, "myTypedEntity", "MyEntity")
 	}
 	
 	@Test

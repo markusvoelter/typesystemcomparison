@@ -65,7 +65,12 @@ entity MyEntity {
 	myDecimalDerived = 10.54;
 	myBooleanDerived = true;
 	
-	myEntity = new MyEntity;
+	myEntity = new MyDerivedEntity;
+	myTypedEntity : MyEntity = new MyDerivedEntity;
+}
+
+entity MyDerivedEntity extends MyEntity {
+	
 }
 '''
 
