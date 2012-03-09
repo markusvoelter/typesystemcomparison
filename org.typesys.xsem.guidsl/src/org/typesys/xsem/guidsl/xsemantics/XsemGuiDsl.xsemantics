@@ -171,6 +171,22 @@ from {
 		mostGeneral = second
 }
 
+checkrule AcyclicEntityHierarchy for
+	Entity entity
+from {
+	if (entity.superType != null) {
+		!getAll(entity, 
+			XsemGuiDslPackage::eINSTANCE.entity_SuperType,
+			XsemGuiDslPackage::eINSTANCE.entity_SuperType,
+			typeof(Entity)
+		).contains(entity)
+		or
+		fail
+			error "Cyclic hierarchy for " + entity.name
+			source entity
+	}
+}
+
 checkrule AttributeTypeChecks for
 	Attribute attribute
 from {

@@ -148,6 +148,43 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		}
 	}
 
+	public Result<Boolean> acyclicEntityHierarchy(final Entity entity) {
+		try {
+			return acyclicEntityHierarchyInternal(null, entity);
+		} catch (Exception e) {
+			return resultForFailure(e);
+		}
+	}
+	
+	public Result<Boolean> acyclicEntityHierarchyInternal(final RuleApplicationTrace _trace_, final Entity entity) 
+			throws RuleFailedException {
+		
+		Entity _superType = entity.getSuperType();
+		boolean _operator_notEquals = ObjectExtensions.operator_notEquals(_superType, null);
+		if (_operator_notEquals) {
+		  /* !getAll(entity, XsemGuiDslPackage::eINSTANCE.entity_SuperType, XsemGuiDslPackage::eINSTANCE.entity_SuperType, typeof(Entity) ).contains(entity) or fail error "Cyclic hierarchy for " + entity.name source entity */
+		  try {
+		    EReference _entity_SuperType = XsemGuiDslPackage.eINSTANCE.getEntity_SuperType();
+		    EReference _entity_SuperType_1 = XsemGuiDslPackage.eINSTANCE.getEntity_SuperType();
+		    List<Entity> _all = this.<Entity>getAll(entity, _entity_SuperType, _entity_SuperType_1, org.typesys.xsem.guidsl.xsemGuiDsl.Entity.class);
+		    boolean _contains = _all.contains(entity);
+		    boolean _operator_not = BooleanExtensions.operator_not(_contains);
+		    /* !getAll(entity, XsemGuiDslPackage::eINSTANCE.entity_SuperType, XsemGuiDslPackage::eINSTANCE.entity_SuperType, typeof(Entity) ).contains(entity) */
+		    if (!_operator_not) {
+		      sneakyThrowRuleFailedException("!getAll(entity, XsemGuiDslPackage::eINSTANCE.entity_SuperType, XsemGuiDslPackage::eINSTANCE.entity_SuperType, typeof(Entity) ).contains(entity)");
+		    }
+		  } catch (Exception e) {
+		    /* fail error "Cyclic hierarchy for " + entity.name source entity */
+		    String _name = entity.getName();
+		    String _operator_plus = StringExtensions.operator_plus("Cyclic hierarchy for ", _name);
+		    String error = _operator_plus;
+		    EObject source = entity;
+		    throwForExplicitFail(error, new ErrorInformation(source, null));
+		  }
+		}
+		return new Result<Boolean>(true);
+	}
+	
 	public Result<Boolean> attributeTypeChecks(final Attribute attribute) {
 		try {
 			return attributeTypeChecksInternal(null, attribute);

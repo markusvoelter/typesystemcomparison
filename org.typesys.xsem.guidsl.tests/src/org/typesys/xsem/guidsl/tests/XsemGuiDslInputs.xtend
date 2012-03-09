@@ -85,4 +85,11 @@ form MyForm edits MyEntity {
 	checkbox -> myInt validate false; // cannot refer to non boolean attr
 }
 '''
+
+	def testCyclicHierarchy()
+'''
+entity A extends C {}
+entity B extends A {}
+entity C extends B {}
+'''
 }

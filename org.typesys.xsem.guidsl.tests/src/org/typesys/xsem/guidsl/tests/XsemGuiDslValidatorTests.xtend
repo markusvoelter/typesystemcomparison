@@ -57,6 +57,16 @@ Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.EqualsType "faile
 		)
 	}
 	
+	@Test
+	def void testCyclicHierarchy() {
+		assertAll(inputs.testCyclicHierarchy,
+'''
+Diagnostic ERROR "Cyclic hierarchy for A" at Model.entities[0]->Entity'A'
+Diagnostic ERROR "Cyclic hierarchy for B" at Model.entities[1]->Entity'B'
+Diagnostic ERROR "Cyclic hierarchy for C" at Model.entities[2]->Entity'C' '''
+		)
+	}
+	
 	def void assertOk(CharSequence program) {
 		assertOk(tester.validate(program.parse))
 	}
