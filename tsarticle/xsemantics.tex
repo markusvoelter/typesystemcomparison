@@ -111,7 +111,14 @@ Xbase expression, or a rule invocation.  If you think of a rule declaration as a
 function declaration, then a rule invocation corresponds to function invocation,
 thus you must specify the environment to pass to the rule, and the arguments,
 both input and output arguments.
-Moreover, if a rule does not require any premise, we can use a special form of
+The premises of an Xsemantics rule are considered in \emph{logical and} relation
+and are verified in the same order they are specified in the block.
+If we need premises (block of premises) in \emph{logical or} relation, we can
+use the operator \verb|or|, which separates blocks of premises; if (and only if) one
+of the premises of the first block fails, the premises of the second block are
+inspected, etc.
+
+If a rule does not require any premise, we can use a special form of
 rules, called indeed \textit{axiom}s, which only have a conclusion, without
 premises.
 In the premises you can assign values to the output parameters; and when you
@@ -205,9 +212,9 @@ from {
 
 Thus, the rule in Listing~\ref{lst:xsem-attribute} relies on rules of the
 judgment \mytt{isAssignable} (see Listing~\ref{lst:xsem-judgments}); the rules
-of this judgment do not have an output parameter, they accept two types as
-parameters; the intention of these rules is that they succeed if the right
-parameter is assignable to the left parameter.
+of this judgment, which basically implements subtyping, do not have an output
+parameter, they accept two types as parameters; the intention of these rules is
+that they succeed if the right parameter is assignable to the left parameter.
 
 \begin{lstlisting}[language=xsemantics,float,label=lst:xsem-assignable,caption=Some
 rules for the \mytt{isAssignable} judgment.] 
@@ -234,6 +241,126 @@ that types of the same kind are assignable to each other (in this context
 booleans and integers are assignable to strings (for instance, like in Java, by
 an implicit conversion through \mytt{toString} method).  Finally, an integer can
 be assigned to a float.
+
+\begin{lstlisting}[language=xsemantics,float,label=lst:xsem-entitysubtyping,caption=Rule
+for \mytt{isAssignable} for entity types.] 
+rule EntityTypeAssignable
+	G |- EntityType left <~ EntityType right
+from {
+	left.ref == right.ref
+	or
+	getAll(right.ref, 
+		XsemGuiDslPackage::eINSTANCE.entity_SuperType,
+		XsemGuiDslPackage::eINSTANCE.entity_SuperType,
+		typeof(Entity)
+	).contains(left.ref)
+}
+\end{lstlisting}
+
+In Listing~\ref{lst:xsem-entitysubtyping} we show a more interesting case for
+subtyping: the one between two \mytt{EntityType}.  The idea is that \mytt{right}
+can be assigned to \mytt{left} either if they are the same type (entity
+subtyping is reflexive) or if \mytt{left} is a ``super entity'' (possibly
+indirectly) for \mytt{right} (entity subtyping is transitive).  We could check
+the latter condition by following recursively the feature \mytt{superType} of
+the right entity; however, in an uncorrect program the entity hierarchy might be
+acyclic, and this recursive inspection might lead to an infinite loop.  In a
+manual Java implementation we thus would have to keep track of the visited
+entities while inspecting the hierarchy (see
+Listing~\ref{lst:plain-type-conformance}).  Indeed, the AST for Xtext languages,
+due to references might be graphs.  Since when developing Xtext languages we
+might face the issue of inspecting a graph avoiding possible loops, e.g., to
+compute the ``closure'' of a graph, Xsemantics provides a predefined function
+which allows to collect nodes in a graph according to EMF features avoiding
+loops.  Such function is
+
+\begin{small}
+\begin{verbatim}
+getAll(eObject, feature to collect, feature to follow, expected type)
+\end{verbatim}
+\end{small}
+
+\noindent an invocation of \mytt{getAll} will return a list of ``expected
+type'', built by collecting all the elements from ``feature to collect'' of the
+specified ``eObject'', and recursively collecting such elements by following the
+feature ``feature to collect'', but avoiding possible loops in the EMF graph
+representing the AST.
+Thus, in the use of Listing~\ref{lst:xsem-entitysubtyping}, it will return all
+the superclasses of \mytt{right}.  Similarly, we can get all the attributes of
+an entity, including the inherited ones, by simply calling
+
+\begin{lstlisting}[language=xsemantics] 
+	getAll(entity, 
+		XsemGuiDslPackage::eINSTANCE.entity_Attribute,
+		XsemGuiDslPackage::eINSTANCE.entity_SuperType,
+		typeof(Attribute))
+\end{lstlisting}
+
+\begin{lstlisting}[language=xsemantics,float,label=lst:xsem-mostgeneral,caption=Rule
+for \mytt{mostGeneral}.] 
+rule MostGeneral
+	G |- Type first ~~ Type second |> Type mostGeneral
+from {
+	{
+		G |- first <~ second
+		mostGeneral = first
+	} or
+		mostGeneral = second
+}
+\end{lstlisting}
+
+The judgment \mytt{mostGeneral} (Listing~\ref{lst:xsem-judgments}) takes two
+types as input parameters and returns as output the most general between the
+two; this judgment has one simple rule, shown in
+Listing~\ref{lst:xsem-mostgeneral}.
+
+\begin{lstlisting}[language=xsemantics,float,label=lst:xsem-binaryexp,caption=Some
+rules for binary expressions.] 
+rule MinusType
+	G |- Minus minus : NumberType type
+from {
+	// require number types
+	G |- minus.left : var NumberType leftType
+	G |- minus.right : var NumberType rightType
+	// get the most general
+	G |- leftType ~~ rightType |> type
+}
+
+rule PlusType
+	G |- Plus plus : Type type
+from {
+	// deal with any type
+	G |- plus.left : var Type leftType
+	G |- plus.right : var Type rightType
+	// get the most general (which can also be string)
+	G |- leftType ~~ rightType |> type
+}
+\end{lstlisting}
+
+The judgment \mytt{mostGeneral} is useful for typing some binary expressions,
+for instance, \mytt{Minus} and \mytt{Plus}, shown in
+Listing~\ref{lst:xsem-binaryexp}.  The typing rule for \mytt{Minus} requires
+that the two subexpressions have a numeric type (recall that since we specify a
+\mytt{NumberType} as the output argument in rule invocation, such invocation
+will succeed only if the result is assignable to \mytt{NumberType}); the
+resulting type will be the most general type, thus, for instance, if one of the
+two subexpressions have type \mytt{FloatType} and the other one \mytt{IntType},
+the resulting type will be \mytt{FloatType}.  Recall that we use \mytt{+} not
+only as the arithmetic operator, but also for string concatenation; in
+particular, if one of the subexpression is a string, the whole expression is
+considered as string concatenation.  Thus, the rule for \mytt{Plus} computes the
+types of the two subexpressions, and then gets the most general; if one of them
+is a string type, the whole expression will have string type (see also subtyping
+rules in Listing~\ref{lst:xsem-assignable}).
+
+\subsection{Rules for the Validator}
+
+In an Xsemantics we can specify some special rules which do not belong to any
+judgment, \mytt{checkrule}, which are used by Xsemantics to generate a Java
+validator for the Xtext language.  A \mytt{checkrule} has a name, a single
+parameter (which is the EObject which will be checked by the validator) and the
+premises (but no rule environment).  The syntax of the premises of a
+\mytt{checkrule} is the same of standard rules.
 
 \subsection{Usage in Xtext}
 
