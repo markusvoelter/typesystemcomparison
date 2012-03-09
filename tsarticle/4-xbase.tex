@@ -1,4 +1,6 @@
 \section{Xbase}
+\label{sec:xbase}
+
 To to leverage type checking and scoping of Xbase in this scenario, the \emph{Expression} rule in the grammar is replaced with the Xbase \emph{XExpression} and \emph{JvmTypes} are inferred for \emph{Entities} and \emph{Forms}.
 
 The validator in the Xbase scenario is shown in listing \ref{lst:xbase-jvm-inferrer}. The validation methods (e.g. the one for a \emph{TextWidget}) look similar to the plain Xtext scenario, with the difference that now \emph{JvmTypes} are compared, which are supplied by a type provider which delegates to the built-in Xbase type provider.
