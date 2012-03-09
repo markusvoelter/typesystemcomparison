@@ -19,12 +19,15 @@ judgments {
 rule AttributeType
 	G ||- Attribute attr : Type attrType
 from {
-	{
-		attr.type != null
+	if (attr.type != null) {
+		if (attr.expr != null) {
+			G |- attr.expr : var Type expType
+			G |- attr.type <~ expType
+		}
 		attrType = attr.type
-	}
-	or
+	} else {
 		G |- attr.expr : attrType
+	}
 }
 
 axiom BooleanLiteralType

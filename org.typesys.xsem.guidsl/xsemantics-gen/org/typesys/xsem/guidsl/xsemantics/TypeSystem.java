@@ -417,26 +417,35 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			throws RuleFailedException {
 		Type attrType = null;
 		
-		/* { attr.type != null attrType = attr.type } or G |- attr.expr : attrType */
-		try {
-		  Type _xblockexpression = null;
+		Type _type = attr.getType();
+		boolean _operator_notEquals = ObjectExtensions.operator_notEquals(_type, null);
+		if (_operator_notEquals) {
 		  {
-		    Type _type = attr.getType();
-		    boolean _operator_notEquals = ObjectExtensions.operator_notEquals(_type, null);
-		    /* attr.type != null */
-		    if (!_operator_notEquals) {
-		      sneakyThrowRuleFailedException("attr.type != null");
+		    Expression _expr = attr.getExpr();
+		    boolean _operator_notEquals_1 = ObjectExtensions.operator_notEquals(_expr, null);
+		    if (_operator_notEquals_1) {
+		      {
+		        /* G |- attr.expr : var Type expType */
+		        Expression _expr_1 = attr.getExpr();
+		        Type expType = null;
+		        Result<Type> result = exprtypeInternal(G, _trace_, _expr_1);
+		        checkAssignableTo(result.getFirst(), Type.class);
+		        expType = (Type) result.getFirst();
+		        
+		        /* G |- attr.type <~ expType */
+		        Type _type_1 = attr.getType();
+		        isAssignableInternal(G, _trace_, _type_1, expType);
+		      }
 		    }
-		    Type _type_1 = attr.getType();
-		    Type _attrType = attrType = _type_1;
-		    _xblockexpression = (_attrType);
+		    Type _type_2 = attr.getType();
+		    attrType = _type_2;
 		  }
-		} catch (Exception e) {
+		} else {
 		  /* G |- attr.expr : attrType */
-		  Expression _expr = attr.getExpr();
-		  Result<Type> result = exprtypeInternal(G, _trace_, _expr);
-		  checkAssignableTo(result.getFirst(), Type.class);
-		  attrType = (Type) result.getFirst();
+		  Expression _expr_2 = attr.getExpr();
+		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _expr_2);
+		  checkAssignableTo(result_1.getFirst(), Type.class);
+		  attrType = (Type) result_1.getFirst();
 		  
 		}
 		return new Result<Type>(attrType);

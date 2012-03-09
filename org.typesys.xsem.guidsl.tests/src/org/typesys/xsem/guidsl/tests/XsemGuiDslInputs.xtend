@@ -92,4 +92,14 @@ entity A extends C {}
 entity B extends A {}
 entity C extends B {}
 '''
+	def testWrongAttributeInitialization()
+'''
+entity Base {}
+entity Derived extends Base {}
+
+entity MyEntity {
+	ok : Base = new Derived;
+	wrong : Derived = new Base;
+}
+'''
 }
