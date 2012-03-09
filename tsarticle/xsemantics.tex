@@ -56,15 +56,14 @@ output parameters, in that case you use the keyword
 type of the output parameter.
 \end{itemize}
 
-\begin{lstlisting}[language=xsemantics,float,label=lst:xsemantics-judgments,caption=Judgment
+\begin{lstlisting}[language=xsemantics,float,label=lst:xsem-judgments,caption=Judgment
 definitions in Xsemantics]
 system org.typesys.xsem.guidsl.xsemantics.TypeSystem
 
 import org.typesys.xsem.guidsl.xsemGuiDsl.*
 
 judgments {
-	attrtype ||- Attribute attribute : output Type
-	exprtype |- Expression expression : output Type
+	type ||- Typable typable : output Type
 	// whether {@code right} is assignable to {@code left}
 	isAssignable |- Type left <~ Type right
 	// computes the most general type between {@code first} and {@code second}
@@ -74,7 +73,7 @@ judgments {
 
 \noindent
 The judgment definitions for our case study are shown in
-Listing~\ref{lst:xsemantics-judgments}.
+Listing~\ref{lst:xsem-judgments}.
 
 Once the judgments of the system are declared, we can start declaring the
 rules.  Each rule consists of
@@ -102,8 +101,8 @@ a \textit{relation symbol} that can be chosen from some predefined symbols;
 \end{itemize}
 
 The things that make a rule belong to a specific judgment are the judgment
-symbol, the relation symbols (which separate the parameters); moreover the types
-of the parameters of a rule must be (Java) subtypes of the corresponding types
+symbol and the relation symbols (which separate the parameters); moreover the
+types of the parameters of a rule must be (Java) subtypes of the corresponding types
 of the judgment (or exactly the same Java types).  Two rules belonging to the
 same judgment must differ for at least one input parameter's type.
 
@@ -115,30 +114,126 @@ both input and output arguments.
 Moreover, if a rule does not require any premise, we can use a special form of
 rules, called indeed \textit{axiom}s, which only have a conclusion, without
 premises.
+In the premises you can assign values to the output parameters; and when you
+invoke another rule, upon return, the output arguments will have the values
+assigned in the invoked rule.
 
-At runtime, the system will select the most appropriate rule according
-to the runtime types of the passed argument (similar to
-\textit{polymorphic dispatch} mechanism).
+\begin{lstlisting}[language=xsemantics,float,label=lst:xsem-firstrules,caption=Some
+examples of rules and axioms in Xsemantics.]
+axiom BooleanLiteralType
+	G |- BooleanLiteral lit : XsemGuiDslFactory::eINSTANCE.createBooleanType
 
-In the premises you can assign values to the output parameters; and
-when you invoke another rule, upon return, the output arguments will have
-the values assigned in the invoked rule.
-
-If one of the premises fails, then the whole rule will fail, and in turn all the
-stack of rule invocation will fail.  If the premise is a boolean expression, it
-will fail if the expression evaluates to false.  If the premise is a rule
-invocation, it will fail if the invoked rule fails.
-
-\begin{lstlisting}[language=xsemantics]
-axiom SimpleAttributeType
-	G ||- SimpleAttribute attr : attr.type
-
-rule DerivedAttributeType
-	G ||- DerivedAttribute attr : Type attrType
+rule AttributeRefType
+	G |- AttributeRef attrRef : Type type
 from {
-	G |- attr.expr : attrType
+	G |- attrRef.attr : type
+}
+
+rule LengthOfType
+	G |- LenghtOf len : XsemGuiDslFactory::eINSTANCE.createIntType
+from {
+	G |- len.expr : var StringType stringType
 }
 \end{lstlisting}
+
+In Listing~\ref{lst:xsem-firstrules} we present some rules for the judgment
+\mytt{type} (see Listing~\ref{lst:xsem-judgments}, recall that in the rules of
+these judgments the second parameter is an output parameter).
+For typing a literal (in the example a boolean literal) we write an axiom (since
+there is no premise) and the result is a \mytt{BooleanType} (created through the
+EMF factory for our language).  The rule for typing an \mytt{AttributeRef} can
+be read as follows: the type of an \mytt{AttributeRef} is the type resulting
+from typing the corresponding referred attribute (the feature \mytt{attr}, refer
+to Listing~\ref{lst:grammar-plain}). The type of a \mytt{LenghtOf} expression is
+an integer type, provided that the expression argument of \mytt{LenghtOf} has
+string type.
+
+In an hypothetic formal type system, we would probably write these typing rules
+
+\begin{tabular}{c@{\hspace{.5cm}}c@{\hspace{.5cm}}c}
+\inferrule
+{}
+{\g \f \mykeyb{true} : \mykeyb{boolean} }
+&
+\inferrule
+{\g \f \mytt{attr} : \T}
+{\g \f \mykeyb{ref} \ \mytt{attr} : \T }
+&
+\inferrule
+{\g \f \mytt{exp} : \mykeyb{string}}
+{\g \f \mykeyb{lengthOf}(\mytt{exp}) : \mykeyb{int} }
+\end{tabular}
+
+\noindent
+Note how, the rules in Xsemantics remind the deduction rules typically used in
+formal type systems (see Listing~\ref{lst:xsem-firstrules}).
+
+At runtime, upon rule invocation, the generated Java system will select the most
+appropriate rule according to the runtime types of the passed argument (using
+the \textit{polymorphic dispatch} mechanism provided by Xtext).
+
+If one of the premises fails, then the whole rule will fail, and in turn all the
+stack of rule invocation will fail.  In particular, if the premise is a boolean
+expression, it will fail if the expression evaluates to false.  If the premise
+is a rule invocation, it will fail if the invoked rule fails.
+
+As another example, we show in Listing~\ref{lst:xsem-attribute} the rule for
+\mytt{Attribute}.  Recall (refer to Listing~\ref{lst:grammar-plain}) that an
+attribute can have an explicit type and an initialization expression. The rule
+says that in case the type is not explicit the resulting type is the type of the
+initialization expression; otherwise, the resulting type is the explicit type of
+the attribute; however, in the latter case, if the initialization expression is
+specified, then we must make sure that the type of the expression is assignable
+to the declared type.
+
+\begin{lstlisting}[language=xsemantics,float,label=lst:xsem-attribute,caption=Type
+rule for \mytt{Attribute}.] 
+rule AttributeType 
+	G |- Attribute attr : Type attrType 
+from {
+	if (attr.type != null) {
+		if (attr.expr != null) {
+			G |- attr.expr : var Type expType
+			G |- attr.type <~ expType
+		}
+		attrType = attr.type
+	} else {
+		G |- attr.expr : attrType
+	}
+}
+\end{lstlisting}
+
+Thus, the rule in Listing~\ref{lst:xsem-attribute} relies on rules of the
+judgment \mytt{isAssignable} (see Listing~\ref{lst:xsem-judgments}); the rules
+of this judgment do not have an output parameter, they accept two types as
+parameters; the intention of these rules is that they succeed if the right
+parameter is assignable to the left parameter.
+
+\begin{lstlisting}[language=xsemantics,float,label=lst:xsem-assignable,caption=Some
+rules for the \mytt{isAssignable} judgment.] 
+rule IsAssignableBase
+	G |- Type left <~ Type right
+from {
+	left.eClass == right.eClass
+}
+
+axiom BooleanAssignableToString
+	G |- StringType left <~ BooleanType right
+
+axiom IntAssignableToString
+	G |- StringType left <~ NumberType right
+
+axiom IntAssignableToFloat
+	G |- FloatType left <~ IntType right
+\end{lstlisting}
+
+In Listing~\ref{lst:xsem-assignable} we present some rules for the
+\mytt{isAssignable} judgment.  The first rule is the most general case, and says
+that types of the same kind are assignable to each other (in this context
+``kind'' corresponds to EClass); moreover, we have some axioms saying that
+booleans and integers are assignable to strings (for instance, like in Java, by
+an implicit conversion through \mytt{toString} method).  Finally, an integer can
+be assigned to a float.
 
 \subsection{Usage in Xtext}
 
