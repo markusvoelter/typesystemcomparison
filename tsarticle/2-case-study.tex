@@ -88,16 +88,16 @@ Attribute:
 The Xtext grammar part used by all variants is shown in listing
 \ref{lst:grammar-plain}. The type and expressions definition part of the grammar
 in listing \ref{lst:grammar-plain-types-and-ex} is the same for the the plain
-Xtext grammar and the XSemantics and Xtext/TS grammars. The rule order reflects
-the precedence hierarchy of the operators, from lowest
-(\emph{BooleanExpression}) to highest (\emph{Atomic}). The rules use
-\emph{assigned actions} to produce an appropriate abstract syntax tree (cf.
-Xtext documentation \cite{xtextdoc}), which is used when checking types.
-In the Xbase scenario, the rule \emph{Expression} is replaced with the Xbase
-\emph{XExpression} rule, which maps to Java types and expressions.
-% float,
+Xtext grammar and the XSemantics and Xtext/TS grammars. 
+The rule \mytt{Typable} is not called by any other rule of the grammar: it is
+only useful to create a common superclass for \mytt{Attribute} and
+\mytt{Expression} which are the elements we want to type.
+
 \begin{lstlisting}[language=xtext,label=lst:grammar-plain-types-and-ex,caption=Types
-and Expressions.] Type: PrimitiveType | EntityType;
+and Expressions.] 
+Typable: Attribute | Expression;
+
+Type: PrimitiveType | EntityType;
 
 EntityType: ref=[Entity];
 
@@ -153,6 +153,17 @@ Number returns ecore::EBigDecimal: INT ('.' INT)?;
 
 %\lstinputlisting[label=lst:grammar-plain-types-and-ex,caption=Grammar with
 % plain Xtext,linerange={54-120}]{../org.typesys.guidsl/src/org/typesys/guidsl/GuiDsl.xtext}
+
+
+The rule order reflects
+the precedence hierarchy of the operators, from lowest
+(\emph{BooleanExpression}) to highest (\emph{Atomic}). The rules use
+\emph{assigned actions} to produce an appropriate abstract syntax tree (cf.
+Xtext documentation \cite{xtextdoc}), which is used when checking types.
+In the Xbase scenario, the rule \emph{Expression} is replaced with the Xbase
+\emph{XExpression} rule, which maps to Java types and expressions.
+% float,
+
 
 \subsection{Demonstration Tasks}
 To compare the different type system variants, each of them will show its type
