@@ -133,7 +133,7 @@ class XsemGuiDslConformanceTests extends XsemGuiDslAbstractTests {
 	
 	def void assertAttributeType(CharSequence input, String attrName, 
 			CharSequence expectedType) {
-		val result = typesystem.attrtype(null, trace, input.attribute(attrName))
+		val result = typesystem.type(null, trace, input.attribute(attrName))
 		if (result.failed) {
 			Assert::fail("unexpected failure: " +
 				result.ruleFailedException.failureTraceAsString

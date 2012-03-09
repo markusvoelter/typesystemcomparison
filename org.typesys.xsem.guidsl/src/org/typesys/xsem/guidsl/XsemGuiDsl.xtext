@@ -43,6 +43,10 @@ Attribute:
 	name=ID ( ((":" type=Type)? "=" expr=Expression) | 
                (":" type=Type) )";";
 
+Typable:
+	Attribute | Expression
+;
+
 Type:
 	PrimitiveType | EntityType
 ;

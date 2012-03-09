@@ -40,6 +40,7 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.Plus;
 import org.typesys.xsem.guidsl.xsemGuiDsl.StringLiteral;
 import org.typesys.xsem.guidsl.xsemGuiDsl.StringType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.TextWidget;
+import org.typesys.xsem.guidsl.xsemGuiDsl.Typable;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Type;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Widget;
 import org.typesys.xsem.guidsl.xsemGuiDsl.XsemGuiDslFactory;
@@ -69,9 +70,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	public final static String INTASSIGNABLETOFLOAT = "org.typesys.xsem.guidsl.xsemantics.rules.IntAssignableToFloat";
 	public final static String MOSTGENERAL = "org.typesys.xsem.guidsl.xsemantics.rules.MostGeneral";
 
-	protected PolymorphicDispatcher<Result<Type>> attrtypeDispatcher;
-	
-	protected PolymorphicDispatcher<Result<Type>> exprtypeDispatcher;
+	protected PolymorphicDispatcher<Result<Type>> typeDispatcher;
 	
 	protected PolymorphicDispatcher<Result<Boolean>> isAssignableDispatcher;
 	
@@ -82,39 +81,23 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	}
 
 	public void init() {
-		attrtypeDispatcher = buildPolymorphicDispatcher1(
-			"attrtypeImpl", 3, "||-", ":");
-		exprtypeDispatcher = buildPolymorphicDispatcher1(
-			"exprtypeImpl", 3, "|-", ":");
+		typeDispatcher = buildPolymorphicDispatcher1(
+			"typeImpl", 3, "|-", ":");
 		isAssignableDispatcher = buildPolymorphicDispatcher1(
 			"isAssignableImpl", 4, "|-", "<~");
 		mostGeneralDispatcher = buildPolymorphicDispatcher1(
 			"mostGeneralImpl", 4, "|-", "~~", "|>");
 	}
 
-	public Result<Type> attrtype(final Attribute attribute) {
-		return attrtype(new RuleEnvironment(),
-			null, attribute);
+	public Result<Type> type(final Typable typable) {
+		return type(new RuleEnvironment(),
+			null, typable);
 	}
 	
-	public Result<Type> attrtype(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
-			final Attribute attribute) {
+	public Result<Type> type(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
+			final Typable typable) {
 		try {
-			return attrtypeInternal(_environment_, _trace_, attribute);
-		} catch (Exception e) {
-			return resultForFailure(e);
-		}
-	}
-	
-	public Result<Type> exprtype(final Expression expression) {
-		return exprtype(new RuleEnvironment(),
-			null, expression);
-	}
-	
-	public Result<Type> exprtype(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
-			final Expression expression) {
-		try {
-			return exprtypeInternal(_environment_, _trace_, expression);
+			return typeInternal(_environment_, _trace_, typable);
 		} catch (Exception e) {
 			return resultForFailure(e);
 		}
@@ -196,9 +179,9 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	public Result<Boolean> attributeTypeChecksInternal(final RuleApplicationTrace _trace_, final Attribute attribute) 
 			throws RuleFailedException {
 		
-		/* empty ||- attribute : var Type type */
+		/* empty |- attribute : var Type type */
 		Type type = null;
-		Result<Type> result = attrtypeInternal(emptyEnvironment(), _trace_, attribute);
+		Result<Type> result = typeInternal(emptyEnvironment(), _trace_, attribute);
 		checkAssignableTo(result.getFirst(), Type.class);
 		type = (Type) result.getFirst();
 		return new Result<Boolean>(true);
@@ -230,7 +213,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		    Expression _validate_1 = widget.getValidate();
 		    BooleanType boolType = null;
 		    Attribute _attr = widget.getAttr();
-		    Result<Type> result = exprtypeInternal(environmentEntry("widgetcontent", _attr), _trace_, _validate_1);
+		    Result<Type> result = typeInternal(environmentEntry("widgetcontent", _attr), _trace_, _validate_1);
 		    checkAssignableTo(result.getFirst(), BooleanType.class);
 		    boolType = (BooleanType) result.getFirst();
 		    
@@ -257,11 +240,11 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			throws RuleFailedException {
 		
 		{
-		  /* 'widgetcontent' <- widget.attr ||- widget.attr : var Type attrType */
+		  /* 'widgetcontent' <- widget.attr |- widget.attr : var Type attrType */
 		  Attribute _attr = widget.getAttr();
 		  Type attrType = null;
 		  Attribute _attr_1 = widget.getAttr();
-		  Result<Type> result = attrtypeInternal(environmentEntry("widgetcontent", _attr_1), _trace_, _attr);
+		  Result<Type> result = typeInternal(environmentEntry("widgetcontent", _attr_1), _trace_, _attr);
 		  checkAssignableTo(result.getFirst(), Type.class);
 		  attrType = (Type) result.getFirst();
 		  
@@ -295,12 +278,12 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	public Result<Boolean> validateCheckBoxWidgetAttributeBooleanInternal(final RuleApplicationTrace _trace_, final CheckBoxWidget widget) 
 			throws RuleFailedException {
 		
-		/* empty ||- widget.attr : var BooleanType attrType or fail error "checkbox widget attribute must be boolean" source widget feature XsemGuiDslPackage::eINSTANCE.widget_Attr */
+		/* empty |- widget.attr : var BooleanType attrType or fail error "checkbox widget attribute must be boolean" source widget feature XsemGuiDslPackage::eINSTANCE.widget_Attr */
 		try {
-		  /* empty ||- widget.attr : var BooleanType attrType */
+		  /* empty |- widget.attr : var BooleanType attrType */
 		  Attribute _attr = widget.getAttr();
 		  BooleanType attrType = null;
-		  Result<Type> result = attrtypeInternal(emptyEnvironment(), _trace_, _attr);
+		  Result<Type> result = typeInternal(emptyEnvironment(), _trace_, _attr);
 		  checkAssignableTo(result.getFirst(), BooleanType.class);
 		  attrType = (BooleanType) result.getFirst();
 		  
@@ -315,46 +298,23 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Boolean>(true);
 	}
 
-	protected void attrtypeThrowException(String _issue, Exception _ex, final Attribute attribute) 
+	protected void typeThrowException(String _issue, Exception _ex, final Typable typable) 
 			throws RuleFailedException {
 		
-		String _stringRep = this.stringRep(attribute);
-		String _operator_plus = StringExtensions.operator_plus("cannot type attribute ", _stringRep);
+		String _stringRep = this.stringRep(typable);
+		String _operator_plus = StringExtensions.operator_plus("cannot type ", _stringRep);
 		String error = _operator_plus;
-		EObject source = attribute;
+		EObject source = typable;
 		throwRuleFailedException(error,
 				_issue, _ex,
 				new ErrorInformation(source, null));
 	}
 	
-	protected Result<Type> attrtypeInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
-			final Attribute attribute) {
+	protected Result<Type> typeInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
+			final Typable typable) {
 		try {
-			checkParamsNotNull(attribute);
-			return attrtypeDispatcher.invoke(_environment_, _trace_, attribute);
-		} catch (Exception e) {
-			sneakyThrowRuleFailedException(e);
-			return null;
-		}
-	}
-	
-	protected void exprtypeThrowException(String _issue, Exception _ex, final Expression expression) 
-			throws RuleFailedException {
-		
-		String _stringRep = this.stringRep(expression);
-		String _operator_plus = StringExtensions.operator_plus("cannot type expression ", _stringRep);
-		String error = _operator_plus;
-		EObject source = expression;
-		throwRuleFailedException(error,
-				_issue, _ex,
-				new ErrorInformation(source, null));
-	}
-	
-	protected Result<Type> exprtypeInternal(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
-			final Expression expression) {
-		try {
-			checkParamsNotNull(expression);
-			return exprtypeDispatcher.invoke(_environment_, _trace_, expression);
+			checkParamsNotNull(typable);
+			return typeDispatcher.invoke(_environment_, _trace_, typable);
 		} catch (Exception e) {
 			sneakyThrowRuleFailedException(e);
 			return null;
@@ -396,17 +356,17 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		}
 	}
 	
-	protected Result<Type> attrtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final Attribute attr) 
 			throws RuleFailedException {
 		try {
 			RuleApplicationTrace _subtrace_ = newTrace(_trace_);
 			Result<Type> _result_ = applyRuleAttributeType(G, _subtrace_, attr);
-			addToTrace(_trace_, ruleName("AttributeType") + stringRepForEnv(G) + " ||- " + stringRep(attr) + " : " + stringRep(_result_.getFirst()));
+			addToTrace(_trace_, ruleName("AttributeType") + stringRepForEnv(G) + " |- " + stringRep(attr) + " : " + stringRep(_result_.getFirst()));
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleAttributeType) {
-			attrtypeThrowException(ATTRIBUTETYPE,
+			typeThrowException(ATTRIBUTETYPE,
 				e_applyRuleAttributeType, attr);
 			return null;
 		}
@@ -428,7 +388,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		        /* G |- attr.expr : var Type expType */
 		        Expression _expr_1 = attr.getExpr();
 		        Type expType = null;
-		        Result<Type> result = exprtypeInternal(G, _trace_, _expr_1);
+		        Result<Type> result = typeInternal(G, _trace_, _expr_1);
 		        checkAssignableTo(result.getFirst(), Type.class);
 		        expType = (Type) result.getFirst();
 		        
@@ -443,7 +403,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		} else {
 		  /* G |- attr.expr : attrType */
 		  Expression _expr_2 = attr.getExpr();
-		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _expr_2);
+		  Result<Type> result_1 = typeInternal(G, _trace_, _expr_2);
 		  checkAssignableTo(result_1.getFirst(), Type.class);
 		  attrType = (Type) result_1.getFirst();
 		  
@@ -451,7 +411,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Type>(attrType);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final BooleanLiteral lit) 
 			throws RuleFailedException {
 		try {
@@ -461,7 +421,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleBooleanLiteralType) {
-			exprtypeThrowException(BOOLEANLITERALTYPE,
+			typeThrowException(BOOLEANLITERALTYPE,
 				e_applyRuleBooleanLiteralType, lit);
 			return null;
 		}
@@ -475,7 +435,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Type>(_createBooleanType);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final StringLiteral lit) 
 			throws RuleFailedException {
 		try {
@@ -485,7 +445,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleStringLiteralType) {
-			exprtypeThrowException(STRINGLITERALTYPE,
+			typeThrowException(STRINGLITERALTYPE,
 				e_applyRuleStringLiteralType, lit);
 			return null;
 		}
@@ -499,7 +459,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Type>(_createStringType);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final NumberLiteral lit) 
 			throws RuleFailedException {
 		try {
@@ -509,7 +469,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleNumberLiteralType) {
-			exprtypeThrowException(NUMBERLITERALTYPE,
+			typeThrowException(NUMBERLITERALTYPE,
 				e_applyRuleNumberLiteralType, lit);
 			return null;
 		}
@@ -523,7 +483,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Type>(_createFloatType);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final FieldContent fieldContent) 
 			throws RuleFailedException {
 		try {
@@ -533,7 +493,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleFieldContentType) {
-			exprtypeThrowException(FIELDCONTENTTYPE,
+			typeThrowException(FIELDCONTENTTYPE,
 				e_applyRuleFieldContentType, fieldContent);
 			return null;
 		}
@@ -544,17 +504,17 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			throws RuleFailedException {
 		Type type = null;
 		
-		/* G ||- env(G, 'widgetcontent', Attribute) : type */
+		/* G |- env(G, 'widgetcontent', Attribute) : type */
 		/* env(G, 'widgetcontent', Attribute) */
 		Attribute _environmentaccess = environmentAccess(G, "widgetcontent", Attribute.class);
-		Result<Type> result = attrtypeInternal(G, _trace_, _environmentaccess);
+		Result<Type> result = typeInternal(G, _trace_, _environmentaccess);
 		checkAssignableTo(result.getFirst(), Type.class);
 		type = (Type) result.getFirst();
 		
 		return new Result<Type>(type);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final EntityType newEntity) 
 			throws RuleFailedException {
 		try {
@@ -564,7 +524,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleNewEntityType) {
-			exprtypeThrowException(NEWENTITYTYPE,
+			typeThrowException(NEWENTITYTYPE,
 				e_applyRuleNewEntityType, newEntity);
 			return null;
 		}
@@ -576,7 +536,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Type>(newEntity);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final LenghtOf len) 
 			throws RuleFailedException {
 		try {
@@ -586,7 +546,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleLengthOfType) {
-			exprtypeThrowException(LENGTHOFTYPE,
+			typeThrowException(LENGTHOFTYPE,
 				e_applyRuleLengthOfType, len);
 			return null;
 		}
@@ -599,7 +559,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		/* G |- len.expr : var StringType stringType */
 		Expression _expr = len.getExpr();
 		StringType stringType = null;
-		Result<Type> result = exprtypeInternal(G, _trace_, _expr);
+		Result<Type> result = typeInternal(G, _trace_, _expr);
 		checkAssignableTo(result.getFirst(), StringType.class);
 		stringType = (StringType) result.getFirst();
 		
@@ -607,7 +567,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Type>(_createIntType);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final AttributeRef attrRef) 
 			throws RuleFailedException {
 		try {
@@ -617,7 +577,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleAttributeRefType) {
-			exprtypeThrowException(ATTRIBUTEREFTYPE,
+			typeThrowException(ATTRIBUTEREFTYPE,
 				e_applyRuleAttributeRefType, attrRef);
 			return null;
 		}
@@ -628,16 +588,16 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			throws RuleFailedException {
 		Type type = null;
 		
-		/* G ||- attrRef.attr : type */
+		/* G |- attrRef.attr : type */
 		Attribute _attr = attrRef.getAttr();
-		Result<Type> result = attrtypeInternal(G, _trace_, _attr);
+		Result<Type> result = typeInternal(G, _trace_, _attr);
 		checkAssignableTo(result.getFirst(), Type.class);
 		type = (Type) result.getFirst();
 		
 		return new Result<Type>(type);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final MultiOrDiv multiOrDiv) 
 			throws RuleFailedException {
 		try {
@@ -647,7 +607,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleMultiOrDivType) {
-			exprtypeThrowException(MULTIORDIVTYPE,
+			typeThrowException(MULTIORDIVTYPE,
 				e_applyRuleMultiOrDivType, multiOrDiv);
 			return null;
 		}
@@ -662,14 +622,14 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		  /* G |- multiOrDiv.left : var NumberType leftType */
 		  Expression _left = multiOrDiv.getLeft();
 		  NumberType leftType = null;
-		  Result<Type> result = exprtypeInternal(G, _trace_, _left);
+		  Result<Type> result = typeInternal(G, _trace_, _left);
 		  checkAssignableTo(result.getFirst(), NumberType.class);
 		  leftType = (NumberType) result.getFirst();
 		  
 		  /* G |- multiOrDiv.right : var NumberType rightType */
 		  Expression _right = multiOrDiv.getRight();
 		  NumberType rightType = null;
-		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _right);
+		  Result<Type> result_1 = typeInternal(G, _trace_, _right);
 		  checkAssignableTo(result_1.getFirst(), NumberType.class);
 		  rightType = (NumberType) result_1.getFirst();
 		  
@@ -682,7 +642,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Type>(type);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final Minus minus) 
 			throws RuleFailedException {
 		try {
@@ -692,7 +652,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleMinusType) {
-			exprtypeThrowException(MINUSTYPE,
+			typeThrowException(MINUSTYPE,
 				e_applyRuleMinusType, minus);
 			return null;
 		}
@@ -707,14 +667,14 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		  /* G |- minus.left : var NumberType leftType */
 		  Expression _left = minus.getLeft();
 		  NumberType leftType = null;
-		  Result<Type> result = exprtypeInternal(G, _trace_, _left);
+		  Result<Type> result = typeInternal(G, _trace_, _left);
 		  checkAssignableTo(result.getFirst(), NumberType.class);
 		  leftType = (NumberType) result.getFirst();
 		  
 		  /* G |- minus.right : var NumberType rightType */
 		  Expression _right = minus.getRight();
 		  NumberType rightType = null;
-		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _right);
+		  Result<Type> result_1 = typeInternal(G, _trace_, _right);
 		  checkAssignableTo(result_1.getFirst(), NumberType.class);
 		  rightType = (NumberType) result_1.getFirst();
 		  
@@ -727,7 +687,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Type>(type);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final Plus plus) 
 			throws RuleFailedException {
 		try {
@@ -737,7 +697,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRulePlusType) {
-			exprtypeThrowException(PLUSTYPE,
+			typeThrowException(PLUSTYPE,
 				e_applyRulePlusType, plus);
 			return null;
 		}
@@ -752,14 +712,14 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		  /* G |- plus.left : var Type leftType */
 		  Expression _left = plus.getLeft();
 		  Type leftType = null;
-		  Result<Type> result = exprtypeInternal(G, _trace_, _left);
+		  Result<Type> result = typeInternal(G, _trace_, _left);
 		  checkAssignableTo(result.getFirst(), Type.class);
 		  leftType = (Type) result.getFirst();
 		  
 		  /* G |- plus.right : var Type rightType */
 		  Expression _right = plus.getRight();
 		  Type rightType = null;
-		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _right);
+		  Result<Type> result_1 = typeInternal(G, _trace_, _right);
 		  checkAssignableTo(result_1.getFirst(), Type.class);
 		  rightType = (Type) result_1.getFirst();
 		  
@@ -772,7 +732,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Type>(type);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final Comparison comparison) 
 			throws RuleFailedException {
 		try {
@@ -782,7 +742,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleComparisonType) {
-			exprtypeThrowException(COMPARISONTYPE,
+			typeThrowException(COMPARISONTYPE,
 				e_applyRuleComparisonType, comparison);
 			return null;
 		}
@@ -796,14 +756,14 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		  /* G |- comparison.left : var Type leftType */
 		  Expression _left = comparison.getLeft();
 		  Type leftType = null;
-		  Result<Type> result = exprtypeInternal(G, _trace_, _left);
+		  Result<Type> result = typeInternal(G, _trace_, _left);
 		  checkAssignableTo(result.getFirst(), Type.class);
 		  leftType = (Type) result.getFirst();
 		  
 		  /* G |- comparison.right : var Type rightType */
 		  Expression _right = comparison.getRight();
 		  Type rightType = null;
-		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _right);
+		  Result<Type> result_1 = typeInternal(G, _trace_, _right);
 		  checkAssignableTo(result_1.getFirst(), Type.class);
 		  rightType = (Type) result_1.getFirst();
 		  
@@ -834,7 +794,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Type>(_createBooleanType);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final Equals equals) 
 			throws RuleFailedException {
 		try {
@@ -844,7 +804,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleEqualsType) {
-			exprtypeThrowException(EQUALSTYPE,
+			typeThrowException(EQUALSTYPE,
 				e_applyRuleEqualsType, equals);
 			return null;
 		}
@@ -858,14 +818,14 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		  /* G |- equals.left : var Type leftType */
 		  Expression _left = equals.getLeft();
 		  Type leftType = null;
-		  Result<Type> result = exprtypeInternal(G, _trace_, _left);
+		  Result<Type> result = typeInternal(G, _trace_, _left);
 		  checkAssignableTo(result.getFirst(), Type.class);
 		  leftType = (Type) result.getFirst();
 		  
 		  /* G |- equals.right : var Type rightType */
 		  Expression _right = equals.getRight();
 		  Type rightType = null;
-		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _right);
+		  Result<Type> result_1 = typeInternal(G, _trace_, _right);
 		  checkAssignableTo(result_1.getFirst(), Type.class);
 		  rightType = (Type) result_1.getFirst();
 		  
@@ -895,7 +855,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Type>(_createBooleanType);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final AndOrExpression andOr) 
 			throws RuleFailedException {
 		try {
@@ -905,7 +865,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleAndOrType) {
-			exprtypeThrowException(ANDORTYPE,
+			typeThrowException(ANDORTYPE,
 				e_applyRuleAndOrType, andOr);
 			return null;
 		}
@@ -919,14 +879,14 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		  /* G |- andOr.left : var BooleanType leftType */
 		  Expression _left = andOr.getLeft();
 		  BooleanType leftType = null;
-		  Result<Type> result = exprtypeInternal(G, _trace_, _left);
+		  Result<Type> result = typeInternal(G, _trace_, _left);
 		  checkAssignableTo(result.getFirst(), BooleanType.class);
 		  leftType = (BooleanType) result.getFirst();
 		  
 		  /* G |- andOr.right : var BooleanType rightType */
 		  Expression _right = andOr.getRight();
 		  BooleanType rightType = null;
-		  Result<Type> result_1 = exprtypeInternal(G, _trace_, _right);
+		  Result<Type> result_1 = typeInternal(G, _trace_, _right);
 		  checkAssignableTo(result_1.getFirst(), BooleanType.class);
 		  rightType = (BooleanType) result_1.getFirst();
 		  
@@ -935,7 +895,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Type>(_createBooleanType);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final BooleanNegation neg) 
 			throws RuleFailedException {
 		try {
@@ -945,7 +905,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleBooleanNegationType) {
-			exprtypeThrowException(BOOLEANNEGATIONTYPE,
+			typeThrowException(BOOLEANNEGATIONTYPE,
 				e_applyRuleBooleanNegationType, neg);
 			return null;
 		}
@@ -958,7 +918,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		/* G |- neg.expression : var BooleanType expType */
 		Expression _expression = neg.getExpression();
 		BooleanType expType = null;
-		Result<Type> result = exprtypeInternal(G, _trace_, _expression);
+		Result<Type> result = typeInternal(G, _trace_, _expression);
 		checkAssignableTo(result.getFirst(), BooleanType.class);
 		expType = (BooleanType) result.getFirst();
 		
@@ -966,7 +926,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		return new Result<Type>(_createBooleanType);
 	}
 	
-	protected Result<Type> exprtypeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
+	protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_,
 			final ArithmeticSigned signed) 
 			throws RuleFailedException {
 		try {
@@ -976,7 +936,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			addAsSubtrace(_trace_, _subtrace_);
 			return _result_;
 		} catch (Exception e_applyRuleArithmeticSignedType) {
-			exprtypeThrowException(ARITHMETICSIGNEDTYPE,
+			typeThrowException(ARITHMETICSIGNEDTYPE,
 				e_applyRuleArithmeticSignedType, signed);
 			return null;
 		}
@@ -989,7 +949,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		
 		/* G |- signed.expression : numType */
 		Expression _expression = signed.getExpression();
-		Result<Type> result = exprtypeInternal(G, _trace_, _expression);
+		Result<Type> result = typeInternal(G, _trace_, _expression);
 		checkAssignableTo(result.getFirst(), NumberType.class);
 		numType = (NumberType) result.getFirst();
 		

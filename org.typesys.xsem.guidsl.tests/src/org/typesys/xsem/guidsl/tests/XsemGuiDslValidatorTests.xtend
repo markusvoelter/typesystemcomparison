@@ -51,9 +51,9 @@ Diagnostic ERROR "checkbox widget attribute must be boolean" at Model.forms[1]->
 	def void testCompareMixedWrong() {
 		assertAll(inputs.testEntityForExpressions,
 '''
-Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.ComparisonType "failed: cannot type expression '10' <= 20" at Model.entities[0]->Entity'MyEntity'.attributes[0]->Attribute'CompareMixed'.expr->Comparison
-Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.ComparisonType "failed: cannot type expression true <= false" at Model.entities[0]->Entity'MyEntity'.attributes[1]->Attribute'CompareBool'.expr->Comparison
-Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.EqualsType "failed: cannot type expression '10' == 20" at Model.entities[0]->Entity'MyEntity'.attributes[2]->Attribute'EqualsMixed'.expr->Equals'''
+Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.ComparisonType "failed: cannot type '10' <= 20" at Model.entities[0]->Entity'MyEntity'.attributes[0]->Attribute'CompareMixed'.expr->Comparison
+Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.ComparisonType "failed: cannot type true <= false" at Model.entities[0]->Entity'MyEntity'.attributes[1]->Attribute'CompareBool'.expr->Comparison
+Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.EqualsType "failed: cannot type '10' == 20" at Model.entities[0]->Entity'MyEntity'.attributes[2]->Attribute'EqualsMixed'.expr->Equals'''
 		)
 	}
 	
@@ -71,7 +71,7 @@ Diagnostic ERROR "Cyclic hierarchy for C" at Model.entities[2]->Entity'C' '''
 	def void testWrongAttributeInitialization() {
 		assertAll(inputs.testWrongAttributeInitialization,
 '''
-Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.AttributeType "failed: cannot type attribute wrong : Derived = new Base;" at Model.entities[2]->Entity'MyEntity'.attributes[1]->Attribute'wrong' '''
+Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.AttributeType "failed: cannot type wrong : Derived = new Base;" at Model.entities[2]->Entity'MyEntity'.attributes[1]->Attribute'wrong' '''
 		)
 	}
 	

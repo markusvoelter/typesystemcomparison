@@ -3,12 +3,9 @@ system org.typesys.xsem.guidsl.xsemantics.TypeSystem
 import org.typesys.xsem.guidsl.xsemGuiDsl.*
 
 judgments {
-	attrtype ||- Attribute attribute : output Type
-		error "cannot type attribute " + stringRep(attribute)
-		source attribute
-	exprtype |- Expression expression : output Type
-		error "cannot type expression " + stringRep(expression)
-		source expression
+	type |- Typable typable : output Type
+		error "cannot type " + stringRep(typable)
+		source typable
 	// computes whether {@code right} is assignable to {@code left}
 	isAssignable |- Type left <~ Type right
 		error stringRep(right) + " is not assignable to " + stringRep(left)
@@ -17,7 +14,7 @@ judgments {
 }
 
 rule AttributeType
-	G ||- Attribute attr : Type attrType
+	G |- Attribute attr : Type attrType
 from {
 	if (attr.type != null) {
 		if (attr.expr != null) {
@@ -42,7 +39,7 @@ axiom NumberLiteralType
 rule FieldContentType
 	G |- FieldContent fieldContent : Type type
 from {
-	G ||- env(G, 'widgetcontent', Attribute) : type
+	G |- env(G, 'widgetcontent', Attribute) : type
 }
 
 axiom NewEntityType
@@ -57,7 +54,7 @@ from {
 rule AttributeRefType
 	G |- AttributeRef attrRef : Type type
 from {
-	G ||- attrRef.attr : type
+	G |- attrRef.attr : type
 }
 
 rule MultiOrDivType
@@ -193,7 +190,7 @@ from {
 checkrule AttributeTypeChecks for
 	Attribute attribute
 from {
-	empty ||- attribute : var Type type
+	empty |- attribute : var Type type
 }
 
 checkrule ValidateMustBeBoolean for
@@ -212,7 +209,7 @@ from {
 checkrule ValidateTextWidgetAttributeNotBoolean for
 	TextWidget widget
 from {
-	'widgetcontent' <- widget.attr ||- widget.attr : var Type attrType
+	'widgetcontent' <- widget.attr |- widget.attr : var Type attrType
 	!(attrType instanceof BooleanType)
 	or
 	fail
@@ -224,7 +221,7 @@ from {
 checkrule ValidateCheckBoxWidgetAttributeBoolean for
 	CheckBoxWidget widget
 from {
-	empty ||- widget.attr : var BooleanType attrType
+	empty |- widget.attr : var BooleanType attrType
 	or
 	fail
 		error "checkbox widget attribute must be boolean"

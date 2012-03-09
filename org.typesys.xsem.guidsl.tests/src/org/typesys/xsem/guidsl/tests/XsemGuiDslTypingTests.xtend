@@ -193,7 +193,7 @@ class XsemGuiDslTypingTests extends XsemGuiDslAbstractTests {
 	
 	def void assertAttributeType(CharSequence input, String attrName, 
 			CharSequence expectedType) {
-		val result = typesystem.attrtype(null, trace, input.attribute(attrName))
+		val result = typesystem.type(null, trace, input.attribute(attrName))
 		if (expectedType != null) {
 			if (result.failed) {
 				Assert::fail("unexpected failure: " +
@@ -212,7 +212,7 @@ class XsemGuiDslTypingTests extends XsemGuiDslAbstractTests {
 	
 	def void assertExpressionType(RuleEnvironment env, Expression expression, 
 			CharSequence expectedType) {
-		val result = typesystem.exprtype(env, trace, expression)
+		val result = typesystem.type(env, trace, expression)
 		if (expectedType != null) {
 			if (result.failed) {
 				Assert::fail("unexpected failure: " +
