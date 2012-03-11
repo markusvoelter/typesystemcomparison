@@ -53,16 +53,13 @@ class GuiDslTypeProvider {
 		}
 	} 
 	def Type getExpectedType(EObject e) { 
-		switch e {
-			Widget : primitive
-			default: internalGetExpectedType(e.eContainer, e.eContainingFeature) 
-		}
+			internalGetExpectedType(e.eContainer, e.eContainingFeature) 
 	} 
 	
 	def protected Type internalGetExpectedType(EObject e, EStructuralFeature feature) {
 		switch e {
 			Widget case feature == GuiDslPackage$Literals::WIDGET__VALIDATE: bool
-			
+			Form case feature == GuiDslPackage$Literals::FORM__WIDGETS: primitive
 			Attribute case e.type != null : e.type
 		
 			AndOrExpression : bool 

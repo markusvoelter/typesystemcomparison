@@ -6,8 +6,7 @@ the actual type of an expression, the expected type (which depends on the
 context where the expression is used), and operations which check whether a type
 is assignable to another type. The Xtext validator in listing
 \ref{lst:validation-plain} uses these operations. The first check operates on
-any expression. Helper methods are used to check whether the actual type is
-assignable to the expected type, for instance \emph{boolean} for the
+any expression. A helper method is used to check whether the actual type is assignable to the expected type, for instance \emph{boolean} for the
 \emph{validate} clause of a widget. The expected type of an expression usually
 depends on the context where the expression is in. In case there is no expected
 type, for instance for a derived attribute, whose type is only defined by the
@@ -30,23 +29,16 @@ is the type it refers to or the type of its initialization expression. In case
 there are both an initialization expression and an explicit type, a conformance
 check is made before. If that check fails, the default (\verb|null|) of the
 switch statement is returned. References to attributes have the type of the
-referenced attribute, and the \emph{widgetcontent} used in validate clauses has
-the type the widget refers to. %Note that \verb|e.type| is the reference to a
-(primitive) type while \verb|e.expr.type| and \verb|e.attr.type| recursively
-call \emph{getType()}. They use the Xtend 2 syntax shortcut to
-\verb|getType(e.expr.type)| and \verb|getType(e.attr.type)|.
+referenced attribute, and the \emph{widgetcontent} used in validate clauses has the type the widget refers to.
+
+%Note that \verb|e.type| is the reference to a (primitive) type while \verb|e.expr.type| and \verb|e.attr.type| recursively call \emph{getType()}. They use the Xtend 2 syntax shortcut to \verb|getType(e.expr.type)| and \verb|getType(e.attr.type)|. 
 
 \lstinputlisting[label=lst:plain-type-provider1,caption=Type provider in Xtend.]{code/GuiDslTypeProvider.xtend}
 
 The operation \emph{getExpectedType()} in listing \ref{lst:plain-type-provider1}
-returns the expected type of an expression by checking its context, i.e. the
-container of the expression. In case of a widget the expected type is always a
-primitive type, so there's no need to check the context. In other cases, it
-calls another operation with the container of the expression and the feature of
-the container pointing to the expression. If the container of an expression is a
-\emph{Widget} and the reference was the \emph{validate} clause, the expected
-type is always boolean. The expected type of a subtraction, multiplication and
-division is a \emph{NumberType}. For an addition, it is a string, unless there
+returns the expected type of an EObject by checking its container. It calls another operation with the container and the feature of the container pointing to the expression. If the container of an expression is a \emph{Widget} and the feature was the \emph{validate} clause, the expected type is always boolean. If the container is a form and the 
+
+The expected type of a subtraction, multiplication and division is a \emph{NumberType}. For an addition, it is a string, unless there
 is a common type of the summands that is more specific. The method returns
 \emph{null} to indicate if there is no expected type.
 
