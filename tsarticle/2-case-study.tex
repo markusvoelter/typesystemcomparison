@@ -1,12 +1,22 @@
 \section{Case Study}
 \label{sec:casestudy}
 
-As a practial example where type inference and validation is useful, we prqesent
-a language for modeling forms in a GUI to edit entities in a database. The forms
-are wired to entities and have widgets like text fields and checkboxes. An
-entity may have simple attributes of base types like \emph{boolean},
-\emph{string}, \emph{int} and \emph{float} and derived attributes. The latter
-have a specification on how to derive them, which may refer to other attributes.
+As a practial example where type inference and validation is useful, we present
+a language for modeling forms in a GUI to edit entities in a database.  An
+entity may have attributes of base types like \emph{boolean}, \emph{string},
+\emph{int} and \emph{float}, or entity types.
+Attributes can have an explicit type and an initialization expression.
+If the attribute has an explicit type and an initialization expression, we
+require that the (inferred) type of the expression is a subtype of the
+attribute's type.  If the attribute has no explicit type then the (in this case
+mandatory) initialization expression is used to infer the type of the attribute.
+
+Since entities can specify an entity to derive from, we also have a subtyping
+relation on entity types implied by the transitive closure of \mykeyb{extends}
+relation.
+
+The forms are wired to entities and have widgets like text fields and
+checkboxes which refer to a specific attribute of the entity.
 Widgets of forms may contain a \emph{validate} clause, which verifies for
 example the length of the input.
 
@@ -21,15 +31,17 @@ implemented for each of the following variants.
 \end{itemize}
 
 Listing \ref{lst:example-plain} shows an example of the DSL with a \emph{Person}
-entity and a \emph{PersonForm} to edit it. The attributes \emph{isAdult} and
-\emph{greeting} are derived, thus it is not necessary to specify their type
-explicitly. They could be read-only widgets in forms.
+entity and a \emph{PersonForm} to edit it. Note that the attribute
+\emph{isAdult} has an explicit type, and its initialization expression
+comforms to that type; \emph{greeting} has no explicit type, and its type is
+inferred from its initialization expression.
+They could be read-only widgets in forms.
 
 %\lstinputlisting[language=bash,label=lst:example-plain,caption=Forms and
 % Entities DSL,linerange={1-16}]{..//exampleCode/src/plain-xtext.gui}
 
 %float,
-\begin{lstlisting}[language=guidsl,label=lst:example-plain,caption=Forms
+\begin{lstlisting}[language=guidsl,float,label=lst:example-plain,caption=Forms
 and Entities DSL.] 
 entity Person {
 	name      : string;
@@ -51,38 +63,37 @@ form PersonForm edits Person {
 }
 \end{lstlisting}
 
+In widgets' validate expressions, one can access the attribute by means of
+\mykeyb{widgetcontent}, which will then have the type of the corresponding
+attribute.
+
 %\lstinputlisting[label=lst:grammar-plain,caption=Grammar with plain
 % Xtext,linerange={7-53}]{../org.typesys.guidsl/src/org/typesys/guidsl/GuiDsl.xtext}
 
 %float
-\begin{lstlisting}[language=xtext,label=lst:grammar-plain,caption=Grammar with plain Xtext.] 
-Model:
-	(entities+=Entity | forms+=Form )*;
+\begin{lstlisting}[language=xtext,float,label=lst:grammar-plain,caption=Grammar
+with plain Xtext.] 
+Model: (entities+=Entity | forms+=Form )*;
 
-Form:
-	"form" name=ID "edits" entity=[Entity] "{"	
+Entity: "entity" name=ID ('extends' superType=[Entity])? "{"
+			(attributes+=Attribute)*
+		"}";
+
+Attribute: name=ID ( ((":" type=Type)? "=" expr=Expression) | 
+               (":" type=Type) )";";
+
+Form: "form" name=ID "edits" entity=[Entity] "{"	
 		(widgets+=Widget)*
-	"}";
+	  "}";
 
-Widget:
-	TextWidget | CheckBoxWidget ;
+Widget: TextWidget | CheckBoxWidget ;
 
 TextWidget:
 	"text" "(" length=Number ")" "->" attr=[Attribute] 
 	("validate" validate=Expression)? ";";
 
 CheckBoxWidget:
-	"checkbox" "->" attr=[Attribute] ("validate" validate=Expression)? ";"
-;
-
-Entity:
-	"entity" name=ID ('extends' superType=[Entity])? "{"
-		(attributes+=Attribute)*
-	"}";
-
-Attribute:
-	name=ID ( ((":" type=Type)? "=" expr=Expression) | 
-               (":" type=Type) )";";
+	"checkbox" "->" attr=[Attribute] ("validate" validate=Expression)? ";" ;
 \end{lstlisting}
 
 The Xtext grammar part used by all variants is shown in listing
@@ -93,7 +104,7 @@ The rule \mytt{Typable} is not called by any other rule of the grammar: it is
 only useful to create a common superclass for \mytt{Attribute} and
 \mytt{Expression} which are the elements we want to type.
 
-\begin{lstlisting}[language=xtext,label=lst:grammar-plain-types-and-ex,caption=Types
+\begin{lstlisting}[language=xtext,float,label=lst:grammar-plain-types-and-ex,caption=Types
 and Expressions.] 
 Typable: Attribute | Expression;
 
