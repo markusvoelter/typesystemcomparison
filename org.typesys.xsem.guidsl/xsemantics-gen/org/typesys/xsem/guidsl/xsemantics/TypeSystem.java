@@ -94,6 +94,12 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			null, typable);
 	}
 	
+	public Result<Type> type(final RuleEnvironment _environment_,
+			final Typable typable) {
+		return type(_environment_,
+			null, typable);
+	}
+	
 	public Result<Type> type(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
 			final Typable typable) {
 		try {
@@ -108,6 +114,12 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			null, left, right);
 	}
 	
+	public Result<Boolean> isAssignable(final RuleEnvironment _environment_,
+			final Type left, final Type right) {
+		return isAssignable(_environment_,
+			null, left, right);
+	}
+	
 	public Result<Boolean> isAssignable(final RuleEnvironment _environment_, final RuleApplicationTrace _trace_,
 			final Type left, final Type right) {
 		try {
@@ -119,6 +131,12 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	
 	public Result<Type> mostGeneral(final Type first, final Type second) {
 		return mostGeneral(new RuleEnvironment(),
+			null, first, second);
+	}
+	
+	public Result<Type> mostGeneral(final RuleEnvironment _environment_,
+			final Type first, final Type second) {
+		return mostGeneral(_environment_,
 			null, first, second);
 	}
 	
