@@ -118,6 +118,28 @@ use the operator \verb|or|, which separates blocks of premises; if (and only if)
 of the premises of the first block fails, the premises of the second block are
 inspected, etc.
 
+Also the concept of rule environment is taken from the type theory (usually is
+denoted by the $\g$).  It can be used to pass additional argument to rules.
+If you want to be sure to pass an empty environment when invoking a rule you can
+use the keyword \mykeyb{empty}.
+Furthermore, when passing an environment during a rule invocation, one
+can specify additional \emph{environment mapping}, using the syntax
+\lstinline[breakatwhitespace=false,breaklines=true]!key <- value!, 
+where you can use any Xbase expression;
+you can also pass an environment with additional
+mappings separated by a comma (or even build an environment from scratch
+by specifyin all the mappings, still separated by a comma); for instance
+\lstinline[breakatwhitespace=false,breaklines=true]!G, x <- 'foo', y <- 10! 
+or
+\lstinline[breakatwhitespace=false,breaklines=true]!x <- o.eClass, y <- (o.eClass.name == 'foo')!, 
+etc.
+Note that when you pass an environment to a rule with additional mappings,
+you actually pass a brand new environment, thus you will not modify the
+current rule environment; if a mapping already exists in the current rule
+environment, in the brand new environment (and only there) the existing mapping
+will be overwritten.  Thus, the rule environment passed to a rule acts
+in a stack manner.
+
 If a rule does not require any premise, we can use a special form of
 rules, called indeed \textit{axiom}s, which only have a conclusion, without
 premises.
@@ -141,6 +163,12 @@ rule LengthOfType
 from {
 	G |- len.expr : var StringType stringType
 }
+
+rule FieldContentType
+	G |- FieldContent fieldContent : Type type
+from {
+	G |- env(G, 'widgetcontent', Attribute) : type
+}
 \end{lstlisting}
 
 In Listing~\ref{lst:xsem-firstrules} we present some rules for the judgment
@@ -153,10 +181,18 @@ be read as follows: the type of an \mytt{AttributeRef} is the type resulting
 from typing the corresponding referred attribute (the feature \mytt{attr}, refer
 to Listing~\ref{lst:grammar-plain}). The type of a \mytt{LenghtOf} expression is
 an integer type, provided that the expression argument of \mytt{LenghtOf} has
-string type.
+string type.  Finally, for typing \mykeyb{widgetcontent} we make use of the
+rule environment: we access the environment with the predefined function
+\mykeyb{env}, by specifying the key and the expected Java type of the
+corresponding value.  If no key is found in the environment or the value cannot
+be assigned to the specified Java type the premise will fail.  We will show
+how such environment is passed in Section~\ref{sec:xsem-validation}.  Thus, this
+rule will type \mykeyb{widgetcontent} with the type of the corresponding
+attribute. 
 
 In an hypothetic formal type system, we would probably write these typing rules
 
+\begin{center}
 \begin{tabular}{c@{\hspace{.5cm}}c@{\hspace{.5cm}}c}
 \inferrule
 {}
@@ -165,15 +201,21 @@ In an hypothetic formal type system, we would probably write these typing rules
 \inferrule
 {\g \f \mytt{attr} : \T}
 {\g \f \mykeyb{ref} \ \mytt{attr} : \T }
-&
+\\
+\\
 \inferrule
 {\g \f \mytt{exp} : \mykeyb{string}}
 {\g \f \mykeyb{lengthOf}(\mytt{exp}) : \mykeyb{int} }
+&
+\inferrule
+{\g \f \g(\mykeyb{widgetcontent}) : \T}
+{\g \f \mykeyb{widgetcontent} : \T }
 \end{tabular}
+\end{center}
 
 \noindent
-Note how, the rules in Xsemantics remind the deduction rules typically used in
-formal type systems (see Listing~\ref{lst:xsem-firstrules}).
+Note how, the rules in Xsemantics (see Listing~\ref{lst:xsem-firstrules}) remind
+of the deduction rules typically used in formal type systems.
 
 At runtime, upon rule invocation, the generated Java system will select the most
 appropriate rule according to the runtime types of the passed argument (using
@@ -354,6 +396,7 @@ is a string type, the whole expression will have string type (see also subtyping
 rules in Listing~\ref{lst:xsem-assignable}).
 
 \subsection{Rules for the Validator}
+\label{sec:xsem-validation}
 
 In an Xsemantics we can specify some special rules which do not belong to any
 judgment, \mytt{checkrule}, which are used by Xsemantics to generate a Java
