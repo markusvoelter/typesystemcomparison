@@ -296,12 +296,13 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 	public Result<Boolean> validateCheckBoxWidgetAttributeBooleanInternal(final RuleApplicationTrace _trace_, final CheckBoxWidget widget) 
 			throws RuleFailedException {
 		
-		/* empty |- widget.attr : var BooleanType attrType or fail error "checkbox widget attribute must be boolean" source widget feature XsemGuiDslPackage::eINSTANCE.widget_Attr */
+		/* 'widgetcontent' <- widget.attr |- widget.attr : var BooleanType attrType or fail error "checkbox widget attribute must be boolean" source widget feature XsemGuiDslPackage::eINSTANCE.widget_Attr */
 		try {
-		  /* empty |- widget.attr : var BooleanType attrType */
+		  /* 'widgetcontent' <- widget.attr |- widget.attr : var BooleanType attrType */
 		  Attribute _attr = widget.getAttr();
 		  BooleanType attrType = null;
-		  Result<Type> result = typeInternal(emptyEnvironment(), _trace_, _attr);
+		  Attribute _attr_1 = widget.getAttr();
+		  Result<Type> result = typeInternal(environmentEntry("widgetcontent", _attr_1), _trace_, _attr);
 		  checkAssignableTo(result.getFirst(), BooleanType.class);
 		  attrType = (BooleanType) result.getFirst();
 		  

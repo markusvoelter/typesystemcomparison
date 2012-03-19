@@ -221,7 +221,7 @@ from {
 checkrule ValidateCheckBoxWidgetAttributeBoolean for
 	CheckBoxWidget widget
 from {
-	empty |- widget.attr : var BooleanType attrType
+	'widgetcontent' <- widget.attr |- widget.attr : var BooleanType attrType
 	or
 	fail
 		error "checkbox widget attribute must be boolean"
