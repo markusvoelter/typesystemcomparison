@@ -8,11 +8,11 @@ entity may have attributes of base types like \emph{boolean}, \emph{string},
 Attributes can have an explicit type and an initialization expression.
 If the attribute has an explicit type and an initialization expression, we
 require that the (inferred) type of the expression is a subtype of the
-attribute's type.  If the attribute has no explicit type then the (in this case
-mandatory) initialization expression is used to infer the type of the attribute.
+attribute's type. If the attribute has no explicit type then the 
+initialization expression is mandatory and used to infer the type of the attribute.
 
 Since entities can specify an entity to derive from, we also have a subtyping
-relation on entity types implied by the transitive closure of \mykeyb{extends}
+relation on entity types implied by the transitive closure of the \mykeyb{extends}
 relation.
 
 The forms are wired to entities and have widgets like text fields and
@@ -187,5 +187,5 @@ checking ability by demonstrating how it solves the following tasks.
 
 All tasks imply being able to infer the type of expressions: The \emph{validate}
 clause is an expression, and widgets and checkboxes may refer to derived
-attributes, which are defined with expressions. Test cases for the projects are
-online at []%TODO
+attributes, which are defined with expressions. 
+%Test cases for the projects are online at []%TODO
