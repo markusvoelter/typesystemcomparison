@@ -9,10 +9,11 @@ is assignable to another type. The Xtext validator in listing
 any expression. A helper method is used to check whether the actual type is assignable to the expected type, for instance \emph{boolean} for the
 \emph{validate} clause of a widget. The expected type of an expression usually
 depends on the context where the expression is in. In case there is no expected
-type, for instance for a derived attribute, whose type is only defined by the
-derivation expression, the check operation just returns. The validations
-operating on widgets just check whether the type of the attribute the widget
-refers to is \emph{boolean}.
+type, for instance for an attribute whose type is only defined by the
+derivation expression, the check operation just returns. The validation
+operating on checkbox widgets (respectively, text widgets) just checks that the
+type of the attribute the widget refers to is (respectively, is not)
+\emph{boolean}.
 
 
 %\input{code/GuiDslTypeProvider.xtend}%linerange={15-23,31-42,49-57}
