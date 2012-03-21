@@ -12,6 +12,8 @@
 \usepackage[htt]{hyphenat} % for hypenantion of texttt
 \usepackage{mathpartir} % for typing rules
 
+\usepackage{datetime} % for the date in the draft versions
+
 \usepackage{listings} % http://en.wikibooks.org/wiki/LaTeX/Packages/Listings
 \usepackage{color}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -93,6 +95,8 @@ independent/itemis AG}
 \input{abstract.ltx} 
 \keywords{Modeling, DSLs, Type Systems, Xtext, Xbase}
 \end{abstract}
+
+\today{} -- \currenttime
 
 \input{body.tex}
 
