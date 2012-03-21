@@ -1,19 +1,59 @@
 \section{Introduction}
 
 Today's tools for domain specific languages (DSL) make it feasible to build
-complex languages. These usually need expressions and type system support, for
-which checking is non-trivial. Type systems may help to avoid boilerplate code
-for validation and scoping, i.e., code which determines scopes and visibilities
-of references and variables.
+complex languages. These usually include data structures, assignments and
+expressions which may contain, for instance, boolean comparison operators,
+arithmetic operators and function calls. A type system allows to assign
+\emph{types} to language elements and specify rules regarding which types are
+allowed where and under which conditions. Checking these rules may be
+non-trivial, and type systems may help to avoid boilerplate code for validation
+and \emph{scoping}. The latter determines visibilities of references and
+variables.
 
-Intro to expressions
+Type checking can occur at compile-time which is called static type checking, or
+at run-time, for instance when types of variables may only be computed at
+run-time. This paper focuses on static type checking, although the type systems
+presented here may be used beyond that, e.g. for reduction rules and
+interpreters.
 
-The developer of the language may arbitrarily define which of his model elements
-he considers as types and define arbitrary rules for them. Usually, the language
-allows to assign types to certain elements (for instance, \emph{integer} to a
-variable called \verb|a|) and build expressions with these elements and the type
-system constraints make sure that all expressions (such as \verb|a = 16|) of are
-free of what the designer considers type errors, e.g. \verb|a + true|.
+A developer of a (domain specific) language may arbitrarily define which of his
+model elements he considers to be typeable, what types exist and define
+arbitrary rules using these types for what he considers to be a system free of
+type errors.
+To illustrate the most common tasks of a type system, we use a language for
+defining explicitly typed and derived variables, with an expression specifying
+how to derive them. It is shown in listing \ref{lst:tlex}. A more detailed
+example can be found in \cite{mvdsl}. The example defines a string variable
+called \emph{name}, an integer constant and a derived variable called
+\emph{greeting} of type string (which happens to be explicitly specified).
 
-Xbase, which is shipped with Xtext 2, Xsemantics \cite{lbts} and Xtext/TS
-\cite{mvts} are all Eclipse plug-ins.
+\begin{lstlisting}[float,label=lst:tlex,caption=Example for a typed language.]
+name : string;
+num = 41 + 1;
+greeting : string = "Hi " + name + ", the answer is " + num + ".";
+\end{lstlisting}
+
+We define the type of the element \emph{string} to be itself, which is usual for
+type declarations. We then define the type of variables to be a) the type of the
+element after the colon (\verb|:|), if there is one, or, if no colon is there,
+the type of the expression after the equals symbol (\verb|=|).
+If there are both an explicit type specification and a derivation expression,
+the type of the derivation expression has to be conformant to the specified
+type. Conformance could mean that the two types have to be in a certain
+relationship in the type hierarchy or that the given type is convertible to the
+expected type. We define the type of an addition to be the most general type of
+its summands and that a string is more general than a number, thus the
+derivation expression is of type string and conformant to the explicitly
+specified type \emph{string} of \verb|greeting|. In summary, the most common
+tasks for type systems are:
+Assigning fixed types to language elements, being able to tell whether a type is
+conformant to another type, i.e. whether a specific type can be given where
+another one is expected, and deriving the types of complex expressions, e.g.
+additions.
+
+The rest of this paper is structured as follows. The next section introduces a
+common case study which will be implemented in plain Xtext, Xbase, which is
+shipped with Xtext 2, Xsemantics \cite{lbts}, and Xtext/TS \cite{mvts}. The
+latter two are, like Xtext and Xbase, open source Eclipse plug-ins. Each
+implementation will be presented in its own section before comparing them in
+the final section.
