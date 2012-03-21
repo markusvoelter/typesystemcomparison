@@ -30,3 +30,18 @@
       morestring=[b]",% 
       morestring=[b]',% 
   }[keywords,comments,strings]
+
+\lst@definelanguage{xtend}%
+  {morekeywords={abstract,adds,as,boolean,break,byte,case,catch,char,choose,class,%
+      configurations,const,continue,core,default,delta,do,double,else,extends,features,final,finally,%
+      float,for,goto,if,implements,import,instanceof,int,interface,%
+      long,native,new,modifies,null,package,private,protected,public,removes,renames,replaces,return,%
+      short,static,super,switch,synchronized,this,throw,throws,%
+      transient,try,void,volatile,when,while,true,false,%
+      def,override,extension},%
+   sensitive,% 
+   morecomment=[l]//,% 
+   morecomment=[s]{/*}{*/},%
+   morestring=[b]",%
+   morestring=[b]',%
+  }[keywords,comments,strings]
