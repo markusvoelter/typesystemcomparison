@@ -16,8 +16,8 @@ with formal type systems and operational semantics: it aims at providing
 a syntax which is close to the way deduction rules are written in a formal
 setting~\cite{hindley:1997a,Pierce02}.
 Actually, Xsemantics rules are written in the other direction with respect
-to standard deduction rules: the conclusion come before the premises; this is just
-to make the IDE tooling work better, and to give a more "programming" style to rules.
+to standard deduction rules: the conclusion comes before the premises; this is
+just to make the IDE tooling work better, and to give a more "programming" style to rules.
 
 Starting from the definitions of these rules, Xsemantics generates Java code
 that can be used in your language implemented in Xtext for scoping and
@@ -55,6 +55,11 @@ output parameters, in that case you use the keyword
 \verb|output| followed by the Java
 type of the output parameter.
 \end{itemize}
+
+Judgments can have any number of input parameters (though they must have at
+least one input parameter) and at most two output parameters.\footnote{In our
+experience, we never needed more than two output parameters; the extension of
+more than two output parameters is however straightforward.}
 
 \begin{lstlisting}[language=xsemantics,float,label=lst:xsem-judgments,caption=Judgment
 definitions in Xsemantics]
@@ -107,8 +112,8 @@ of the judgment (or exactly the same Java types).  Two rules belonging to the
 same judgment must differ for at least one input parameter's type.
 
 The premises of a rule which are specified in a \verb|from| block can be any
-Xbase expression, or a rule invocation.  If you think of a rule declaration as a
-function declaration, then a rule invocation corresponds to function invocation,
+Xbase expression, or a \emph{rule invocation}.  If you think of a rule
+declaration as a function declaration, then a rule invocation corresponds to function invocation,
 thus you must specify the environment to pass to the rule, and the arguments,
 both input and output arguments.
 The premises of an Xsemantics rule are considered in \emph{logical and} relation
@@ -117,18 +122,21 @@ If we need premises (block of premises) in \emph{logical or} relation, we can
 use the operator \verb|or|, which separates blocks of premises; if (and only if) one
 of the premises of the first block fails, the premises of the second block are
 inspected, etc.
+If a rule does not require any premise, we can use a special form of
+rules, called indeed \textit{axiom}s, which only have a conclusion, without
+premises.
 
-Also the concept of rule environment is taken from the type theory (usually is
-denoted by the $\g$).  It can be used to pass additional argument to rules.
+Also the concept of rule environment is taken from the type theory (usually it
+is denoted by the $\g$).  It can be used to pass additional arguments to rules.
 If you want to be sure to pass an empty environment when invoking a rule you can
 use the keyword \mykeyb{empty}.
 Furthermore, when passing an environment during a rule invocation, one
-can specify additional \emph{environment mapping}, using the syntax
+can specify additional \emph{environment mappings}, using the syntax
 \lstinline[breakatwhitespace=false,breaklines=true]!key <- value!, 
 where you can use any Xbase expression;
 you can also pass an environment with additional
 mappings separated by a comma (or even build an environment from scratch
-by specifyin all the mappings, still separated by a comma); for instance
+by specifying all the mappings, still separated by a comma); for instance
 \lstinline[breakatwhitespace=false,breaklines=true]!G, x <- 'foo', y <- 10! 
 or
 \lstinline[breakatwhitespace=false,breaklines=true]!x <- o.eClass, y <- (o.eClass.name == 'foo')!, 
@@ -140,9 +148,6 @@ environment, in the brand new environment (and only there) the existing mapping
 will be overwritten.  Thus, the rule environment passed to a rule acts
 in a stack manner.
 
-If a rule does not require any premise, we can use a special form of
-rules, called indeed \textit{axiom}s, which only have a conclusion, without
-premises.
 In the premises you can assign values to the output parameters; and when you
 invoke another rule, upon return, the output arguments will have the values
 assigned in the invoked rule.
@@ -191,6 +196,7 @@ rule will type \mykeyb{widgetcontent} with the type of the corresponding
 attribute. 
 
 In an hypothetic formal type system, we would probably write these typing rules
+as
 
 \begin{center}
 \begin{tabular}{c@{\hspace{.5cm}}c@{\hspace{.5cm}}c}
@@ -214,7 +220,7 @@ In an hypothetic formal type system, we would probably write these typing rules
 \end{center}
 
 \noindent
-Note how, the rules in Xsemantics (see Listing~\ref{lst:xsem-firstrules}) remind
+Note how the rules in Xsemantics (see Listing~\ref{lst:xsem-firstrules}) remind
 of the deduction rules typically used in formal type systems.
 
 At runtime, upon rule invocation, the generated Java system will select the most
@@ -300,17 +306,17 @@ from {
 \end{lstlisting}
 
 In Listing~\ref{lst:xsem-entitysubtyping} we show a more interesting case for
-subtyping: the one between two \mytt{EntityType}.  The idea is that \mytt{right}
-can be assigned to \mytt{left} either if they are the same type (entity
+subtyping: the one between two \mytt{EntityType}s.  The idea is that
+\mytt{right} can be assigned to \mytt{left} either if they are the same type (entity
 subtyping is reflexive) or if \mytt{left} is a ``super entity'' (possibly
 indirectly) for \mytt{right} (entity subtyping is transitive).  We could check
 the latter condition by following recursively the feature \mytt{superType} of
 the right entity; however, in an incorrect program the entity hierarchy might be
-acyclic, and this recursive inspection might lead to an infinite loop.  In a
-manual Java implementation we thus would have to keep track of the visited
+contain cycles, and this recursive inspection might lead to an infinite loop. 
+In a manual Java implementation we thus would have to keep track of the visited
 entities while inspecting the hierarchy (see
-Listing~\ref{lst:plain-type-conformance}).  Indeed, the AST for Xtext languages,
-due to references might be graphs.  Since when developing Xtext languages we
+Listings~\ref{lst:plain-type-provider1} and~\ref{lst:plain-type-conformance}). 
+Indeed, the AST for Xtext languages, due to references might be graphs.  Since when developing Xtext languages we
 might face the issue of inspecting a graph avoiding possible loops, e.g., to
 compute the ``closure'' of a graph, Xsemantics provides a predefined function
 which allows to collect nodes in a graph according to EMF features avoiding
@@ -325,7 +331,7 @@ getAll(eObject, feature to collect, feature to follow, expected type)
 \noindent an invocation of \mytt{getAll} will return a list of ``expected
 type'', built by collecting all the elements from ``feature to collect'' of the
 specified ``eObject'', and recursively collecting such elements by following the
-feature ``feature to collect'', but avoiding possible loops in the EMF graph
+feature ``feature to follow'', but avoiding possible loops in the EMF graph
 representing the AST.
 Thus, in the use of Listing~\ref{lst:xsem-entitysubtyping}, it will return all
 the superclasses of \mytt{right}.  Similarly, we can get all the attributes of
@@ -398,8 +404,8 @@ rules in Listing~\ref{lst:xsem-assignable}).
 \subsection{Rules for the Validator}
 \label{sec:xsem-validation}
 
-In an Xsemantics we can specify some special rules which do not belong to any
-judgment, \mytt{checkrule}, which are used by Xsemantics to generate a Java
+In an Xsemantics system we can specify some special rules which do not belong to
+any judgment, \mytt{checkrule}, which are used by Xsemantics to generate a Java
 validator for the Xtext language.  A \mytt{checkrule} has a name, a single
 parameter (which is the EObject which will be checked by the validator) and the
 premises (but no rule environment).  The syntax of the premises of a
@@ -435,11 +441,11 @@ the elements of our language (see Section~\ref{sec:casestudy}).  The first
 checkrule basically says that an Attribute is correct if we can give it a type
 (in the empty environment).  The second one accepts a Widget provided that
 either its validate part is not specified or it has a boolean type; note that in
-this case we pass to the type judgment an explicit environment so that we are
-able to type possible occurrences of \mykeyb{widgetcontent}.  These first two
-rules also show an important use of environment: since the rule for typing
-\mykeyb{widgetcontent} requires that the string `widgetcontent' is bound to an
-attribute in the environment, and since when typing an attribute we provide an
+this case we pass to the type rule invocation an explicit environment so that we
+are able to type possible occurrences of \mykeyb{widgetcontent}.  These first two
+rules also show an important use of the environment: since the rule for typing
+\mykeyb{widgetcontent} (Listing~\ref{lst:xsem-firstrules}) requires that the
+string `widgetcontent' is bound to an attribute in the environment, and since when typing an attribute we provide an
 empty environment, then a possible occurrence of \mykeyb{widgetcontent} in an
 attribute's initialization expression (which is accepted by the grammar) will be
 automatically (and correctly) rejected.
@@ -489,7 +495,7 @@ public Result<MyOutputClass> myjudgment(
 \end{lstlisting}
 
 The class \mytt{Result} is part of Xsemantics runtime, and it is a wrapper for
-the actual result value and a possible failure (in the shape of a \failedexc.
+the actual result value and a possible failure (in the shape of a \failedexc).
 The value in the result will be \mytt{null} if the judgment rule failed; in that
 case one might want to inspect the \failedexc.
 In particular, Xsemantics provides utility methods to get the stack of all the
