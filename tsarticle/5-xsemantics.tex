@@ -17,7 +17,7 @@ a syntax which is close to the way deduction rules are written in a formal
 setting~\cite{hindley:1997a,Pierce02}.
 Actually, Xsemantics rules are written in the other direction with respect
 to standard deduction rules: the conclusion come before the premises; this is just
-to make IDE tooling work better, and to give a more "programming" style to rules.
+to make the IDE tooling work better, and to give a more "programming" style to rules.
 
 Starting from the definitions of these rules, Xsemantics generates Java code
 that can be used in your language implemented in Xtext for scoping and
@@ -305,7 +305,7 @@ can be assigned to \mytt{left} either if they are the same type (entity
 subtyping is reflexive) or if \mytt{left} is a ``super entity'' (possibly
 indirectly) for \mytt{right} (entity subtyping is transitive).  We could check
 the latter condition by following recursively the feature \mytt{superType} of
-the right entity; however, in an uncorrect program the entity hierarchy might be
+the right entity; however, in an incorrect program the entity hierarchy might be
 acyclic, and this recursive inspection might lead to an infinite loop.  In a
 manual Java implementation we thus would have to keep track of the visited
 entities while inspecting the hierarchy (see
@@ -445,7 +445,7 @@ attribute's initialization expression (which is accepted by the grammar) will be
 automatically (and correctly) rejected.
 The third checkrule requires that the text widget's attribute is not of boolean
 type, while the fourth one requires that the checkbox's attribute has a boolean
-type (by implicitly trying to assing the result type, in the rule invocation, to
+type (by implicitly trying to assign the result type, in the rule invocation, to
 a boolean type).
 \subsection{Usage in Xtext}
 
