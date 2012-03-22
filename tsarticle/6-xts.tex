@@ -22,20 +22,19 @@ To enable type checks, you have to hook up the type system framework  with the
 validation  framework provided by Xtext. Here is the code you have to write in
 the validator:
 
-\begin{code}
-@Inject 
-private ITypesystem ts;
+\begin{lstlisting}[language=Java] 
+@Inject private ITypesystem ts;
 
 @Check(CheckType.NORMAL)
 public void validateTypes( EObject m ) {
     ts.checkTypesystemConstraints( m, this );
 }    
-\end{code}
+\end{lstlisting}
 
-Also the type system is used mostly in the way shown above, from the validator,
-it can be used in any other place in an Xtext DSL. For example it has been used
-as part of scope implementations.. In this case, you simply inject the type
-system into the scope provider and use it from there.
+The type system can be used, mostly in the same way as shown above, in any other
+place in an Xtext DSL implementation.
+For example it has been used as part of scope implementations. In this case, you
+simply inject the type system into the scope provider and use it from there.
 
 \subsection{Setting up}
 
@@ -44,11 +43,12 @@ type system plug-ins from TODO
 
 We start with the header of the type system file.
 
-\begin{code}
+\begin{lstlisting}[language=xts] 
 typesystem org.typesys.xts.guidsl.typesys.GuiDlsTypesystem 
-    ecore file "platform:/resource/org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/GuiDsl.ecore"
+    ecore file 
+    "platform:/resource/org.typesys.xts.guidsl/src-gen/org/typesys/xts/guidsl/GuiDsl.ecore"
     language package org.typesys.xts.guidsl.guiDsl.GuiDslPackage 
-\end{code}
+\end{lstlisting}
 
 The header of the type system file specifies the fully qualified class name of
 the type system implementation file generated from this specification file. We
@@ -69,11 +69,11 @@ In the initial section in the following piece of code we specify  that the type
 of the Type metaclass and all its subclasses (hence the +) is a clone of itself.
 In other words, types of their own types.
 
-\begin{code}
+\begin{lstlisting}[language=xts] 
 section "Types"
     typeof Type+ -> clone
     subtype IntType base FloatTyoe
-\end{code}
+\end{lstlisting}
 
 We also specify the subtyping relationship between FloatType and IntType. This
 means that, wherever a FloatType is expected, an IntType can also be used.  But
@@ -81,91 +81,86 @@ not the other way around. In other words, IntType is more specialized.
 
 \subsection{Literals}
 
-The type of string literals and Boolean literals is always the same, it can be
-fixed  to specific type. The contrast specifie that type after the arrow.
-however, for number literals it is more complicated. it depends on the value
-whether it is an integer or float type. This cannot be expressed declaratively
-in the DSL. So we declare the type for NumberLiteral to be calculated with Java
+The type of string literals and Boolean literals is always the same, so it can
+be fixed to a specific type.
+However, for number literals it is more complicated:
+whether it is an integer or float type depends on the value and this cannot be
+expressed declaratively in the DSL. So we declare the type for NumberLiteral to be calculated with Java
 code.
 
-\begin{code}
+\begin{lstlisting}[language=xts] 
 section "Literals"
       typeof StringLiteral -> StringType
-     typeof BooleanLiteral -> BooleanType
+      typeof BooleanLiteral -> BooleanType
       typeof NumberLiteral -> javacode
-\end{code}
+\end{lstlisting}
  
- This specification leads to the generation of an abstract method into the
- generated type system class, which we have to override in the manually written
- subclass. The respective method looks as follows:
+This specification leads to the generation of an abstract method into the
+generated type system class, which we have to override in the manually written
+subclass. The corresponding method looks as follows:
  
-\begin{code}
+\begin{lstlisting}[language=Java] 
 public EObject type( NumberLiteral s, TypeCalculationTrace trace ) {
     if ( s.getValue().equals(s.getValue().intValue())) {
         return create(cl.getIntType());
     }
     return create(cl.getFloatType());
 } 
-\end{code} 
+\end{lstlisting}
 
 
 
 \subsection{Expressions}
 
-Before we define the type system rules for on the various expressions,  we first
-define two characteristics. A characteristic is essentially a set of types.
-instead of listing the set of types over and over again, you can use the
+Before we define the type system rules for the various expressions,  we first
+define two characteristics. A \emph{characteristic} is essentially a set of
+types:
+instead of listing the set of types over and over again, we can use the
 characteristic the shortcut.
 
-\begin{code}
+\begin{lstlisting}[language=xts] 
 characteristic COMPARABLE {
     IntType, FloatType, BooleanType, StringType
 }  
   
-    characteristic NUMERIC {
+characteristic NUMERIC {
     IntType, FloatType
 } 
-\end{code}
+\end{lstlisting}
 
-Next up is the definition of the type fully abstract expression class. of course
-this thing has no type, since is abstract, and all it subclasses have different
+Then we define the abstract type for the Expression class: such class
+has no type, since it is itself abstract, and all it subclasses have different
 types. However, it makes sense to declare this fact explicitly, because the type
-system DSL editor can then check that all subclasses of expression are actually
+system DSL editor can then check that all subclasses of Expression are actually
 covered by type system rules.
 
-\begin{code}
-    typeof Expression -> abstract
-\end{code}
+\begin{lstlisting}[language=xts]
+typeof Expression -> abstract
+\end{lstlisting}
 
 We can now take a look at some of the more interesting cases. For comparisons,
-the left and right argument  have to be comparable (see above). in addition, the
-left and right argument has to be compatible. so, while Boolean and string are
-both comparable,  they cannot be compaired to each other. This is why we need
+the left and right arguments  have to be comparable (see above). In addition,
+they also have to be compatible. For instance, while boolean and string types
+are both comparable, they cannot be compared to each other. This is why we need
 this explicit compatibility check:
 
-\begin{code}
+\begin{lstlisting}[language=xts]
  typeof Comparison -> BooleanType {
      ensureType left :<=: char(COMPARABLE)
      ensureType right :<=: char(COMPARABLE)
      ensureCompatibility left :<=>: right
  } 
-\end{code}
+\end{lstlisting}
 
 
-Note the tool strange symbols. The first one is called ordered compatibility. It
+The symbol \verb|:<=:| is called ordered compatibility. It
 means that the type on the left must be the same or a subtype of the type
-specified on the right. The second arrow represents unordered compatibility.
-this means that the left must be the same or a subtype of the right, or vice
-versa. 
+specified on the right. The symbol \verb|:<=>:| represents unordered
+compatibility: the left must be the same or a subtype of the right, or vice
+versa.
 
-the remainder of the binary expressions is essentially more of the same. the
-only thing worth mentioning is the common keyword. Using common in the type for
-a meta class means that the type is going to be the common supertype of the two
-arguments. This only works, if the two types are either the same or top of a
-subtype relationship (such as float and int).
-
-
-\begin{code}
+\begin{lstlisting}[language=xts,float,label=lst:xts-binaryexpressions,caption=Some
+rules for expressions.] 
 typeof Equality -> BooleanType {
     ensureType left :<=: char(COMPARABLE), BooleanType
     ensureType right :<=: char(COMPARABLE), BooleanType
@@ -197,81 +192,89 @@ typeof MultiOrDiv -> common left right {
 typeof BooleanNegation -> BooleanType {
     ensureType expression :<=: BooleanType
 }
-\end{code}
+\end{lstlisting}
 
+The remainder of specifications for the binary expressions is essentially more
+of the same (Listing~\ref{lst:xts-binaryexpressions}).
+The only thing worth mentioning is the \mykeyb{common} keyword. Using common in the
+type for a meta class means that the type is going to be the common supertype of the two
+arguments. This only works, if the two types are either the same or top of a
+subtype relationship (such as float and int).
 
-New things here are some more special cases: the type of the attribute reference
+Let us now see some more special cases: the type of the attribute reference
 is the type of the referenced attribute. In other words, we have to follow the 
 attr reference to find out the type:
 
-\begin{code}
-     typeof AttributeRef -> feature attr
-\end{code}
+\begin{lstlisting}[language=xts]
+typeof AttributeRef -> feature attr
+\end{lstlisting}
 
-The type of the widgets (yes,  they are not expressions, but as we will see
-below, it is useful if they have a type) should also be relatively obvious. This
-is also where  the type system rules for our  test case are  finally
-implemented.
+The type of the widgets (although they are not expressions, but as we will see
+below, it is useful if they have a type) should also be relatively
+straigthforward.
+This is also where  the type system rules for our  test case are  finally
+implemented (Listing~\ref{lst:xts-widgets}).
 
-\begin{code}
-    // 1) the expression after "validate" must be boolean
-    typeof Widget -> abstract
-    
-    // 2) text widgets may only refer to non-boolean attributes 
-    typeof TextWidget -> feature attr {
-        ensureType length :<=: IntType
-        ensureType attr :<=: StringType, IntType, FloatType
-        ensureType validate :<=: BooleanType
-    }  
-    
-    // 3) checkbox widgets may only refer to boolean attributes
-    typeof CheckBoxWidget -> feature attr {
-        ensureType attr :<=: BooleanType
-        ensureType validate :<=: BooleanType
-    }
-\end{code}
+\begin{lstlisting}[language=xts,float,label=lst:xts-widgets,caption=Rules
+for widgets.] 
+// 1) the expression after "validate" must be boolean
+typeof Widget -> abstract
+
+// 2) text widgets may only refer to non-boolean attributes 
+typeof TextWidget -> feature attr {
+    ensureType length :<=: IntType
+    ensureType attr :<=: StringType, IntType, FloatType
+    ensureType validate :<=: BooleanType
+}  
+
+// 3) checkbox widgets may only refer to boolean attributes
+typeof CheckBoxWidget -> feature attr {
+    ensureType attr :<=: BooleanType
+    ensureType validate :<=: BooleanType
+}
+\end{lstlisting}
 
 
 We can now calculate the type of the field content expression, which has to have
-the same type as  the attribute to which the owning widget points. ssince we
+the same type as  the attribute to which the owning widget points. Since we
 have defined the type of the widget to be the type of the reference attribute,
 we can now use the following type specification for FieldContent:
 
-\begin{code}
-    typeof FieldContent -> ancestor Widget
-\end{code}
+\begin{lstlisting}[language=xts]
+typeof FieldContent -> ancestor Widget
+\end{lstlisting}
 
 The type of NewExpr is the type of the new'ed entity:
 
-\begin{code}
+\begin{lstlisting}[language=xts]
     typeof NewExpr -> feature entity
-\end{code} 
+\end{lstlisting}
 
 Finally, the type of an Entity also has to be calculated with Java code, because
-it has to be an entity type that references the respective entity:
+it has to be an entity type that references the corresponding entity:
 
-\begin{code}
-    protected boolean compareTypes( EntityType t1, EntityType t2, CheckKind k, TypeCalculationTrace trace ) {
-        if ( k == CheckKind.same ) return t1.getRef() == t2.getRef();
-        if ( k == CheckKind.ordered ) return t1.getRef().getExtends() == t2.getRef();
-        return false;
-    }
-\end{code}
+\begin{lstlisting}[language=Java]
+protected boolean compareTypes( EntityType t1, EntityType t2, CheckKind k, TypeCalculationTrace trace ) {
+    if ( k == CheckKind.same ) return t1.getRef() == t2.getRef();
+    if ( k == CheckKind.ordered ) return t1.getRef().getExtends() == t2.getRef();
+    return false;
+}
+\end{lstlisting}
 
 
 There is one more interesting open issue. We have to implement the subtyping
 relationship between entities. This is not so simple, because we will compare 
-EntityTypes, but it depends on whether there respective referenced entities are
-subtypes of each other. So instead of declaring a subtype relationship
+EntityTypes, and the subtyping depends on whether their corresponding referenced
+entities are subtypes of each other. So instead of declaring a subtype relationship
 in the DSL, we can implement a type comparison function in Java:
 
-\begin{code}
-    protected boolean compareTypes( EntityType t1, EntityType t2, CheckKind k, TypeCalculationTrace trace ) {
-        if ( k == CheckKind.same ) return t1.getRef() == t2.getRef();
-        if ( k == CheckKind.ordered ) return extends( t1.getRef(), t2.getRef() );
-        return false; 
-    }
-\end{code}
+\begin{lstlisting}[language=Java]
+protected boolean compareTypes( EntityType t1, EntityType t2, CheckKind k, TypeCalculationTrace trace ) {
+    if ( k == CheckKind.same ) return t1.getRef() == t2.getRef();
+    if ( k == CheckKind.ordered ) return extends( t1.getRef(), t2.getRef() );
+    return false; 
+}
+\end{lstlisting}
 
 
 
