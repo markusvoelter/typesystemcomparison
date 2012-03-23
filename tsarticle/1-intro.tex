@@ -7,10 +7,10 @@ arithmetic operators and function calls. A type system allows to assign
 \emph{types} to language elements and specify rules regarding which types are
 allowed where and under which conditions. Checking these rules may be
 non-trivial, and type systems may help to avoid boilerplate code for validation
-and \emph{scoping}. The latter determines visibilities of references and
-variables.
+and \emph{scoping}. The latter determines visibilities of variables and other
+referencable elements.
 
-Type checking can occur at compile-time which is called static type checking, or
+Type checking can occur at compile-time (static type checking), or
 at run-time, for instance when types of variables may only be computed at
 run-time. This paper focuses on static type checking, although the type systems
 presented here may be used beyond that, e.g. for reduction rules and
