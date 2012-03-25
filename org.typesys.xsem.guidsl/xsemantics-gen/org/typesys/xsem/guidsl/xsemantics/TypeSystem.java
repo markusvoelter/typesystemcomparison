@@ -1,5 +1,6 @@
 package org.typesys.xsem.guidsl.xsemantics;
 
+import com.google.common.base.Objects;
 import it.xsemantics.runtime.ErrorInformation;
 import it.xsemantics.runtime.Result;
 import it.xsemantics.runtime.RuleApplicationTrace;
@@ -12,9 +13,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.util.PolymorphicDispatcher;
-import org.eclipse.xtext.xbase.lib.BooleanExtensions;
-import org.eclipse.xtext.xbase.lib.ObjectExtensions;
-import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.typesys.xsem.guidsl.xsemGuiDsl.AndOrExpression;
 import org.typesys.xsem.guidsl.xsemGuiDsl.ArithmeticSigned;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Attribute;
@@ -161,24 +159,25 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			throws RuleFailedException {
 		
 		Entity _superType = entity.getSuperType();
-		boolean _operator_notEquals = ObjectExtensions.operator_notEquals(_superType, null);
-		if (_operator_notEquals) {
+		boolean _notEquals = (!Objects.equal(_superType, null));
+		if (_notEquals) {
 		  /* !getAll(entity, XsemGuiDslPackage::eINSTANCE.entity_SuperType, XsemGuiDslPackage::eINSTANCE.entity_SuperType, typeof(Entity) ).contains(entity) or fail error "Cyclic hierarchy for " + entity.name source entity */
 		  try {
 		    EReference _entity_SuperType = XsemGuiDslPackage.eINSTANCE.getEntity_SuperType();
 		    EReference _entity_SuperType_1 = XsemGuiDslPackage.eINSTANCE.getEntity_SuperType();
-		    List<Entity> _all = this.<Entity>getAll(entity, _entity_SuperType, _entity_SuperType_1, org.typesys.xsem.guidsl.xsemGuiDsl.Entity.class);
+		    List<Entity> _all = this.<Entity>getAll(entity, _entity_SuperType, _entity_SuperType_1, 
+		      Entity.class);
 		    boolean _contains = _all.contains(entity);
-		    boolean _operator_not = BooleanExtensions.operator_not(_contains);
+		    boolean _not = (!_contains);
 		    /* !getAll(entity, XsemGuiDslPackage::eINSTANCE.entity_SuperType, XsemGuiDslPackage::eINSTANCE.entity_SuperType, typeof(Entity) ).contains(entity) */
-		    if (!_operator_not) {
+		    if (!_not) {
 		      sneakyThrowRuleFailedException("!getAll(entity, XsemGuiDslPackage::eINSTANCE.entity_SuperType, XsemGuiDslPackage::eINSTANCE.entity_SuperType, typeof(Entity) ).contains(entity)");
 		    }
 		  } catch (Exception e) {
 		    /* fail error "Cyclic hierarchy for " + entity.name source entity */
 		    String _name = entity.getName();
-		    String _operator_plus = StringExtensions.operator_plus("Cyclic hierarchy for ", _name);
-		    String error = _operator_plus;
+		    String _plus = ("Cyclic hierarchy for " + _name);
+		    String error = _plus;
 		    EObject source = entity;
 		    throwForExplicitFail(error, new ErrorInformation(source, null));
 		  }
@@ -219,9 +218,9 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		/* widget.validate == null or { 'widgetcontent' <- widget.attr |- widget.validate : var BooleanType boolType or fail error "validate expression must be boolean" source widget.validate } */
 		try {
 		  Expression _validate = widget.getValidate();
-		  boolean _operator_equals = ObjectExtensions.operator_equals(_validate, null);
+		  boolean _equals = Objects.equal(_validate, null);
 		  /* widget.validate == null */
-		  if (!_operator_equals) {
+		  if (!_equals) {
 		    sneakyThrowRuleFailedException("widget.validate == null");
 		  }
 		} catch (Exception e) {
@@ -268,9 +267,9 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		  
 		  /* !(attrType instanceof BooleanType) or fail error "text widget attribute must NOT be boolean" source widget feature XsemGuiDslPackage::eINSTANCE.widget_Attr */
 		  try {
-		    boolean _operator_not = BooleanExtensions.operator_not((attrType instanceof BooleanType));
+		    boolean _not = (!(attrType instanceof BooleanType));
 		    /* !(attrType instanceof BooleanType) */
-		    if (!_operator_not) {
+		    if (!_not) {
 		      sneakyThrowRuleFailedException("!(attrType instanceof BooleanType)");
 		    }
 		  } catch (Exception e) {
@@ -321,8 +320,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			throws RuleFailedException {
 		
 		String _stringRep = this.stringRep(typable);
-		String _operator_plus = StringExtensions.operator_plus("cannot type ", _stringRep);
-		String error = _operator_plus;
+		String _plus = ("cannot type " + _stringRep);
+		String error = _plus;
 		EObject source = typable;
 		throwRuleFailedException(error,
 				_issue, _ex,
@@ -344,10 +343,10 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			throws RuleFailedException {
 		
 		String _stringRep = this.stringRep(right);
-		String _operator_plus = StringExtensions.operator_plus(_stringRep, " is not assignable to ");
+		String _plus = (_stringRep + " is not assignable to ");
 		String _stringRep_1 = this.stringRep(left);
-		String _operator_plus_1 = StringExtensions.operator_plus(_operator_plus, _stringRep_1);
-		String error = _operator_plus_1;
+		String _plus_1 = (_plus + _stringRep_1);
+		String error = _plus_1;
 		throwRuleFailedException(error,
 				_issue, _ex,
 				new ErrorInformation(null, null));
@@ -397,12 +396,12 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		Type attrType = null;
 		
 		Type _type = attr.getType();
-		boolean _operator_notEquals = ObjectExtensions.operator_notEquals(_type, null);
-		if (_operator_notEquals) {
+		boolean _notEquals = (!Objects.equal(_type, null));
+		if (_notEquals) {
 		  {
 		    Expression _expr = attr.getExpr();
-		    boolean _operator_notEquals_1 = ObjectExtensions.operator_notEquals(_expr, null);
-		    if (_operator_notEquals_1) {
+		    boolean _notEquals_1 = (!Objects.equal(_expr, null));
+		    if (_notEquals_1) {
 		      {
 		        /* G |- attr.expr : var Type expType */
 		        Expression _expr_1 = attr.getExpr();
@@ -786,26 +785,26 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		  checkAssignableTo(result_1.getFirst(), Type.class);
 		  rightType = (Type) result_1.getFirst();
 		  
-		  boolean _operator_or = false;
-		  boolean _operator_and = false;
+		  boolean _or = false;
+		  boolean _and = false;
 		  if (!(leftType instanceof StringType)) {
-		    _operator_and = false;
+		    _and = false;
 		  } else {
-		    _operator_and = BooleanExtensions.operator_and((leftType instanceof StringType), (rightType instanceof StringType));
+		    _and = ((leftType instanceof StringType) && (rightType instanceof StringType));
 		  }
-		  if (_operator_and) {
-		    _operator_or = true;
+		  if (_and) {
+		    _or = true;
 		  } else {
-		    boolean _operator_and_1 = false;
+		    boolean _and_1 = false;
 		    if (!(leftType instanceof NumberType)) {
-		      _operator_and_1 = false;
+		      _and_1 = false;
 		    } else {
-		      _operator_and_1 = BooleanExtensions.operator_and((leftType instanceof NumberType), (rightType instanceof NumberType));
+		      _and_1 = ((leftType instanceof NumberType) && (rightType instanceof NumberType));
 		    }
-		    _operator_or = BooleanExtensions.operator_or(_operator_and, _operator_and_1);
+		    _or = (_and || _and_1);
 		  }
 		  /* (leftType instanceof StringType && rightType instanceof StringType) || (leftType instanceof NumberType && rightType instanceof NumberType) */
-		  if (!_operator_or) {
+		  if (!_or) {
 		    sneakyThrowRuleFailedException("(leftType instanceof StringType && rightType instanceof StringType) || (leftType instanceof NumberType && rightType instanceof NumberType)");
 		  }
 		}
@@ -850,22 +849,22 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		  
 		  /* (leftType instanceof NumberType && rightType instanceof NumberType) or leftType.eClass == rightType.eClass */
 		  try {
-		    boolean _operator_and = false;
+		    boolean _and = false;
 		    if (!(leftType instanceof NumberType)) {
-		      _operator_and = false;
+		      _and = false;
 		    } else {
-		      _operator_and = BooleanExtensions.operator_and((leftType instanceof NumberType), (rightType instanceof NumberType));
+		      _and = ((leftType instanceof NumberType) && (rightType instanceof NumberType));
 		    }
 		    /* leftType instanceof NumberType && rightType instanceof NumberType */
-		    if (!_operator_and) {
+		    if (!_and) {
 		      sneakyThrowRuleFailedException("leftType instanceof NumberType && rightType instanceof NumberType");
 		    }
 		  } catch (Exception e) {
 		    EClass _eClass = leftType.eClass();
 		    EClass _eClass_1 = rightType.eClass();
-		    boolean _operator_equals = ObjectExtensions.operator_equals(_eClass, _eClass_1);
+		    boolean _equals = Objects.equal(_eClass, _eClass_1);
 		    /* leftType.eClass == rightType.eClass */
-		    if (!_operator_equals) {
+		    if (!_equals) {
 		      sneakyThrowRuleFailedException("leftType.eClass == rightType.eClass");
 		    }
 		  }
@@ -1029,16 +1028,17 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		try {
 		  Entity _ref = left.getRef();
 		  Entity _ref_1 = right.getRef();
-		  boolean _operator_equals = ObjectExtensions.operator_equals(_ref, _ref_1);
+		  boolean _equals = Objects.equal(_ref, _ref_1);
 		  /* left.ref == right.ref */
-		  if (!_operator_equals) {
+		  if (!_equals) {
 		    sneakyThrowRuleFailedException("left.ref == right.ref");
 		  }
 		} catch (Exception e) {
 		  Entity _ref_2 = right.getRef();
 		  EReference _entity_SuperType = XsemGuiDslPackage.eINSTANCE.getEntity_SuperType();
 		  EReference _entity_SuperType_1 = XsemGuiDslPackage.eINSTANCE.getEntity_SuperType();
-		  List<Entity> _all = this.<Entity>getAll(_ref_2, _entity_SuperType, _entity_SuperType_1, org.typesys.xsem.guidsl.xsemGuiDsl.Entity.class);
+		  List<Entity> _all = this.<Entity>getAll(_ref_2, _entity_SuperType, _entity_SuperType_1, 
+		    Entity.class);
 		  Entity _ref_3 = left.getRef();
 		  boolean _contains = _all.contains(_ref_3);
 		  /* getAll(right.ref, XsemGuiDslPackage::eINSTANCE.entity_SuperType, XsemGuiDslPackage::eINSTANCE.entity_SuperType, typeof(Entity) ).contains(left.ref) */
