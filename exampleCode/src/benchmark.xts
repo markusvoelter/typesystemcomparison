@@ -11,13 +11,17 @@ entity Person {
 
 entity Teacher extends Person {
 	subject : string;
-} 
+}
+
+entity ExtTeacher extends Teacher {
+	from: string;
+}
   
 entity Gym {}
   
 entity School {   
 	janitor: Person = new Gym; // error
-	head : Person = new Teacher; 
+	head : Person = new ExtTeacher; 
 	gym  = new Gym;  
 	gym2 : Gym = new Gym;
 }
