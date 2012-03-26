@@ -6,14 +6,14 @@ the actual type of an expression, the expected type (which depends on the
 context where the expression is used), and operations which check whether a type
 is assignable to another type. The Xtext validator in listing
 \ref{lst:validation-plain} uses these operations. The first check operates on
-any expression. A helper method is used to check whether the actual type is assignable to the expected type, for instance \emph{boolean} for the
+any expression. A helper method is used to check whether the actual type is
+assignable to the expected type, for instance \emph{boolean} for the
 \emph{validate} clause of a widget. The expected type of an expression usually
 depends on the context where the expression is in. In case there is no expected
-type, for instance for an attribute whose type is only defined by the
-derivation expression, the check operation just returns. The validation
-operating on checkbox widgets (respectively, text widgets) just checks that the
-type of the attribute the widget refers to is (respectively, is not)
-\emph{boolean}.
+type, for instance for an attribute whose type is only defined by the derivation
+expression, the check operation just returns. The validation operating on
+checkbox widgets (respectively, text widgets) just checks that the type of the
+attribute the widget refers to is (respectively, is not) \emph{boolean}.
 
 
 %\input{code/GuiDslTypeProvider.xtend}%linerange={15-23,31-42,49-57}
@@ -41,11 +41,18 @@ the type of the attribute that the widget refers to.
 provider in Xtend.]{code/GuiDslTypeProvider.xtend}
 
 The operation \emph{getExpectedType()} in listing \ref{lst:plain-type-provider1}
-returns the expected type of an EObject by checking its container. It calls another operation with the container of the EObject and the feature of the container pointing to it. For instance, if the container of an expression is a \emph{Widget} and the feature of the widget containing the expression is the \emph{validate} clause, the expected type is boolean. If the container is a form and the EObject a \emph{Widget}, the expected type must be primitive (i.e., a widget cannot directly edit an entity).
+returns the expected type of an EObject by checking its container. It calls
+another operation with the container of the EObject and the feature of the
+container pointing to it. For instance, if the container of an expression is a
+\emph{Widget} and the feature of the widget containing the expression is the
+\emph{validate} clause, the expected type is boolean. If the container is a
+\emph{Form} and the EObject a \emph{Widget}, the expected type must be primitive
+(i.e., a widget cannot directly edit an entity).
 
-The expected type of a subtraction, multiplication and division is a \emph{NumberType}. For an addition, it is a string, unless there
-is a common type of the summands that is more specific. The method returns
-\emph{null} to indicate if there is no expected type.
+The expected type of a subtraction, multiplication and division is a
+\emph{NumberType}. For an addition, it is a string, unless there is a common
+type of the summands that is more specific. The method returns \emph{null} to
+indicate if there is no expected type.
 
 %\lstinputlisting[label=lst:plain-type-provider2,caption=Calculating the expected type.,linerange={96-98,114-146}]{../org.typesys.guidsl/src/org/typesys/guidsl/types/GuiDslTypeProvider.xtend}
 
@@ -65,7 +72,7 @@ method is used to get the EMF \emph{EClass} of a type for comparison
 (parentheses may be omitted in Xtend 2 if there is no parameter).
 
 An entity can be assigned to another entity if it is of the same type (i.e., has
-the same EMF \emph{EClass}), or if it the latter is a super entity of the
+the same EMF \emph{EClass}), or if the latter is a super entity of the
 former.
 Here, the reference \emph{superType} is not an EMF reference, but the one given in the grammar for
 \emph{Entity}. Other special cases are dealt with the following methods. As
