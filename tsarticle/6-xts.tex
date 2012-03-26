@@ -3,17 +3,16 @@
 
 \subsection{Introduction}
 
-XTS was originally developed as a framework. The type system rules  had been
-specified declaratively via a Java API. Later, a DSL was put on top of the
-framework. The DSL simply generates the Java code you would have written
-manually without the DSL. For some aspects of type systems you still have to
-write procedural Java code, because no suitable declarative abstraction is
-available, either in the framework or in the DSL.
+XTS was originally developed as a framework with a Java API to declaratively
+specify type system rules. Later, a DSL was put on top of the framework which
+simply generates the Java code that had to be written before.
+If no suitable declarative abstraction is available, either in the framework or
+in the DSL, procedural Java code can still be added manually.
 
 At the center of XTS is the \ic{ITypesystem} interface. It has various methods for
 calculating the type of model elements, and for comparing types for
 compatibility and subtyping relationships. In principle, you can implement this
-interface anyway you like. However, to benefit from the framework, you should
+interface any way you like. However, to benefit from the framework, you should
 use the declarative APIs used in the \ic{DefaultTypesystem} implementation.
 
 \subsection{Hooking up the type checker}
@@ -206,7 +205,7 @@ typeof AttributeRef -> feature attr
 \end{lstlisting}
 
 The type of the widgets (they are not expressions, but as we will see below, it
-is useful if they have a type) should also be relatively straigthforward. This
+is useful if they have a type) should also be relatively straightforward. This
 is also where  the type system rules for our test case are finally implemented
 (Listing~\ref{lst:xts-widgets}).
 
@@ -245,35 +244,35 @@ The type of \ic{NewExpr} is the type of the \ic{new}'ed entity:
     typeof NewExpr -> feature entity
 \end{lstlisting}
 
-Finally, the type of an \ic{Entity} also has to be calculated with Java code, because
-it has to be an \ic{EntityType} that references the corresponding entity:
+ Finally, the type of an \ic{Entity} also has to be calculated with Java code, because
+ it has to be an \ic{EntityType} that references the corresponding entity:
 
 \begin{lstlisting}[language=Java]
-protected boolean compareTypes( EntityType t1, EntityType t2, CheckKind k, TypeCalculationTrace trace ) {
-    if ( k == CheckKind.same ) return t1.getRef() == t2.getRef();
-    if ( k == CheckKind.ordered ) return t1.getRef().getExtends() == t2.getRef();
-    return false;
-}
+    protected EObject type(Entity element, TypeCalculationTrace trace) {
+        EntityType et = (EntityType)create(cl.getEntityType());
+        et.setRef(element);
+        return et;
+    }
 \end{lstlisting}
 
-
 There is one more interesting open issue. We have to implement the subtyping
-relationship between entities. This is not so simple, because we compare 
+relationship between entities. This is not so simple, because we compare
 \ic{EntityType}s, and the subtyping depends on whether their corresponding
-referenced entities are subtypes of each other. So instead of declaring a subtype relationship
-in the DSL, we can implement a type comparison function in Java:
+referenced entities are subtypes of each other. So instead of declaring a
+subtype relationship in the DSL, we can implement a type comparison function in
+Java. The method \emph{internalCompareTypesOrdered()} checks the entity subtype
+relation with cycle detection as seen in the plain Xtext case in listing
+\ref{lst:plain-type-conformance}, operation \emph{internalIsAssignable()}.
+
 
 \begin{lstlisting}[language=Java]
 protected boolean compareTypes( EntityType t1, EntityType t2, CheckKind k, TypeCalculationTrace trace ) {
     if ( k == CheckKind.same ) return t1.getRef() == t2.getRef();
-    if ( k == CheckKind.ordered ) return extends( t1.getRef(), t2.getRef() );
+    if ( k == CheckKind.ordered ) return internalCompareTypesOrdered(
+        t1.getRef(), t2.getRef(), Sets.<Entity>newHashSet());
     return false; 
 }
 \end{lstlisting}
-
-
-
-
 
 
 \subsection{Status of the Framework}
