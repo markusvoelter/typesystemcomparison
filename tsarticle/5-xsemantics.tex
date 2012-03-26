@@ -8,7 +8,7 @@ A system definition in Xsemantics is a set of judgment rules which have a
 conclusion and a set of premises; these rules can act on any Java object,
 though, typically, they will act on EObjects which are elements of the metamodel
 of the language implemented in Xtext.  Indeed, Xsemantics relies on Xbase to
-provide a rich syntax for defining rules (and premises of rule), thus giving
+provide a rich syntax for defining rules (and premises of rules), thus giving
 full access to Java types.
 
 Xsemantics is thought to be used by people who are at least a little familiar
@@ -17,7 +17,8 @@ a syntax which is close to the way deduction rules are written in a formal
 setting~\cite{hindley:1997a,Pierce02}.
 Actually, Xsemantics rules are written in the other direction with respect
 to standard deduction rules: the conclusion comes before the premises; this is
-just to make the IDE tooling work better, and to give a more "programming" style to rules.
+just to make the IDE tooling work better, and to give a more "programming"-like
+style to rules.
 
 Starting from the definitions of these rules, Xsemantics generates Java code
 that can be used in your language implemented in Xtext for scoping and
@@ -68,7 +69,7 @@ system org.typesys.xsem.guidsl.xsemantics.TypeSystem
 import org.typesys.xsem.guidsl.xsemGuiDsl.*
 
 judgments {
-	type ||- Typable typable : output Type
+	type |- Typable typable : output Type
 	// whether {@code right} is assignable to {@code left}
 	isAssignable |- Type left <~ Type right
 	// computes the most general type between {@code first} and {@code second}
@@ -78,7 +79,7 @@ judgments {
 
 \noindent
 The judgment definitions for our case study are shown in
-Listing~\ref{lst:xsem-judgments}.
+listing~\ref{lst:xsem-judgments}.
 
 Once the judgments of the system are declared, we can start declaring the
 rules.  Each rule consists of
@@ -113,18 +114,17 @@ same judgment must differ for at least one input parameter's type.
 
 The premises of a rule which are specified in a \verb|from| block can be any
 Xbase expression, or a \emph{rule invocation}.  If you think of a rule
-declaration as a function declaration, then a rule invocation corresponds to function invocation,
-thus you must specify the environment to pass to the rule, and the arguments,
-both input and output arguments.
-The premises of an Xsemantics rule are considered in \emph{logical and} relation
-and are verified in the same order they are specified in the block.
-If we need premises (block of premises) in \emph{logical or} relation, we can
-use the operator \verb|or|, which separates blocks of premises; if (and only if) one
-of the premises of the first block fails, the premises of the second block are
-inspected, etc.
-If a rule does not require any premise, we can use a special form of
-rules, called indeed \textit{axiom}s, which only have a conclusion, without
-premises.
+declaration as a function declaration, then a rule invocation corresponds to a
+function invocation, thus you must specify the environment to pass to the rule,
+and the arguments, both input and output arguments.
+The premises of an Xsemantics rule are considered to be in a \emph{logical and}
+relation and are verified in the same order they are specified in the block.
+If we need premises (or blocks of premises) in a \emph{logical or} relation, we
+can use the operator \verb|or|, which separates blocks of premises; if (and only
+if) one of the premises of the first block fails, the premises of the second
+block are inspected, etc.
+If a rule does not require any premise, we can use a special kind of rule,
+called \textit{axiom}, which only has a conclusion.
 
 Also the concept of rule environment is taken from the type theory (usually it
 is denoted by the $\g$).  It can be used to pass additional arguments to rules.
@@ -176,22 +176,22 @@ from {
 }
 \end{lstlisting}
 
-In Listing~\ref{lst:xsem-firstrules} we present some rules for the judgment
-\mytt{type} (see Listing~\ref{lst:xsem-judgments}, recall that in the rules of
+In listing~\ref{lst:xsem-firstrules} we present some rules for the judgment
+\mytt{type} (see listing~\ref{lst:xsem-judgments}, recall that in the rules of
 these judgments the second parameter is an output parameter).
 For typing a literal (in the example a boolean literal) we write an axiom (since
 there is no premise) and the result is a \mytt{BooleanType} (created through the
 EMF factory for our language).  The rule for typing an \mytt{AttributeRef} can
 be read as follows: the type of an \mytt{AttributeRef} is the type resulting
 from typing the corresponding referred attribute (the feature \mytt{attr}, refer
-to Listing~\ref{lst:grammar-plain}). The type of a \mytt{LenghtOf} expression is
+to listing~\ref{lst:grammar-plain}). The type of a \mytt{LenghtOf} expression is
 an integer type, provided that the expression argument of \mytt{LenghtOf} has
 string type.  Finally, for typing \mykeyb{widgetcontent} we make use of the
 rule environment: we access the environment with the predefined function
 \mykeyb{env}, by specifying the key and the expected Java type of the
 corresponding value.  If no key is found in the environment or the value cannot
 be assigned to the specified Java type the premise will fail.  We will show
-how such environment is passed in Section~\ref{sec:xsem-validation}.  Thus, this
+how an environment is passed in Section~\ref{sec:xsem-validation}.  Thus, this
 rule will type \mykeyb{widgetcontent} with the type of the corresponding
 attribute. 
 
@@ -220,20 +220,21 @@ as
 \end{center}
 
 \noindent
-Note how the rules in Xsemantics (see Listing~\ref{lst:xsem-firstrules}) remind
-of the deduction rules typically used in formal type systems.
+Note how the rules in Xsemantics (see listing~\ref{lst:xsem-firstrules})
+resemble the deduction rules typically used in formal type systems.
 
 At runtime, upon rule invocation, the generated Java system will select the most
 appropriate rule according to the runtime types of the passed argument (using
 the \textit{polymorphic dispatch} mechanism provided by Xtext).
 
-If one of the premises fails, then the whole rule will fail, and in turn all the
-stack of rule invocation will fail.  In particular, if the premise is a boolean
-expression, it will fail if the expression evaluates to false.  If the premise
-is a rule invocation, it will fail if the invoked rule fails.
+If one of the premises fails, then the whole rule will fail.
+% and in turn all the stack of rule invocation will fail
+In particular, if the premise is a boolean expression, it will fail if the
+expression evaluates to false.  If the premise is a rule invocation, it will
+fail if the invoked rule fails.
 
-As another example, we show in Listing~\ref{lst:xsem-attribute} the rule for
-\mytt{Attribute}.  Recall (refer to Listing~\ref{lst:grammar-plain}) that an
+As another example, we show in listing~\ref{lst:xsem-attribute} the rule for
+\mytt{Attribute}.  Recall (refer to listing~\ref{lst:grammar-plain}) that an
 attribute can have an explicit type and an initialization expression. The rule
 says that in case the type is not explicit the resulting type is the type of the
 initialization expression; otherwise, the resulting type is the explicit type of
@@ -258,8 +259,8 @@ from {
 }
 \end{lstlisting}
 
-Thus, the rule in Listing~\ref{lst:xsem-attribute} relies on rules of the
-judgment \mytt{isAssignable} (see Listing~\ref{lst:xsem-judgments}); the rules
+Thus, the rule in listing~\ref{lst:xsem-attribute} relies on rules of the
+judgment \mytt{isAssignable} (see listing~\ref{lst:xsem-judgments}); the rules
 of this judgment, which basically implements subtyping, do not have an output
 parameter, they accept two types as parameters; the intention of these rules is
 that they succeed if the right parameter is assignable to the left parameter.
@@ -282,7 +283,7 @@ axiom IntAssignableToFloat
 	G |- FloatType left <~ IntType right
 \end{lstlisting}
 
-In Listing~\ref{lst:xsem-assignable} we present some rules for the
+In listing~\ref{lst:xsem-assignable} we present some rules for the
 \mytt{isAssignable} judgment.  The first rule is the most general case, and says
 that types of the same kind are assignable to each other (in this context
 ``kind'' corresponds to EClass); moreover, we have some axioms saying that
@@ -305,22 +306,21 @@ from {
 }
 \end{lstlisting}
 
-In Listing~\ref{lst:xsem-entitysubtyping} we show a more interesting case for
+In listing~\ref{lst:xsem-entitysubtyping} we show a more interesting case for
 subtyping: the one between two \mytt{EntityType}s.  The idea is that
 \mytt{right} can be assigned to \mytt{left} either if they are the same type (entity
 subtyping is reflexive) or if \mytt{left} is a ``super entity'' (possibly
 indirectly) for \mytt{right} (entity subtyping is transitive).  We could check
 the latter condition by following recursively the feature \mytt{superType} of
-the right entity; however, in an incorrect program the entity hierarchy might be
+the right entity; however, in an incorrect program the entity hierarchy might 
 contain cycles, and this recursive inspection might lead to an infinite loop. 
 In a manual Java implementation we thus would have to keep track of the visited
 entities while inspecting the hierarchy (see
-Listings~\ref{lst:plain-type-provider1} and~\ref{lst:plain-type-conformance}). 
-Indeed, the AST for Xtext languages, due to references might be graphs.  Since when developing Xtext languages we
-might face the issue of inspecting a graph avoiding possible loops, e.g., to
-compute the ``closure'' of a graph, Xsemantics provides a predefined function
+listings~\ref{lst:plain-type-provider1} and~\ref{lst:plain-type-conformance}). 
+Indeed, the AST for an Xtext language might be a graph due to references. 
+To compute the ``closure'' of a graph, Xsemantics provides a predefined function
 which allows to collect nodes in a graph according to EMF features avoiding
-loops.  Such function is
+loops:
 
 \begin{small}
 \begin{verbatim}
@@ -328,12 +328,12 @@ getAll(eObject, feature to collect, feature to follow, expected type)
 \end{verbatim}
 \end{small}
 
-\noindent an invocation of \mytt{getAll} will return a list of ``expected
+\noindent An invocation of \mytt{getAll} will return a list of ``expected
 type'', built by collecting all the elements from ``feature to collect'' of the
 specified ``eObject'', and recursively collecting such elements by following the
-feature ``feature to follow'', but avoiding possible loops in the EMF graph
+feature ``feature to follow'', but avoid possible loops in the EMF graph
 representing the AST.
-Thus, in the use of Listing~\ref{lst:xsem-entitysubtyping}, it will return all
+Thus, in listing~\ref{lst:xsem-entitysubtyping}, it will return all
 the superclasses of \mytt{right}.  Similarly, we can get all the attributes of
 an entity, including the inherited ones, by simply calling
 
@@ -357,10 +357,10 @@ from {
 }
 \end{lstlisting}
 
-The judgment \mytt{mostGeneral} (Listing~\ref{lst:xsem-judgments}) takes two
+The judgment \mytt{mostGeneral} (listing~\ref{lst:xsem-judgments}) takes two
 types as input parameters and returns as output the most general between the
 two; this judgment has one simple rule, shown in
-Listing~\ref{lst:xsem-mostgeneral}.
+listing~\ref{lst:xsem-mostgeneral}.
 
 \begin{lstlisting}[language=xsemantics,float,label=lst:xsem-binaryexp,caption=Some
 rules for binary expressions.] 
@@ -387,29 +387,29 @@ from {
 
 The judgment \mytt{mostGeneral} is useful for typing some binary expressions,
 for instance, \mytt{Minus} and \mytt{Plus}, shown in
-Listing~\ref{lst:xsem-binaryexp}.  The typing rule for \mytt{Minus} requires
+listing~\ref{lst:xsem-binaryexp}.  The typing rule for \mytt{Minus} requires
 that the two subexpressions have a numeric type (recall that since we specify a
-\mytt{NumberType} as the output argument in rule invocation, such invocation
+\mytt{NumberType} as the output argument in rule invocation, its invocation
 will succeed only if the result is assignable to \mytt{NumberType}); the
 resulting type will be the most general type, thus, for instance, if one of the
-two subexpressions have type \mytt{FloatType} and the other one \mytt{IntType},
-the resulting type will be \mytt{FloatType}.  Recall that we use \mytt{+} not
+two subexpressions has the type \mytt{FloatType} and the other one
+\mytt{IntType}, the resulting type will be \mytt{FloatType}.  Recall that we use \mytt{+} not
 only as the arithmetic operator, but also for string concatenation; in
 particular, if one of the subexpression is a string, the whole expression is
-considered as string concatenation.  Thus, the rule for \mytt{Plus} computes the
-types of the two subexpressions, and then gets the most general; if one of them
+considered as a string concatenation.  Thus, the rule for \mytt{Plus}
+computes the types of the two subexpressions, and then gets the most general; if one of them
 is a string type, the whole expression will have string type (see also subtyping
-rules in Listing~\ref{lst:xsem-assignable}).
+rules in listing~\ref{lst:xsem-assignable}).
 
 \subsection{Rules for the Validator}
 \label{sec:xsem-validation}
 
-In an Xsemantics system we can specify some special rules which do not belong to
-any judgment, \mytt{checkrule}, which are used by Xsemantics to generate a Java
-validator for the Xtext language.  A \mytt{checkrule} has a name, a single
-parameter (which is the EObject which will be checked by the validator) and the
-premises (but no rule environment).  The syntax of the premises of a
-\mytt{checkrule} is the same of standard rules.
+In an Xsemantics system we can specify some special rules of type
+\mytt{checkrule} which do not belong to any judgment. They are used by
+Xsemantics to generate a Java validator for the Xtext language.  A
+\mytt{checkrule} has a name, a single parameter (which is the EObject which will
+be checked by the validator) and the premises (but no rule environment).  The
+syntax of the premises of a \mytt{checkrule} is the same of standard rules.
 Xsemantics will generate a Java validator with a \checkm{} method for each
 \mytt{checkrule}; just like in Java validators for Xtext languages, you can have
 many checkrules for the same JavaType (provided the rule name is unique).
@@ -436,26 +436,27 @@ checkrule ValidateCheckBoxWidgetAttributeBoolean for CheckBoxWidget widget
 from { 'widgetcontent' <- widget.attr |- widget.attr : var BooleanType attrType }
 \end{lstlisting}
 
-In Listing~\ref{lst:xsem-validator} we present some checkrules for validating
+In listing~\ref{lst:xsem-validator} we present some checkrules for validating
 the elements of our language (see Section~\ref{sec:casestudy}).  The first
 checkrule basically says that an Attribute is correct if we can give it a type
-(in the empty environment).  The second one accepts a Widget provided that
+(in the empty environment).  The second one accepts a Widget and ensures that
 either its validate part is not specified or it has a boolean type; note that in
 this case we pass to the type rule invocation an explicit environment so that we
-are able to type possible occurrences of \mykeyb{widgetcontent}.  These first two
-rules also show an important use of the environment: since the rule for typing
-\mykeyb{widgetcontent} (Listing~\ref{lst:xsem-firstrules}) requires that the
-string `widgetcontent' is bound to an attribute in the environment, and since when typing an attribute we provide an
-empty environment, then a possible occurrence of \mykeyb{widgetcontent} in an
-attribute's initialization expression (which is accepted by the grammar) will be
-automatically (and correctly) rejected.
-The third checkrule requires that the text widget's attribute is not of boolean
+are able to type possible occurrences of \mykeyb{widgetcontent}.  These first
+two rules also show an important use of the environment: since the rule for
+typing \mykeyb{widgetcontent} (listing~\ref{lst:xsem-firstrules}) requires that
+the string `widgetcontent' is bound to an attribute in the environment, and
+since when typing an attribute we provide an empty environment, then a possible
+occurrence of \mykeyb{widgetcontent} in an attribute's initialization expression
+(which is accepted by the grammar) will be automatically (and correctly)
+rejected.
+The third checkrule requires that the TextWidget's attribute is not of boolean
 type, while the fourth one requires that the checkbox's attribute has a boolean
 type (by implicitly trying to assign the result type, in the rule invocation, to
 a boolean type).
 \subsection{Usage in Xtext}
 
-Xsemantics will generate two Java classes for each xsemantics system:
+Xsemantics will generate two Java classes for each Xsemantics system:
 A Java class with the same name of the system, containing all the
 implementations of the system's rules; a derived class from
 \mytt{AbstractDeclarativeValidator}, with a \checkm{} for each checkrule (see
@@ -494,7 +495,7 @@ public Result<MyOutputClass> myjudgment(
 	MyClass1 arg1, MyClass2 arg2)
 \end{lstlisting}
 
-The class \mytt{Result} is part of Xsemantics runtime, and it is a wrapper for
+The class \mytt{Result} is part of Xsemantics runtime, and is a wrapper for
 the actual result value and a possible failure (in the shape of a \failedexc).
 The value in the result will be \mytt{null} if the judgment rule failed; in that
 case one might want to inspect the \failedexc.
@@ -514,7 +515,7 @@ method terminates with success you can then inspect the trace of all the rules
 invoked together with the values used in the rules.  If the judgment fails,
 you will see also the rules that failed in the rule application trace.
 Xsemantics provides utility methods to get a string representation of a trace
-indented, with the following idea
+indented, yielding an output similar to the following.
 
 \begin{footnotesize}
 \begin{verbatim}
