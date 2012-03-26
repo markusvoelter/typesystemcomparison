@@ -1,16 +1,16 @@
 package org.typesys.xts.guidsl.typesys;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.typesys.xts.guidsl.guiDsl.Entity;
 import org.typesys.xts.guidsl.guiDsl.EntityType;
-import org.typesys.xts.guidsl.guiDsl.FieldContent;
 import org.typesys.xts.guidsl.guiDsl.GuiDslPackage;
-import org.typesys.xts.guidsl.guiDsl.NewExpr;
 import org.typesys.xts.guidsl.guiDsl.NumberLiteral;
-import org.typesys.xts.guidsl.guiDsl.Widget;
+
+import com.google.common.collect.Sets;
 
 import de.itemis.xtext.typesystem.trace.TypeCalculationTrace;
-import de.itemis.xtext.typesystem.util.Utils;
 
 public class GuiDlsTypesystem extends GuiDlsTypesystemGenerated {
 
@@ -48,10 +48,22 @@ public class GuiDlsTypesystem extends GuiDlsTypesystemGenerated {
 	
 	protected boolean compareTypes( EntityType t1, EntityType t2, CheckKind k, TypeCalculationTrace trace ) {
 		if ( k == CheckKind.same ) return t1.getRef() == t2.getRef();
-		if ( k == CheckKind.ordered ) return t1.getRef().getExtends() == t2.getRef();
+		if ( k == CheckKind.ordered ) return internalCompareTypesOrdered(t1.getRef(), t2.getRef(), Sets.<Entity>newHashSet());
 		return false;
 	}
 
-	
+	/**
+	 * An entity can be assigned to its super type(s) (extends is a reference 
+	 * specified in the DSL)
+	 * @param t1 the type that is expected to be more general
+	 * @param t2 the type that is checked if it is a subclass of t1
+	 * @param to prevent cycles, set of types already visited
+	 */
+	protected boolean internalCompareTypesOrdered(Entity t1, Entity t2, Set<Entity> visited) {
+		if (visited.contains(t2)) return false; // cycle detected
+		visited.add(t2);
+		return t1 == t2 || (t2.getExtends()!= null && 
+				internalCompareTypesOrdered(t1, t2.getExtends(), visited));
+	}
 	
 }
