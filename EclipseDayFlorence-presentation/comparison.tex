@@ -1,6 +1,93 @@
 \section{Comparison}
 
-\begin{frame}
-\frametitle{Comparison}
+\begin{frame}[fragile,allowframebreaks]
+  \frametitle{Which approach should I use when?}
+  
+  Criteria to help in deciding which approach might be good for a particular use
+  case:
+  \begin{itemize}
+    \item Context: coupling of the DSL with Java
+    \item Expressivity
+    \item Verbosity/conciseness
+    \item Customizability
+    \item Additional features
+    \item Target audience
+    \item Learning curve
+    \item documentation
+    \item support
+  \end{itemize}
+  
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Context: coupling of the DSL with Java} \\ \hline
+Plain & - \\
+Xbase & Generation of Java classes with the JvmModelInferrer, may use these in
+DSL \\
+Xsem & - \\
+XTS & - \\
+\end{tabularx}
 
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Expressivity} \\ \hline
+Plain & - \\
+Xbase & - \\
+Xsem & - \\
+XTS & - \\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Verbosity/conciseness} \\ \hline
+Plain & uses Xtend to make code concise \\
+Xbase & JvmModelInferrer using Xtend \\
+Xsem & - \\
+XTS & - \\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Customizability} \\ \hline
+Plain & change source \\
+Xbase & Xtext framework \\
+Xsem & - \\
+XTS & hooks for own implementations \\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Additional Features} \\ \hline
+Plain & - \\
+Xbase & generated Java classes for free \\
+Xsem & dynamic type checking and interpreters \\
+XTS & - \\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Target audience} \\ \hline
+Plain & - \\
+Xbase & - \\
+Xsem & people familiar with type systems \\
+XTS & - \\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Learning curve} \\ \hline
+Plain & Xtend recommended \\
+Xbase & JVM Model inferrer from Xtext Documentation \\
+Xsem & - \\
+XTS & - \\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Documentation} \\ \hline
+Plain & Xtext/Xtend in general \\
+Xbase & Xtext documentation JvmModelInferrer \\
+Xsem & http://xsemantics.sourceforge.net/ \\
+XTS & http://code.google.com/a/eclipselabs.org/p/xtext-typesystem/ \\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Support} \\ \hline
+Plain & - \\
+Xbase & - \\
+Xsem & - \\
+XTS & - \\
+\end{tabularx}
+  
 \end{frame}
