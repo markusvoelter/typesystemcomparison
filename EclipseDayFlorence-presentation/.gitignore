@@ -1,0 +1,13 @@
+tmp
+main.pdf
+presentation.pdf
+handouts*.pdf
+*.dvi
+*~
+*.aux
+*.bbl
+*.blg
+*.log
+*.tex.orig
+*.synctex.gz
+/tmp

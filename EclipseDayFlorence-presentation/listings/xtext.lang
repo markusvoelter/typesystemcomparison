@@ -1,0 +1,10 @@
+include "number.lang"
+
+include "c_string.lang"
+
+keyword = "grammar|with|generate|current|returns"
+
+function = '^[[:alnum:]]+[[:blank:]]*:'
+function = '^[[:alnum:]]+[[:blank:]]*(?=returns)'
+
+symbol = "(",")","?","+","=","*","\|"
