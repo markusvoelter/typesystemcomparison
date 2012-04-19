@@ -102,8 +102,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			final Typable typable) {
 		try {
 			return typeInternal(_environment_, _trace_, typable);
-		} catch (Exception e) {
-			return resultForFailure(e);
+		} catch (Exception _e_type) {
+			return resultForFailure(_e_type);
 		}
 	}
 	
@@ -122,8 +122,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			final Type left, final Type right) {
 		try {
 			return isAssignableInternal(_environment_, _trace_, left, right);
-		} catch (Exception e) {
-			return resultForFailure(e);
+		} catch (Exception _e_isAssignable) {
+			return resultForFailure(_e_isAssignable);
 		}
 	}
 	
@@ -142,8 +142,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 			final Type first, final Type second) {
 		try {
 			return mostGeneralInternal(_environment_, _trace_, first, second);
-		} catch (Exception e) {
-			return resultForFailure(e);
+		} catch (Exception _e_mostGeneral) {
+			return resultForFailure(_e_mostGeneral);
 		}
 	}
 
@@ -333,8 +333,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		try {
 			checkParamsNotNull(typable);
 			return typeDispatcher.invoke(_environment_, _trace_, typable);
-		} catch (Exception e) {
-			sneakyThrowRuleFailedException(e);
+		} catch (Exception _e_type) {
+			sneakyThrowRuleFailedException(_e_type);
 			return null;
 		}
 	}
@@ -357,8 +357,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		try {
 			checkParamsNotNull(left, right);
 			return isAssignableDispatcher.invoke(_environment_, _trace_, left, right);
-		} catch (Exception e) {
-			sneakyThrowRuleFailedException(e);
+		} catch (Exception _e_isAssignable) {
+			sneakyThrowRuleFailedException(_e_isAssignable);
 			return null;
 		}
 	}
@@ -368,8 +368,8 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
 		try {
 			checkParamsNotNull(first, second);
 			return mostGeneralDispatcher.invoke(_environment_, _trace_, first, second);
-		} catch (Exception e) {
-			sneakyThrowRuleFailedException(e);
+		} catch (Exception _e_mostGeneral) {
+			sneakyThrowRuleFailedException(_e_mostGeneral);
 			return null;
 		}
 	}
