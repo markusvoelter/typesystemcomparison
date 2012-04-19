@@ -1,25 +1,53 @@
 \section{Introduction}
 
 \begin{frame}
-  \frametitle{Implementing a Language}
-
-  \begin{itemize}
-  \item writing the parser using a compiler generator (like, e.g.,
-    Flex \& Bison and ANTLR),
-  \item building the abstract syntax tree (AST), 
-  \item perform all the visits on the AST (e.g., type checking),
-  \item and finally generate code into a target language or build the
-    interpreter.
-  \end{itemize}
-
-\onslide<2->
+  \frametitle{Are Typesystems Useful?}
 
 \begin{itemize}
-\item Also implement an IDE for the language
+  \item advent of DSLs and DSL tools made writing languages popular
+  \item easy even for complex domains
+  \item complex languages require complex constraint checking
+  \item most languages have a concept of types: reusable building blocks for
+  constraints
+\end{itemize}
+
+In this presentation:
+\begin{itemize}
+  \item Using Xtext as DSL development environment
+  \item case study: form based editing of entities
+  \item compare different approaches to use type systems
+\end{itemize}
+
+% \onslide<2->
+
+\end{frame}
+
+\begin{frame}[allowframebreaks,fragile]
+  \frametitle{Typesystem Introduction}
   \begin{itemize}
-  \item syntax highlighting
-  \item code completion, etc.
+    \item Concept of types
+    \item static vs dynamic type checking
   \end{itemize}
 
+  \begin{itemize}
+    \item graphical example for type inference
+   \end{itemize}
+
+\begin{verbatim}
+name : string;
+
+num = 41 + 1;
+
+greeting : string = "Hi " + name + ", the answer is " + num + ".";
+\end{verbatim}
+
+Common tasks of type systems:
+
+\begin{itemize}
+  \item Assigning fixed types to language elements
+  \item is a type conformant to another type?
+  \item Inferring types of complex expressions
 \end{itemize}
+
 \end{frame}
+
