@@ -3,45 +3,23 @@
 joint work with\\
 \textbf{Serano Colameo}$^2$ \and \textbf{Markus V\"olter}$^3$}
 \institute{$^1$Dipartimento di Informatica, Universit\`a di Torino, Italy\\
-$^2$Itemis AG, Zurich, Switzerland\\
+$^2$Itemis GmbH, Zurich, Switzerland\\
 $^3$Itemis AG, Stuttgart, Germany}
 \date{Eclipse Day Florence, 4th May, 2012.}
 
 \begin{document}
 \maketitle
 
-% \section*{Outline}
-% \begin{frame}
-%    \tableofcontents
-% \end{frame}
-
-\section{Introduction}
-
+\section*{Outline}
 \begin{frame}
-  \frametitle{Implementing a Language}
-
-  \begin{itemize}
-  \item writing the parser using a compiler generator (like, e.g.,
-    Flex \& Bison and ANTLR),
-  \item building the abstract syntax tree (AST), 
-  \item perform all the visits on the AST (e.g., type checking),
-  \item and finally generate code into a target language or build the
-    interpreter.
-  \end{itemize}
-
-\onslide<2->
-
-\begin{itemize}
-\item Also implement an IDE for the language
-  \begin{itemize}
-  \item syntax highlighting
-  \item code completion, etc.
-  \end{itemize}
-
-\end{itemize}
+   \tableofcontents
 \end{frame}
 
-
+\include{intro}
+\include{casestudy}
+\include{plain-xtext}
+\include{xbase}
+\include{comparison}
 
 \end{document}
 
