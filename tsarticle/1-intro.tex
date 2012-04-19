@@ -34,9 +34,9 @@ greeting : string = "Hi " + name + ", the answer is " + num + ".";
 \end{lstlisting}
 
 We define the type of the element \emph{string} to be itself, which is usual for
-type declarations. We then define the type of variables to be a) the type of the
-element after the colon (\verb|:|), if there is one, or, if no colon is there,
-the type of the expression after the equals symbol (\verb|=|).
+type declarations. We then define the type of variables to be the type of the
+element after the colon (\verb|:|), if there is one. If no colon is there,
+it's the type of the expression after the equals symbol (\verb|=|).
 If there are both an explicit type specification and a derivation expression,
 the type of the derivation expression has to be conformant to the specified
 type. Conformance could mean that the two types have to be in a generalization
