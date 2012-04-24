@@ -13,40 +13,49 @@
     \item Additional features
     \item Target audience
     \item Learning curve
-    \item documentation
-    \item support
+    \item Documentation
+    \item Support
   \end{itemize}
   
 \begin{tabularx}{\linewidth}{ l   X }
 \multicolumn{2}{c}{Context: coupling of the DSL with Java} \\ \hline
-Plain & - \\
-Xbase & Generation of Java classes with the JvmModelInferrer, may use these in
-DSL \\
-Xsem & - \\
-XTS & - \\
+Plain & DSL may refer to \emph{JavaVMTypes} as known from Xtext 1\\
+Xbase & Tight coupling, DSL may link to Java classes, JvmModelInferrer generates
+Java classes from DSL model elements\\
+Xsem & see \emph{Plain} \\
+XTS & see \emph{Plain} \\
 \end{tabularx}
+\begin{itemize}
+  \item JavaVMTypes: use \emph{import
+  ``http://\-www.eclipse.org/\-xtext/\-common/\-JavaVMTypes'' \ldots}
+  \item All approaches allow to hook in custom java methods for typing rule
+  computation
+\end{itemize}
 
 \begin{tabularx}{\linewidth}{ l   X }
 \multicolumn{2}{c}{Expressivity} \\ \hline
 Plain & - \\
-Xbase & - \\
+Xbase & Xbase library \\
 Xsem & - \\
 XTS & - \\
 \end{tabularx}
 
 \begin{tabularx}{\linewidth}{ l   X }
 \multicolumn{2}{c}{Verbosity/conciseness} \\ \hline
-Plain & uses Xtend to make code concise \\
-Xbase & JvmModelInferrer using Xtend \\
-Xsem & - \\
-XTS & - \\
+Plain & Xtend, \emph{TypeProvider}, \emph{TypeConformance}, $\approx$300 LOC\\
+Xbase & Xtend, \emph{JvmModelInferrer}, reuse Java types, $\approx$200 LOC  \\
+Xsem &  -, $\approx$200 LOC \\
+XTS & -, $\approx$70 LOC\\
 \end{tabularx}
+TODO: Numbers are just placeholders, define what goes into LOC and then count,
+count characters instead of LOC?
+
 
 \begin{tabularx}{\linewidth}{ l   X }
 \multicolumn{2}{c}{Customizability} \\ \hline
-Plain & change source \\
-Xbase & Xtext framework \\
-Xsem & - \\
+Plain & no framework, change source \\
+Xbase & Xbase and Xtext framework \\
+Xsem & use generated Java methods in your implementation \\
 XTS & hooks for own implementations \\
 \end{tabularx}
 
@@ -54,8 +63,8 @@ XTS & hooks for own implementations \\
 \multicolumn{2}{c}{Additional Features} \\ \hline
 Plain & - \\
 Xbase & generated Java classes for free \\
-Xsem & dynamic type checking and interpreters \\
-XTS & - \\
+Xsem & dynamic type checking and interpreters, generates validators \\
+XTS & \ldots, generates validators \\
 \end{tabularx}
 
 \begin{tabularx}{\linewidth}{ l   X }
@@ -68,9 +77,9 @@ XTS & - \\
 
 \begin{tabularx}{\linewidth}{ l   X }
 \multicolumn{2}{c}{Learning curve} \\ \hline
-Plain & Xtend recommended \\
-Xbase & JVM Model inferrer from Xtext Documentation \\
-Xsem & - \\
+Plain & Xtend \\
+Xbase & Xbase, JVM Model inferrer from Xtext Documentation \\
+Xsem & similar to rules written in commonly used type theory \\
 XTS & - \\
 \end{tabularx}
 
