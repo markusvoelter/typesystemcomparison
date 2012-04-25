@@ -5,7 +5,7 @@ import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
 var grammarURI = "classpath:/org/typesys/xsem/guidsl/XsemGuiDsl.xtext"
-var file.extensions = "xsemgui"
+var file.extensions = "xsem"
 var projectName = "org.typesys.xsem.guidsl"
 var runtimeProject = "../${projectName}"
 
