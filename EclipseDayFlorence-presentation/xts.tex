@@ -4,3 +4,28 @@
 \frametitle{Xtext Typesystem (XTS)}
 \tableofcontents[currentsection]
 \end{frame}
+
+
+\begin{frame}[allowframebreaks,fragile]
+\frametitle{Titel ausdenken}
+
+\begin{verbatim}
+
+	characteristic NUMERIC {
+		IntType, FloatType
+	} 
+
+ 	typeof Plus -> common left right {
+ 		ensureType left :<=: StringType, char(NUMERIC)
+ 		ensureType right :<=: StringType, char(NUMERIC)
+ 		ensureCompatibility left :<=>: right
+ 	} 
+\end{verbatim}
+
+\note{TODO :  check if this is desired
+text(20) -> firstName validate widgetcontent + true; // valid
+text(20) -> firstName validate true + widgetcontent; // invalid
+}
+ 	
+ 	
+\end{frame}

@@ -3,4 +3,38 @@
 \begin{frame}
 \frametitle{XSemantics}
 \tableofcontents[currentsection]
+
+\end{frame}
+
+\begin{frame}[allowframebreaks,fragile]
+
+\begin{verbatim}
+rule PlusType
+	G |- Plus plus : Type type
+from {
+	// deal with any type
+	G |- plus.left : var Type leftType
+	G |- plus.right : var Type rightType
+	// get the most general (which can also be string)
+	G |- leftType ~~ rightType |> type
+}
+
+judgments {
+   isAssignable |- Type left <~ Type right
+	  error stringRep(right) + " is not assignable to " + stringRep(left)
+   ...
+}
+
+rule IsAssignableBase
+	G |- Type left <~ Type right
+from {
+	left.eClass.isSuperTypeOf(right.eClass)
+}
+
+axiom IntAssignableToString
+	G |- StringType left <~ NumberType right
+
+\end{verbatim}
+
+\note{transitive hull implemented, but not shown here}
 \end{frame}

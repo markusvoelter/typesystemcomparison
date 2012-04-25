@@ -2,24 +2,35 @@
 
 \begin{frame}
   \frametitle{Are Typesystems Useful?}
+  
+  \begin{itemize}
+    \item advent of DSLs and DSL tools made writing languages popular
+    \item easy even for complex domains
+    \item complex languages require complex constraint checking
+    \item most languages have a concept of types: reusable building blocks for
+    constraints
+  \end{itemize}
+  
+  In this presentation:
+  \begin{itemize}
+    \item Using Xtext as DSL development environment
+    \item case study: form based editing of entities
+    \item compare different approaches to use type systems
+  \end{itemize}
+\end{frame}
 
-\begin{itemize}
-  \item advent of DSLs and DSL tools made writing languages popular
-  \item easy even for complex domains
-  \item complex languages require complex constraint checking
-  \item most languages have a concept of types: reusable building blocks for
-  constraints
-\end{itemize}
-
-In this presentation:
-\begin{itemize}
-  \item Using Xtext as DSL development environment
-  \item case study: form based editing of entities
-  \item compare different approaches to use type systems
-\end{itemize}
-
-% \onslide<2->
-
+\begin{frame}
+	\frametitle{Case Study} % for adjustments use overpic[grid,tics=10]  
+	\begin{overpic}[scale=0.6]%
+       {img/form-valid.png}
+       \only<2>{
+        \put(55,-40){\includegraphics[scale=0.6]%
+		{img/form-invalid.png}}}
+     \end{overpic}
+	
+	
+%	\includegraphics[width=0.5\linewidth]{img/form-valid.png}
+	%\includegraphics[width=0.7\linewidth]{img/form-invalid.png}
 \end{frame}
 
 \begin{frame}[allowframebreaks,fragile]
