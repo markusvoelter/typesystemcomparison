@@ -30,7 +30,8 @@ public class GuiDlsTypesystem extends GuiDlsTypesystemGenerated {
 //		}
 		
 	}
-
+	
+	@Override
 	public EObject type( NumberLiteral s, TypeCalculationTrace trace ) {
 		if ( s.getValue().equals(s.getValue().intValue())) {
 			return create(cl.getIntType());
