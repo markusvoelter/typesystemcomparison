@@ -1,0 +1,12 @@
+% Generator: GNU source-highlight, by Lorenzo Bettini, http://www.gnu.org/software/src-highlite
+\begin{tabular}[t]{l}
+\noindent
+\mbox{}\textbf{\textcolor{Blue}{public}}\ EObject\ \textbf{\textcolor{Black}{typeCoerce}}\textcolor{BrickRed}{(}\ EObject\ candidateElement\textcolor{BrickRed}{,}\ FloatType\ candidate\textcolor{BrickRed}{,}\  \\
+\mbox{}\ \ \ \ \ \ \ \ StringType\ expected\textcolor{BrickRed}{,}\ TypeCalculationTrace\ trace\ \textcolor{BrickRed}{)}\ \textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \textbf{\textcolor{Blue}{if}}\ \textcolor{BrickRed}{(}\ candidateElement\ \textbf{\textcolor{Blue}{instanceof}}\ NumberLiteral\ \textcolor{BrickRed}{)}\ \textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ trace\textcolor{BrickRed}{.}\textbf{\textcolor{Black}{add}}\textcolor{BrickRed}{(}\ candidateElement\textcolor{BrickRed}{,}\ \texttt{\textcolor{Red}{"{}Number\ coerced\ to\ string."{}}}\textcolor{BrickRed}{);} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{return}}\ \textbf{\textcolor{Black}{create}}\textcolor{BrickRed}{(}cl\textcolor{BrickRed}{.}\textbf{\textcolor{Black}{getStringType}}\textcolor{BrickRed}{());} \\
+\mbox{}\ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\ \ \ \ \textbf{\textcolor{Blue}{return}}\ \textbf{\textcolor{Blue}{null}}\textcolor{BrickRed}{;} \\
+\mbox{}\textcolor{Red}{\}}
+\end{tabular}

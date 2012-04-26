@@ -1,0 +1,14 @@
+% Generator: GNU source-highlight, by Lorenzo Bettini, http://www.gnu.org/software/src-highlite
+\begin{tabular}[t]{l}
+\noindent
+\mbox{}@Inject\ ITypeProvider\ typeProvider \\
+\mbox{} \\
+\mbox{}\textbf{\textcolor{Plum}{def}}\ JvmTypeReference\ \textcolor{Black}{getJvmType}(Attribute\ attr)\ \{ \\
+\mbox{}\ \ \ \ \textbf{\textcolor{Plum}{switch}}\ attr\ \{ \\
+\mbox{}\ \ \ \ \ \ \ \ Attribute\ \textbf{\textcolor{Plum}{case}}\ attr.type\ !=\ \textbf{\textcolor{Plum}{null}}\ :\ attr.type \\
+\mbox{}\ \ \ \ \ \ \ \ Attribute\ \textbf{\textcolor{Plum}{case}}\ attr.expr\ !=\ \textbf{\textcolor{Plum}{null}}\ :\  \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ typeProvider.\textcolor{Black}{getType}(attr.\textcolor{Black}{getExpr}()) \\
+\mbox{}\ \ \ \ \ \ \ \ \textbf{\textcolor{Plum}{default}}:\ \textbf{\textcolor{Plum}{null}} \\
+\mbox{}\ \ \ \ \} \\
+\mbox{}\}
+\end{tabular}

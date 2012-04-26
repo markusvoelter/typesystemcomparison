@@ -1,26 +1,41 @@
 \section[XTS]{Implementation in XTS}
 
 \begin{frame}
-\frametitle{Xtext Typesystem (XTS)}
-\tableofcontents[currentsection]
+  \frametitle{Xtext Typesystem (XTS)}
+  \tableofcontents[currentsection]
 \end{frame}
 
+\begin{frame}
+  \frametitle{Xtext Typesystem (XTS)}
+  \begin{itemize}
+  \item (TODO Intro)
+  \item Recursive type computation
+\end{itemize}
+\end{frame}
 
 \begin{frame}[allowframebreaks,fragile]
-\frametitle{Titel ausdenken}
+\frametitle{The Plus Operator with XTS}
 
-\begin{verbatim}
+Common language elements
+\begin{itemize}
+  \item subtype relationships
+  \item grouping of types
+  \item type computation, \emph{ensure}\ldots clauses 
+\end{itemize}
 
-	characteristic NUMERIC {
-		IntType, FloatType
-	} 
+\begin{footnotesize}
+\input{listings/xts-plus.ts.tex}
+\end{footnotesize}
 
- 	typeof Plus -> common left right {
- 		ensureType left :<=: StringType, char(NUMERIC)
- 		ensureType right :<=: StringType, char(NUMERIC)
- 		ensureCompatibility left :<=>: right
- 	} 
-\end{verbatim}
+\framebreak
+Coercion of a number to a String
+\begin{itemize}
+  \item XTS will try custom coercion methods before throwing a type error 
+\end{itemize}
+
+\begin{footnotesize}
+\input{listings/xts-typecoerce.java.tex}
+\end{footnotesize}
 
 \note{TODO :  check if this is desired
 text(20) -> firstName validate widgetcontent + true; // valid

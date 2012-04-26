@@ -2,7 +2,10 @@ STAMP=stamp
 
 GENERATEDTEXS = SimpleRules.xsemantics.tex SimpleRules2.xsemantics.tex \
 	Judgments.xsemantics.tex \
-	Example.xtend.tex
+	plain-gettype.xtend.tex \
+	xbase-gettype.xtend.tex \
+	xts-typecoerce.java.tex \
+	xts-plus.ts.tex
 
 all: $(GENERATEDTEXS)
 
@@ -22,6 +25,10 @@ STDOPTIONS=-t 4 --header=listing_header.txt --footer=listing_footer.txt --style-
 
 %.xsemantics.tex: %.xsemantics xsemantics.lang sh_ide-eclipse.css
 	source-highlight --lang-def xsemantics.lang -f latexcolor $< $(STDOPTIONS)
+	touch $(STAMP)
+
+%.ts.tex: %.ts ts.lang sh_ide-eclipse.css
+	source-highlight --lang-def ts.lang -f latexcolor $< $(STDOPTIONS)
 	touch $(STAMP)
 
 %.typesystem.tex: %.typesystem typesystem.lang

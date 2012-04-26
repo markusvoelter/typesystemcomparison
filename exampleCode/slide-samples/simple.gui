@@ -1,0 +1,24 @@
+entity Person {
+	name      : string;
+	firstName : string;
+	age       : int; 
+	weight    : float;
+	likesCake : bool;
+	isAdult = age > 10 + 8;
+	greeting = "Hello " + firstName + " !";
+}
+
+form PersonForm edits Person {
+	text (20) -> firstName;
+	text (20) -> name validate lengthOf(widgetcontent) < 20;
+	text (3) -> age validate widgetcontent > 0 && widgetcontent < 130;
+	checkbox -> isAdult;
+	text(30) -> greeting;
+}
+
+form PersonFormWithErrors edits Person {
+	text(10) -> name validate widgetcontent;
+	text(10) -> isAdult;
+	checkbox -> firstName;
+	checkbox -> greeting validate likesCake;
+}

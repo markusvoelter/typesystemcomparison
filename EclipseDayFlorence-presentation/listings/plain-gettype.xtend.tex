@@ -1,0 +1,20 @@
+% Generator: GNU source-highlight, by Lorenzo Bettini, http://www.gnu.org/software/src-highlite
+\begin{tabular}[t]{l}
+\noindent
+\mbox{}\textbf{\textcolor{Plum}{def}}\ Type\ \textcolor{Black}{getExpectedType}(EObject\ e)\ \{ \\
+\mbox{}\ \ \ \ ... \\
+\mbox{}\ \ \ \ \textbf{\textcolor{Plum}{switch}}\ e\ \{ \\
+\mbox{}\ \ \ \ \ \ \ \ ... \\
+\mbox{}\ \ \ \ \ \ \ \ Plus\ :\ \ \textcolor{Black}{mostGeneral}(e.left.type,\ e.right.type).\textcolor{Black}{mostSpecific}(string)\ \ \ \ \  \\
+\mbox{} \\
+\mbox{}\textbf{\textcolor{Plum}{def}}\ Type\ \textcolor{Black}{mostGeneral}(Type\ one,\ Type\ two)\ \{ \\
+\mbox{}\ \ \ \ \textbf{\textcolor{Plum}{if}}\ (\textcolor{Black}{isAssignable}(one,\ two)) \\
+\mbox{}\ \ \ \ \ \ one\  \\
+\mbox{}\ \ \ \ \ \ \ \ \textbf{\textcolor{Plum}{else}} \\
+\mbox{}\ \ \ \ \ \ two \\
+\mbox{}\ \ \ \ \} \\
+\mbox{} \\
+\mbox{}\textcolor{Green}{//\ allow\ numbers\ where\ strings\ are\ expected} \\
+\mbox{}\textbf{\textcolor{Plum}{def}}\ \textbf{\textcolor{Plum}{dispatch}}\ \textcolor{Black}{isAssignable}(StringType\ left,\ NumberType\ right)\ \{\ \textbf{\textcolor{Plum}{true}}\ \} \\
+\mbox{}\ \ \ \ \ \ \ \ 
+\end{tabular}

@@ -5,8 +5,8 @@ entity Person {
 	weight    : float;
 	likesCake : bool; 
 	isAdult = age > 18;
-	greeting = "Hello " + firstName + " " + name;
-	testExpr = -2 - 2;
+	greeting = "Hello " + firstName + " " + name + 1;
+	testExpr = 2 + 2.2;
 } 
 
 entity Teacher extends Person {
