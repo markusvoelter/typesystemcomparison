@@ -85,36 +85,39 @@ setting
 
 \end{frame}
 
-\begin{frame}[allowframebreaks,fragile]
-\frametitle{Similarities}
 
+\begin{frame}
+\frametitle{The generated validator}
+
+\includegraphics[width=.7\textwidth]{img/xsem-validation.png}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Traces}
+
+\begin{itemize}
+  \item Automatic trace generation:
+  \begin{itemize}
+    \item for rule sucessfull applications
+    \item for rule failures
+  \end{itemize}
+  \item Useful for testing and debugging
+\end{itemize}
+
+\medskip
+
+\begin{footnotesize}
 \begin{verbatim}
-rule PlusType
-	G |- Plus plus : Type type
-from {
-	// deal with any type
-	G |- plus.left : var Type leftType
-	G |- plus.right : var Type rightType
-	// get the most general (which can also be string)
-	G |- leftType ~~ rightType |> type
-}
-
-judgments {
-   isAssignable |- Type left <~ Type right
-	  error stringRep(right) + " is not assignable to " + stringRep(left)
+final result provided by rule MyRule
+ rule 1 used by MyRule to get to the result
+  rule 2 used by rule 1
+   rule 3 used by rule 2
    ...
-}
-
-rule IsAssignableBase
-	G |- Type left <~ Type right
-from {
-	left.eClass.isSuperTypeOf(right.eClass)
-}
-
-axiom IntAssignableToString
-	G |- StringType left <~ NumberType right
-
+ rule 1a used by MyRule to get to the result
+  rule 2a used by rule 1a
+  ...
 \end{verbatim}
+\end{footnotesize}
 
-\note{transitive hull implemented, but not shown here}
 \end{frame}
