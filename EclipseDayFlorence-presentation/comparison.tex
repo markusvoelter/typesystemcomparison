@@ -34,10 +34,10 @@ XTS & see \emph{Plain} \\
 
 \begin{tabularx}{\linewidth}{ l   X }
 \multicolumn{2}{c}{Expressivity} \\ \hline
-Plain & - \\
+Plain & Java \\
 Xbase & Xbase library \\
-Xsem & - \\
-XTS & - \\
+Xsem & similar to Xbase + specific syntax\\
+XTS & EMF feature access + specific syntax\\
 \end{tabularx}
 
 \begin{tabularx}{\linewidth}{ l   X }
@@ -55,7 +55,9 @@ count characters instead of LOC?
 \multicolumn{2}{c}{Customizability} \\ \hline
 Plain & no framework, change source \\
 Xbase & Xbase and Xtext framework \\
-Xsem & use generated Java methods in your implementation \\
+Xsem & write custom Java methods (generation GAP
+pattern)
+\\
 XTS & hooks for own implementations \\
 \end{tabularx}
 
@@ -71,7 +73,7 @@ XTS & \ldots, generates validators \\
 \multicolumn{2}{c}{Target audience} \\ \hline
 Plain & - \\
 Xbase & - \\
-Xsem & people familiar with type systems \\
+Xsem & people familiar with formal systems \\
 XTS & - \\
 \end{tabularx}
 
