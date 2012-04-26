@@ -1,0 +1,48 @@
+.keyword {
+  color: Plum;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.type {
+  color: Plum;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.string {
+  color: RoyalBlue;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.specialchar {
+  color: RoyalBlue;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.comment {
+  color: Green;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.number {
+  color: Gray;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.preproc {
+  color: Plum;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.function {
+  color: Black;
+  font-weight: normal;
+  font-style: normal;
+}
+

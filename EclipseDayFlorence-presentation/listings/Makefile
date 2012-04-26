@@ -5,6 +5,8 @@ GENERATEDTEXS = SimpleRules.xsemantics.tex \
 
 all: $(GENERATEDTEXS)
 
+STDOPTIONS=-t 4 --header=listing_header.txt --footer=listing_footer.txt --style-css-file=sh_ide-eclipse.css
+
 %.java.tex: %.java
 	source-highlight -s java -f latexcolor $< -t 4 --header=listing_header.txt --footer=listing_footer.txt
 	touch $(STAMP)
@@ -13,12 +15,12 @@ all: $(GENERATEDTEXS)
 	source-highlight --lang-def xtext.lang -f latexcolor $< -t 4 --header=listing_header.txt --footer=listing_footer.txt
 	touch $(STAMP)
 
-%.xtend.tex: %.xtend xtend.lang
-	source-highlight --lang-def xtend.lang -f latexcolor $< -t 4 --header=listing_header.txt --footer=listing_footer.txt
+%.xtend.tex: %.xtend xtend.lang sh_ide-eclipse.css
+	source-highlight --lang-def xtend.lang -f latexcolor $< $(STDOPTIONS)
 	touch $(STAMP)
 
-%.xsemantics.tex: %.xsemantics xsemantics.lang
-	source-highlight --lang-def xsemantics.lang -f latexcolor $< -t 4 --header=listing_header.txt --footer=listing_footer.txt
+%.xsemantics.tex: %.xsemantics xsemantics.lang sh_ide-eclipse.css
+	source-highlight --lang-def xsemantics.lang -f latexcolor $< $(STDOPTIONS)
 	touch $(STAMP)
 
 %.typesystem.tex: %.typesystem typesystem.lang
