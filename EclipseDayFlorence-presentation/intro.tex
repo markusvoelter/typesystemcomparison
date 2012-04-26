@@ -7,8 +7,8 @@
     \item advent of DSLs and DSL tools made writing languages popular
     \item easy even for complex domains
     \item complex languages require complex constraint checking
-    \item most languages have a concept of types: reusable building blocks for
-    constraints
+    \item most languages have a concept of \textbf{type}: reusable building
+    blocks for constraints
   \end{itemize}
   
   In this presentation:
@@ -44,19 +44,20 @@
     \item graphical example for type inference
    \end{itemize}
 
+\begin{small}
 \begin{verbatim}
 name : string;
-
 num = 41 + 1;
-
-greeting : string = "Hi " + name + ", the answer is " + num + ".";
+greeting : string = "Hi " + name + 
+    ", the answer is " + num + ".";
 \end{verbatim}
+\end{small}
 
 Common tasks of type systems:
 
 \begin{itemize}
   \item Assigning fixed types to language elements
-  \item is a type conformant to another type?
+  \item Subtyping: is a type conformant to another type?
   \item Inferring types of complex expressions
 \end{itemize}
 
