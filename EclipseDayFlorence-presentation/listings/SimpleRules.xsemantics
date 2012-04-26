@@ -1,0 +1,20 @@
+axiom BooleanLiteralType
+	G |- BooleanLiteral lit : XsemGuiDslFactory::eINSTANCE.createBooleanType
+
+rule AttributeRefType
+	G |- AttributeRef attrRef : Type type
+from {
+	G |- attrRef.attr : type
+}
+
+rule LengthOfType
+	G |- LenghtOf len : XsemGuiDslFactory::eINSTANCE.createIntType
+from {
+	G |- len.expr : var StringType stringType
+}
+
+rule FieldContentType
+	G |- FieldContent fieldContent : Type type
+from {
+	G |- env(G, 'widgetcontent', Attribute) : type
+}

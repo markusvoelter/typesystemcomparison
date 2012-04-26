@@ -1,0 +1,24 @@
+% Generator: GNU source-highlight, by Lorenzo Bettini, http://www.gnu.org/software/src-highlite
+\begin{tabular}[t]{l}
+\noindent
+\mbox{}\textbf{\textcolor{Blue}{axiom}}\ BooleanLiteralType \\
+\mbox{}\ \ \ \ G\ \textcolor{BrickRed}{$|$-}\ BooleanLiteral\ lit\ \textcolor{BrickRed}{:}\ XsemGuiDslFactory\textcolor{BrickRed}{::}eINSTANCE.createBooleanType \\
+\mbox{} \\
+\mbox{}\textbf{\textcolor{Blue}{rule}}\ AttributeRefType \\
+\mbox{}\ \ \ \ G\ \textcolor{BrickRed}{$|$-}\ AttributeRef\ attrRef\ \textcolor{BrickRed}{:}\ Type\ type \\
+\mbox{}\textbf{\textcolor{Blue}{from}}\ \{ \\
+\mbox{}\ \ \ \ G\ \textcolor{BrickRed}{$|$-}\ attrRef.attr\ \textcolor{BrickRed}{:}\ type \\
+\mbox{}\} \\
+\mbox{} \\
+\mbox{}\textbf{\textcolor{Blue}{rule}}\ LengthOfType \\
+\mbox{}\ \ \ \ G\ \textcolor{BrickRed}{$|$-}\ LenghtOf\ len\ \textcolor{BrickRed}{:}\ XsemGuiDslFactory\textcolor{BrickRed}{::}eINSTANCE.createIntType \\
+\mbox{}\textbf{\textcolor{Blue}{from}}\ \{ \\
+\mbox{}\ \ \ \ G\ \textcolor{BrickRed}{$|$-}\ len.expr\ \textcolor{BrickRed}{:}\ \textbf{\textcolor{Blue}{var}}\ StringType\ stringType \\
+\mbox{}\} \\
+\mbox{} \\
+\mbox{}\textbf{\textcolor{Blue}{rule}}\ FieldContentType \\
+\mbox{}\ \ \ \ G\ \textcolor{BrickRed}{$|$-}\ FieldContent\ fieldContent\ \textcolor{BrickRed}{:}\ Type\ type \\
+\mbox{}\textbf{\textcolor{Blue}{from}}\ \{ \\
+\mbox{}\ \ \ \ G\ \textcolor{BrickRed}{$|$-}\ \textbf{\textcolor{Blue}{env}}\textcolor{BrickRed}{(}G,\ \texttt{\textcolor{Red}{'widgetcontent'}},\ Attribute\textcolor{BrickRed}{)}\ \textcolor{BrickRed}{:}\ type \\
+\mbox{}\}
+\end{tabular}

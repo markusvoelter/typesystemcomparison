@@ -1,25 +1,6 @@
 STAMP=stamp
 
-GENERATEDTEXS = \
-	MethodCall.java.tex \
-	CodeScopeExample.java.tex \
-	CodeValidationExample.java.tex \
-	Cast.xtext.tex \
-	CheckCast.java.tex \
-	ScopeExample.java.tex \
-	generatedMethods.java.tex \
-	Selection.xtext.tex \
-	Selection2.xtext.tex \
-	fj.xtext.tex \
-	fj2.xtext.tex \
-	fjclass.xtext.tex \
-	fjtype.xtext.tex \
-	vars.rule.tex \
-	grammar.typesystem.tex \
-	judgments.rule.tex \
-	subclass.rule.tex \
-	subtype.rule.tex \
-	cast.rule.tex
+GENERATEDTEXS = SimpleRules.xsemantics.tex
 
 all: $(GENERATEDTEXS)
 
@@ -29,6 +10,10 @@ all: $(GENERATEDTEXS)
 
 %.xtext.tex: %.xtext xtext.lang
 	source-highlight --lang-def xtext.lang -f latexcolor $< -t 4 --header=listing_header.txt --footer=listing_footer.txt
+	touch $(STAMP)
+
+%.xsemantics.tex: %.xsemantics xsemantics.lang
+	source-highlight --lang-def xsemantics.lang -f latexcolor $< -t 4 --header=listing_header.txt --footer=listing_footer.txt
 	touch $(STAMP)
 
 %.typesystem.tex: %.typesystem typesystem.lang

@@ -6,7 +6,55 @@
 
 \end{frame}
 
+\begin{frame}
+\frametitle{Xsemantics}
+
+\begin{itemize}
+  \item  a DSL for writing 
+  \begin{itemize}
+    \item type systems (static semantics)
+    \item reduction rules (dynamic semantics)
+    \item interpreters
+    \item general relation rules
+  \end{itemize}
+  for languages implemented in Xtext
+  \item A system definition is a set of judgment rules which have a
+conclusion and a set of premises (relying on Xbase for the syntax)
+  \item thought to be used by people who are familiar
+with formal type systems and operational semantics
+  \item aims at providing
+a syntax which is close to the way deduction rules are written in a formal
+setting
+\end{itemize}
+
+\end{frame}
+
 \begin{frame}[allowframebreaks,fragile]
+
+\begin{center}
+\begin{tabular}{c@{\hspace{.5cm}}c@{\hspace{.5cm}}c}
+\inferrule
+{}
+{\g \f \mykeyb{true} : \mykeyb{boolean} }
+&
+\inferrule
+{\g \f \mytt{attr} : \T}
+{\g \f \mykeyb{ref} \ \mytt{attr} : \T }
+\\
+\\
+\inferrule
+{\g \f \mytt{exp} : \mykeyb{string}}
+{\g \f \mykeyb{lengthOf}(\mytt{exp}) : \mykeyb{int} }
+&
+\inferrule
+{\g \f \g(\mykeyb{widgetcontent}) : \T}
+{\g \f \mykeyb{widgetcontent} : \T }
+\end{tabular}
+\end{center}
+
+\begin{footnotesize}
+\input{listings/SimpleRules.xsemantics}
+\end{footnotesize}
 
 \begin{verbatim}
 rule PlusType
