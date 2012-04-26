@@ -1,6 +1,7 @@
 STAMP=stamp
 
-GENERATEDTEXS = SimpleRules.xsemantics.tex \
+GENERATEDTEXS = SimpleRules.xsemantics.tex SimpleRules2.xsemantics.tex \
+	Judgments.xsemantics.tex \
 	Example.xtend.tex
 
 all: $(GENERATEDTEXS)
@@ -35,3 +36,5 @@ clean-gen:
 	rm -f $(GENERATEDTEXS)
 
 clean-all: clean-gen clean
+
+regenerate: clean-gen all

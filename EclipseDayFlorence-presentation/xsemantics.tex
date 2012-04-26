@@ -29,10 +29,21 @@ setting
 
 \end{frame}
 
-\begin{frame}[allowframebreaks,fragile]
+\begin{frame}
+\frametitle{Define your judgments}
+
+\begin{footnotesize}
+\input{listings/Judgments.xsemantics}
+\end{footnotesize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Similarities}
 
 \begin{center}
-\begin{tabular}{c@{\hspace{.5cm}}c@{\hspace{.5cm}}c}
+\begin{tabular}{c@{\hspace{1cm}}c}
 \inferrule
 {}
 {\g \f \mykeyb{true} : \mykeyb{boolean} }
@@ -40,8 +51,22 @@ setting
 \inferrule
 {\g \f \mytt{attr} : \T}
 {\g \f \mykeyb{ref} \ \mytt{attr} : \T }
-\\
-\\
+\end{tabular}
+\end{center}
+
+\onslide<2->
+
+\begin{footnotesize}
+\input{listings/SimpleRules.xsemantics}
+\end{footnotesize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Similarities}
+
+\begin{center}
+\begin{tabular}{c@{\hspace{.5cm}}c@{\hspace{.5cm}}c}
 \inferrule
 {\g \f \mytt{exp} : \mykeyb{string}}
 {\g \f \mykeyb{lengthOf}(\mytt{exp}) : \mykeyb{int} }
@@ -52,9 +77,16 @@ setting
 \end{tabular}
 \end{center}
 
+\onslide<2->
+
 \begin{footnotesize}
-\input{listings/SimpleRules.xsemantics}
+\input{listings/SimpleRules2.xsemantics}
 \end{footnotesize}
+
+\end{frame}
+
+\begin{frame}[allowframebreaks,fragile]
+\frametitle{Similarities}
 
 \begin{verbatim}
 rule PlusType

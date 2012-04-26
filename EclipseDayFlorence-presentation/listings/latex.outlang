@@ -36,7 +36,7 @@ translations
 "&" "\\&"
 "\\" "\\textbackslash{}"
 "^" "\\textasciicircum{}"
-"~" "\\textasciitilde{}"
+"~" "$\\sim$"
 "\n" " \\\\\n"
 #"  " "\\hspace*{2ex} "
 #"\t" "\\hspace*{8ex} "

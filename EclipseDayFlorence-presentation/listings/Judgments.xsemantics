@@ -1,0 +1,11 @@
+system org.typesys.xsem.guidsl.xsemantics.TypeSystem
+
+import org.typesys.xsem.guidsl.xsemGuiDsl.*
+
+judgments {
+	type |- Typable typable : output Type
+	// whether {@code right} is assignable to {@code left}
+	isAssignable |- Type left <~ Type right
+	// computes the most general type between {@code first} and {@code second}
+	mostGeneral |- Type first ~~  Type second |> output Type
+}
