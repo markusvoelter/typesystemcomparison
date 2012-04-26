@@ -1,6 +1,7 @@
 STAMP=stamp
 
-GENERATEDTEXS = SimpleRules.xsemantics.tex
+GENERATEDTEXS = SimpleRules.xsemantics.tex \
+	Example.xtend.tex
 
 all: $(GENERATEDTEXS)
 
@@ -10,6 +11,10 @@ all: $(GENERATEDTEXS)
 
 %.xtext.tex: %.xtext xtext.lang
 	source-highlight --lang-def xtext.lang -f latexcolor $< -t 4 --header=listing_header.txt --footer=listing_footer.txt
+	touch $(STAMP)
+
+%.xtend.tex: %.xtend xtend.lang
+	source-highlight --lang-def xtend.lang -f latexcolor $< -t 4 --header=listing_header.txt --footer=listing_footer.txt
 	touch $(STAMP)
 
 %.xsemantics.tex: %.xsemantics xsemantics.lang
