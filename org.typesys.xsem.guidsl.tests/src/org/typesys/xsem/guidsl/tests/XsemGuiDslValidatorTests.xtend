@@ -71,7 +71,7 @@ Diagnostic ERROR "Cyclic hierarchy for C" at Model.entities[2]->Entity'C' '''
 	def void testWrongAttributeInitialization() {
 		assertAll(inputs.testWrongAttributeInitialization,
 '''
-Diagnostic ERROR code=org.typesys.xsem.guidsl.xsemantics.rules.AttributeType "failed: cannot type wrong : Derived = new Base;" at Model.entities[2]->Entity'MyEntity'.attributes[1]->Attribute'wrong' '''
+Diagnostic ERROR "cannot assign Base to Derived" at Model.entities[2]->Entity'MyEntity'.attributes[1]->Attribute'wrong'.expr==((instanceof EntityType: org.typesys.xsem.guidsl.xsemGuiDsl.impl.EntityTypeImpl)'''
 		)
 	}
 	

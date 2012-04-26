@@ -19,7 +19,13 @@ from {
 	if (attr.type != null) {
 		if (attr.expr != null) {
 			G |- attr.expr : var Type expType
+			
 			G |- attr.type <~ expType
+			or fail
+				error "cannot assign " + stringRep(expType) +
+					" to " + stringRep(attr.type)
+				source attr
+				feature XsemGuiDslPackage::eINSTANCE.attribute_Expr
 		}
 		attrType = attr.type
 	} else {
