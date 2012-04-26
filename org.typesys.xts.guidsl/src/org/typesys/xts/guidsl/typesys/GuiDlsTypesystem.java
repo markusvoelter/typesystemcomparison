@@ -5,8 +5,12 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.typesys.xts.guidsl.guiDsl.Entity;
 import org.typesys.xts.guidsl.guiDsl.EntityType;
+import org.typesys.xts.guidsl.guiDsl.FloatType;
 import org.typesys.xts.guidsl.guiDsl.GuiDslPackage;
+import org.typesys.xts.guidsl.guiDsl.IntType;
 import org.typesys.xts.guidsl.guiDsl.NumberLiteral;
+import org.typesys.xts.guidsl.guiDsl.StringLiteral;
+import org.typesys.xts.guidsl.guiDsl.StringType;
 
 import com.google.common.collect.Sets;
 
@@ -66,5 +70,19 @@ public class GuiDlsTypesystem extends GuiDlsTypesystemGenerated {
 		return t1 == t2 || (t2.getExtends()!= null && 
 				internalCompareTypesOrdered(t1, t2.getExtends(), visited));
 	}
+	
+	/**
+	 * A number may be coerced to be a string. This is useful for instance
+	 * in concatenation with the plus operator.
+	 * 
+	 */
+	public EObject typeCoerce( EObject candidateElement, FloatType candidate, StringType expected, TypeCalculationTrace trace ) {
+		if ( candidateElement instanceof NumberLiteral ) {
+				trace.add( candidateElement, "Number coerced to string.");
+				return create(cl.getStringType());
+		}
+		return null;
+	}
+	
 	
 }
