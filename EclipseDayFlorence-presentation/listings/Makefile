@@ -1,13 +1,16 @@
 STAMP=stamp
 
-GENERATEDTEXS = SimpleRules.xsemantics.tex SimpleRules2.xsemantics.tex \
-	Judgments.xsemantics.tex \
-	plain-gettype.xtend.tex \
-	xbase-gettype.xtend.tex \
-	xts-typecoerce.java.tex \
-	xts-plus.ts.tex
+GENERATEDTEXS = SimpleRules.xsemantics SimpleRules2.xsemantics \
+	Judgments.xsemantics \
+	intro.gui \
+	plain-gettype.xtend \
+	plain-typeconf.xtend \
+	xbase-gettype.xtend \
+	xts-typecoerce.java \
+	xts-plus.ts
 
-all: $(GENERATEDTEXS)
+# add .tex suffix to original path => path will not exist => execute target each time
+  all: $(addsuffix .tex,$(GENERATEDTEXS))
 
 STDOPTIONS=-t 4 --header=listing_header.txt --footer=listing_footer.txt --style-css-file=sh_ide-eclipse.css
 
@@ -21,6 +24,10 @@ STDOPTIONS=-t 4 --header=listing_header.txt --footer=listing_footer.txt --style-
 
 %.xtend.tex: %.xtend xtend.lang sh_ide-eclipse.css
 	source-highlight --lang-def xtend.lang -f latexcolor $< $(STDOPTIONS)
+	touch $(STAMP)
+
+%.gui.tex: %.gui guidsl.lang sh_ide-eclipse.css
+	source-highlight --lang-def guidsl.lang -f latexcolor $< $(STDOPTIONS)
 	touch $(STAMP)
 
 %.xsemantics.tex: %.xsemantics xsemantics.lang sh_ide-eclipse.css
