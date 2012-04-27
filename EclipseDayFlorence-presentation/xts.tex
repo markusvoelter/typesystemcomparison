@@ -8,39 +8,38 @@
 \begin{frame}
   \frametitle{Xtext Typesystem (XTS)}
   \begin{itemize}
-  \item (TODO Intro)
+  \item Typesystem DSL written in Xtext
+  \item Additional uses: interpreter, testing
   \item Recursive type computation
 \end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks,fragile]
-\frametitle{The Plus Operator with XTS}
+  \frametitle{The Plus Operator with XTS}
 
-Common language elements
-\begin{itemize}
-  \item subtype relationships
-  \item grouping of types
-  \item type computation, \emph{ensure}\ldots clauses 
-\end{itemize}
+  \begin{itemize}
+    \item Commonly used language elements 
+  \end{itemize}
 
-\begin{footnotesize}
-\input{listings/xts-plus.ts.tex}
-\end{footnotesize}
+  \begin{footnotesize}
+    \input{listings/xts-plus.ts.tex}
+  \end{footnotesize}
 
+  \note{
+  \begin{itemize}
+    \item subtype relationships
+    \item grouping of types
+    \item type computation, \emph{ensure}\ldots clauses 
+  \end{itemize}}
+  
 \framebreak
-Coercion of a number to a String
-\begin{itemize}
-  \item XTS will try custom coercion methods before throwing a type error 
-\end{itemize}
+  Coercion of a number to a String
+  \begin{itemize}
+    \item XTS will try custom coercion methods before throwing a type error 
+  \end{itemize}
 
-\begin{footnotesize}
-\input{listings/xts-typecoerce.java.tex}
-\end{footnotesize}
-
-\note{TODO :  check if this is desired
-text(20) -> firstName validate widgetcontent + true; // valid
-text(20) -> firstName validate true + widgetcontent; // invalid
-}
- 	
- 	
+  \begin{footnotesize}
+    \input{listings/xts-typecoerce.java.tex}
+  \end{footnotesize}
+	
 \end{frame}

@@ -1,0 +1,9 @@
+digraph AST {
+# dot -Tpng AST.dot > AST.png
+	plus_ [label="+"];
+	plus [label="+"];
+	plus_ -> plus;
+	plus_ -> "\"!\"";
+	plus -> "\"Hello\"";
+	plus -> "name";	
+}

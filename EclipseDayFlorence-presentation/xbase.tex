@@ -1,23 +1,29 @@
-\section[Xbase]{Implementation in Xbase}
+\def \xbaseImpl {Implementation in Xbase}
+\section[Xbase]{\xbaseImpl}
 
 \begin{frame}
-  \frametitle{Implementation in Xbase}
+  \frametitle{\xbaseImpl}
   \tableofcontents[currentsection]
 \end{frame}
   
-\begin{frame}[fragile,allowframebreaks]
-  \frametitle{Implementation in Xbase}
+\begin{frame}[fragile]
+  \frametitle{\xbaseImpl}
   \begin{itemize}
-    \item Attributes of entities refer to Java elements
     \item Infer Java type for Entities and Forms with
     \emph{JvmModelInferrer}
   \end{itemize}
-  
-  \includegraphics[width=1.1\textwidth]{img/xbase-infer.png}  
 
-\framebreak 
-\begin{footnotesize}
-\input{listings/xbase-gettype.xtend.tex}
-\end{footnotesize}
-  
+  \includegraphics[width=1.1\textwidth]{img/xbase-infer.png}
+  \note{Reuse JVM types by mapping to Java}
+\end{frame}    
+
+\begin{frame}
+  \frametitle{\xbaseImpl}
+  \begin{itemize}
+    \item Attributes of Entities refer to Java elements and Xbase expressions
+   \end{itemize}
+  \begin{footnotesize}
+  \input{listings/xbase-gettype.xtend.tex}
+  \end{footnotesize}
 \end{frame}
+  

@@ -10,7 +10,7 @@ entity Person {
 
 form PersonForm edits Person {
 	text (20) -> firstName;
-	text (20) -> name validate lengthOf(widgetcontent) < 20;
+	text (20) -> name validate lengthOf(widgetcontent) > 1;
 	text (3) -> age validate widgetcontent > 0 && widgetcontent < 130;
 	checkbox -> isAdult;
 	text(30) -> greeting;
@@ -22,3 +22,5 @@ form PersonFormWithErrors edits Person {
 	checkbox -> firstName;
 	checkbox -> greeting validate likesCake;
 }
+
+

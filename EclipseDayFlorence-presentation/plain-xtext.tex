@@ -7,19 +7,39 @@
 \begin{frame}[allowframebreaks,fragile]
   \frametitle{Implementation in Plain Xtext}
   \begin{itemize}
-    \item makes use of Xtend to get concise code
-    \item recursive type computation
-    \item type conformance specification
-    \item inferrer for expected types
-    \item hooked into xtext validator
+    \item Use Xtend for concise code
+    \item Recursive type computation
+    \item Implementation
+    \begin{itemize}
+      \item Type provider
+      \item Type conformance computer
+      \item Xtext validator hook
+    \end{itemize}
+  \end{itemize}
+  \begin{itemize}
+    \item Running example: \\
+    type checking the plus operator
   \end{itemize}
 
 
 %\includegraphics[width=.9\textwidth]{img/plain-xtext-provider.png}
 
 \framebreak
+\begin{itemize}
+  \item Type Provider 
+\end{itemize}
+
 \begin{footnotesize}
 \input{listings/plain-gettype.xtend.tex}
+\end{footnotesize}
+
+\framebreak
+\begin{itemize}
+  \item Type Conformance 
+\end{itemize}
+
+\begin{footnotesize}
+\input{listings/plain-typeconf.xtend}
 \end{footnotesize}
 
 \end{frame}
