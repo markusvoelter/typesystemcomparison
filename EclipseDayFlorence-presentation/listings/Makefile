@@ -1,21 +1,21 @@
 STAMP=stamp
 
-GENERATEDTEXS = SimpleRules.xsemantics SimpleRules2.xsemantics \
-	Judgments.xsemantics \
-	intro.gui \
-	plain-gettype.xtend \
-	plain-typeconf.xtend \
-	xbase-gettype.xtend \
-	xts-typecoerce.java \
-	xts-plus.ts
+GENERATEDTEXS = SimpleRules.xsemantics.tex SimpleRules2.xsemantics.tex \
+	Judgments.xsemantics.tex \
+	plain-gettype.xtend.tex \
+	xbase-gettype.xtend.tex \
+	xts-typecoerce.java.tex \
+	xts-plus.ts.tex
 
 # add .tex suffix to original path => path will not exist => execute target each time
-  all: $(addsuffix .tex,$(GENERATEDTEXS))
+# all: $(addsuffix .tex,$(GENERATEDTEXS))
+
+all: $(GENERATEDTEXS)
 
 STDOPTIONS=-t 4 --header=listing_header.txt --footer=listing_footer.txt --style-css-file=sh_ide-eclipse.css
 
 %.java.tex: %.java
-	source-highlight -s java -f latexcolor $< -t 4 --header=listing_header.txt --footer=listing_footer.txt
+	source-highlight -s java -f latexcolor $< $(STDOPTIONS)
 	touch $(STAMP)
 
 %.xtext.tex: %.xtext xtext.lang
