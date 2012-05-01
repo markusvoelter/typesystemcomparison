@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<splitpane orientation="vertical">
+	<panel name="panel" columns="3" gap="4">
+		<button text="Button-1" /><button text="Button-2" /><button text="Button-3" />
+		<button text="Button-4" /><button text="Button-5" weightx="1" weighty="1" /><button text="Button-6" />
+		<button text="Button-7" /><button text="Button-8" /><button text="Button-9" />
+		<button text="Button-10" /><button text="Button-11" /><button text="Button-12" />
+	</panel>
+	<panel border="true" columns="2" top="4" left="4" bottom="4" right="4" gap="4">
+		<checkbox text="Bordered" action="setBorder(thinlet, panel, this.selected)" />
+		<checkbox text="Scrollable" action="setScrollable(thinlet, panel, this.selected)" />
+		<checkbox text="Icon" action="setIcon(thinlet, panel, this.selected)" />
+		<checkbox text="Background" action="setBackground(thinlet, panel, this.selected)" />
+		<label text="Title"/>
+		<textfield insert="setTitle(thinlet, panel, this.text)" remove="setTitle(thinlet, panel, this.text)" />
+		<button text="Dialog..." action="openDialog(thinlet)" />
+		<slider valign="center" />
+		<button text="FileDialog..." action="openFileDialog(thinlet)" />
+		<button text="Exit" action="exit()" />
+	</panel>
+</splitpane>

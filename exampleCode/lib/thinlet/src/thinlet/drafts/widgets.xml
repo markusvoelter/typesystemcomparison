@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<panel columns="1" gap="4">
+	<menubar weightx="1">
+		<menu text="Menu" mnemonic="0">
+			<menuitem text="MenuItem" accelerator="Shift Ctrl Alt Meta Back_space" />
+			<menuitem text="MenuItem" />
+			<separator />
+			<menu text="Menu" mnemonic="0">
+				<checkboxmenuitem text="MenuItem" />
+				<menu text="Menu" mnemonic="3">
+					<checkboxmenuitem text="MenuItem" mnemonic="1" />
+					<checkboxmenuitem text="MenuItem" group="group" mnemonic="2" />
+					<menu text="Menu">
+						<checkboxmenuitem text="MenuItem" />
+						<checkboxmenuitem text="MenuItem" group="group" />
+					</menu>
+				</menu>
+				<checkboxmenuitem text="MenuItem" group="group" />
+			</menu>
+			<menuitem text="MenuItem" />
+		</menu>
+		<menu text="Menu">
+			<menu text="Menu">
+				<checkboxmenuitem text="MenuItem" />
+				<menu text="Not bug">
+					<separator />
+					<checkboxmenuitem text="MenuItem" />
+				</menu>
+				<menu text="Bug">
+					<separator />
+				</menu>
+				<menu text="Null menu" />
+				<separator />
+				<menu text="Menu" enabled="false" />
+			</menu>
+		</menu>
+		<menu text="Menu" enabled="false" />
+		<menu text="Edit">
+			<menuitem text="Cut" accelerator="Ctrl X" action="cut" />
+			<menuitem text="Copy" accelerator="Ctrl C" action="copy" />
+			<menuitem text="Paste" accelerator="Ctrl V" action="paste" />
+			<menuitem text="Delete" accelerator="Delete" action="delete" />
+		</menu>
+		<menu text="Navigate">
+			<menuitem text="Home" accelerator="Home" />
+			<menuitem text="Back" accelerator="Alt Left" />
+			<menuitem text="Forward" accelerator="Alt Right" />
+		</menu>
+	</menubar>
+	<tabbedpane weighty="1">
+		<tab text="One" mnemonic="1">
+			<panel columns="2" gap="4"	top="4" left="4" bottom="4" right="4">
+				<label text="Label" icon="/icon/library.gif" mnemonic="0" for="mycombo" />
+				<label text="Label &#169;" icon="/icon/library.gif" />
+				<button text="Button" icon="/icon/library.gif" mnemonic="0" />
+				<checkbox text="CheckBox" mnemonic="0" />
+				<checkbox text="RadioButton" group="group" mnemonic="0" />
+				<combobox name="mycombo" text="ComboBox" icon="/icon/library.gif">
+					<choice text="Choice1" icon="/icon/library.gif" />
+					<choice text="Choice2" icon="/icon/library.gif" />
+					<choice text="Choice3" icon="/icon/library.gif" />
+				</combobox>
+				<textfield text="TextField">
+					<popupmenu>
+						<menuitem text="Cut" />
+						<menuitem text="Copy" />
+						<menuitem text="Paste" />
+					</popupmenu>
+				</textfield>
+				<textfield text="Center" alignment="center" />
+				<textfield text="Right" alignment="right" />
+				<passwordfield text="PasswordField" perform="perform" />
+				<textarea text="TextArea" />
+				<combobox text="ComboBox" icon="/icon/library.gif" editable="false" valign="top">
+					<choice text="Choice1" /><choice text="Choice2" /><choice text="Choice3" />
+					<choice text="Choice4" /><choice text="Choice5" /><choice text="Choice6" />
+					<choice text="Choice7" /><choice text="Choice8" /><choice text="Choice9" />
+					<choice text="Choice10" /><choice text="Choice11" /><choice text="Choice12" />
+				</combobox>
+				<label />
+				<combobox text="ComboBox" icon="/icon/library.gif">
+					<choice text="Choice1" /><choice text="Choice2" /><choice text="Choice3" />
+					<choice text="Choice4" /><choice text="Choice5" /><choice text="Choice6" />
+				</combobox>
+				<panel gap="4" colspan="2" halign="right">
+					<button text="OK" type="default" action="ok" />
+					<button text="Cancel" type="cancel" action="cancel" />
+				</panel>
+			</panel>
+		</tab>
+		<tab text="Two" mnemonic="1">
+			<panel columns="1" gap="4" 	top="4" left="4" bottom="4" right="4">
+				<spinbox text="125" minimum="0" maximum="255" step="5" />
+				<progressbar />
+				<slider />
+			</panel>
+		</tab>
+		<tab text="Three">
+			<panel columns="1" top="4" left="4" bottom="4" right="4" gap="4">
+				<panel gap="4">
+					<label text="Line:"/>
+					<checkbox text="list" selected="true" action="setLine(thinlet, mylist, this.selected)" />
+					<checkbox text="tree" selected="true" action="setLine(thinlet, mytree, this.selected)" />
+					<checkbox text="table" selected="true" action="setLine(thinlet, mytable, this.selected)" />
+				</panel>
+				<splitpane orientation="vertical" weightx="1" weighty="1">
+					<splitpane>
+						<list name="mylist">
+							<item text="Item" icon="/icon/library.gif" /><item text="Item" icon="/icon/library.gif" />
+							<item text="Item" icon="/icon/library.gif" /><item text="Item" icon="/icon/library.gif" />
+							<item text="Item" icon="/icon/library.gif" /><item text="Item" icon="/icon/library.gif" />
+							<popupmenu>
+								<menuitem text="MenuItem" />
+								<menu text="Menu">
+									<checkboxmenuitem text="CheckBox" />
+									<checkboxmenuitem text="RadioButton" group="group" />
+								</menu>
+								<menuitem text="MenuItem" />
+							</popupmenu>
+						</list>
+						<tree name="mytree">
+							<node text="NodeA" icon="/icon/library.gif">
+								<node text="NodeB" icon="/icon/library.gif">
+									<node text="NodeC" icon="/icon/library.gif" />
+								</node>
+							</node>
+							<node text="NodeD" icon="/icon/library.gif" />
+							<node text="NodeE" icon="/icon/library.gif" expanded="false">
+								<node text="NodeF" icon="/icon/library.gif" />
+							</node>
+						</tree>
+					</splitpane>
+					<table name="mytable">
+						<header>
+							<column text="Key" width="40" />
+							<column text="Value" />
+							<column text="Value" />
+						</header>	
+						<row><cell text="Cell" /><cell icon="/icon/library.gif" /><cell text="Cell" /></row>
+						<row><cell text="Cell" /><cell icon="/icon/library.gif" /><cell text="Cell" /></row>
+					</table>
+				</splitpane>
+			</panel>
+		</tab>
+		<tab text="Four">
+			<label text="PopupMenu" alignment="center">
+				<popupmenu>
+					<menuitem text="MenuItem" />
+					<menu text="Menu">
+						<checkboxmenuitem text="CheckBox" />
+						<checkboxmenuitem text="RadioButton" group="group" />
+					</menu>
+					<menuitem text="MenuItem" />
+				</popupmenu>
+			</label>
+		</tab>
+		
+		<tab text="Fonts"  font="bold">
+			<panel columns="3" gap="4"	top="4" left="4" bottom="4" right="4">
+				<label text="bold" font="bold" foreground="#6699cc" />
+				<checkbox text="italic" font="italic" />
+				<label text="bold italic" font="bold italic" foreground="255 191 152" />
+				<label text="bold 15" font="bold 15" foreground="0xcc9966" />
+				<label text="Serif 18" font="Serif 18" />
+				<label text="Monospaced bold 11" font="Monospaced bold 11" />
+				<textfield text="bold" font="bold 12" />
+				<passwordfield text="bold" font="bold 12" />
+				<menubar weightx="1">
+					<menu text="Menu" font="bold">
+						<menu text="Menu" font="Serif 18">
+							<checkboxmenuitem text="MenuItem" font="Monospaced bold 12" />
+						</menu>
+					</menu>
+				</menubar>
+				<textarea text="Serif 18" font="Serif 18" />
+				<list><item text="Serif 18" font="Serif 18" /><item text="Item" /></list>
+				<tree><node text="Serif 18" font="Serif 18"><node text="Node" /></node></tree>
+				<table colspan="3">
+					<header><column text="Serif 18" font="Serif 18" /><column text="bold" font="bold" /></header>
+					<row><cell text="bold" font="bold" /><cell text="Serif 18" font="Serif 18" /></row>
+				</table>
+			</panel>
+		</tab>
+		<tab text="#">
+			<panel top="8" left="8" gap="4">
+				<combobox editable="false" valign="top">
+					<choice text="Choice1" icon="/icon/library.gif" />
+					<choice text="Choice2" icon="/icon/library.gif" />
+					<choice text="Choice3" icon="/icon/library.gif" />
+				</combobox>
+				<textarea name="mytextarea"/>
+				<button text="Load" action="loadText(thinlet, mytextarea)" valign="bottom" />
+				<button text="Dialog..." action="showDialog(thinlet)" valign="bottom" />
+			</panel>
+		</tab>
+		<tab text="?">
+			<panel top="4" left="4" bottom="4" right="4" gap="4" columns="3">
+				<menubar colspan="3">
+					<menu text="Menu" font="bold"><menuitem text="MenuItem" font="bold" /></menu>
+				</menubar>
+				<label text="Label" font="bold" foreground="#ff0000" />
+				<button text="Button" font="bold" foreground="#ffff00" />
+				<checkbox text="CheckBox" font="bold" foreground="#0000ff" />
+				<checkbox text="RadioButton" group="group" font="bold" foreground="#ff0000" />
+				<togglebutton text="ToggleButton" font="bold" foreground="#ffff00" />
+				<combobox text="ComboBox" icon="/icon/library.gif" font="bold" foreground="#ff0000"><choice text="Choice" font="italic" foreground="#0000ff" /></combobox>
+				<textfield text="TextField" font="bold" foreground="#00ff00" />
+				<passwordfield text="PasswordField" font="bold" foreground="#0000ff" />
+				<separator valign="center" />
+				<tabbedpane colspan="3" selected="7">
+					<tab text="TextArea">
+						<textarea text="TextArea" font="bold" foreground="#ff0000" />
+					</tab>
+					<tab text="List and Tree" background="#0000ff">
+						<splitpane>
+							<list selection="multiple"><item text="Item" font="bold" foreground="#0000ff" /><item text="Item" /><item text="Item" /></list>
+							<tree selection="multiple"><node text="Node" font="bold" foreground="#0000ff"><node text="Node" /></node><node text="Node" /></tree>
+						</splitpane>
+					</tab>
+					<tab text="Table" font="bold" foreground="#0000ff">
+						<table selection="multiple">
+							<header><column text="Column" icon="/icon/library.gif" font="bold" foreground="#0000ff" sort="ascent" /><column text="Column" width="20" /><column text="Column" icon="/icon/volume.gif" sort="descent" /></header>
+							<row><cell text="Cell" font="bold" foreground="#0000ff" /><cell text="Cell" /><cell text="Cell" /></row>
+							<row><cell text="Cell" /><cell text="Cell" /><cell text="Cell" /></row>
+							<row><cell text="Cell" /><cell text="Cell" /><cell text="Cell" /></row>
+						</table>
+					</tab>
+					<tab text="One"><label /></tab>
+					<tab text="Two"><label /></tab>
+					<tab text="Three"><label /></tab>
+					<tab text="Four"><label /></tab>
+					<tab text="Five"><label /></tab>
+					<tab text="Six"><label /></tab>
+					<tab text="Seven"><label /></tab>
+					<tab text="Eight"><label /></tab>
+				</tabbedpane>
+				<spinbox text="SpinBox" font="bold" foreground="#0000ff" />
+				<progressbar value="50" valign="center" />
+				<slider valign="center" />
+			</panel>
+		</tab>
+		<tab text="@">
+			<panel top="4" left="4" bottom="4" right="4" gap="4" columns="3" scrollable="true">
+				<label text="F O R   R E A L L Y   T H I N   C L I E N T S" foreground="#999900" font="bold 9" />
+				<label text="@" foreground="#ff3333" font="24" />
+				<label text="F O R   R E A L L Y   T H I N   C L I E N T S" />
+				<textarea width="160" height="240" weightx="1" weighty="1" colspan="3" />
+				<button text="Button" />
+				<button text="Button" />
+				<button text="Button" />
+			</panel>
+		</tab>
+	</tabbedpane>
+</panel>

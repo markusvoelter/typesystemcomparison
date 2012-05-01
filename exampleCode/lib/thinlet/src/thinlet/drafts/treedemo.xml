@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<panel columns="1" gap="4">
+	<label text="Popup menu to collapse/expand node and set enabled/disabled." weightx="1" />
+	<tree name="tree" weighty="1" >
+		<node text="Node A">
+			<node text="Node A1" />
+			<node text="Node A2" enabled="false" />
+		</node>
+		<node text="Node B">
+			<node text="Node B1" enabled="false" />
+			<node text="Node B2" />
+		</node>
+		<popupmenu name="treepopup" menushown="updatePopup(thinlet, tree, expand, collapse, enable, disable)">
+			<menuitem name="expand" text="Expand" action="expand(thinlet, tree)" />
+			<menuitem name="collapse" text="Collapse" action="collapse(thinlet, tree)" />
+			<separator />
+			<menuitem name="enable" text="Enable" action="enable(thinlet, tree)" />
+			<menuitem name="disable" text="Disable" action="disable(thinlet, tree)" />
+		</popupmenu>
+	</tree>
+	<button text="Remove popup-menu" halign="left" action="removePopup(thinlet, this, treepopup)" />
+</panel>

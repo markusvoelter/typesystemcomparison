@@ -11,4 +11,4 @@ entity PersonT {
 entity House {
 	floors : int; 
 	street : String;
-}
+}	

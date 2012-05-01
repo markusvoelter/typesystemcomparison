@@ -1,0 +1,51 @@
+<tabbedpane>
+	<tab text="List">
+		<panel gap="4" top="3" left="3" bottom="3" right="3">
+			<list selection="multiple" name="leftlist" weightx="1"
+					action="listSelectionChanged(thinlet, this, rightbutton)">
+				<item icon="/icon/cut.gif" text="Item-A" />
+				<item icon="/icon/copy.gif" text="Item-B" />
+				<item icon="/icon/paste.gif" text="Item-C" />
+				<item icon="/icon/delete.gif" text="Item-D" />
+				<popupmenu>
+					<menuitem text="Item" />
+					<menu text="Menu">
+						<menuitem text="Item" />
+						<separator />
+						<checkboxmenuitem text="Item" />
+					</menu>
+					<separator />
+					<menuitem text="Item" />
+				</popupmenu>
+			</list>
+			<panel gap="4" valign="top" weighty="1" columns="1">
+				<button name="leftbutton" text="<" enabled="false"
+					action="moveListItem(thinlet, rightlist, leftlist)" />
+				<button name="rightbutton" text=">" enabled="false"
+					action="moveListItem(thinlet, leftlist, rightlist)" />
+			</panel>
+			<list selection="multiple" name="rightlist" weightx="1"
+				action="listSelectionChanged(thinlet, this, leftbutton)" />
+		</panel>
+	</tab>
+	
+	<tab text="Table">
+		<panel gap="4" top="3" left="3" bottom="3" right="3" columns="1">
+			<table selection="multiple" name="table" weightx="1" weighty="1">
+				<header>
+					<column text="Column-A" />
+					<column text="Column-B" />
+					<column text="Column-C" />
+				</header>
+			</table>
+			<panel gap="4">
+				<button text="Add" action="addTableRows(thinlet, table)" />
+				<button text="Clear" action="clearTable(thinlet, table)" />
+			</panel>
+		</panel>
+	</tab>
+	
+	<tab text="Tree">
+		<tree selection="multiple" />
+	</tab>
+</tabbedpane>

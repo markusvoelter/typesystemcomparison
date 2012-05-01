@@ -1,0 +1,4 @@
+<panel gap="4" top="4" left="4">
+	<textfield name="field" />
+	<button text="Start..." action="start(thinlet, field)" />
+</panel>

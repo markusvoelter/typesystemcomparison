@@ -1,0 +1,4 @@
+<panel gap="4" top="4" right="4" columns="1">
+	<bean name="chart" bean="thinlet.drafts.ChartBean" weightx="1" />
+	<button text="Update" action="update(thinlet, chart)" halign="center" />
+</panel>

@@ -1,0 +1,97 @@
+<html>
+<head><title>Thinlet - Button</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <a href="overview.html" class="tab">Overview</a>
+| <span class="activetab">Widgets</span>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="component.html">Component</a><br>
+<a href="label.html">Label</a><br>
+<span class="activeside"><b>Button</b></span><br>
+<a href="checkbox.html">CheckBox</a><br>
+<a href="togglebutton.html">ToggleButton</a><br>
+<a href="combobox.html">ComboBox</a><br>
+<a href="textfield.html">TextField</a><br>
+<a href="passwordfield.html">PasswordField</a><br>
+<a href="textarea.html">TextArea</a><br>
+<a href="tabbedpane.html">TabbedPane</a><br>
+<a href="panel.html">Panel</a><br>
+<a href="desktop.html">Desktop</a><br>
+<a href="dialog.html">Dialog</a><br>
+<a href="spinbox.html">SpinBox</a><br>
+<a href="progressbar.html">ProgressBar</a><br>
+<a href="slider.html">Slider</a><br>
+<a href="splitpane.html">SplitPane</a><br>
+<a href="list.html">List</a><br>
+<a href="table.html">Table</a><br>
+<a href="tree.html">Tree</a><br>
+<a href="separator.html">Separator</a><br>
+<a href="menubar.html">MenuBar</a><br>
+
+		</td>
+		<td class="body">
+			<p class="title">Button</p>
+<p>The following button displays a short text string and an image.
+	Its content is on the left and centered vertically. The second button
+	resembles an HTML link, and when pressed invokes the method
+	<code>goHome</code>.</p><p class="xml"><font color="#000080">&lt;</font><font color="#800000"><b>button</b></font>  text=<font color="#008000">&quot;Button&quot;</font> icon=<font color="#008000">&quot;image.gif&quot;</font> alignment=<font color="#008000">&quot;left&quot;</font> tooltip=<font color="#008000">&quot;ToolTip&quot;</font> <font color="#000080">/&gt;</font><br>
+<font color="#000080">&lt;</font><font color="#800000"><b>button</b></font>  text=<font color="#008000">&quot;www.thinlet.com&quot;</font> type=<font color="#008000">&quot;link&quot;</font> action=<font color="#008000">&quot;goHome&quot;</font> <font color="#000080">/&gt;</font></p>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Properties</caption>
+<tr><td class="header">Name</td><td class="header">Type</td><td class="header">Default</td><td class="header">Description</td></tr>
+<tr><td class="cell">text</td><td class="cell">string</td><td class="cell">&nbsp;</td><td class="cell">The text string that the button displays.</td></tr>
+<tr><td class="cell">icon</td><td class="cell">icon</td><td class="cell">&nbsp;</td><td class="cell">The icon image that the button displays.</td></tr>
+<tr><td class="cell">alignment</td><td class="cell">choice</td><td class="cell">center</td><td class="cell">The alignment of the text and image similar to label.
+			Possible values are: center, left, and right. The default value is center.
+			Icons are always displayed to the left of text (if any).</td></tr>
+<tr><td class="cell">mnemonic</td><td class="cell">integer</td><td class="cell">-1</td><td class="cell">Specifies the index of underlined char and a key combination (Alt + the char)
+			which invokes the (not necessarily focused, but enabled and visible)
+			button's action listener.</td></tr>
+<tr><td class="cell">type</td><td class="cell">choice</td><td class="cell">normal</td><td class="cell">Possible values are: normal, default, cancel, and link. The default value is normal.
+			Default, and cancel values are for dialog control. Link changes the appearance of
+			button so that it resembles HTML link.</td></tr>
+<tr><td class="cell" colspan="4">name, enabled, visible, tooltip, property, i18n, width, height, colspan, rowspan,
+			weightx, weighty, halign, and valign parameters are similar to
+			<a href="component.html">component</a></td></tr>
+</table>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Listeners</caption>
+<tr><td class="header">Name</td><td class="header">Description</td></tr>
+<tr><td class="cell">action</td><td class="cell">Invokes the given method when the button is pressed by mouse or keyboard.</td></tr>
+</table>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Keyboard-actions</caption>
+<tr><td class="header">Operation</td><td class="header">Action</td></tr>
+<tr><td class="cell">Spacebar</td><td class="cell">Activates button</td></tr>
+<tr><td class="cell">Tab, Shift-Tab</td><td class="cell">Navigate forward, backward</td></tr>
+</table>
+
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

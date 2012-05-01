@@ -1,0 +1,57 @@
+<html>
+<head><title>Thinlet - Amazon Explorer</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <span class="activetab">Showcase</span>
+| <a href="overview.html" class="tab">Overview</a>
+| <a href="component.html" class="tab">Widgets</a>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="showcase.html">Showcase</a><br>
+<a href="demo.html">Demo</a><br>
+<span class="activeside"><b>Amazon Explorer</b><br>Demo application for
+		<i>amazon.com</i>'s web service.</span><br>
+<a href="drafts.html">Drafts</a><br>
+
+		</td>
+		<td class="body">
+			<content>
+	
+
+<applet code="thinlet.AppletLauncher" codebase="../lib" archive="thinlet.jar, amazon.jar" width="236" height="280">
+	<param name="class" value="thinlet.amazon.AmazonExplorer"></param>
+</applet>
+<br><b>Note</b>:
+<i>xml.amazon.com</i> isn't accessible from a local unsigned applet,
+thus it doesn't work. Try the application version instead, it is
+available in the <i>lib</i> directory.
+
+
+</content>
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

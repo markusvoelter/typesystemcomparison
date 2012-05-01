@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<panel gap="4">
+	<button text="i18n.english" />
+	<button text="i18n.hungarian" />
+</panel>

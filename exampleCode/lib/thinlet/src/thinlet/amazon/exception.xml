@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dialog name="dialog" icon="/icon/help.gif" modal="true"
+		columns="1" gap="4" top="4" left="4" bottom="4" right="4" >
+	<label name="message" />
+	<textarea name="stacktrace" editable="false" width="200" height="150" weightx="1" weighty="1" />
+	<button text="Close" halign="center" action="closeDialog(dialog)" />
+</dialog>

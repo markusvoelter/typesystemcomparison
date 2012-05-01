@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<splitpane name="content" divider="120">
+	<tree angle="true" line="false" action="loadDraft(content, this)">
+		<node text="Widgets">
+			<node text="Auto-fill"
+					property="ui=autofill.xml;logic=thinlet.drafts.AutoFill" />
+			<node text="Tabbed pane"
+					property="ui=tabbedpane.xml;logic=thinlet.drafts.TabbedPane" />
+			<node text="Tree demo"
+					property="ui=treedemo.xml;logic=thinlet.drafts.TreeDemo" />
+			<node text="List, Table &amp; Tree"
+					property="ui=lists.xml;logic=thinlet.drafts.Lists" />
+			<node text="MDI"
+					property="ui=mdi.xml;logic=thinlet.drafts.MDI" />
+			<node text="Class explorer"
+					property="ui=classexplorer.xml;logic=thinlet.drafts.ClassExplorer" />
+			<node text="Folder browser"
+					property="ui=folderbrowser.xml;logic=thinlet.drafts.FolderBrowser" />
+			<node text="Choosers"
+					property="ui=choosers.xml;logic=thinlet.drafts.Choosers" />
+			<node text="Bean test"
+					property="ui=beantest.xml;logic=thinlet.drafts.BeanTest" />
+			<node text="Focus test"
+					property="ui=focustest.xml;logic=thinlet.drafts.FocusTest" />
+			<node text="Dialog demo"
+					property="ui=dialogdemo.xml;logic=thinlet.drafts.DialogDemo" />
+		</node>
+		<node text="Style"
+				property="ui=style.xml;logic=thinlet.drafts.Style" />
+		<node text="Event logger"
+				property="ui=eventlogger.xml;logic=thinlet.drafts.EventLogger" />
+		<node text="Internationalization"
+				property="ui=internationalization.xml;logic=thinlet.drafts.Internationalization" />
+		<node text="System" expanded="false">
+			<node text="Properties"
+					property="ui=systemproperties.xml;logic=thinlet.drafts.SystemProperties" />
+			<node text="Colors"
+					property="ui=systemcolors.xml;logic=thinlet.drafts.SystemColors" />
+			<node text="Windows"
+					property="ui=desktopproperties.xml;logic=thinlet.drafts.DesktopProperties" />
+		</node>
+		<node text="Modal dialog"
+				property="ui=modaldemo.xml;logic=thinlet.drafts.ModalDemo" />
+		<node text="Widgets"
+				property="ui=widgets.xml;logic=thinlet.drafts.Widgets" />
+		<node text="Looks"
+				property="ui=looks.xml;logic=thinlet.drafts.Looks" />
+		<node text="Progress Monitor"
+				property="ui=progressmonitor.xml;logic=thinlet.drafts.ProgressMonitor" />
+		<node text="Chart"
+				property="ui=chart.xml;logic=thinlet.drafts.Chart" />
+	</tree>
+	<panel border="true" />
+</splitpane>

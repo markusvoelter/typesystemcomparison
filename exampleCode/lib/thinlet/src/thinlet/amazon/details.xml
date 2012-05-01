@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel name="detailspage" columns="1" weighty="1"
+		gap="4" top="4" left="4" bottom="4" right="4">
+	<panel columns="2" gap="4">
+		<textfield name="productname" editable="false" weightx="1" />
+		<button text="Back" icon="/icon/library.gif" action="removePage" />
+	</panel>
+	
+	<tabbedpane weightx="1" weighty="1" action="checkDetails(detailspage, this.selected)">
+		<tab text="Info">
+			<panel name="infoproperties" columns="2"
+					gap="4" top="4" left="4" bottom="4" right="4" weightx="1" weighty="1" />
+		</tab>
+		
+		<tab text="More">
+			<panel name="moreproperties" columns="2"
+					gap="4" top="4" left="4" bottom="4" right="4" weightx="1" weighty="1" />
+		</tab>
+		
+		<tab text="Reviews">
+			<panel name="reviewpanel" columns="1" gap="4" top="4" left="4" bottom="4" right="4">
+				<panel gap="4">
+					<label text="Average:" />
+					<progressbar name="avgrating" maximum="500" valign="center" weightx="1" />
+				</panel>
+				<separator />
+				<panel columns="4" gap="4">
+					<textfield name="summary" editable="false" colspan="2" />
+					<button name="prevreview" icon="/icon/back.gif" tooltip="Previous review" enabled="false"
+							action="previousReview(reviewpanel)" rowspan="2" valign="top" />
+					<button name="nextreview" icon="/icon/forward.gif" tooltip="Next review" enabled="false"
+							action="nextReview(reviewpanel)" rowspan="2" valign="top" />
+					<label text="Rating:" />
+					<progressbar name="rating" maximum="500" valign="center" weightx="1" />
+				</panel>
+				<textarea name="comment" wrap="true" weightx="1" weighty="1" />
+			</panel>
+		</tab>
+		
+		<tab text="Details">
+			<splitpane name="detailpanel" orientation="vertical">
+				<panel columns="1" gap="4" top="4" left="4" right="4">
+					<label name="platformtitle" text="Platforms:" />
+					<list name="platformlist" weightx="1" weighty="1" />
+				</panel>
+				<panel columns="1" gap="4" left="4" bottom="4" right="4">
+					<label name="featuretitle" text="Features:" />
+					<list name="featurelist" weightx="1" weighty="1" />
+				</panel>
+			</splitpane>
+		</tab>
+		
+		<tab text="Links">
+			<panel name="linkpanel" columns="1" gap="4" top="4" left="4" bottom="4" right="4">
+				<panel gap="4" weightx="1">
+					<button name="accessories" text="Accessories" action="showAccessories(this)" weightx="1" />
+					<button name="similars" text="Similars" action="showSimilars(this)" weightx="1" />
+					<button name="wishlists" text="Listmania!" action="showWishlists(this)" weightx="1"/>
+				</panel>
+				<panel gap="4">
+					<label text="Marketplace:" />
+					<combobox name="offertype" editable="false" selected="0" weightx="1">
+						<choice text="All" />
+						<choice text="ThirdPartyNew" />
+						<choice text="Used" />
+						<choice text="Collectible" />
+						<choice text="Refurbished" />
+					</combobox>
+					<button name="marketsearch" text="Search" action="searchMarket(this, offertype)" />
+				</panel>
+				<label text="Browse list:" />
+				<list name="browselist" weighty="1"  />
+			</panel>
+		</tab>
+	</tabbedpane>
+</panel>

@@ -1,0 +1,127 @@
+<html>
+<head><title>Thinlet - Tree</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <a href="overview.html" class="tab">Overview</a>
+| <span class="activetab">Widgets</span>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="component.html">Component</a><br>
+<a href="label.html">Label</a><br>
+<a href="button.html">Button</a><br>
+<a href="checkbox.html">CheckBox</a><br>
+<a href="togglebutton.html">ToggleButton</a><br>
+<a href="combobox.html">ComboBox</a><br>
+<a href="textfield.html">TextField</a><br>
+<a href="passwordfield.html">PasswordField</a><br>
+<a href="textarea.html">TextArea</a><br>
+<a href="tabbedpane.html">TabbedPane</a><br>
+<a href="panel.html">Panel</a><br>
+<a href="desktop.html">Desktop</a><br>
+<a href="dialog.html">Dialog</a><br>
+<a href="spinbox.html">SpinBox</a><br>
+<a href="progressbar.html">ProgressBar</a><br>
+<a href="slider.html">Slider</a><br>
+<a href="splitpane.html">SplitPane</a><br>
+<a href="list.html">List</a><br>
+<a href="table.html">Table</a><br>
+<span class="activeside"><b>Tree</b><br>Node</span><br>
+<a href="separator.html">Separator</a><br>
+<a href="menubar.html">MenuBar</a><br>
+
+		</td>
+		<td class="body">
+			<p class="title">Tree</p>
+<p>Tree displays a set of hierarchical data, contains nodes
+	(not only one root node is allowed), and a node could have subnodes.
+	It internally handles scrolling.
+	The following example shows a tree with 2 root nodes ('Node A', and 'Node D'),
+	the first has 2 subnodes (a selected 'Node B' and 'Node C'), the collapsed
+	'Node D' includes one node.</p><p class="xml"><font color="#000080">&lt;</font><font color="#800000"><b>tree</b></font>  selection=<font color="#008000">&quot;multiple&quot;</font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>node</b></font>  text=<font color="#008000">&quot;Node A&quot;</font> icon=<font color="#008000">&quot;image.gif&quot;</font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>node</b></font>  text=<font color="#008000">&quot;Node B&quot;</font> icon=<font color="#008000">&quot;image.gif&quot;</font> selected=<font color="#008000">&quot;true&quot;</font> <font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>node</b></font>  text=<font color="#008000">&quot;Node C&quot;</font> icon=<font color="#008000">&quot;image.gif&quot;</font> <font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;/</font><font color="#800000"><b>node</b></font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>node</b></font>  text=<font color="#008000">&quot;Node D&quot;</font> expanded=<font color="#008000">&quot;false&quot;</font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>node</b></font>  text=<font color="#008000">&quot;Node E&quot;</font> icon=<font color="#008000">&quot;image.gif&quot;</font> <font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;/</font><font color="#800000"><b>node</b></font><font color="#000080">&gt;</font><br>
+<font color="#000080">&lt;/</font><font color="#800000"><b>tree</b></font><font color="#000080">&gt;</font></p>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Properties</caption>
+<tr><td class="header">Name</td><td class="header">Type</td><td class="header">Default</td><td class="header">Description</td></tr>
+<tr><td class="cell">selection</td><td class="cell">choice</td><td class="cell">single</td><td class="cell">Possible values are: single, interval, and multiple. For the default
+			single value the selection can only contain one path at a time,
+			for interval the selection can only be contiguous (of the currently
+			visible nodes), and for the multiple value the selection can contain
+			any number of nodes that are not necessarily contiguous.</td></tr>
+<tr><td class="cell">angle</td><td class="cell">boolean</td><td class="cell">false</td><td class="cell">To specify to draw lines detailing the relationships between nodes.</td></tr>
+<tr><td class="cell" colspan="4">line, and selection parameters are similar to <a href="list.html">list</a></td></tr>
+<tr><td class="cell" colspan="4">name, enabled, visible, tooltip, property, width, height, colspan, rowspan,
+			weightx, weighty, halign, and valign parameters are similar to
+			<a href="component.html">component</a></td></tr>
+</table>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Listeners</caption>
+<tr><td class="header">Name</td><td class="header">Description</td></tr>
+<tr><td class="cell">action</td><td class="cell">Calls the method whenever the selection changes.</td></tr>
+<tr><td class="cell">perform</td><td class="cell">Calls the method whenever a double-click event occurs.</td></tr>
+<tr><td class="cell">expand</td><td class="cell">The listener that's notified when the tree expands a node.</td></tr>
+<tr><td class="cell">collapse</td><td class="cell">Called whenever a node in the tree has been collapsed.</td></tr>
+</table>
+<p class="title">Node</p>
+<p>Tree node is similar to list item, but maybe contains subnodes, and has
+		collapse control.</p><table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Properties</caption>
+<tr><td class="header">Name</td><td class="header">Type</td><td class="header">Default</td><td class="header">Description</td></tr>
+<tr><td class="cell">selected</td><td class="cell">boolean</td><td class="cell">false</td><td class="cell">True if currently selected.</td></tr>
+<tr><td class="cell">expanded</td><td class="cell">boolean</td><td class="cell">true</td><td class="cell">Ensures that the node is expanded if true, otherwise collapsed.</td></tr>
+<tr><td class="cell" colspan="4">name, enabled, text, icon, alignment, tooltip, and property parameters
+				are similar to <a href="combobox.html#choice">combobox choice</a></td></tr>
+</table>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Keyboard-actions</caption>
+<tr><td class="header">Operation</td><td class="header">Action</td></tr>
+<tr><td class="cell">Right arrow</td><td class="cell">Expands current collapsed node, or selects its first subnode</td></tr>
+<tr><td class="cell">Left arrow</td><td class="cell">Collapses current expanded node, or selects its parent node</td></tr>
+<tr><td class="cell">Up arrow</td><td class="cell">Selects previous node</td></tr>
+<tr><td class="cell">Down arrow</td><td class="cell">Selects next node</td></tr>
+<tr><td class="cell">Home</td><td class="cell">Selects first node</td></tr>
+<tr><td class="cell">End</td><td class="cell">Selects last node</td></tr>
+<tr><td class="cell">Page Up</td><td class="cell">Selects node one view up</td></tr>
+<tr><td class="cell">Page Down</td><td class="cell">Selects node one view down</td></tr>
+<tr><td class="cell">+Shift</td><td class="cell">Extends selection</td></tr>
+<tr><td class="cell">+Ctrl</td><td class="cell">Set lead node</td></tr>
+<tr><td class="cell">Space</td><td class="cell">Selects lead node</td></tr>
+<tr><td class="cell">Ctrl-A, Ctrl-Slash</td><td class="cell">Selects all</td></tr>
+<tr><td class="cell">Ctrl-Backslash</td><td class="cell">Deselects all</td></tr>
+<tr><td class="cell">Tab, Shift-Tab</td><td class="cell">Navigate forward, backward</td></tr>
+</table>
+
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

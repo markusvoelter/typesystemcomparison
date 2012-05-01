@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel columns="2" weighty="1" gap="4" top="4" left="4" bottom="4" right="4">
+	<label text="Total results:" />
+	<label name="total" weightx="1" />
+	<list name="resultlist" colspan="2" weighty="1" action="resultSelected(this, detailsbutton)" />
+	<panel gap="4" colspan="2" halign="right">
+		<button name="detailsbutton" text="Details" icon="/icon/library.gif" enabled="false" action="showDetails(resultlist)" />
+		<button text="Back" icon="/icon/find.gif" action="removePage" />
+		<button name="nextresult" text="Next" icon="/icon/find.gif"
+				action="findNext(this, total, resultlist)" />
+	</panel>
+</panel>

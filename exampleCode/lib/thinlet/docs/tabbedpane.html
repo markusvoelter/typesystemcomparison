@@ -1,0 +1,111 @@
+<html>
+<head><title>Thinlet - TabbedPane</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <a href="overview.html" class="tab">Overview</a>
+| <span class="activetab">Widgets</span>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="component.html">Component</a><br>
+<a href="label.html">Label</a><br>
+<a href="button.html">Button</a><br>
+<a href="checkbox.html">CheckBox</a><br>
+<a href="togglebutton.html">ToggleButton</a><br>
+<a href="combobox.html">ComboBox</a><br>
+<a href="textfield.html">TextField</a><br>
+<a href="passwordfield.html">PasswordField</a><br>
+<a href="textarea.html">TextArea</a><br>
+<span class="activeside"><b>TabbedPane</b><br>Tab</span><br>
+<a href="panel.html">Panel</a><br>
+<a href="desktop.html">Desktop</a><br>
+<a href="dialog.html">Dialog</a><br>
+<a href="spinbox.html">SpinBox</a><br>
+<a href="progressbar.html">ProgressBar</a><br>
+<a href="slider.html">Slider</a><br>
+<a href="splitpane.html">SplitPane</a><br>
+<a href="list.html">List</a><br>
+<a href="table.html">Table</a><br>
+<a href="tree.html">Tree</a><br>
+<a href="separator.html">Separator</a><br>
+<a href="menubar.html">MenuBar</a><br>
+
+		</td>
+		<td class="body">
+			<p class="title">TabbedPane</p>
+<p>TabbedPane contains tabs and components. The first tab
+	(has an index equal to 0) is associated with the first component.
+	This example tabbed pane has 3 tab and 3 components (text areas),
+	tabs are on the left, and the second component is visible.</p><p class="xml"><font color="#000080">&lt;</font><font color="#800000"><b>tabbedpane</b></font>  placement=<font color="#008000">&quot;left&quot;</font> selected=<font color="#008000">&quot;1&quot;</font> action=<font color="#008000">&quot;tabchanged&quot;</font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>tab</b></font>  text=<font color="#008000">&quot;One&quot;</font> icon=<font color="#008000">&quot;image.gif&quot;</font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>textarea</b></font>  text=<font color="#008000">&quot;One&quot;</font> <font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;/</font><font color="#800000"><b>tab</b></font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>tab</b></font>  text=<font color="#008000">&quot;Two&quot;</font> alignment=<font color="#008000">&quot;right&quot;</font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>textarea</b></font>  text=<font color="#008000">&quot;Two&quot;</font> <font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;/</font><font color="#800000"><b>tab</b></font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>tab</b></font>  text=<font color="#008000">&quot;Three&quot;</font> enabled=<font color="#008000">&quot;false&quot;</font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>textarea</b></font>  text=<font color="#008000">&quot;Three&quot;</font> <font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;/</font><font color="#800000"><b>tab</b></font><font color="#000080">&gt;</font><br>
+<font color="#000080">&lt;/</font><font color="#800000"><b>tabbedpane</b></font><font color="#000080">&gt;</font></p>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Properties</caption>
+<tr><td class="header">Name</td><td class="header">Type</td><td class="header">Default</td><td class="header">Description</td></tr>
+<tr><td class="cell">placement</td><td class="cell">choice</td><td class="cell">top</td><td class="cell">The placement for the tabs relative to the content. Possible values are:
+			top, left, bottom, right, and stack. The default value, if not set, is top.
+			The stack placement arranges tabs so that they resemble a sidebar.</td></tr>
+<tr><td class="cell">selected</td><td class="cell">integer</td><td class="cell">0</td><td class="cell">The index of the currently selected tab, and the visible content
+			(the first index is 0). Value -1 means there is no selected tab.</td></tr>
+<tr><td class="cell" colspan="4">name, enabled, visible, tooltip, property, width, height, colspan, rowspan,
+			weightx, weighty, halign, and valign parameters are similar to
+			<a href="component.html">component</a></td></tr>
+</table>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Listeners</caption>
+<tr><td class="header">Name</td><td class="header">Description</td></tr>
+<tr><td class="cell">action</td><td class="cell">Invokes the method when the tabbedpane has changed its selected tab index.</td></tr>
+</table>
+<p class="title">Tab</p>
+<p>Tabs are identified in the component's list as 'tab',
+		and components with the 'component' key.</p><table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Properties</caption>
+<tr><td class="header">Name</td><td class="header">Type</td><td class="header">Default</td><td class="header">Description</td></tr>
+<tr><td class="cell">mnemonic</td><td class="cell">integer</td><td class="cell">-1</td><td class="cell">Specifies the underlined char and the key combination
+				which selects the tab.</td></tr>
+<tr><td class="cell" colspan="4">name, enabled, text, icon, alignment, tooltip, and property parameters
+				are similar to <a href="combobox.html#choice">combobox choice</a></td></tr>
+</table>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Keyboard-actions</caption>
+<tr><td class="header">Operation</td><td class="header">Action</td></tr>
+<tr><td class="cell">Left arrow, up arrow</td><td class="cell">Selects previous tab</td></tr>
+<tr><td class="cell">Right arrow, down arrow</td><td class="cell">Selects next tab</td></tr>
+<tr><td class="cell">Tab, Shift-Tab</td><td class="cell">Navigate forward, backward</td></tr>
+</table>
+
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

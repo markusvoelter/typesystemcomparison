@@ -9,6 +9,7 @@ entity Person {
 }
 
 form PersonForm edits Person {
+<<<<<<< HEAD
 	text (20) -> firstName;
 	text (20) -> name validate lengthOf(widgetcontent) > 1;
 	text (3) -> age validate widgetcontent > 0 && widgetcontent < 130;
@@ -24,3 +25,24 @@ form PersonFormWithErrors edits Person {
 }
 
 
+=======
+	text (20) -> name validate lengthOf(widgetcontent) < 20;
+	text (20) -> firstName;
+	text (3) -> age validate widgetcontent > 0 && widgetcontent < 130;
+	checkbox -> isAdult;
+	text(5) -> weight validate weight > 10;
+}
+
+form PersonGreeting edits Person {
+	text(20) -> firstName;
+    text(20) -> greeting;
+}
+
+form PersonFormWithErrors edits Person {
+	text(10) -> name validate widgetcontent; // error for widgetcontent
+	text(10) -> isAdult;
+	text(20) -> likesCake;
+	checkbox -> firstName;
+	checkbox -> greeting validate likesCake;
+}
+>>>>>>> 1f40c55... validation stubs for Thinlet example

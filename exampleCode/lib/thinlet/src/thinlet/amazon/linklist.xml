@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel columns="1" weighty="1" gap="4" top="4" left="4" bottom="4" right="4">
+	<label name="title" weightx="1" />
+	<list name="resultlist" weighty="1" action="resultSelected(resultlist, detailsbutton)" />
+	<panel gap="4" halign="right">
+		<button name="detailsbutton" text="Details" enabled="false" action="showDetails(resultlist)" />
+		<button text="Back" icon="/icon/find.gif" action="removePage" />
+	</panel>
+</panel>

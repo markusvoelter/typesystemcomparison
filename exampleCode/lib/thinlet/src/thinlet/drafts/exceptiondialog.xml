@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<dialog name="dialog" modal="true"
+		columns="1" top="4" left="4" bottom="4" right="4" gap="4">
+	<label name="message" weightx="1" />
+	<textarea name="stacktrace" editable="false" width="240" height="160" weighty="1" />
+	<button text="OK" action="close(thinlet, dialog)" halign="center" />
+</dialog>

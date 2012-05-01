@@ -1,0 +1,79 @@
+<html>
+<head><title>Thinlet - Home</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<span class="activetab">Home</span>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <a href="overview.html" class="tab">Overview</a>
+| <a href="component.html" class="tab">Widgets</a>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<span class="activeside"><p>Thinlet is a GUI toolkit, a single Java class, parses the
+		hierarchy and properties of the GUI, handles user interaction, and calls business
+		logic. Separates the graphic presentation (described in an XML file) and the
+		application methods (written as Java code).</p><p>
+		Its compressed size is 39KB, and it is LGPL licensed.</p><p>
+		Thinlet runs with Java™ 1.1 (IE's default JVM) to 1.4, Personal Java™,
+		and Personal (Basis) Profile™. Swing isn't required.</p></span><br>
+
+		</td>
+		<td class="body">
+			<content>
+<img src="screenshot.png" width="208" height="320" alt="Screenshot" align="left"></img>
+
+<p><b>March 28, 2005.</b>
+	Invoking a popup menu doesn't update the selection of a
+		text (in a textfield, or textarea) or items (in a list, table, or tree)
+		if the mouse was clicked inside the selection. 
+	Clips tabbedpane's painting area when all the tabs will not fit.
+	Dotted rectangle is painted for focused components,
+		it's more visible for checkboxes, radio buttons, textfields, and areas;
+		moreover it's painted for empty lists, trees, and tables.
+	Custom background and text color of textfields and textareas
+		(and components including editable fields, and scrollable widgets'
+		background) are considered.
+</p>
+
+<p><b>February 27, 2005.</b>
+	Encoding declaration of the XML prolog is considered, thus you can use a different charset for internationalized content.
+	The <code>parse</code> method consumes only the required length of a char array for text values.
+	Use constant numbers or strings for event handlers.
+	Text and circle rendering is done with antialiasing on J2SE by default (corrects the ugly radio button).
+	Textfield <code>alignment</code> parameter added (combobox, spinbox, and passwordfield also support alignment).
+	A default constructor is added, thus Javac 1.1 compiles it.
+	The <code>setComponent</code> method updates the content.
+	Progressbar's fault at '50' value is repaired.
+	The <code>getFont</code> and <code>getColor</code> public methods are added.
+	Menubar's placement attribute is deprecated.
+	The secondary internationalization API has been removed.
+</p>
+
+
+
+</content>
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

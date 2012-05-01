@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<panel columns="1" border="true" top="4" left="4" bottom="4" right="4" gap="4">
+	<tabbedpane action="tabChanged(this.selected)" weightx="1" weighty="1">
+		<tab text="1" mnemonic="0">
+			<panel top="4" left="4" bottom="4" right="4" gap="4" columns="2">
+				<button text="Button" mnemonic="0" action="buttonAction(this.text, 'string', 12, 1234567890L, 12.34, 45.6F)" />
+				<checkbox text="CheckBox" mnemonic="0" action="buttonAction(this.text)" />
+				<checkbox text="RadioButton" mnemonic="0" group="group" action="buttonAction(this.text)" />
+				<togglebutton text="ToggleButton" mnemonic="0" action="buttonAction(this.text)" />
+				<button text="http://www.thinlet.com" mnemonic="7" type="link" action="showLink(thinlet)" />
+			</panel>
+		</tab>
+		<tab text="2" mnemonic="0">
+			<panel top="4" left="4" bottom="4" right="4" gap="4">
+				<list name="list" action="selectAction(this.name, item.text)"
+						perform="doubleClick(this.name, item.text)" weightx="1" weighty="1">
+					<item text="Item1" /><item text="Item2" /><item text="Item3" /><item text="Item4" />
+				</list>
+				<tree name="tree" action="selectAction(this.name, item.text)"
+						perform="doubleClick(this.name, item.text)"
+						expand="expand(item.text)" collapse="collapse(item.text)" weightx="1">
+					<node text="Node1">
+						<node text="Node1a" /><node text="Node1b" />
+						<node text="Node1c">
+							<node text="Node1c1" /><node text="Node1c2" />
+						</node>
+					</node>
+					<node text="Node2" /><node text="Node3" />
+				</tree>
+				<table name="table" action="selectAction(this.name, this.name)"
+						perform="doubleClick(this.name, this.name)" weightx="2">
+					<header><column text="Column 1" /><column text="Column 2" /></header>
+					<row><cell text="Cell11" /><cell text="Cell21" /></row>
+					<row><cell text="Cell12" /><cell text="Cell22" /></row>
+				</table>
+			</panel>
+		</tab>
+		<tab text="3" mnemonic="0">
+			<panel top="4" columns="2" left="4" bottom="4" right="4" gap="4">
+				<textfield text="TextField" insert="insert(this.text, this.start, this.end)"
+					remove="remove(this.text, this.start, this.end)"
+					caret="caret(this.text, this.start, this.end)" perform="perform(this.text)" />
+				<textfield editable="false" text="NonEditable" insert="insert(this.text, this.start, this.end)"
+					remove="remove(this.text, this.start, this.end)"
+					caret="caret(this.text, this.start, this.end)" perform="perform(this.text)" />
+				<textarea text="TextArea" insert="insert(this.text, this.start, this.end)"
+					remove="remove(this.text, this.start, this.end)"
+					caret="caret(this.text, this.start, this.end)" perform="perform(this.text)" />
+				<textarea editable="false" text="NonEditable" insert="insert(this.text, this.start, this.end)"
+					remove="remove(this.text, this.start, this.end)"
+					caret="caret(this.text, this.start, this.end)" perform="perform(this.text)" />
+			</panel>
+		</tab>
+		<tab text="4" mnemonic="0">
+			<panel columns="1">
+				<menubar weightx="1">
+					<menu text="Menu" mnemonic="0">
+						<menuitem text="MenuItem" mnemonic="4" accelerator="ctrl shift f8" action="menuAction(this.text)" />
+					</menu>
+				</menubar>
+				<label weighty="1">
+					<popupmenu>
+						<menuitem text="MenuItem" mnemonic="4" />
+					</popupmenu>
+				</label>
+				<menubar>
+					<menu text="Start">
+						<menuitem text="Item" /><menuitem text="Item" />
+					</menu>
+				</menubar>
+			</panel>
+		</tab>
+	</tabbedpane>
+	<textarea editable="false" init="setLogArea(thinlet, this)" />
+</panel>

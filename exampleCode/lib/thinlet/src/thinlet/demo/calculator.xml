@@ -1,0 +1,7 @@
+<panel gap="4" top="4" left="4">
+	<textfield name="number1" columns="4" />
+	<label text="+" />
+	<textfield name="number2" columns="4" />
+	<button text="=" action="calculate(number1.text, number2.text, result)" />
+	<textfield name="result" editable="false" />
+</panel>

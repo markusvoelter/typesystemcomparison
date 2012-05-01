@@ -1,0 +1,107 @@
+<html>
+<head><title>Thinlet - Hierarchy</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <span class="activetab">Overview</span>
+| <a href="component.html" class="tab">Widgets</a>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="overview.html">Overview</a><br>
+<a href="calculator.html">Calculator</a><br>
+<span class="activeside"><b>Hierarchy</b></span><br>
+<a href="properties.html">Properties</a><br>
+<a href="events.html">Events</a><br>
+<a href="xml.html">XML</a><br>
+<a href="i18n.html">Internationalization</a><br>
+
+		</td>
+		<td class="body">
+			<content>
+	
+<p class="title">Widget tree</p>
+
+<p>The root of <i>thinlet</i>'s widget hierarchy is a <i>desktop</i>,
+it contains mainly panels and dialogs.</p>
+<p class="java"><font color="#800000"><b>public</b></font> <font color="#000080">Object</font> getDesktop()</p>
+
+
+<p>You can observe the whole tree.
+	<ul><li>A <i>panel</i>, <i>desktop</i>, or <i>dialog</i>
+		could contain <i>component</i>s,</li>
+	<li>a <i>combobox</i> <i>choice</i>s,</li>
+	<li>a <i>tabbedpane</i> <i>tab</i>s,</li>
+	<li>a <i>tab</i> a single <i>component</i>,</li>
+	<li>a <i>list</i> <i>item</i>s,</li>
+	<li>a <i>table</i> <i>row</i>s,</li>
+	<li>a <i>header</i> <i>column</i>s,</li>
+	<li>a <i>row</i> <i>cell</i>s,</li>
+	<li>a <i>tree</i>, or a <i>node</i> <i>node</i>s,</li>
+	<li>a <i>menubar</i>, a <i>menu</i>, or a <i>popupmenu</i> <i>menu</i>s,
+		<i>menuitem</i>s, <i>checkboxmenuitem</i>s, and <i>separator</i>s,</li>
+	<li>and a <i>splitpane</i> two <i>component</i>s.</li></ul>
+A <i>table</i> contains <i>row</i>s, but also a single <i>header</i> widget,
+similarly a container <i>component</i> may contain <i>component</i>s, but also
+a single <i>popupmenu</i> widget. Use the <code>getWidget</code> method for it.</p>
+<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>int</b></font> getCount(<font color="#000080">Object</font> component)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Object</font> getItem(<font color="#000080">Object</font> component, <font color="#800000"><b>int</b></font> index)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Object</font>[] getItems(<font color="#000080">Object</font> component)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Object</font> getWidget(<font color="#000080">Object</font> component, <font color="#000080">String</font> key)<br>
+<font color="#800000"><b>public</b></font> <font color="#800000"><b>static</b></font> <font color="#000080">String</font> getClass(<font color="#000080">Object</font> component)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Object</font> getParent(<font color="#000080">Object</font> component)</p>
+
+
+<p>It is possible to find a widget by name (starting from the root desktop
+or a given component), but probably it's more appropriate to identify components
+as event parameters.</p>
+<p class="java"><font color="#800000"><b>public</b></font> <font color="#000080">Object</font> find(<font color="#000080">String</font> name)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Object</font> find(<font color="#000080">Object</font> component, <font color="#000080">String</font> name)</p>
+
+
+<p>The following methods are useful for <i>combobox</i>, <i>tabbedpane</i>,
+<i>list</i>, <i>table</i>, or <i>tree</i> components:</p>
+<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>int</b></font> getSelectedIndex(<font color="#000080">Object</font> component)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Object</font> getSelectedItem(<font color="#000080">Object</font> component)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Object</font>[] getSelectedItems(<font color="#000080">Object</font> component)</p>
+
+
+<p>At runtime you can change the widget tree,
+create new widgets, add, or remove these.</p>
+<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>static</b></font> <font color="#000080">Object</font> create(<font color="#000080">String</font> classname)<br>
+<font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> add(<font color="#000080">Object</font> component)<br>
+<font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> add(<font color="#000080">Object</font> parent, <font color="#000080">Object</font> component)<br>
+<font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> add(<font color="#000080">Object</font> parent, <font color="#000080">Object</font> component, <font color="#800000"><b>int</b></font> index)<br>
+<font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> remove(<font color="#000080">Object</font> component)<br>
+<font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> removeAll(<font color="#000080">Object</font> component)</p>
+
+
+
+
+</content>
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

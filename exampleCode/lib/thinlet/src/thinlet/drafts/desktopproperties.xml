@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<tabbedpane
+		init="loadProperties(thinlet, colortable, geometrytable, fonttable, audiolist)">
+	<tab text="Color">
+		<table name="colortable">
+			<header>
+				<column text="Name" width="140" />
+				<column text="Value" />
+			</header>
+		</table>
+	</tab>
+	<tab text="Geometry">
+		<table name="geometrytable">
+			<header>
+				<column text="Name" width="140" />
+				<column text="Value" />
+			</header>
+		</table>
+	</tab>
+	<tab text="Font">
+		<table name="fonttable">
+			<header>
+				<column text="Name" width="140" />
+				<column text="Value" />
+			</header>
+		</table>
+	</tab>
+	<tab text="Audio">
+		<panel columns="1" gap="4">
+			<list name="audiolist" weightx="1" weighty="1"
+					action="rowSelected(thinlet, this, play)" />
+			<button name="play" text="Play" icon="/icon/play.gif" enabled="false" halign="center"
+					action="play(thinlet, audiolist)" />
+		</panel>
+	</tab>
+</tabbedpane>

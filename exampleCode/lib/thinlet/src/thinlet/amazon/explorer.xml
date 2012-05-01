@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel name="mainpanel" columns="1">
+	<menubar weightx="1">
+		<menu text="File">
+			<menuitem text="Exit" action="exit" />
+		</menu>
+		<menu text="Theme">
+			<checkboxmenuitem text="Default" group="theme" selected="true" action="defaultTheme" />
+			<checkboxmenuitem text="Sandstone" group="theme" action="yellowTheme" />
+			<checkboxmenuitem text="Ocean" group="theme" action="blueTheme" />
+		</menu>
+		<menu text="Help">
+			<menuitem text="About" action="about" />
+		</menu>
+	</menubar>
+	
+	<panel columns="2" top="4" left="4" bottom="4" right="4" gap="4">
+		<label text="Product:" alignment="right" />
+		<combobox name="modes" editable="false" selected="1"  weightx="1"
+				action="selectMode(this.selected, searchby, keyword, sort)">
+			<choice text="Baby" />
+			<choice text="Books" />
+			<choice text="Classical Music" />
+			<choice text="DVD" />
+			<choice text="Electronics" />
+			<choice text="Outdoor Living" />
+			<choice text="Kitchen &amp; Housewares" />
+			<choice text="Magazines" />
+			<choice text="Popular Music" />
+			<choice text="Computers" />
+			<choice text="Camera &amp; Photo" />
+			<choice text="Software" />
+			<choice text="Toys &amp; Games" />
+			<choice text="Tools &amp; Hardware" />
+			<choice text="Video" />
+			<choice text="Computer &amp; Video Games" />
+		</combobox>
+		
+		<label text="By:" alignment="right" />
+		<combobox name="searchby" editable="false" />
+		<label />
+		<combobox name="keyword" />
+		<label text="Sort:" alignment="right" />
+		<combobox name="sort" editable="false" />
+		
+		<label />
+		<button text="Search" icon="/icon/find.gif" halign="left"
+				action="find(modes.selected, searchby.text, keyword, keyword.text, sort.selected)" />
+	</panel>
+</panel>

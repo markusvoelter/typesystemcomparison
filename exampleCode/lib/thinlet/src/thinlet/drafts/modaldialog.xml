@@ -1,0 +1,6 @@
+<dialog name="dialog" text="Dialog" modal="true"
+		top="4" left="4" bottom="4" right="4" gap="4" columns="2">
+	<textfield name="field" colspan="2" />
+	<button text="Open..." action="start(thinlet, field)" />
+	<button text="Close" action="close(thinlet, dialog)" />
+</dialog>

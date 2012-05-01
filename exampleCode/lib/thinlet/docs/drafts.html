@@ -1,0 +1,55 @@
+<html>
+<head><title>Thinlet - Drafts</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <span class="activetab">Showcase</span>
+| <a href="overview.html" class="tab">Overview</a>
+| <a href="component.html" class="tab">Widgets</a>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="showcase.html">Showcase</a><br>
+<a href="demo.html">Demo</a><br>
+<a href="amazon.html">Amazon Explorer</a><br>
+<span class="activeside"><b>Drafts</b><br>
+		All kinds of example, and test applications.<br>
+		It is also available as application in the <i>lib</i> folder. Start it as follows:
+		<code>java -jar drafts.jar</code></span><br>
+
+		</td>
+		<td class="body">
+			<content>
+
+
+<applet code="thinlet.AppletLauncher" codebase="../lib" archive="thinlet.jar, drafts.jar" width="560" height="420">
+	<param name="class" value="thinlet.drafts.Drafts"></param>
+</applet>
+
+
+</content>
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

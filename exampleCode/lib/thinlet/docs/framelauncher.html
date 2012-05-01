@@ -1,0 +1,154 @@
+<html>
+<head><title>Thinlet - thinlet.FrameLauncher</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <a href="overview.html" class="tab">Overview</a>
+| <a href="component.html" class="tab">Widgets</a>
+| <span class="activetab">API</span>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="appletlauncher.html">AppletLauncher</a><br>
+<span class="activeside"><b>FrameLauncher</b></span><br>
+<a href="thinlet.html">Thinlet</a><br>
+
+		</td>
+		<td class="body">
+			<api>
+
+<p class="title">FrameLauncher</p>
+<p><i>package</i> thinlet<br>
+public <i>class</i> <b>FrameLauncher</b><br>
+<i>extends</i> java.awt.Frame<br>
+<i>implements</i> java.awt.event.WindowListener</p>
+
+<p><code>FrameLauncher</code> is a double buffered frame
+ to launch any <i>thinlet</i> component as an application</p>
+<script language="JavaScript">
+function expand(prefix, index, n) {
+	for (var i = 0; i < n; i++) {
+		var tr = document.getElementById(prefix + i);
+		tr.style.display = (i == index) ? '' : 'none';
+		var tr = document.getElementById('h' + prefix + i);
+		tr.style.display = (i == index) ? 'none' : '';
+	}
+}
+</script>
+<table class="apitable" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Constructor</caption>
+<tr id="hc0"><td class="apipre" nowrap="true">
+public</td><td class="apiname" width="100%"><b><a href="javascript:expand('c', 0, 1)">FrameLauncher</a></b>(String title, Thinlet content, int width, int height)</td></tr>
+<tr id="c0"><td class="apidetail" colspan="2">
+<p class="apicode">public FrameLauncher(java.lang.String title, thinlet.Thinlet content, int width, int height)</p>
+<p class="apitext">Construct and show a new frame with the specified title, including the
+ given <i>thinlet</i> component. The frame is centered on the screen, and its
+ preferred size is specified (excluding the frame's borders). The icon is
+ the thinlet logo</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>title</i> - the title to be displayed in the frame's border</p>
+<p class="apitem"><i>content</i> - a <i>thinlet</i> instance</p>
+<p class="apitem"><i>width</i> - the preferred width of the content</p>
+<p class="apitem"><i>height</i> - the preferred height of the content</p>
+</td></tr>
+</table>
+<script>expand('c', -1, 1)</script>
+
+<table class="apitable" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Method</caption>
+<tr id="hm0"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 0, 10)">doLayout</a></b>()</td></tr>
+<tr id="m0"><td class="apidetail" colspan="2">
+<p class="apicode">public void doLayout()</p>
+<p class="apitext">Clear the double buffer image (because the frame has been resized),
+ the overriden method lays out its components
+ (centers the <i>thinlet</i> component)</p>
+<p class="apititle">Overrides:</p>
+<p class="apitem"><i>doLayout</i> in class <i>java.awt.Container</i></p>
+</td></tr>
+<tr id="hm1"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 1, 10)">paint</a></b>(Graphics g)</td></tr>
+<tr id="m1"><td class="apidetail" colspan="2">
+<p class="apicode">public void paint(java.awt.Graphics g)</p>
+<p class="apitext">Create a double buffer if needed,
+ the <i>thinlet</i> component paints the content</p>
+<p class="apititle">Overrides:</p>
+<p class="apitem"><i>paint</i> in class <i>java.awt.Container</i></p>
+</td></tr>
+<tr id="hm2"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 2, 10)">update</a></b>(Graphics g)</td></tr>
+<tr id="m2"><td class="apidetail" colspan="2">
+<p class="apicode">public void update(java.awt.Graphics g)</p>
+<p class="apitext">Call the paint method to redraw this component without painting a
+ background rectangle</p>
+<p class="apititle">Overrides:</p>
+<p class="apitem"><i>update</i> in class <i>java.awt.Container</i></p>
+</td></tr>
+<tr id="hm3"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 3, 10)">windowActivated</a></b>(WindowEvent e)</td></tr>
+<tr id="m3"><td class="apidetail" colspan="2">
+<p class="apicode">public void windowActivated(java.awt.event.WindowEvent e)</p>
+</td></tr>
+<tr id="hm4"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 4, 10)">windowClosed</a></b>(WindowEvent e)</td></tr>
+<tr id="m4"><td class="apidetail" colspan="2">
+<p class="apicode">public void windowClosed(java.awt.event.WindowEvent e)</p>
+</td></tr>
+<tr id="hm5"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 5, 10)">windowClosing</a></b>(WindowEvent e)</td></tr>
+<tr id="m5"><td class="apidetail" colspan="2">
+<p class="apicode">public void windowClosing(java.awt.event.WindowEvent e)</p>
+<p class="apitext">Notify the <i>thinlet</i> component and terminates the Java Virtual Machine,
+ or redisplay the frame depending on the return value of <i>thinlet</i>'s
+ <code>destroy</code> method (true by default,
+ thus terminates the VM if not overriden)</p>
+</td></tr>
+<tr id="hm6"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 6, 10)">windowDeactivated</a></b>(WindowEvent e)</td></tr>
+<tr id="m6"><td class="apidetail" colspan="2">
+<p class="apicode">public void windowDeactivated(java.awt.event.WindowEvent e)</p>
+</td></tr>
+<tr id="hm7"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 7, 10)">windowDeiconified</a></b>(WindowEvent e)</td></tr>
+<tr id="m7"><td class="apidetail" colspan="2">
+<p class="apicode">public void windowDeiconified(java.awt.event.WindowEvent e)</p>
+</td></tr>
+<tr id="hm8"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 8, 10)">windowIconified</a></b>(WindowEvent e)</td></tr>
+<tr id="m8"><td class="apidetail" colspan="2">
+<p class="apicode">public void windowIconified(java.awt.event.WindowEvent e)</p>
+</td></tr>
+<tr id="hm9"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 9, 10)">windowOpened</a></b>(WindowEvent e)</td></tr>
+<tr id="m9"><td class="apidetail" colspan="2">
+<p class="apicode">public void windowOpened(java.awt.event.WindowEvent e)</p>
+</td></tr>
+</table>
+<script>expand('m', -1, 10)</script>
+
+</api>
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

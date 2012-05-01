@@ -1,0 +1,3 @@
+<panel top="4" left="4">
+	<button text="Directory..." action="chooseDirectory(thinlet)" />
+</panel>

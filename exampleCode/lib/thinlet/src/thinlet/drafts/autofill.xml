@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<panel columns="2" border="true" top="4" left="4" bottom="4" right="4" gap="4"
+		init="load(thinlet, locales, shortmonths, months, shortweekdays, weekdays)">
+	<combobox name="locales" editable="false" colspan="2" />
+	<label text="ShortMonths" weightx="1" /><label text="ShortWeekdays" weightx="1" />
+	<list name="shortmonths" weighty="1" /><list name="shortweekdays" />
+	<label text="Months" /><label text="Weekdays" />
+	<list name="months" weighty="1" /><list name="weekdays" />
+	<label text="Weekday" /><textfield insert="autoFill(thinlet, this, this.text, this.end)" />
+	<label text="File path:" /><textfield init="initPath(thinlet, this)" insert="complementPath(thinlet, this, this.text, this.end)" />
+</panel>

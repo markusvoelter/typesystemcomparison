@@ -1,0 +1,105 @@
+<html>
+<head><title>Thinlet - Overview</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <span class="activetab">Overview</span>
+| <a href="component.html" class="tab">Widgets</a>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<span class="activeside"><b>Overview</b></span><br>
+<a href="calculator.html">Calculator</a><br>
+<a href="hierarchy.html">Hierarchy</a><br>
+<a href="properties.html">Properties</a><br>
+<a href="events.html">Events</a><br>
+<a href="xml.html">XML</a><br>
+<a href="i18n.html">Internationalization</a><br>
+
+		</td>
+		<td class="body">
+			<content>
+	
+<p class="title">Overview</p>
+<p>Thinlet separates the GUI description and the business logic.
+The following overview pages, the <i>Widgets</i>, and the <i>API</i>
+tab includes guidance to develop XML and Java sources. This page contains
+instructions about deployment.</p>
+
+<p><b>Compile</b><br>
+To compile and run <i>thinlet</i> related codes you have to add the <i>thinlet.jar</i>
+(available in the <i>lib</i> directory)
+file to the CLASSPATH environment variable.  To ensure that generated class files
+will be compatible with 1.1 VMs use the <code>-target 1.1</code> compilation
+option. For smaller class file use the <code>-g:none</code> option,
+it won't generate any debugging information, thus it is not suggestible
+during development.</p>
+
+<p>To deploy the applet or application create a jar file including your <i>class</i>,
+<i>xml</i>, image, and resource files.</p>
+
+<p class="java">jar cvfM myapp.jar myapp\*.class myapp\*.xml</p>
+
+
+<p><b>Applet</b><br>
+To deploy your <i>thinlet</i> instance (<i>myapp.MyThinletInstance</i> class
+in this example) as applet using the <i>AppletLauncher</i>
+you have to create an <i>html</i> file, and move the <i>myapp.jar</i> and
+<i>thinlet.jar</i> files there (<i>thinlet.jar</i> includes <i>AppletLauncher.class</i>,
+<i>FrameLauncher.class</i>, and <i>Thinlet.class</i>). The applet tag in
+the HTML file is as follows:</p>
+
+<p class="xml"><font color="#000080">&lt;</font><font color="#800000"><b>applet</b></font>  code=<font color="#008000">&quot;thinlet.AppletLauncher&quot;</font> archive=<font color="#008000">&quot;thinlet.jar, myapp.jar&quot;</font> width=<font color="#008000">&quot;320&quot;</font> height=<font color="#008000">&quot;200&quot;</font><font color="#000080">&gt;</font> <br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>param</b></font>  name=<font color="#008000">&quot;class&quot;</font> value=<font color="#008000">&quot;myapp.MyThinletInstance&quot;</font> <font color="#000080">/&gt;</font> <br>
+<font color="#000080">&lt;/</font><font color="#800000"><b>applet</b></font><font color="#000080">&gt;</font></p>
+
+
+<p>The <i>AppletLauncher</i> loads the class (given as <code>class</code>
+parameter), and creates an instance using the empty constructor, or a contructor with
+an applet parameter (thus you get this applet instance e.g. to get the further parameters
+of the applet HTML tag).</p>
+
+<p><b>Application</b><br>
+To deploy your <i>thinlet</i> application using the <i>FrameLauncher</i> you
+can archive your files including e.g. the following manifest information
+(in the <i>myapp.mf</i> file):</p>
+
+<p class="java">Main-<font color="#000080">Class</font>: myapp.MyThinletInstance<br>
+<font color="#000080">Class</font>-Path: thinlet.jar<br>
+<font color="#636163">// the text file must end with a new line or carriage return</p>
+
+<p class="java">jar cvmf myapp.mf myapp.jar myapp\*.class myapp\*.xml</p>
+
+
+<p>In this case you have to deploy the <i>thinlet.jar</i> and
+<i>myapp.jar</i> files.</p>
+
+
+
+</content>
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

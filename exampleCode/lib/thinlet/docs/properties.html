@@ -1,0 +1,175 @@
+<html>
+<head><title>Thinlet - Properties</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <span class="activetab">Overview</span>
+| <a href="component.html" class="tab">Widgets</a>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="overview.html">Overview</a><br>
+<a href="calculator.html">Calculator</a><br>
+<a href="hierarchy.html">Hierarchy</a><br>
+<span class="activeside"><b>Properties</b></span><br>
+<a href="events.html">Events</a><br>
+<a href="xml.html">XML</a><br>
+<a href="i18n.html">Internationalization</a><br>
+
+		</td>
+		<td class="body">
+			<content>
+	
+	<p class="title">Properties</p>
+	<p>The property types are as follows: string, choice, boolean, integer, icon,
+	method, component, property, font, color, keystroke, and bean. This page
+	summarizes the possible attribute values in the XML resources, and the
+	corresponding setter/getter methods in the <code>Thinlet</code> class.</p>
+	
+	<p><b>string</b><br>
+	String value is a simple text, although you can use the following entities for
+	the XML attribute values:
+	<code>&#38;lt;</code> for less than, <code>&#38;gt;</code> for greater than,
+	<code>&#38;amp;</code> for ampersand, <code>&#38;quot;</code> for quotation mark,
+	<code>&#38;apos;</code> for apostrophe, and
+	<code>&#38;x??;</code> including the hexadecimal or
+	<code>&#38;??;</code> the decimal code of the character.
+	<i>E.g.</i> use the <code>&#38;#169;</code> decimal code for the copyright mark
+	instead of the <code>&#38;copy;</code> named entity.</p>
+	<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> setString(<font color="#000080">Object</font> component, <font color="#000080">String</font> key, <font color="#000080">String</font> value)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">String</font> getString(<font color="#000080">Object</font> component, <font color="#000080">String</font> key)</p>
+
+		
+	<p><b>choice</b><br>
+	Unlike string, the choice parameter's possible values are limited,
+	e.g. only the <i>left</i>, <i>center</i>, and <i>right</i> values
+	are legal for content <i>alignment</i> in a label.</p>
+	<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> setChoice(<font color="#000080">Object</font> component, <font color="#000080">String</font> key, <font color="#000080">String</font> value)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">String</font> getChoice(<font color="#000080">Object</font> component, <font color="#000080">String</font> key)</p>
+
+		
+	<p><b>boolean</b><br>
+	Lower case <code>true</code> and <code>false</code>
+	values are expected.</p>
+	<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> setBoolean(<font color="#000080">Object</font> component, <font color="#000080">String</font> key, <font color="#800000"><b>boolean</b></font> value)<br>
+<font color="#800000"><b>public</b></font> <font color="#800000"><b>boolean</b></font> getBoolean(<font color="#000080">Object</font> component, <font color="#000080">String</font> key)</p>
+
+		
+	<p><b>integer</b><br>
+	A signed decimal integer.</p>
+	<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> setInteger(<font color="#000080">Object</font> component, <font color="#000080">String</font> key, <font color="#800000"><b>int</b></font> value)<br>
+<font color="#800000"><b>public</b></font> <font color="#800000"><b>int</b></font> getInteger(<font color="#000080">Object</font> component, <font color="#000080">String</font> key)</p>
+
+		
+	<p><b>icon</b><br>
+	The image is specified by the path, the path is relative to your <i>thinlet</i>
+	instance, or the classpath (if the it starts with <i>'/'</i> character),
+	or a full URL. E.g. from your <code>mycompany.myapp.MyThinlet</code> thinlet
+	instance the <code>mypackage/images/logo.gif</code> is available as
+	<code>../images/logo.gif</code>, or <code>/mypackage/images/logo.gif</code>,
+	even with the valid <code>http://mycompany/img/logo.gif</code> URL.</p>
+	<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> setIcon(<font color="#000080">Object</font> component, <font color="#000080">String</font> key, <font color="#000080">Image</font> icon)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Image</font> getIcon(<font color="#000080">Object</font> component, <font color="#000080">String</font> key)</p>
+
+	<p>Use the following methods to create an image from the specified
+	resource (a relative, or an absolute path, or an URL):</p>
+	<p class="java"><font color="#800000"><b>public</b></font> <font color="#000080">Image</font> getIcon(<font color="#000080">String</font> path)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Image</font> getIcon(<font color="#000080">String</font> path, <font color="#800000"><b>boolean</b></font> preload)</p>
+
+	
+	<p><b>method</b><br>
+	See the <i>event handling</i> page for more details.</p>
+	<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> setMethod(<font color="#000080">Object</font> component, <font color="#000080">String</font> key, <font color="#000080">String</font> value, <font color="#000080">Object</font> root, <font color="#000080">Object</font> handler)</p>
+
+		
+	<p><b>component</b><br>
+	Component is a <i>thinlet</i> widget specified by its name, currently
+	used only for label's <i>for</i> attribute.</p>
+		
+	<p><b>property</b><br>
+	The format of its value is <code>key=value</code>, both are stored in a
+	hashtable of the component as strings. Use the <i>';'</i> separator
+	for multiple properties, e.g. <code>key1=1st value;key2=value2</code>.
+	Unfortunately you can't use the separator character (or as <code>&#38;#59;</code>
+	entity) in a property value.</p>
+	<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> putProperty(<font color="#000080">Object</font> component, <font color="#000080">Object</font> key, <font color="#000080">Object</font> value)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Object</font> getProperty(<font color="#000080">Object</font> component, <font color="#000080">Object</font> key)</p>
+
+		
+	<p><b>font</b><br>
+	The font string may contains <i>bold</i>, or <i>italic</i> strings for style,
+	integer for the size, and the remainings specifies the name. These tokens are
+	separated by whitespaces. At least one font parameter must be present.
+	The undefined name, style, or size is specified by
+	<i>thinlet</i>'s present font. E.g. the <code>bold 14 italic</code> value defines
+	the <code>new Font('SansSerif', Font.BOLD + Font.ITALIC, 14)</code>
+	(if the default font was <i>SansSerif plain 12</i>).</p>
+	<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> setFont(<font color="#000080">Object</font> component, <font color="#000080">String</font> key, <font color="#000080">Font</font> font)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Font</font> getFont(<font color="#000080">Object</font> component, <font color="#000080">String</font> key)</p>
+
+		
+	<p><b>color</b><br>
+	Color value is defined by a string that represents a color as hexidecimal
+	numbers starting with <code>#</code>, or <code>0x</code> and including the
+	RGB values in hexadecimal format as <i>RRGGBB</i>. Or
+	RGB values as integers separated by commas or whitespaces, e.g both
+	<code>#ff0000</code>, <code>0xff0000</code>, and
+	<code>255, 0, 0</code> are red.</p>
+	<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> setColor(<font color="#000080">Object</font> component, <font color="#000080">String</font> key, <font color="#000080">Color</font> color)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Color</font> getColor(<font color="#000080">Object</font> component, <font color="#000080">String</font> key)</p>
+
+		
+	<p><b>keystroke</b><br>
+	The keystroke contains modifiers (defined in
+	<code>java.awt.event.InputEvent</code> as modifier name + <i>'_MASK'</i>)
+	and a key (defined in
+	<code>java.awt.event.KeyEvent</code> as <i>'VK_'</i> + key name).
+	E.g. <code>ctrl+alt escape</code> means <code>InputEvent.CTRL_MASK |
+	InputEvent.ALT_MASK</code>, and <code>KeyEvent.VK_ESCAPE</code>.
+	The tokens are separated by <i>'+'</i> or whitespaces.</p>
+	<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> setKeystroke(<font color="#000080">Object</font> component, <font color="#000080">String</font> key, <font color="#000080">String</font> value)</p>
+
+		
+	<p><b>bean</b><br>
+	
+	<span class="note">Note: this widget is very limited, e.g. you can use
+	it for a chart (see the chart draft example for more details), but it won't
+	receive events, and can't use <i>Component</i>'s <code>repaint</code>
+	or <code>requestFocus</code> method. It's nonsense
+	to include a Swing component in the future, it requires the Swing environment
+	including its repaint manager, popup factory, and focus manager.</span>
+	
+	The <code>java.awt.Component</code> is associated with the class name.
+	Currently used only for the <i>bean</i> widget.</p>
+	
+	<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> setComponent(<font color="#000080">Object</font> component, <font color="#000080">String</font> key, <font color="#000080">Component</font> bean)<br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Component</font> getComponent(<font color="#000080">Object</font> component, <font color="#000080">String</font> key)</p>
+
+	
+</content>
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<desktop>
+	<dialog name="dialog" text="Dialog" icon="/icon/library.gif"
+			scrollable="true" resizable="true"
+			top="8" left="8" bottom="8" right="8" gap="4" columns="2">
+		<label text="Icon:" mnemonic="2" for="iconpool" />
+		<combobox name="iconpool" selected="4" editable="false" halign="left"
+				action="setIcon(thinlet, dialog, this.icon)">
+			<choice icon="/icon/cut.gif" /><choice icon="/icon/copy.gif" />
+			<choice icon="/icon/paste.gif" /><choice icon="/icon/delete.gif" />
+			<choice icon="/icon/library.gif" /><choice text="none"/>
+		</combobox>
+		<label text="Text:" mnemonic="0" for="titlefield" />
+		<textfield name="titlefield" text="Dialog"
+			action="setText(thinlet, dialog, this.text)" />
+		<checkbox text="Resizable" mnemonic="0" selected="true" colspan="2"
+			action="setResizable(thinlet, dialog, this.selected)" />
+		<checkbox text="Closable" mnemonic="0" colspan="2"
+			action="setClosable(thinlet, dialog, this.selected)" />
+		<checkbox text="Maximizable" mnemonic="0" colspan="2"
+			action="setMaximizable(thinlet, dialog, this.selected)" />
+		<checkbox text="Iconifiable" mnemonic="0" colspan="2"
+			action="setIconifiable(thinlet, dialog, this.selected)" />
+	</dialog>
+</desktop>

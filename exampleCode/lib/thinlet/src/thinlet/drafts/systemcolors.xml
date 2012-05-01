@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<panel columns="2" border="true"
+		top="4" left="4" bottom="4" right="4" gap="4">
+	<label text="Colors:" />
+	<combobox editable="false" init="loadColors(thinlet, this)" weightx="1" />
+	<label text="System colors:" colspan="2" />
+	<list init="loadSystemColors(thinlet, this)" colspan="2" weighty="1" />
+</panel>

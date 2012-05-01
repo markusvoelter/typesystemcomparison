@@ -1,0 +1,120 @@
+<html>
+<head><title>Thinlet - ComboBox</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <a href="overview.html" class="tab">Overview</a>
+| <span class="activetab">Widgets</span>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="component.html">Component</a><br>
+<a href="label.html">Label</a><br>
+<a href="button.html">Button</a><br>
+<a href="checkbox.html">CheckBox</a><br>
+<a href="togglebutton.html">ToggleButton</a><br>
+<span class="activeside"><b>ComboBox</b><br>Choice</span><br>
+<a href="textfield.html">TextField</a><br>
+<a href="passwordfield.html">PasswordField</a><br>
+<a href="textarea.html">TextArea</a><br>
+<a href="tabbedpane.html">TabbedPane</a><br>
+<a href="panel.html">Panel</a><br>
+<a href="desktop.html">Desktop</a><br>
+<a href="dialog.html">Dialog</a><br>
+<a href="spinbox.html">SpinBox</a><br>
+<a href="progressbar.html">ProgressBar</a><br>
+<a href="slider.html">Slider</a><br>
+<a href="splitpane.html">SplitPane</a><br>
+<a href="list.html">List</a><br>
+<a href="table.html">Table</a><br>
+<a href="tree.html">Tree</a><br>
+<a href="separator.html">Separator</a><br>
+<a href="menubar.html">MenuBar</a><br>
+
+		</td>
+		<td class="body">
+			<p class="title">ComboBox</p>
+<p>ComboBox is a combination of a text field and drop-down list.
+	This example has a default value, two choices, and it is editable.</p><p class="xml"><font color="#000080">&lt;</font><font color="#800000"><b>combobox</b></font>  text=<font color="#008000">&quot;ComboBox&quot;</font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>choice</b></font>  text=<font color="#008000">&quot;Choice&quot;</font> icon=<font color="#008000">&quot;image.gif&quot;</font> <font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>choice</b></font>  text=<font color="#008000">&quot;Disabled&quot;</font> enabled=<font color="#008000">&quot;false&quot;</font> <font color="#000080">/&gt;</font><br>
+<font color="#000080">&lt;/</font><font color="#800000"><b>combobox</b></font><font color="#000080">&gt;</font></p>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Properties</caption>
+<tr><td class="header">Name</td><td class="header">Type</td><td class="header">Default</td><td class="header">Description</td></tr>
+<tr><td class="cell">icon</td><td class="cell">icon</td><td class="cell">&nbsp;</td><td class="cell">The icon image that the combobox displays.</td></tr>
+<tr><td class="cell">selected</td><td class="cell">integer</td><td class="cell">-1</td><td class="cell">The index of the currently selected choice, value -1
+			indicates a custom edited value in an editable box.</td></tr>
+<tr><td class="cell" colspan="4">text, columns, editable, and alignment parameters are described at
+			<a href="textfield.html">textfield</a></td></tr>
+<tr><td class="cell" colspan="4">name, enabled, visible, tooltip, property, i18n, width, height, colspan, rowspan,
+			weightx, weighty, halign, and valign parameters are similar to
+			<a href="component.html">component</a></td></tr>
+</table>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Listeners</caption>
+<tr><td class="header">Name</td><td class="header">Description</td></tr>
+<tr><td class="cell">action</td><td class="cell">Invokes the given method when there was change in the text or a new
+			choice was selected.</td></tr>
+</table>
+<a name="choice"></a><p class="title">Choice</p>
+<p>The drop down list of a combobox contains choices.
+		The popup combolist internally handles scrolling.</p><table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Properties</caption>
+<tr><td class="header">Name</td><td class="header">Type</td><td class="header">Default</td><td class="header">Description</td></tr>
+<tr><td class="cell">name</td><td class="cell">string</td><td class="cell">&nbsp;</td><td class="cell">Identifies the item.</td></tr>
+<tr><td class="cell">enabled</td><td class="cell">boolean</td><td class="cell">true</td><td class="cell">Enables or disables the item. A disabled item is painted gray,
+				and can't be selected by mouse or keyboard.</td></tr>
+<tr><td class="cell">text</td><td class="cell">string</td><td class="cell">&nbsp;</td><td class="cell">The text text that the choice displays.</td></tr>
+<tr><td class="cell">icon</td><td class="cell">icon</td><td class="cell">&nbsp;</td><td class="cell">The icon image that the choice displays.</td></tr>
+<tr><td class="cell">alignment</td><td class="cell">choice</td><td class="cell">left</td><td class="cell">The alignment of the text and image similar to label.
+				Possible values are: left, center, and right.</td></tr>
+<tr><td class="cell">tooltip</td><td class="cell">string</td><td class="cell">&nbsp;</td><td class="cell">The text pops up when the mouse lingers inside this specified part of the component,
+				otherwise the tooltip text of the component.</td></tr>
+<tr><td class="cell">font</td><td class="cell">font</td><td class="cell">&nbsp;</td><td class="cell">Custom font to use for text.</td></tr>
+<tr><td class="cell">foreground</td><td class="cell">color</td><td class="cell">&nbsp;</td><td class="cell">Custom foreground (text) color.</td></tr>
+<tr><td class="cell">background</td><td class="cell">color</td><td class="cell">&nbsp;</td><td class="cell">Custom background color.</td></tr>
+<tr><td class="cell">property</td><td class="cell">property</td><td class="cell">&nbsp;</td><td class="cell">Adds an arbitrary key/value client property (or properties)
+				stored in a hashtable of the item.</td></tr>
+</table>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Keyboard-actions</caption>
+<tr><td class="header">Operation</td><td class="header">Action</td></tr>
+<tr><td class="cell">Spacebar, Down arrow</td><td class="cell">Post menu</td></tr>
+<tr><td class="cell">Up arrow</td><td class="cell">Selects previous (or last) choice</td></tr>
+<tr><td class="cell">Down arrow</td><td class="cell">Selects next (or first) choice</td></tr>
+<tr><td class="cell">Home</td><td class="cell">Selects first choice</td></tr>
+<tr><td class="cell">End</td><td class="cell">Selects last choice</td></tr>
+<tr><td class="cell">Page Up</td><td class="cell">Selects choice one view up</td></tr>
+<tr><td class="cell">Page Down</td><td class="cell">Selects choice one view down</td></tr>
+<tr><td class="cell">Enter, Return, Spacebar</td><td class="cell">Activates selection, and retract menu</td></tr>
+<tr><td class="cell">Escape</td><td class="cell">Retract menu without taking selection</td></tr>
+<tr><td class="cell">Tab, Shift-Tab</td><td class="cell">Navigate forward, backward</td></tr>
+</table>
+
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

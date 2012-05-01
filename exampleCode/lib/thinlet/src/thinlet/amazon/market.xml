@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel columns="1" weighty="1" gap="4" top="4" left="4" bottom="4" right="4">
+	<panel gap="4" weightx="1">
+		<label text="Number of offerings:" />
+		<label name="offerings" />
+	</panel>
+	<table name="detailslist" weighty="1" action="resultSelected(this, detailsbutton)">
+		<header>
+			<column text="Seller" width="140" />
+			<column text="Offering Price" />
+		</header>
+	</table>
+	<panel gap="4" halign="right">
+		<button name="detailsbutton" text="Details" icon="/icon/library.gif" enabled="false" action="showMarketDetails(detailslist)" />
+		<button text="Back" icon="/icon/back.gif" action="removePage" />
+	</panel>
+</panel>

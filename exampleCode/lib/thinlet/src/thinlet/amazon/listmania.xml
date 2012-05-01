@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel name="listmania" columns="1" weighty="1" gap="4" top="4" left="4" bottom="4" right="4">
+	<panel gap="4" weightx="1">
+		<textfield name="listname" editable="false" weightx="1" />
+		<button name="prevlist" icon="/icon/back.gif" tooltip="Previous list" enabled="false"
+					action="previousWishlist(listmania, resultlist, listname, this, nextlist)" />
+			<button name="nextlist" icon="/icon/forward.gif" tooltip="Next list" enabled="false"
+					action="nextWishlist(listmania, resultlist, listname, prevlist, this)" />
+	</panel>
+	<list name="resultlist" weighty="1" action="resultSelected(resultlist, detailsbutton)" />
+	<panel gap="4" halign="right">
+		<button name="detailsbutton" text="Details" enabled="false" action="showDetails(resultlist)" />
+		<button text="Back" icon="/icon/find.gif" action="removePage" />
+	</panel>
+</panel>

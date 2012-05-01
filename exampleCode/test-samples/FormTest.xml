@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE panel SYSTEM "/home/ds/dm/itemis/xtext-schulungen/2012-02 Xtext2 Typesystems/typesystemcomparison/exampleCode/thinlet.dtd">
+<panel name="panel" columns="3" gap="4" top="4" left="4" bottom="4" right="4">
+
+  <label name="Headline" init="initHeadline(this)" colspan="3"/> 
+  <label text="Attribute" /> <label text="Value" /> <label text="Valid?" />
+
+  <label text="firstName" /> <textfield name="firstName" action="formChanged()"/> <checkbox name="firstNameValid" enabled="false"/>
+
+  <label text="name" /> <textfield name="name" action="formChanged()"/> <checkbox name="nameValid" enabled="false"/>
+  
+  <label text="age" ></label><textfield name="age" action="formChanged()"/> <checkbox name="ageValid" enabled="false"/>
+  
+  <label text="likesCake" ></label><checkbox name="likesCake" enabled="true"/> <checkbox name="likesCakeValid" enabled="false"/>
+    
+  <label text="/isAdult" ></label><checkbox name="isAdult" enabled="false"/> <label />
+  
+  <label text="/greeting" /> <label name="greeting" init="initGreeting(this)"/> <label />
+
+
+</panel>
+ 

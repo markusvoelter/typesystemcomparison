@@ -1,0 +1,102 @@
+<tabbedpane foreground="#ff0000" background="#ffcccc">
+	<tab text="tab" icon="/icon/library.gif" mnemonic="1" foreground="#00ff00" background="#ccffcc" font="bold">
+		<panel text="panel" icon="/icon/library.gif" border="true" gap="4" columns="4" foreground="#0000ff" background="#ccccff">
+			<label text="label" icon="/icon/library.gif" mnemonic="0" foreground="#ff0000" background="#ffcccc" font="bold" />
+			<button text="button" icon="/icon/library.gif" mnemonic="0"/>
+			<button text="button" icon="/icon/library.gif" type="link" mnemonic="2"/>
+			<button text="button" icon="/icon/library.gif" mnemonic="0" foreground="#ff0000" background="#ff9999" font="bold" />
+			<checkbox text="checkbox" selected="true" foreground="#ff0000" background="#ffcccc" font="bold" />
+			<togglebutton text="toggle" foreground="#ff0000" background="#ffcccc" font="bold" />
+			<combobox text="combobox" foreground="#ff0000" background="#ffcccc" font="bold">
+				<choice text="choice" foreground="#00ff00" background="#ccffcc" font="bold" />
+			</combobox>
+			<combobox text="combobox" icon="/icon/library.gif" editable="false" foreground="#ff0000" background="#ffcccc" font="bold">
+				<choice text="choice" foreground="#00ff00" background="#ccffcc" font="bold" />
+			</combobox>
+			<combobox text="combobox" icon="/icon/library.gif" editable="false">
+				<choice text="choice" />
+			</combobox>
+			<textfield text="textfield" foreground="#ff0000" background="#ffcccc" font="bold" />
+			<passwordfield text="passwordfield" foreground="#ff0000" background="#ffcccc" font="bold" />
+		</panel>
+	</tab>
+	<tab text="tab">
+		<panel gap="4" columns="2" foreground="#0000ff" background="#ccccff">
+			<textarea text="textarea" foreground="#ff0000" background="#ffcccc" font="bold" />
+			<spinbox text="spinbox" valign="top" foreground="#ff0000" background="#ffcccc" font="bold" />
+			<progressbar foreground="#ff0000" background="#ffcccc" font="bold" />
+			<slider foreground="#ff0000" background="#ffcccc" font="bold" />
+			<separator foreground="#ff0000" background="#ffcccc" />
+		</panel>
+	</tab>
+	<tab text="tab">
+		<splitpane orientation="vertical" foreground="#ff0000" background="#ffcccc">
+			<splitpane>
+				<list foreground="#ff0000" background="#ffcccc">
+					<item text="item" foreground="#00ff00" background="#ccffcc" font="bold" />
+					<item text="item" />
+				</list>
+				<tree foreground="#ff0000" background="#ffcccc">
+					<node text="node" foreground="#00ff00" background="#ccffcc" font="bold" />
+					<node text="node" />
+				</tree>
+			</splitpane>
+			<table foreground="#ff0000" background="#ffcccc">
+				<header><column text="column" foreground="#00ff00" background="#ccffcc" font="bold" /></header>
+				<row><cell text="cell" foreground="#00ff00" background="#ccffcc" font="bold" /></row>
+				<row><cell text="cell" /></row>
+			</table>
+		</splitpane>
+	</tab>
+	<tab text="tab">
+		<panel gap="4" columns="1">
+			<menubar weightx="1" foreground="#ff0000" background="#ffcccc">
+				<menu text="menu" foreground="#ff0000" background="#ffcccc" font="bold">
+					<menuitem text="menuitem" foreground="#00ff00" background="#ccffcc" font="bold" />
+					<checkboxmenuitem text="checkboxmenuitem" foreground="#00ff00" background="#ccffcc" font="bold" />
+				</menu>
+				<menu text="menu">
+					<menuitem text="menuitem" />
+					<checkboxmenuitem text="checkboxmenuitem" />
+					<menuitem text="menuitem" enabled="false" />
+				</menu>
+				<menu text="menu" enabled="false" />
+			</menubar>
+			<popupmenu foreground="#ff0000" background="#ffcccc">
+				<menu text="menu" foreground="#ff0000" background="#ffcccc" font="bold">
+					<menuitem text="menuitem" foreground="#00ff00" background="#ccffcc" font="bold" />
+					<checkboxmenuitem text="checkboxmenuitem" foreground="#00ff00" background="#ccffcc" font="bold" />
+				</menu>
+				<menu text="menu">
+					<menuitem text="menuitem" />
+					<checkboxmenuitem text="checkboxmenuitem" />
+					<menuitem text="menuitem" enabled="false" />
+				</menu>
+				<menu text="menu" enabled="false" />
+			</popupmenu>
+		</panel>
+	</tab>
+	<tab text="t e s t">
+		<panel>
+			<splitpane>
+				<button text="button" icon="/icon/library.gif" />
+				<button text="button" icon="/icon/library.gif" />
+			</splitpane>
+		</panel>
+	</tab>
+	<tab text="scrollable test">
+		<panel columns="1" scrollable="true">
+			<label width="320" height="480" />
+			<combobox text="ComboBox" icon="/icon/library.gif" editable="false"><choice text="Choice" /></combobox>
+			<menubar><menu text="Menu"><menu text="Menu"><menuitem text="Item" /></menu><menuitem text="Item" /></menu></menubar>
+			<panel columns="1" weightx="1" scrollable="true">
+				<label width="320" height="480" />
+				<combobox text="ComboBox" icon="/icon/library.gif" editable="false"><choice text="Choice" /></combobox>
+				<menubar><menu text="Menu"><menuitem text="Item" /></menu></menubar>
+				<label width="320" height="480" />
+				<popupmenu><menu text="Popup2"><menuitem text="Item" /></menu></popupmenu>
+			</panel>
+			<popupmenu><menu text="Popup1"><menuitem text="Item" /></menu></popupmenu>
+		</panel>
+	</tab>
+</tabbedpane>

@@ -1,0 +1,10 @@
+<dialog name="dialog" text="Progress..." modal="true"
+		columns="3" top="4" left="4" bottom="4" right="4" gap="4"
+		init="init(thinlet, this, status, progressbar, iconlabel.icon)">
+	<label name="iconlabel" icon="/icon/loading.gif" valign="top" rowspan="4" />
+	<label text="Running a Long Task" font="bold" colspan="2" />
+	<label name="status" text=" " colspan="2" />
+	<progressbar name="progressbar" width="180" height="8" colspan="2" />
+	<button text="OK" type="default" action="close" />
+	<button text="Cancel" halign="left" type="cancel" action="cancel" />
+</dialog>

@@ -5,6 +5,8 @@
 form PersonForm1 edits PersonT {
 	 text(20) -> name validate 1 == 1;
 	 text(20) -> firstName validate firstName.length > 2;
+	 text(10) -> age validate widgetcontent > 0;
 	 checkbox -> isAdult validate 1 == 1;
 	 checkbox -> likesCake validate firstName.length > 2;
+	 text(50) -> greeting;
 }

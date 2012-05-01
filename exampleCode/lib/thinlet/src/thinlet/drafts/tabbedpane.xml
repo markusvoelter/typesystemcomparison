@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<panel columns="1" border="true" gap="4"
+		top="4" left="4" bottom="4" right="4">
+	<label text="TabbedPane demo" />
+	<tabbedpane name="tabbed" weightx="1">
+		<tab text="One"><textarea text="One" /></tab>
+		<tab text="Two"><panel columns="1">
+			<textarea name="ta2" text="Two" weightx="1" weighty="1" />
+			<checkbox text="Bordered" selected="true" action="setBorder(thinlet, this.selected, ta2)" />
+		</panel></tab>
+		<tab text="Three"><textarea text="Three" /></tab>
+		<tab text="Four"><textarea text="Four" /></tab>
+		<tab text="Five"><panel gap="4" scrollable="true">
+			<button text="Button" /><button text="Button" /><button text="Button" />
+			<button text="Button" /><button text="Button" /><button text="Button" />
+			<button text="Button" /><button text="Button" /><button text="Button" />
+		</panel></tab>
+	</tabbedpane>
+	<panel gap="4">
+		<label text="Placement:" />
+		<combobox editable="false" selected="0"
+				action="changePlacement(thinlet, this, tabbed)">
+			<choice text="Top" />
+			<choice text="Left" />
+			<choice text="Bottom" />
+			<choice text="Right" />
+			<choice text="Stacked" />
+		</combobox>
+		<checkbox text="Enabled" selected="true"
+				action="changeEnabled(thinlet, this.selected, tabbed, tabbed.selected)"/>
+		<button text="Change text" action="changeText(thinlet, tabbed)" />
+		<spinbox minimum="0" maximum="4" text="0"
+			action="updateIndex(thinlet, tabbed, this.text)" />
+		<button text="Add" mnemonic="0" action="addTab(thinlet, tabbed)" />
+	</panel>
+	
+	<panel gap="4">
+		<list action="focus(thinlet, tf)"><item text="Click" /><item text="Click" /><item text="Click" /></list>
+		<textfield visible="false" name="tf" />
+	</panel>
+	<tabbedpane init="loadTab(thinlet, firsttab)" weightx="1">
+		<tab name="firsttab" text="One">
+			<label text="loading..." />
+		</tab>
+	</tabbedpane>
+</panel>

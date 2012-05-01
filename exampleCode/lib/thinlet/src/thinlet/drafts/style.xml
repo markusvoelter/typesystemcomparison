@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<panel columns="5" border="true" top="4" left="4" bottom="4" right="4" gap="4">
+	<combobox editable="false" name="name" tooltip="Name" init="loadFontNames(thinlet, this)"/>
+	<togglebutton name="bold" icon="/icon/bold.gif" tooltip="Bold" />
+	<togglebutton name="italic" icon="/icon/italic.gif" tooltip="Italic" />
+	<combobox name="size" columns="3" tooltip="Size" init="loadFontSizes(thinlet, this)" />
+	<button text="Update"
+			action="changeFont(thinlet, name.text, bold.selected, italic.selected, size.text)" />
+	
+	<combobox editable="false" selected="0" action="changeColors(thinlet, this.selected)">
+		<choice text="Default" />
+		<choice text="Sandstone" />
+		<choice text="Ocean" />
+		<choice text="XP" />
+	</combobox>
+</panel>

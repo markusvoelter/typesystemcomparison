@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<panel columns="1" gap="4">
+	<label text="- focus 'C', if 'A' lost focus" />
+	<label text="- and focus 'D', if 'C' gained focus" />
+	<panel gap="4">
+		<textfield text="A" focuslost="focusLost(thinlet, tfc)" />
+		<textfield text="B" />
+		<textfield name="tfc" text="C" focusgained="focusGained(thinlet, tfd)" />
+		<textfield name="tfd" text="D" />
+	</panel>
+</panel>

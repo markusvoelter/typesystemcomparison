@@ -1,0 +1,96 @@
+<html>
+<head><title>Thinlet - Slider</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <a href="overview.html" class="tab">Overview</a>
+| <span class="activetab">Widgets</span>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="component.html">Component</a><br>
+<a href="label.html">Label</a><br>
+<a href="button.html">Button</a><br>
+<a href="checkbox.html">CheckBox</a><br>
+<a href="togglebutton.html">ToggleButton</a><br>
+<a href="combobox.html">ComboBox</a><br>
+<a href="textfield.html">TextField</a><br>
+<a href="passwordfield.html">PasswordField</a><br>
+<a href="textarea.html">TextArea</a><br>
+<a href="tabbedpane.html">TabbedPane</a><br>
+<a href="panel.html">Panel</a><br>
+<a href="desktop.html">Desktop</a><br>
+<a href="dialog.html">Dialog</a><br>
+<a href="spinbox.html">SpinBox</a><br>
+<a href="progressbar.html">ProgressBar</a><br>
+<span class="activeside"><b>Slider</b></span><br>
+<a href="splitpane.html">SplitPane</a><br>
+<a href="list.html">List</a><br>
+<a href="table.html">Table</a><br>
+<a href="tree.html">Tree</a><br>
+<a href="separator.html">Separator</a><br>
+<a href="menubar.html">MenuBar</a><br>
+
+		</td>
+		<td class="body">
+			<p class="title">Slider</p>
+<p>A slider lets the user graphically select a value by sliding a knob
+	within a bounded interval, e.g. between 25 and 75.</p><p class="xml"><font color="#000080">&lt;</font><font color="#800000"><b>slider</b></font>  minimum=<font color="#008000">&quot;25&quot;</font> maximum=<font color="#008000">&quot;75&quot;</font> value=<font color="#008000">&quot;50&quot;</font> orientation=<font color="#008000">&quot;vertical&quot;</font> <font color="#000080">/&gt;</font></p>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Properties</caption>
+<tr><td class="header">Name</td><td class="header">Type</td><td class="header">Default</td><td class="header">Description</td></tr>
+<tr><td class="cell">orientation</td><td class="cell">choice</td><td class="cell">horizontal</td><td class="cell">Possible values are: horizontal, and vertical.
+			The default value, if not set, is horizontal.</td></tr>
+<tr><td class="cell">minimum</td><td class="cell">integer</td><td class="cell">0</td><td class="cell">The slider's minimum value. By default, this is 0.</td></tr>
+<tr><td class="cell">maximum</td><td class="cell">integer</td><td class="cell">100</td><td class="cell">The slider's maximum value. By default, this is 100.</td></tr>
+<tr><td class="cell">value</td><td class="cell">integer</td><td class="cell">0</td><td class="cell">The value is always between the slider's minimum and maximum values, inclusive.
+			By default, the value equals the minimum.</td></tr>
+<tr><td class="cell">unit</td><td class="cell">integer</td><td class="cell">5</td><td class="cell">The distance of the value change when using arrow buttons.</td></tr>
+<tr><td class="cell">block</td><td class="cell">integer</td><td class="cell">25</td><td class="cell">The distance of the value change when using page buttons.</td></tr>
+<tr><td class="cell" colspan="4">name, enabled, visible, tooltip, property, width, height, colspan, rowspan,
+			weightx, weighty, halign, and valign parameters are similar to
+			<a href="component.html">component</a></td></tr>
+</table>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Listeners</caption>
+<tr><td class="header">Name</td><td class="header">Description</td></tr>
+<tr><td class="cell">action</td><td class="cell">Invokes the method when the slider has changed its value.</td></tr>
+</table>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Keyboard-actions</caption>
+<tr><td class="header">Operation</td><td class="header">Action</td></tr>
+<tr><td class="cell">Left arrow, up arrow</td><td class="cell">Decreases the value (steps in left/top direction) by unit value</td></tr>
+<tr><td class="cell">Right arrow, down arrow</td><td class="cell">Increases the value (steps in right/bottom direction) by unit value</td></tr>
+<tr><td class="cell">Page Up</td><td class="cell">Decreases the value (jumps in left/top direction) by block value</td></tr>
+<tr><td class="cell">Page Down</td><td class="cell">Increases the value (jumps in right/bottom direction) by block value</td></tr>
+<tr><td class="cell">Home</td><td class="cell">Moves to minimum (left/top) value</td></tr>
+<tr><td class="cell">End</td><td class="cell">Moves to maximum (right/bottom) value</td></tr>
+<tr><td class="cell">Tab, Shift-Tab</td><td class="cell">Navigate forward, backward</td></tr>
+</table>
+
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

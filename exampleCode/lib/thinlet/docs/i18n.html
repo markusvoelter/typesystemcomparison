@@ -1,0 +1,95 @@
+<html>
+<head><title>Thinlet - Internationalization</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <span class="activetab">Overview</span>
+| <a href="component.html" class="tab">Widgets</a>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="overview.html">Overview</a><br>
+<a href="calculator.html">Calculator</a><br>
+<a href="hierarchy.html">Hierarchy</a><br>
+<a href="properties.html">Properties</a><br>
+<a href="events.html">Events</a><br>
+<a href="xml.html">XML</a><br>
+<span class="activeside"><b>Internationalization</b></span><br>
+
+		</td>
+		<td class="body">
+			<content>
+	
+<p class="title">Internationalization</p>
+
+<p>A simple solution to internationalize texts (and other properties)
+depending on the current or selected locale is the separation of property
+values into locale-specific objects. You can specify a resource bundle
+containing translated values using the following method:</p>
+<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> setResourceBundle(<font color="#000080">ResourceBundle</font> resourcebundle)</p>
+
+
+<p>The following example creates two buttons (<i>yes</i> and <i>no</i>),
+in the XML file the translated attribute values are marked with the
+<b>i18n.</b> prefix:</p>
+<p class="xml"><font color="#000080">&lt;</font><font color="#800000"><b>panel</b></font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>button</b></font>  text=<font color="#008000">&quot;i18n.yes&quot;</font> <font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>button</b></font>  text=<font color="#008000">&quot;i18n.no&quot;</font> <font color="#000080">/&gt;</font><br>
+<font color="#000080">&lt;/</font><font color="#800000"><b>panel</b></font><font color="#000080">&gt;</font></p>
+
+<p>Note: you can internationalize not only string values, e.g. you can set the
+<i>state</i> field visible only for the <i>_en_US</i> locales.</p>
+
+<span class="note">Note: the <i>ResourceBundle</i> class loads resources
+using the 8859-1 charset, thus for other characters you (or a properties editor)
+have to use the <code>\u????</code> format including its hexadecimal code.</span>
+
+<p>The <i>mypackage/myresources_de.properties</i> file
+includes German texts:</p>
+<p class="xml">yes=Ja<br>
+no=Nein</p>
+
+
+<p>and <i>mypackage/myresources.properties</i> the English words:</p>
+<p class="xml">yes=Yes<br>
+no=No</p>
+
+
+<p>The Java source contains the <code>setResourceBundle</code> method
+call before parsing the XML file:</p>
+<p class="java">setResourceBundle(ResourceBundle.getBundle(<font color="#008000">&quot;mypackage.myresources&quot;</font>));<br>
+add(parse(<font color="#008000">&quot;mypanel.xml&quot;</font>));</p>
+
+
+<p>Presumably the application's locale is defined at startup, or only the
+first (e.g. <i>login</i>) screen have to be reloaded. Changing locale runtime seems
+to be complicated, you have to update all the localizable data (numbers, dates,
+messages, or cell values coming from internationalized database views, etc.).</p>
+	
+</content>
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

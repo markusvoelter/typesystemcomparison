@@ -1,0 +1,742 @@
+<html>
+<head><title>Thinlet - thinlet.Thinlet</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <a href="overview.html" class="tab">Overview</a>
+| <a href="component.html" class="tab">Widgets</a>
+| <span class="activetab">API</span>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="appletlauncher.html">AppletLauncher</a><br>
+<a href="framelauncher.html">FrameLauncher</a><br>
+<span class="activeside"><b>Thinlet</b></span><br>
+
+		</td>
+		<td class="body">
+			<api>
+
+<p class="title">Thinlet</p>
+<p><i>package</i> thinlet<br>
+public <i>class</i> <b>Thinlet</b><br>
+<i>extends</i> java.awt.Container<br>
+<i>implements</i> java.lang.Runnable, java.io.Serializable</p>
+
+<script language="JavaScript">
+function expand(prefix, index, n) {
+	for (var i = 0; i < n; i++) {
+		var tr = document.getElementById(prefix + i);
+		tr.style.display = (i == index) ? '' : 'none';
+		var tr = document.getElementById('h' + prefix + i);
+		tr.style.display = (i == index) ? 'none' : '';
+	}
+}
+</script>
+<table class="apitable" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Constructor</caption>
+<tr id="hc0"><td class="apipre" nowrap="true">
+public</td><td class="apiname" width="100%"><b><a href="javascript:expand('c', 0, 1)">Thinlet</a></b>()</td></tr>
+<tr id="c0"><td class="apidetail" colspan="2">
+<p class="apicode">public Thinlet()</p>
+</td></tr>
+</table>
+<script>expand('c', -1, 1)</script>
+
+<table class="apitable" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Method</caption>
+<tr id="hm0"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 0, 67)">add</a></b>(Object component)</td></tr>
+<tr id="m0"><td class="apidetail" colspan="2">
+<p class="apicode">public void add(java.lang.Object component)</p>
+<p class="apitext">Adds the specified component to the root desktop</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a widget to be added</p>
+</td></tr>
+<tr id="hm1"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 1, 67)">add</a></b>(Object parent, Object component)</td></tr>
+<tr id="m1"><td class="apidetail" colspan="2">
+<p class="apicode">public void add(java.lang.Object parent, java.lang.Object component)</p>
+<p class="apitext">Adds the specified component to the end of the specified container</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>parent</i> - a container</p>
+<p class="apitem"><i>component</i> - a component to be added</p>
+</td></tr>
+<tr id="hm2"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 2, 67)">add</a></b>(Object parent, Object component, int index)</td></tr>
+<tr id="m2"><td class="apidetail" colspan="2">
+<p class="apicode">public void add(java.lang.Object parent, java.lang.Object component, int index)</p>
+<p class="apitext">Adds the specified component to the container at the given position</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>parent</i> - a container</p>
+<p class="apitem"><i>component</i> - a component to be inserted</p>
+<p class="apitem"><i>index</i> - the position at which to insert the component, 
+ or -1 to insert the component at the end</p>
+</td></tr>
+<tr id="hm3"><td class="apipre" nowrap="true">
+protected void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 3, 67)">characters</a></b>(String text)</td></tr>
+<tr id="m3"><td class="apidetail" colspan="2">
+<p class="apicode">protected void characters(java.lang.String text)</p>
+<p class="apitext">The SAX-like parser calls this method, you have to overwrite it</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>text</i> - the content of a tag</p>
+</td></tr>
+<tr id="hm4"><td class="apipre" nowrap="true">
+public static Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 4, 67)">create</a></b>(String classname)</td></tr>
+<tr id="m4"><td class="apidetail" colspan="2">
+<p class="apicode">public static java.lang.Object create(java.lang.String classname) throws java.lang.IllegalArgumentException</p>
+<p class="apitext">Creates a new component</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>classname</i> - the widget type (e.g. <i>button</i>)</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">a new component, every component is simply an <i>Object</i></p>
+<p class="apititle">Throws:</p>
+<p class="apitem"><i>java.lang.IllegalArgumentException</i> - for unknown widget type</p>
+</td></tr>
+<tr id="hm5"><td class="apipre" nowrap="true">
+public boolean</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 5, 67)">destroy</a></b>()</td></tr>
+<tr id="m5"><td class="apidetail" colspan="2">
+<p class="apicode">public boolean destroy()</p>
+<p class="apitext">This method is called by the FrameLauncher if the window was closing,
+ or AppletLauncher's destroy method. Overwrite it to e.g. save the application changes.</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">true to exit, and false to keep the frame and continue the application</p>
+</td></tr>
+<tr id="hm6"><td class="apipre" nowrap="true">
+protected void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 6, 67)">endElement</a></b>()</td></tr>
+<tr id="m6"><td class="apidetail" colspan="2">
+<p class="apicode">protected void endElement()</p>
+<p class="apitext">The SAX-like parser calls this method, you have to overwrite it</p>
+</td></tr>
+<tr id="hm7"><td class="apipre" nowrap="true">
+public Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 7, 67)">find</a></b>(Object component, String name)</td></tr>
+<tr id="m7"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object find(java.lang.Object component, java.lang.String name)</p>
+<p class="apitext">Finds the first component from the specified component by a name</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - the widget is searched inside this component</p>
+<p class="apitem"><i>name</i> - parameter value identifies the widget</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the first suitable component, or null</p>
+</td></tr>
+<tr id="hm8"><td class="apipre" nowrap="true">
+public Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 8, 67)">find</a></b>(String name)</td></tr>
+<tr id="m8"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object find(java.lang.String name)</p>
+<p class="apitext">Finds the first component from the root desktop by a specified name value</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>name</i> - parameter value identifies the widget</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the first suitable component, or null</p>
+</td></tr>
+<tr id="hm9"><td class="apipre" nowrap="true">
+public boolean</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 9, 67)">getBoolean</a></b>(Object component, String key)</td></tr>
+<tr id="m9"><td class="apidetail" colspan="2">
+<p class="apicode">public boolean getBoolean(java.lang.Object component, java.lang.String key)</p>
+<p class="apitext">Gets the property value of the given component by the property key</p>
+</td></tr>
+<tr id="hm10"><td class="apipre" nowrap="true">
+public String</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 10, 67)">getChoice</a></b>(Object component, String key)</td></tr>
+<tr id="m10"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.String getChoice(java.lang.Object component, java.lang.String key)</p>
+<p class="apitext">Gets the property value of the given component by the property key</p>
+</td></tr>
+<tr id="hm11"><td class="apipre" nowrap="true">
+public static String</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 11, 67)">getClass</a></b>(Object component)</td></tr>
+<tr id="m11"><td class="apidetail" colspan="2">
+<p class="apicode">public static java.lang.String getClass(java.lang.Object component)</p>
+<p class="apitext">Gets the type of the given component</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a widget</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the class name of the component (e.g. <i>button</i>)</p>
+</td></tr>
+<tr id="hm12"><td class="apipre" nowrap="true">
+public Color</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 12, 67)">getColor</a></b>(Object component, String key)</td></tr>
+<tr id="m12"><td class="apidetail" colspan="2">
+<p class="apicode">public java.awt.Color getColor(java.lang.Object component, java.lang.String key)</p>
+<p class="apitext">Get custom color of a component.</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a component</p>
+<p class="apitem"><i>key</i> - the identifier of the parameter, e.g. "foreground"</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">value of the custom color, or null if default color is used</p>
+</td></tr>
+<tr id="hm13"><td class="apipre" nowrap="true">
+public Component</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 13, 67)">getComponent</a></b>(Object component, String key)</td></tr>
+<tr id="m13"><td class="apidetail" colspan="2">
+<p class="apicode">public java.awt.Component getComponent(java.lang.Object component, java.lang.String key)</p>
+<p class="apitext">Get the AWT component of the given (currently <i>bean</i>) widget</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a <i>bean</i> widget</p>
+<p class="apitem"><i>key</i> - the identifier of the parameter</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">an AWT component, or null</p>
+</td></tr>
+<tr id="hm14"><td class="apipre" nowrap="true">
+public int</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 14, 67)">getCount</a></b>(Object component)</td></tr>
+<tr id="m14"><td class="apidetail" colspan="2">
+<p class="apicode">public int getCount(java.lang.Object component)</p>
+<p class="apitext">Gets the count of subcomponents in the list of the given component</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a widget</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the number of components in this component</p>
+</td></tr>
+<tr id="hm15"><td class="apipre" nowrap="true">
+protected static String</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 15, 67)">getDOMAttribute</a></b>(Object node, String key)</td></tr>
+<tr id="m15"><td class="apidetail" colspan="2">
+<p class="apicode">protected static java.lang.String getDOMAttribute(java.lang.Object node, java.lang.String key)</p>
+<p class="apitext">Gets the attribute value by the specified key for a DOM tag</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>node</i> - a specified tag</p>
+<p class="apitem"><i>key</i> - a string to identify the value pair</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the value, or null</p>
+</td></tr>
+<tr id="hm16"><td class="apipre" nowrap="true">
+protected static int</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 16, 67)">getDOMCount</a></b>(Object node, String key)</td></tr>
+<tr id="m16"><td class="apidetail" colspan="2">
+<p class="apicode">protected static int getDOMCount(java.lang.Object node, java.lang.String key)</p>
+<p class="apitext">Gets the number of tags in a tag by a specified tagname</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>node</i> - a specified tag</p>
+<p class="apitem"><i>key</i> - the searched tagname</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the number of tags</p>
+</td></tr>
+<tr id="hm17"><td class="apipre" nowrap="true">
+protected static Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 17, 67)">getDOMNode</a></b>(Object node, String key, int index)</td></tr>
+<tr id="m17"><td class="apidetail" colspan="2">
+<p class="apicode">protected static java.lang.Object getDOMNode(java.lang.Object node, java.lang.String key, int index)</p>
+<p class="apitext">Gets the subtag of the specified tag by tagname and index</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>node</i> - a specified tag</p>
+<p class="apitem"><i>key</i> - the searched tagname</p>
+<p class="apitem"><i>index</i> - the index of the requested subtag</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the found tag, or null</p>
+</td></tr>
+<tr id="hm18"><td class="apipre" nowrap="true">
+protected static String</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 18, 67)">getDOMText</a></b>(Object node)</td></tr>
+<tr id="m18"><td class="apidetail" colspan="2">
+<p class="apicode">protected static java.lang.String getDOMText(java.lang.Object node)</p>
+<p class="apitext">Gets the content string of a tag</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>node</i> - a specified tag</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the value, or null</p>
+</td></tr>
+<tr id="hm19"><td class="apipre" nowrap="true">
+public Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 19, 67)">getDesktop</a></b>()</td></tr>
+<tr id="m19"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object getDesktop()</p>
+<p class="apitext">Get the topmost component</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the root object (it is a <i>desktop</i>), never <i>null</i></p>
+</td></tr>
+<tr id="hm20"><td class="apipre" nowrap="true">
+public Font</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 20, 67)">getFont</a></b>(Object component, String key)</td></tr>
+<tr id="m20"><td class="apidetail" colspan="2">
+<p class="apicode">public java.awt.Font getFont(java.lang.Object component, java.lang.String key)</p>
+<p class="apitext">Get custom font of a component.</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a component</p>
+<p class="apitem"><i>key</i> - the identifier of the parameter, e.g. "font"</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">may return null if the default font is used</p>
+</td></tr>
+<tr id="hm21"><td class="apipre" nowrap="true">
+public Image</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 21, 67)">getIcon</a></b>(Object component, String key)</td></tr>
+<tr id="m21"><td class="apidetail" colspan="2">
+<p class="apicode">public java.awt.Image getIcon(java.lang.Object component, java.lang.String key)</p>
+<p class="apitext">Gets the property value of the given component by the property key</p>
+</td></tr>
+<tr id="hm22"><td class="apipre" nowrap="true">
+public Image</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 22, 67)">getIcon</a></b>(String path)</td></tr>
+<tr id="m22"><td class="apidetail" colspan="2">
+<p class="apicode">public java.awt.Image getIcon(java.lang.String path)</p>
+<p class="apitext">Creates an image, and loads it immediately by default</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>path</i> - is relative to your thinlet instance or the classpath
+ (if the path starts with <i>'/'</i> character), or a full URL</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the loaded image or null</p>
+</td></tr>
+<tr id="hm23"><td class="apipre" nowrap="true">
+public Image</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 23, 67)">getIcon</a></b>(String path, boolean preload)</td></tr>
+<tr id="m23"><td class="apidetail" colspan="2">
+<p class="apicode">public java.awt.Image getIcon(java.lang.String path, boolean preload)</p>
+<p class="apitext">Creates an image from the specified resource.
+ To speed up loading the same images use a cache (a simple hashtable).
+ And flush the resources being used by an image when you won't use it henceforward</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>path</i> - is relative to your thinlet instance or the classpath, or an URL</p>
+<p class="apitem"><i>preload</i> - waits for the whole image if true, starts loading
+ (and repaints, and updates the layout) only when required (painted, or size requested) if false</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the loaded image or null</p>
+</td></tr>
+<tr id="hm24"><td class="apipre" nowrap="true">
+public int</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 24, 67)">getInteger</a></b>(Object component, String key)</td></tr>
+<tr id="m24"><td class="apidetail" colspan="2">
+<p class="apicode">public int getInteger(java.lang.Object component, java.lang.String key)</p>
+<p class="apitext">Gets the property value of the given component by the property key</p>
+</td></tr>
+<tr id="hm25"><td class="apipre" nowrap="true">
+public Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 25, 67)">getItem</a></b>(Object component, int index)</td></tr>
+<tr id="m25"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object getItem(java.lang.Object component, int index)</p>
+<p class="apitext">Returns the subcomponent of the given component's specified list at the given index</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a specified container</p>
+<p class="apitem"><i>index</i> - the index of the component to get</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the index<sup>th</sup> component in this container</p>
+</td></tr>
+<tr id="hm26"><td class="apipre" nowrap="true">
+public Object[]</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 26, 67)">getItems</a></b>(Object component)</td></tr>
+<tr id="m26"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object[] getItems(java.lang.Object component)</p>
+<p class="apitext">Gets all the components in this container</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a specified container</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">an array of all the components in this container</p>
+</td></tr>
+<tr id="hm27"><td class="apipre" nowrap="true">
+public Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 27, 67)">getParent</a></b>(Object component)</td></tr>
+<tr id="m27"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object getParent(java.lang.Object component)</p>
+<p class="apitext">Gets the parent of this component</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a widget</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the parent container of this component or item</p>
+</td></tr>
+<tr id="hm28"><td class="apipre" nowrap="true">
+public Dimension</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 28, 67)">getPreferredSize</a></b>()</td></tr>
+<tr id="m28"><td class="apidetail" colspan="2">
+<p class="apicode">public java.awt.Dimension getPreferredSize()</p>
+<p class="apitext">Gets the preferred size of the root component</p>
+<p class="apititle">Overrides:</p>
+<p class="apitem"><i>getPreferredSize</i> in class <i>java.awt.Container</i></p>
+<p class="apititle">Returns:</p>
+<p class="apitem">a dimension object indicating the root component's preferred size</p>
+</td></tr>
+<tr id="hm29"><td class="apipre" nowrap="true">
+public Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 29, 67)">getProperty</a></b>(Object component, Object key)</td></tr>
+<tr id="m29"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object getProperty(java.lang.Object component, java.lang.Object key)</p>
+<p class="apitext">Returns the value of the property with the specified key.</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - searches the hashtable of this component</p>
+<p class="apitem"><i>key</i> - the client property key</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the value to which the key is mapped or null if the key is not mapped to any value</p>
+</td></tr>
+<tr id="hm30"><td class="apipre" nowrap="true">
+public int</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 30, 67)">getSelectedIndex</a></b>(Object component)</td></tr>
+<tr id="m30"><td class="apidetail" colspan="2">
+<p class="apicode">public int getSelectedIndex(java.lang.Object component)</p>
+<p class="apitext">Gets the index of the first selected item in the given component</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a widget (combobox, tabbedpane, list, table, or tree)</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the first selected index or -1</p>
+</td></tr>
+<tr id="hm31"><td class="apipre" nowrap="true">
+public Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 31, 67)">getSelectedItem</a></b>(Object component)</td></tr>
+<tr id="m31"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object getSelectedItem(java.lang.Object component)</p>
+<p class="apitext">Gets the first selected item of the given component</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a widget (combobox, tabbedpane, list, table, or tree)</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the first selected item or null</p>
+</td></tr>
+<tr id="hm32"><td class="apipre" nowrap="true">
+public Object[]</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 32, 67)">getSelectedItems</a></b>(Object component)</td></tr>
+<tr id="m32"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object[] getSelectedItems(java.lang.Object component)</p>
+<p class="apitext">Gets the selected item of the given component (list, table, or tree)
+ when multiple selection is allowed</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a widget</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the array of selected items, or a 0 length array</p>
+</td></tr>
+<tr id="hm33"><td class="apipre" nowrap="true">
+public String</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 33, 67)">getString</a></b>(Object component, String key)</td></tr>
+<tr id="m33"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.String getString(java.lang.Object component, java.lang.String key)</p>
+<p class="apitext">Gets the property value of the given component by the property key</p>
+</td></tr>
+<tr id="hm34"><td class="apipre" nowrap="true">
+public Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 34, 67)">getWidget</a></b>(Object component, String key)</td></tr>
+<tr id="m34"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object getWidget(java.lang.Object component, java.lang.String key)</p>
+</td></tr>
+<tr id="hm35"><td class="apipre" nowrap="true">
+protected void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 35, 67)">handleException</a></b>(Throwable throwable)</td></tr>
+<tr id="m35"><td class="apidetail" colspan="2">
+<p class="apicode">protected void handleException(java.lang.Throwable throwable)</p>
+<p class="apitext">Overwrite this method to handle exceptions thrown
+ by the invoked custom methods</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>throwable</i> - the thrown exception by the bussiness logic</p>
+</td></tr>
+<tr id="hm36"><td class="apipre" nowrap="true">
+public boolean</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 36, 67)">isFocusTraversable</a></b>()</td></tr>
+<tr id="m36"><td class="apidetail" colspan="2">
+<p class="apicode">public boolean isFocusTraversable()</p>
+<p class="apitext">This component can be traversed using Tab or Shift-Tab keyboard focus traversal,
+ although 1.4 replaced this method by <i>isFocusable</i>,
+ so 1.4 compilers write deprecation warning</p>
+<p class="apititle">Overrides:</p>
+<p class="apitem"><i>isFocusTraversable</i> in class <i>java.awt.Component</i></p>
+<p class="apititle">Returns:</p>
+<p class="apitem">true as focus-transverable component, overwrites the default false value</p>
+</td></tr>
+<tr id="hm37"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 37, 67)">paint</a></b>(Graphics g)</td></tr>
+<tr id="m37"><td class="apidetail" colspan="2">
+<p class="apicode">public void paint(java.awt.Graphics g)</p>
+<p class="apitext">Paints the components inside the graphics clip area</p>
+<p class="apititle">Overrides:</p>
+<p class="apitem"><i>paint</i> in class <i>java.awt.Container</i></p>
+</td></tr>
+<tr id="hm38"><td class="apipre" nowrap="true">
+public Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 38, 67)">parse</a></b>(InputStream inputstream)</td></tr>
+<tr id="m38"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object parse(java.io.InputStream inputstream) throws java.io.IOException</p>
+<p class="apitext">Creates a component from the given stream</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>inputstream</i> - e.g. <i>new URL("http://myserver/myservlet").openStream()</i></p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the root component of the parsed stream</p>
+<p class="apititle">Throws:</p>
+<p class="apitem"><i>java.io.IOException</i> - </p>
+</td></tr>
+<tr id="hm39"><td class="apipre" nowrap="true">
+public Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 39, 67)">parse</a></b>(InputStream inputstream, Object handler)</td></tr>
+<tr id="m39"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object parse(java.io.InputStream inputstream, java.lang.Object handler) throws java.io.IOException</p>
+<p class="apitext">Creates a component from the given stream and event handler</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>inputstream</i> - read xml from this stream</p>
+<p class="apitem"><i>handler</i> - event handlers are implemented in this object</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the parsed components' root</p>
+<p class="apititle">Throws:</p>
+<p class="apitem"><i>java.io.IOException</i> - </p>
+</td></tr>
+<tr id="hm40"><td class="apipre" nowrap="true">
+public Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 40, 67)">parse</a></b>(String path)</td></tr>
+<tr id="m40"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object parse(java.lang.String path) throws java.io.IOException</p>
+<p class="apitext">Creates a component (and its subcomponents, and properties)
+ from the given xml resource</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>path</i> - is relative to your thinlet instance or the classpath
+ (if the path starts with an <i>/</i> character), or a full URL</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the root component of the parsed resource</p>
+<p class="apititle">Throws:</p>
+<p class="apitem"><i>java.io.IOException</i> - </p>
+</td></tr>
+<tr id="hm41"><td class="apipre" nowrap="true">
+public Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 41, 67)">parse</a></b>(String path, Object handler)</td></tr>
+<tr id="m41"><td class="apidetail" colspan="2">
+<p class="apicode">public java.lang.Object parse(java.lang.String path, java.lang.Object handler) throws java.io.IOException</p>
+<p class="apitext">Creates a component from the given xml resource using the
+ specified event handler</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>path</i> - is relative to your application package or the classpath, or an URL</p>
+<p class="apitem"><i>handler</i> - bussiness methods are implemented in this object</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the parsed components' root</p>
+<p class="apititle">Throws:</p>
+<p class="apitem"><i>java.io.IOException</i> - </p>
+</td></tr>
+<tr id="hm42"><td class="apipre" nowrap="true">
+protected Object</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 42, 67)">parseDOM</a></b>(InputStream inputstream)</td></tr>
+<tr id="m42"><td class="apidetail" colspan="2">
+<p class="apicode">protected java.lang.Object parseDOM(java.io.InputStream inputstream) throws java.io.IOException</p>
+<p class="apitext">You can use the internal xml parser as a simple DOM-like parser,
+ use the <i>getDOMAttribute</i>, <i>getDOMText</i>,
+ <i>getDOMCount</i>, <i>getDOMNode</i>, <i>getClass</i>,
+ and <i>getParent</i> methods to analise the document</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>inputstream</i> - e.g. <i>new URL("http://myserver/myservlet").openStream()</i></p>
+<p class="apititle">Returns:</p>
+<p class="apitem">the root tag</p>
+<p class="apititle">Throws:</p>
+<p class="apitem"><i>java.io.IOException</i> - </p>
+</td></tr>
+<tr id="hm43"><td class="apipre" nowrap="true">
+protected void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 43, 67)">parseXML</a></b>(InputStream inputstream)</td></tr>
+<tr id="m43"><td class="apidetail" colspan="2">
+<p class="apicode">protected void parseXML(java.io.InputStream inputstream) throws java.io.IOException</p>
+<p class="apitext">You can use the internal xml parser as a simple SAX-like parser,
+ during the process it calls the <i>startElement</i>, <i>characters</i>,
+ and <i>endElement</i> methods</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>inputstream</i> - e.g. <i>new URL("http://myserver/myservlet").openStream()</i></p>
+<p class="apititle">Throws:</p>
+<p class="apitem"><i>java.io.IOException</i> - </p>
+</td></tr>
+<tr id="hm44"><td class="apipre" nowrap="true">
+protected void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 44, 67)">processEvent</a></b>(AWTEvent e)</td></tr>
+<tr id="m44"><td class="apidetail" colspan="2">
+<p class="apicode">protected void processEvent(java.awt.AWTEvent e)</p>
+<p class="apitext">Dispatches mouse, key, focus, and component events occurring on the
+ <i>Thinlet</i> component internally</p>
+<p class="apititle">Overrides:</p>
+<p class="apitem"><i>processEvent</i> in class <i>java.awt.Container</i></p>
+</td></tr>
+<tr id="hm45"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 45, 67)">putProperty</a></b>(Object component, Object key, Object value)</td></tr>
+<tr id="m45"><td class="apidetail" colspan="2">
+<p class="apicode">public void putProperty(java.lang.Object component, java.lang.Object key, java.lang.Object value)</p>
+<p class="apitext">Binds the specified key to the specified value, and stores in this component.
+ <i>Null</i> value removes the property. Use the parameter tag in the xml
+ resource to bind a string value, the format is: <i>parameter='key=value'</i></p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - the hashtable is binded to this component</p>
+<p class="apitem"><i>key</i> - the client property key</p>
+<p class="apitem"><i>value</i> - the new client property value</p>
+</td></tr>
+<tr id="hm46"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 46, 67)">remove</a></b>(Object component)</td></tr>
+<tr id="m46"><td class="apidetail" colspan="2">
+<p class="apicode">public void remove(java.lang.Object component)</p>
+<p class="apitext">Remove the specified component from its parent list, or
+ delete component's popupmenu or table's header</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - the component to be removed</p>
+</td></tr>
+<tr id="hm47"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 47, 67)">removeAll</a></b>(Object component)</td></tr>
+<tr id="m47"><td class="apidetail" colspan="2">
+<p class="apicode">public void removeAll(java.lang.Object component)</p>
+<p class="apitext">Removes all the components from this container's specified list</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - the specified container</p>
+</td></tr>
+<tr id="hm48"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 48, 67)">repaint</a></b>(Object component)</td></tr>
+<tr id="m48"><td class="apidetail" colspan="2">
+<p class="apicode">public void repaint(java.lang.Object component)</p>
+<p class="apitext">Repaint the given component's area later</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a visible widget inside thinlet desktop</p>
+</td></tr>
+<tr id="hm49"><td class="apipre" nowrap="true">
+public boolean</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 49, 67)">requestFocus</a></b>(Object component)</td></tr>
+<tr id="m49"><td class="apidetail" colspan="2">
+<p class="apicode">public boolean requestFocus(java.lang.Object component)</p>
+<p class="apitext">Requests that both the <i>Thinlet</i> component,
+ and the given widget get the input focus</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a focusable widget inside
+ visible and enabled parents, and tabbedpane's selected tab</p>
+<p class="apititle">Returns:</p>
+<p class="apitem">true, if the given component was focusable</p>
+</td></tr>
+<tr id="hm50"><td class="apipre" nowrap="true">
+public synchronized void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 50, 67)">run</a></b>()</td></tr>
+<tr id="m50"><td class="apidetail" colspan="2">
+<p class="apicode">public synchronized void run()</p>
+<p class="apitext">A second thread is used to repeat value change events for scrollbar or spinbox
+ during the mouse is pressed, or to pop up tooltip</p>
+</td></tr>
+<tr id="hm51"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 51, 67)">setBoolean</a></b>(Object component, String key, boolean value)</td></tr>
+<tr id="m51"><td class="apidetail" colspan="2">
+<p class="apicode">public void setBoolean(java.lang.Object component, java.lang.String key, boolean value)</p>
+<p class="apitext">Sets the given property pair (key and value) for the component</p>
+</td></tr>
+<tr id="hm52"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 52, 67)">setChoice</a></b>(Object component, String key, String value)</td></tr>
+<tr id="m52"><td class="apidetail" colspan="2">
+<p class="apicode">public void setChoice(java.lang.Object component, java.lang.String key, java.lang.String value)</p>
+<p class="apitext">Sets the given property pair (key and value) for the component</p>
+</td></tr>
+<tr id="hm53"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 53, 67)">setColor</a></b>(Object component, String key, Color color)</td></tr>
+<tr id="m53"><td class="apidetail" colspan="2">
+<p class="apicode">public void setColor(java.lang.Object component, java.lang.String key, java.awt.Color color)</p>
+<p class="apitext">Set custom color on a component.
+ Notes: For "foreground" key, this sets the text color.
+ For "background" key, on gradient-filled
+ components (such as tabs, buttons etc) this will result in a 
+ component filled with solid background color, and not a new gradient.
+ Also, Color.brighter() will be used for highlight, and Color.darker()
+ will be used for pressed or not selected.</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - component to use for custom color</p>
+<p class="apitem"><i>key</i> - currently "background" and "foreground" are supported</p>
+<p class="apitem"><i>color</i> - custom color to use, or null to reset component to use default color</p>
+</td></tr>
+<tr id="hm54"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 54, 67)">setColors</a></b>(int background, int text, int textbackground, int border, int disable, int hover, int press, int focus, int select)</td></tr>
+<tr id="m54"><td class="apidetail" colspan="2">
+<p class="apicode">public void setColors(int background, int text, int textbackground, int border, int disable, int hover, int press, int focus, int select)</p>
+<p class="apitext">Sets the 9 colors used for components, and repaints the whole UI</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>background</i> - the backround of panels (dialogs, desktops),
+ and disabled controls, not editable texts, lines between list items
+ (the default value if <i>#e6e6e6</i>)</p>
+<p class="apitem"><i>text</i> - for text, arrow foreground (<i>black</i> by default)</p>
+<p class="apitem"><i>textbackground</i> - the background of text components, and lists
+ (<i>white</i> by default)</p>
+<p class="apitem"><i>border</i> - for outer in inner borders of enabled components
+ (<i>#909090</i> by default)</p>
+<p class="apitem"><i>disable</i> - for text, border, arrow color in disabled components
+ (<i>#b0b0b0</i> by default)</p>
+<p class="apitem"><i>hover</i> - indicates that the mouse is inside a button area
+ (<i>#ededed</i> by default)</p>
+<p class="apitem"><i>press</i> - for pressed buttons,
+ gradient image is calculated using the background and this press color
+ (<i>#b9b9b9</i> by default)</p>
+<p class="apitem"><i>focus</i> - for text caret and rectagle color marking the focus owner
+ (<i>#89899a</i> by default)</p>
+<p class="apitem"><i>select</i> - used as the background of selected text, and list items,
+ and in slider (<i>#c5c5dd</i> by default)</p>
+</td></tr>
+<tr id="hm55"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 55, 67)">setComponent</a></b>(Object component, String key, Component bean)</td></tr>
+<tr id="m55"><td class="apidetail" colspan="2">
+<p class="apicode">public void setComponent(java.lang.Object component, java.lang.String key, java.awt.Component bean)</p>
+<p class="apitext">Set the AWT component for the given (currently <i>bean</i>) widget</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - a <i>bean</i> widget</p>
+<p class="apitem"><i>key</i> - the identifier of the parameter</p>
+<p class="apitem"><i>bean</i> - an AWT component, or null</p>
+</td></tr>
+<tr id="hm56"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 56, 67)">setFont</a></b>(Font font)</td></tr>
+<tr id="m56"><td class="apidetail" colspan="2">
+<p class="apicode">public void setFont(java.awt.Font font)</p>
+<p class="apitext">Sets the only one font used everywhere, and revalidates the whole UI.
+ Scrollbar width/height, spinbox, and combobox button width,
+ and slider size is the same as the font height</p>
+<p class="apititle">Overrides:</p>
+<p class="apitem"><i>setFont</i> in class <i>java.awt.Container</i></p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>font</i> - the default font is <i>SansSerif</i>, <i>plain</i>, and <i>12pt</i></p>
+</td></tr>
+<tr id="hm57"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 57, 67)">setFont</a></b>(Object component, Font font)</td></tr>
+<tr id="m57"><td class="apidetail" colspan="2">
+<p class="apicode">public void setFont(java.lang.Object component, java.awt.Font font)</p>
+<p class="apitext">Set custom font on a component, 
+ use the other <code>setFont</code> method instead</p>
+</td></tr>
+<tr id="hm58"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 58, 67)">setFont</a></b>(Object component, String key, Font font)</td></tr>
+<tr id="m58"><td class="apidetail" colspan="2">
+<p class="apicode">public void setFont(java.lang.Object component, java.lang.String key, java.awt.Font font)</p>
+<p class="apitext">Set custom font on a component</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - component to use the custom font</p>
+<p class="apitem"><i>font</i> - custom font to use, or null to reset component to use default font</p>
+</td></tr>
+<tr id="hm59"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 59, 67)">setIcon</a></b>(Object component, String key, Image icon)</td></tr>
+<tr id="m59"><td class="apidetail" colspan="2">
+<p class="apicode">public void setIcon(java.lang.Object component, java.lang.String key, java.awt.Image icon)</p>
+<p class="apitext">Sets the given property pair (key and value) for the component</p>
+</td></tr>
+<tr id="hm60"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 60, 67)">setInteger</a></b>(Object component, String key, int value)</td></tr>
+<tr id="m60"><td class="apidetail" colspan="2">
+<p class="apicode">public void setInteger(java.lang.Object component, java.lang.String key, int value)</p>
+<p class="apitext">Sets the given property pair (key and value) for the component</p>
+</td></tr>
+<tr id="hm61"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 61, 67)">setKeystroke</a></b>(Object component, String key, String value)</td></tr>
+<tr id="m61"><td class="apidetail" colspan="2">
+<p class="apicode">public void setKeystroke(java.lang.Object component, java.lang.String key, java.lang.String value)</p>
+</td></tr>
+<tr id="hm62"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 62, 67)">setMethod</a></b>(Object component, String key, String value, Object root, Object handler)</td></tr>
+<tr id="m62"><td class="apidetail" colspan="2">
+<p class="apicode">public void setMethod(java.lang.Object component, java.lang.String key, java.lang.String value, java.lang.Object root, java.lang.Object handler) throws java.lang.IllegalArgumentException</p>
+<p class="apitext">Sets a new event handler method for a component</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>component</i> - the target component</p>
+<p class="apitem"><i>key</i> - the key name of the parameter (e.g. <i>action</i>)</p>
+<p class="apitem"><i>value</i> - the method name and parameters
+ (e.g. <i>foo(this, this.text, mybutton, mybutton.enabled)</i>
+ for <i>public void foo(Object component, String text, Object mybutton, boolean enabled)</i>)</p>
+<p class="apitem"><i>root</i> - the search starting component for name components in the arguments</p>
+<p class="apitem"><i>handler</i> - the target event handler object including the method</p>
+<p class="apititle">Throws:</p>
+<p class="apitem"><i>java.lang.IllegalArgumentException</i> - </p>
+</td></tr>
+<tr id="hm63"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 63, 67)">setResourceBundle</a></b>(ResourceBundle resourcebundle)</td></tr>
+<tr id="m63"><td class="apidetail" colspan="2">
+<p class="apicode">public void setResourceBundle(java.util.ResourceBundle resourcebundle) throws java.util.MissingResourceException</p>
+<p class="apitext">Set a bundle used in parse method, it replaces the parameter values starting
+ with the 'i18n.' string with a value found in the given bundle</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>resourcebundle</i> - a bundle for the next parsing or null to remove
+ the current one</p>
+<p class="apititle">Throws:</p>
+<p class="apitem"><i>java.util.MissingResourceException</i> - if no object for the given key can be found</p>
+</td></tr>
+<tr id="hm64"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 64, 67)">setString</a></b>(Object component, String key, String value)</td></tr>
+<tr id="m64"><td class="apidetail" colspan="2">
+<p class="apicode">public void setString(java.lang.Object component, java.lang.String key, java.lang.String value)</p>
+<p class="apitext">Sets the given property pair (key and value) for the component</p>
+</td></tr>
+<tr id="hm65"><td class="apipre" nowrap="true">
+protected void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 65, 67)">startElement</a></b>(String name, Hashtable attributelist)</td></tr>
+<tr id="m65"><td class="apidetail" colspan="2">
+<p class="apicode">protected void startElement(java.lang.String name, java.util.Hashtable attributelist)</p>
+<p class="apitext">The SAX-like parser calls this method, you have to overwrite it</p>
+<p class="apititle">Parameters:</p>
+<p class="apitem"><i>name</i> - of the tag</p>
+<p class="apitem"><i>attributelist</i> - a list of attributes including keys and value pairs</p>
+</td></tr>
+<tr id="hm66"><td class="apipre" nowrap="true">
+public void</td><td class="apiname" width="100%"><b><a href="javascript:expand('m', 66, 67)">update</a></b>(Graphics g)</td></tr>
+<tr id="m66"><td class="apidetail" colspan="2">
+<p class="apicode">public void update(java.awt.Graphics g)</p>
+<p class="apitext">Invokes the paint method</p>
+<p class="apititle">Overrides:</p>
+<p class="apitem"><i>update</i> in class <i>java.awt.Container</i></p>
+</td></tr>
+</table>
+<script>expand('m', -1, 67)</script>
+
+</api>
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

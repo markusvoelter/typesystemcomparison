@@ -1,0 +1,131 @@
+<html>
+<head><title>Thinlet - Calculator Example</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <span class="activetab">Overview</span>
+| <a href="component.html" class="tab">Widgets</a>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="overview.html">Overview</a><br>
+<span class="activeside"><b>Calculator</b><br>This overview is a step by step
+		guide to create a simple calculator applet and application.</span><br>
+<a href="hierarchy.html">Hierarchy</a><br>
+<a href="properties.html">Properties</a><br>
+<a href="events.html">Events</a><br>
+<a href="xml.html">XML</a><br>
+<a href="i18n.html">Internationalization</a><br>
+
+		</td>
+		<td class="body">
+			<content>
+<p><b>Layout and component properties</b><br>
+Edit an xml file (called <i>calculator.xml</i>) which describes the
+hierarchy and the static attributes of the components. The root panel
+component contains 3 textfields, a label (+) and a button (=).
+For event handling identify the textfields with names, and
+add method name (action listener) for the button.</p>
+<p class="xml"><font color="#000080">&lt;</font><font color="#800000"><b>panel</b></font>  gap=<font color="#008000">&quot;4&quot;</font> top=<font color="#008000">&quot;4&quot;</font> left=<font color="#008000">&quot;4&quot;</font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>textfield</b></font>  name=<font color="#008000">&quot;number1&quot;</font> columns=<font color="#008000">&quot;4&quot;</font> <font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>label</b></font>  text=<font color="#008000">&quot;+&quot;</font> <font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>textfield</b></font>  name=<font color="#008000">&quot;number2&quot;</font> columns=<font color="#008000">&quot;4&quot;</font> <font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>button</b></font>  text=<font color="#008000">&quot;=&quot;</font> action=<font color="#008000">&quot;calculate(number1.text, number2.text, result)&quot;</font> <font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>textfield</b></font>  name=<font color="#008000">&quot;result&quot;</font> editable=<font color="#008000">&quot;false&quot;</font> <font color="#000080">/&gt;</font><br>
+<font color="#000080">&lt;/</font><font color="#800000"><b>panel</b></font><font color="#000080">&gt;</font></p>
+
+
+<p><img src="calculator.png" width="186" height="30"></img></p>
+
+<p><b>Java source both for applet and application</b><br>
+Create the Calculator class (<i>Calculator.java</i>) extending Thinlet.<br>
+Running the calculator as application the main method creates a frame
+including the Calculator component.
+The constructor loads the panel (decribed in the xml file) and add to
+the desktop.</p>
+<p class="java"><font color="#800000"><b>package</b></font> thinlet.demo;<br>
+<font color="#800000"><b>import</b></font> thinlet.*;<br>
+<br>
+<font color="#800000"><b>public</b></font> <font color="#800000"><b>class</b></font> Calculator <font color="#800000"><b>extends</b></font> Thinlet {<br>
+<br>
+&nbsp;&nbsp;<font color="#800000"><b>public</b></font> Calculator() <font color="#800000"><b>throws</b></font> <font color="#000080">Exception</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;add(parse(<font color="#008000">&quot;calculator.xml&quot;</font>));<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;<font color="#800000"><b>public</b></font> <font color="#800000"><b>static</b></font> <font color="#800000"><b>void</b></font> main(<font color="#000080">String</font>[] args) <font color="#800000"><b>throws</b></font> <font color="#000080">Exception</font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#800000"><b>new</b></font> FrameLauncher(<font color="#008000">&quot;Calculator&quot;</font>, <font color="#800000"><b>new</b></font> Calculator(), 320, 240);<br>
+&nbsp;&nbsp;}<br>
+}</p>
+
+
+<p><b>Event handling</b><br>
+Complement the <i>Calculator.java</i> source with the business logic.
+The calculate method computes the sum of the first two fields' value, and
+updates the third field.</p>
+<p class="java">&nbsp;&nbsp;<font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> calculate(<font color="#000080">String</font> number1, <font color="#000080">String</font> number2, <font color="#000080">Object</font> result) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#800000"><b>try</b></font> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#800000"><b>int</b></font> i1 = Integer.parseInt(number1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#800000"><b>int</b></font> i2 = Integer.parseInt(number2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setString(result, <font color="#008000">&quot;text&quot;</font>, String.valueOf(i1 + i2));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <font color="#800000"><b>catch</b></font> (<font color="#000080">NumberFormatException</font> nfe) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getToolkit().beep();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}</p>
+
+
+<p><b>Compile, run, and deploy</b><br>
+
+<span class="note">Note: the <i>-target 1.1</i> and <i>-source 1.3</i> options
+are required if you developed your application for 1.1 compatible Java VMs
+(e.g. IE's default VM). Only the 1.1 subset of the API is available for these
+applications, e.g. to check you application download the JDK 1.1 version.</span>
+
+Compile the source in the <i>thinlet/src</i> folder using
+e.g. the <i>javac -target 1.1 -source 1.3 thinlet/demo/Calculator.java</i>
+command, and run it, <i>java thinlet.demo.Calculator</i>.
+For applet compile the applet launcher (<i>javac -target 1.1 -source 1.3
+thinlet/AppletLauncher.java</i>) and create a jar archive including
+<i>thinlet/demo/Calculator.class</i>, <i>thinlet/*.class</i>,
+<i>thinlet/demo/calculator.xml</i>
+(and later image) files (<i>jar cvfM calculator.jar thinlet/demo/Calculator.class
+thinlet/*.class thinlet/demo/calculator.xml</i>). Note, Netscape 4.x browser doesn't
+load unknown (e.g. *.xml) resources from jar archive, thus rename the
+files to <i>calculator.txt</i> and update the java sources.
+To decrease the class size use the <i>-g:none</i> compiler option
+(especially for <i>thinlet/Thinlet.java</i>).</p>
+
+<p>Use <i>thinlet.AppletLauncher</i> to load any thinlet component, you have to add
+the <i>class</i> parameter including the class name of your thinlet component.</p>
+
+<p class="xml"><font color="#000080">&lt;</font><font color="#800000"><b>applet</b></font>  code=<font color="#008000">&quot;thinlet.AppletLauncher&quot;</font> archive=<font color="#008000">&quot;calculator.jar&quot;</font> width=<font color="#008000">&quot;320&quot;</font> height=<font color="#008000">&quot;200&quot;</font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>param</b></font>  name=<font color="#008000">&quot;class&quot;</font> value=<font color="#008000">&quot;thinlet.demo.Calculator&quot;</font> <font color="#000080">/&gt;</font><br>
+<font color="#000080">&lt;/</font><font color="#800000"><b>applet</b></font><font color="#000080">&gt;</font></p>
+
+
+</content>
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

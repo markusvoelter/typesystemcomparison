@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<dialog name="dialog" text="Dialog" icon="/icon/library.gif"
+		columns="1" gap="4" top="4" left="4" bottom="4" right="4">
+	<textarea text="TextArea" />
+	<checkbox text="Modal" action="setModal(thinlet, dialog, this.selected)" />
+	<button text="Close" halign="center" action="closeDialog(thinlet, dialog)" />
+</dialog>

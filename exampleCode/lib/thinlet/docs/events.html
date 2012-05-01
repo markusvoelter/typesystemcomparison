@@ -1,0 +1,133 @@
+<html>
+<head><title>Thinlet - Events</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <span class="activetab">Overview</span>
+| <a href="component.html" class="tab">Widgets</a>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="overview.html">Overview</a><br>
+<a href="calculator.html">Calculator</a><br>
+<a href="hierarchy.html">Hierarchy</a><br>
+<a href="properties.html">Properties</a><br>
+<span class="activeside"><b>Events</b></span><br>
+<a href="xml.html">XML</a><br>
+<a href="i18n.html">Internationalization</a><br>
+
+		</td>
+		<td class="body">
+			<content>
+	
+<p class="title">Event handling</p>
+<p>The XML resource and a Java class is joint by the <code>parse</code>
+methods, the XML file is given as path or input stream, and the events are
+handled by the <i>thinlet</i> instance, or a handler object as follows:</p>
+
+<p class="java"><font color="#800000"><b>public</b></font> <font color="#000080">Object</font> parse(<font color="#000080">String</font> path) <font color="#800000"><b>throws</b></font> <font color="#000080">IOException</font><br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Object</font> parse(<font color="#000080">String</font> path, <font color="#000080">Object</font> handler) <font color="#800000"><b>throws</b></font> <font color="#000080">IOException</font><br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Object</font> parse(<font color="#000080">InputStream</font> inputstream) <font color="#800000"><b>throws</b></font> <font color="#000080">IOException</font><br>
+<font color="#800000"><b>public</b></font> <font color="#000080">Object</font> parse(<font color="#000080">InputStream</font> inputstream, <font color="#000080">Object</font> handler) <font color="#800000"><b>throws</b></font> <font color="#000080">IOException</font></p>
+
+
+<p><b>Parameters</b><br>
+The attribute value for an event in the XML file must be a public method of
+the handler Java object (the return type of the method doesn't count).
+The event description may contain parameters (in brackets, separated by
+comma or whitespace characters) as follows:</p>
+
+<p><b><i>thinlet</i></b><br>
+It is beneficial, if the handler object wasn't your <i>thinlet</i> instance.
+The parameter type is <code>thinlet.Thinlet</code>, but you can cast it
+(e.g. <code>(MyThinlet) thinlet</code>).</p>
+
+<p><b><i>this</i></b><br>
+The source widget (the object on which the event occurred), its type
+is <code>Object</code>.</p>
+
+<p><b><i>widget name</i></b><br>
+The widget (in the same XML file) identified by the given name, its type
+is <code>Object</code>.</p>
+
+<p class="xml"><font color="#000080">&lt;</font><font color="#800000"><b>button</b></font>  action=<font color="#008000">&quot;one&quot;</font> <font color="#000080">/&gt;</font><br>
+<font color="#000080">&lt;</font><font color="#800000"><b>label</b></font>  name=<font color="#008000">&quot;label1&quot;</font> text=<font color="#008000">&quot;...&quot;</font> visible=<font color="#008000">&quot;false&quot;</font> <font color="#000080">/&gt;</font><br>
+<font color="#000080">&lt;</font><font color="#800000"><b>button</b></font>  action=<font color="#008000">&quot;two(thinlet, this, label1)&quot;</font> <font color="#000080">/&gt;</font></p>
+
+<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> one() {}<br>
+<font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> two(Thinlet thinlet, <font color="#000080">Object</font> button, <font color="#000080">Object</font> label) {}</p>
+
+
+<p><b><i>item</i></b><br>
+The component part on which the event occurred, valid for
+list <i>item</i>, tree <i>node</i>, table <i>row</i>, combobox <i>choice</i>,
+and tabbedpane <i>tab</i>. Its type is <code>Object</code>, it is null,
+if the event wasn't associated with component item.</p>
+
+<p><b><i>this/name/item.attribute</i></b><br>
+The event parameter may contain a component's or item's attribute value,
+defined by the <i>this</i>, <i>widget name</i>, or <i>item</i> string,
+dot, and the attribute key. The parameter type is <i>String</i> for
+<i>string</i> and <i>choice</i> attributes, <i>boolean</i> for
+<i>boolean</i> types, <i>int</i> for <i>integer</i>s, and <i>Image</i>
+for <i>icon</i>s. If the <i>item</i> was null, the <i>String</i> or
+<i>Image</i> parameter is null, the <i>boolean</i> or <i>int</i>
+parameter is the default value for those items.</p>
+
+<p class="xml"><font color="#000080">&lt;</font><font color="#800000"><b>button</b></font>  action=<font color="#008000">&quot;three(this.text, this.icon, label1.visible, label1.colspan)&quot;</font> <font color="#000080">/&gt;</font><br>
+<font color="#000080">&lt;</font><font color="#800000"><b>list</b></font>  action=<font color="#008000">&quot;four(item, item.text, item.icon)&quot;</font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>item</b></font>  text=<font color="#008000">&quot;File&quot;</font> icon=<font color="#008000">&quot;file.gif&quot;</font> <font color="#000080">/&gt;</font><br>
+<font color="#000080">&lt;/</font><font color="#800000"><b>list</b></font><font color="#000080">&gt;</font></p>
+
+<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> three(<font color="#000080">String</font> buttontext, <font color="#000080">Image</font> buttonicon, <font color="#800000"><b>boolean</b></font> labelvisible, <font color="#800000"><b>int</b></font> labelcols) {}<br>
+<font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> four(<font color="#000080">Object</font> item, <font color="#000080">String</font> itemtext, <font color="#000080">Image</font> itemicon) {}</p>
+
+
+<p><b><i>constant string</i></b><br>
+You can use constant number or string for the event handler method.
+Constant string values begin and end with apostrophe character.</p>
+
+<p><b><i>constant number</i></b><br>
+Long numbers end with <code>'L'</code> character (it ignors case),
+floats width <code>'F'</code>, doubles have to include a dot character,
+otherwise it is expected as integer.</p>
+
+<p class="xml"><font color="#000080">&lt;</font><font color="#800000"><b>button</b></font>  text=<font color="#008000">&quot;Button&quot;</font> mnemonic=<font color="#008000">&quot;0&quot;</font> action=<font color="#008000">&quot;five('string', 12, 1234567890L, 12.34, 45.6F)&quot;</font> <font color="#000080">/&gt;</font></p>
+
+<p class="java"><font color="#800000"><b>public</b></font> <font color="#800000"><b>void</b></font> five(<font color="#000080">String</font> s, <font color="#800000"><b>int</b></font> i, <font color="#800000"><b>long</b></font> l, <font color="#800000"><b>double</b></font> d, <font color="#800000"><b>float</b></font> f) {}</p>
+
+
+<p><b>Exceptions</b><br>
+Your methods may throw exceptions (and even errors), by default the
+exception handler prints the stack trace to the console, but you can customize it
+(e.g. show a warning dialog) by overwriting the following method:</p>
+<p class="java"><font color="#800000"><b>protected</b></font> <font color="#800000"><b>void</b></font> handleException(<font color="#000080">Throwable</font> throwable)</p>
+
+
+</content>
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>

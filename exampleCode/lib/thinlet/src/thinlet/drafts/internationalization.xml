@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<panel name="panel" columns="1" top="4" left="4" bottom="4" right="4" gap="4">
+	<label text="ÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP - árvíztűrő tükörfúrógép"/>
+	<combobox selected="0" editable="false" action="update(thinlet, this, this.selected, panel)">
+		<choice text="English" property="locale=en" />
+		<choice text="Hungarian" property="locale=hu" />
+	</combobox>
+</panel>

@@ -1,0 +1,115 @@
+<html>
+<head><title>Thinlet - List</title>
+<link rel="icon" href="icon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="0" cellspacing="1" width="100%">
+	<tr>
+		<td class="headerlogo" rowspan="2"><img src="logo.png" width="159" height="25"></td>
+		<td class="headertop"><img src="header.png" width="221" height="9"></td>
+	</tr>
+	<tr>
+		<td class="menubar" nowrap width="100%">
+			<a href="index.html" class="tab">Home</a>
+| <a href="showcase.html" class="tab">Showcase</a>
+| <a href="overview.html" class="tab">Overview</a>
+| <span class="activetab">Widgets</span>
+| <a href="appletlauncher.html" class="tab">API</a>
+| <a href="lgpl.html" class="tab">License</a>
+		</td>
+	</tr>
+	<tr>
+		<td rowspan="2" class="sidebar">
+			<a href="component.html">Component</a><br>
+<a href="label.html">Label</a><br>
+<a href="button.html">Button</a><br>
+<a href="checkbox.html">CheckBox</a><br>
+<a href="togglebutton.html">ToggleButton</a><br>
+<a href="combobox.html">ComboBox</a><br>
+<a href="textfield.html">TextField</a><br>
+<a href="passwordfield.html">PasswordField</a><br>
+<a href="textarea.html">TextArea</a><br>
+<a href="tabbedpane.html">TabbedPane</a><br>
+<a href="panel.html">Panel</a><br>
+<a href="desktop.html">Desktop</a><br>
+<a href="dialog.html">Dialog</a><br>
+<a href="spinbox.html">SpinBox</a><br>
+<a href="progressbar.html">ProgressBar</a><br>
+<a href="slider.html">Slider</a><br>
+<a href="splitpane.html">SplitPane</a><br>
+<span class="activeside"><b>List</b><br>Item</span><br>
+<a href="table.html">Table</a><br>
+<a href="tree.html">Tree</a><br>
+<a href="separator.html">Separator</a><br>
+<a href="menubar.html">MenuBar</a><br>
+
+		</td>
+		<td class="body">
+			<p class="title">List</p>
+<p>A list allows the user to select one or more objects from a list,
+	and internally handles scrolling.
+	The following example list has three items, the first is selected and the
+	last is disabled, allows to select multiple items.</p><p class="xml"><font color="#000080">&lt;</font><font color="#800000"><b>list</b></font>  selection=<font color="#008000">&quot;multiple&quot;</font><font color="#000080">&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>item</b></font>  text=<font color="#008000">&quot;List&quot;</font> selected=<font color="#008000">&quot;true&quot;</font> <font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>item</b></font>  text=<font color="#008000">&quot;Item&quot;</font><font color="#000080">/&gt;</font><br>
+&nbsp;&nbsp;<font color="#000080">&lt;</font><font color="#800000"><b>item</b></font>  text=<font color="#008000">&quot;Disabled&quot;</font> enabled=<font color="#008000">&quot;false&quot;</font> <font color="#000080">/&gt;</font><br>
+<font color="#000080">&lt;/</font><font color="#800000"><b>list</b></font><font color="#000080">&gt;</font></p>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Properties</caption>
+<tr><td class="header">Name</td><td class="header">Type</td><td class="header">Default</td><td class="header">Description</td></tr>
+<tr><td class="cell">selection</td><td class="cell">choice</td><td class="cell">single</td><td class="cell">Possible values are: single, interval, and multiple. The default
+			single value allows to select one list item at a time, the interval
+			value to select one contiguous range of items, and the multiple
+			value to select one or more contiguous ranges of items.</td></tr>
+<tr><td class="cell">line</td><td class="cell">boolean</td><td class="cell">true</td><td class="cell">If present and set to false, don't draw lines separating the list items.</td></tr>
+<tr><td class="cell" colspan="4">name, enabled, visible, tooltip, property, width, height, colspan, rowspan,
+			weightx, weighty, halign, and valign parameters are similar to
+			<a href="component.html">component</a></td></tr>
+</table>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Listeners</caption>
+<tr><td class="header">Name</td><td class="header">Description</td></tr>
+<tr><td class="cell">action</td><td class="cell">Calls the method whenever the selection changes.</td></tr>
+<tr><td class="cell">perform</td><td class="cell">Calls the method whenever a double-click event occurs.</td></tr>
+</table>
+<p class="title">Item</p>
+<p>List contains items, items display a short text string and an image
+		and can be selected.</p><table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Properties</caption>
+<tr><td class="header">Name</td><td class="header">Type</td><td class="header">Default</td><td class="header">Description</td></tr>
+<tr><td class="cell">selected</td><td class="cell">boolean</td><td class="cell">false</td><td class="cell">True if the item currently selected.</td></tr>
+<tr><td class="cell" colspan="4">name, enabled, text, icon, alignment, tooltip, and property parameters
+				are similar to
+				<a href="combobox.html#choice">combobox choice</a></td></tr>
+</table>
+<table class="table" border="0" cellpadding="1" cellspacing="0">
+<caption class="caption">Keyboard-actions</caption>
+<tr><td class="header">Operation</td><td class="header">Action</td></tr>
+<tr><td class="cell">Up arrow</td><td class="cell">Selects previous item</td></tr>
+<tr><td class="cell">Down arrow</td><td class="cell">Selects next item</td></tr>
+<tr><td class="cell">Home</td><td class="cell">Selects first item</td></tr>
+<tr><td class="cell">End</td><td class="cell">Selects last item</td></tr>
+<tr><td class="cell">Page Up</td><td class="cell">Selects item one view up</td></tr>
+<tr><td class="cell">Page Down</td><td class="cell">Selects item one view down</td></tr>
+<tr><td class="cell">+Shift</td><td class="cell">Extends selection</td></tr>
+<tr><td class="cell">+Ctrl</td><td class="cell">Set lead item</td></tr>
+<tr><td class="cell">Space</td><td class="cell">Selects lead item</td></tr>
+<tr><td class="cell">Ctrl-A, Ctrl-Slash</td><td class="cell">Selects all</td></tr>
+<tr><td class="cell">Ctrl-Backslash</td><td class="cell">Deselects all</td></tr>
+<tr><td class="cell">Tab, Shift-Tab</td><td class="cell">Navigate forward, backward</td></tr>
+</table>
+
+		</td></tr>
+	<tr>
+		<td class="footer">Copyright &copy; 2002-2005
+			<script>document.write('<a href="mailto:rbajz' + 'xat@frx'.substr(1, 5) + 'eemail.hu">')</script>
+			Robert Bajzat
+			<script>document.write('</a>')</script> - All rights reserved.</td>
+	</tr>
+</table>
+
+</body>
+</html>
