@@ -129,7 +129,7 @@ class GuiDslTypeProvider {
 			// the left side of the operator determines the expected type 
 			Equality : e.left.type
 			// everything can be added, it might end up as string
-			Plus :	mostGeneral(e.left.type, e.right.type).mostSpecific(string)
+			Plus :	mostSpecific(string, e.type)
 			Minus      : number
 			MultiOrDiv : number
 
