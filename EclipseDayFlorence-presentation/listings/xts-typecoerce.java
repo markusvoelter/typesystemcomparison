@@ -1,8 +1,10 @@
-public EObject typeCoerce( EObject candidateElement, FloatType candidate, 
-		StringType expected, TypeCalculationTrace trace ) {
+public EObject typeCoerce(EObject candidateElement, 
+		FloatType candidate, StringType expected, ... ) {
+	
 	if ( candidateElement instanceof NumberLiteral ) {
-			trace.add( candidateElement, "Number coerced to string.");
-			return create(cl.getStringType());
+			...
+			return create(lang.getStringType());
 	}
+	
 	return null;
 }

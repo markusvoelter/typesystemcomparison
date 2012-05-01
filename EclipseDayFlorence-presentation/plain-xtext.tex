@@ -9,9 +9,9 @@
 \begin{frame}[fragile]
   \frametitle{\tyPlain}
   \begin{itemize}
-    \item Implementation \visible<2->{in Xtend}
+    \item Implementation in Xtend
     \begin{itemize}
-      \item Type provider \visible<3->{- recursive computation}
+      \item Type provider - recursive computation
       \item Type conformance computer
       \item Xtext validator hook
     \end{itemize}
@@ -40,4 +40,13 @@
   \begin{footnotesize}
     \input{listings/plain-typeconf.xtend}
   \end{footnotesize}
+\note{
+  def Type mostGeneral(Type one, Type two) {
+	if (isAssignable(one, two))
+	  one 
+	    else
+	  two
+	} \\
+  // allow numbers where strings are expected
+}
 \end{frame}

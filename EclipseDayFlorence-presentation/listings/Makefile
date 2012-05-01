@@ -1,16 +1,17 @@
 STAMP=stamp
 
-GENERATEDTEXS = SimpleRules.xsemantics.tex SimpleRules2.xsemantics \
+TOPROCESS = SimpleRules.xsemantics SimpleRules2.xsemantics \
 	Judgments.xsemantics \
 	intro.gui \
-	plain-gettype.xtend \
 	plain-typeconf.xtend \
 	xbase-gettype.xtend \
 	xts-typecoerce.java \
 	xts-plus.ts
 
-all: $(addsuffix .tex,$(GENERATEDTEXS))
-#all: $(GENERATEDTEXS)
+#	plain-gettype.xtend
+
+all: $(addsuffix .tex,$(TOPROCESS))
+#all: $(TOPROCESS)
 
 STDOPTIONS=-t 4 --header=listing_header.txt --footer=listing_footer.txt --style-css-file=sh_ide-eclipse.css
 
@@ -47,7 +48,7 @@ STDOPTIONS=-t 4 --header=listing_header.txt --footer=listing_footer.txt --style-
 	touch $(STAMP)
 
 clean-gen:
-	rm -f $(GENERATEDTEXS)
+	rm -f $(TOPROCESS)
 
 clean-all: clean-gen clean
 

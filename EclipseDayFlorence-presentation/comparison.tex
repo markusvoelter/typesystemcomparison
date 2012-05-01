@@ -29,8 +29,7 @@ XTS & see \emph{Plain} \\
 \begin{itemize}
   \item \emph{JavaVMTypes}: use \emph{import
   ``http://\-www.eclipse.org/\-xtext/\-common/\-JavaVMTypes'' \ldots}
-  \item All approaches allow to hook in custom java methods for typing rule
-  computation
+%  \item All approaches allow custom Java methods for type computation
 \end{itemize}
 
 \framebreak
@@ -45,24 +44,25 @@ XTS & EMF feature access + specific syntax\\
 \framebreak
 \begin{tabularx}{\linewidth}{ l   X }
 \multicolumn{2}{c}{Verbosity/conciseness} \\ \hline
-Plain & Xtend, \emph{TypeProvider}, \emph{TypeConformance}, $\approx$300 LOC\\
-Xbase & Xtend, \emph{JvmModelInferrer}, reuse Java types, $\approx$200 LOC  \\
-Xsem &  -, $\approx$200 LOC \\
-XTS & -, $\approx$70 LOC\\
+Plain & \emph{TypeProvider}, \emph{TypeConformance}, validator: $\approx$11KB\\
+Xbase & \emph{JvmModelInferrer}, validator: $\approx$5KB
+\\
+Xsem & \emph{*.xsemantics} file, validator: $\approx$5KB\\
+XTS & \emph{*.ts} file, validator: $\approx$4KB\\
 \end{tabularx}
 
-TODO: Numbers are just placeholders, define what goes into LOC and then count,
-count characters instead of LOC?
+\begin{itemize}
+  \item Size is a potentially misleading metric! 
+\end{itemize}
+
 
 \framebreak
 \begin{tabularx}{\linewidth}{ l   X }
 \multicolumn{2}{c}{Customizability} \\ \hline
 Plain & no framework, change source \\
 Xbase & Xbase and Xtext framework \\
-Xsem & write custom Java methods (generation GAP
-pattern)
-\\
-XTS & hooks for own implementations \\
+Xsem & custom Java methods (generation gap pattern)\\
+XTS & custom Java methods (generation gap pattern) \\
 \end{tabularx}
 
 \framebreak
@@ -71,7 +71,7 @@ XTS & hooks for own implementations \\
 Plain & - \\
 Xbase & generated Java classes for free \\
 Xsem & generic rules (not only typing), generates validators \\
-XTS & \ldots, generates validators \\
+XTS & generates validators \\
 \end{tabularx}
 
 \framebreak
@@ -87,16 +87,16 @@ XTS & - \\
 \begin{tabularx}{\linewidth}{ l   X }
 \multicolumn{2}{c}{Learning curve} \\ \hline
 Plain & Xtend \\
-Xbase & Xbase, JVM Model inferrer from Xtext Documentation \\
+Xbase & Xbase, \emph{JvmModelInferrer} methods \\
 Xsem & similar to rules written in commonly used type theory \\
-XTS & - \\
+XTS & XTS documentation \\
 \end{tabularx}
 
 \framebreak
 \begin{tabularx}{\linewidth}{ l   X }
 \multicolumn{2}{c}{Documentation} \\ \hline
 Plain & Xtext/Xtend in general \\
-Xbase & Xtext documentation JvmModelInferrer \\
+Xbase & Xtext documentation \emph{JvmModelInferrer} \\
 Xsem & http://xsemantics.sourceforge.net/ \\
 XTS & http://code.google.com/a/eclipselabs.org/p/xtext-typesystem/ \\
 \end{tabularx}

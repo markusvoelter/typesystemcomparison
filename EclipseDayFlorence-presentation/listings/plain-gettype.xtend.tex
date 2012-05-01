@@ -2,16 +2,22 @@
 \begin{tabular}[t]{l}
 \noindent
 \mbox{}\textbf{\textcolor{Plum}{def}}\ Type\ \textcolor{Black}{getType}(EObject\ e)\ \{ \\
+\onslide<2->{
 \mbox{}\ \ \ \ ... \\
 \mbox{}\ \ \ \ \textbf{\textcolor{Plum}{switch}}\ e\ \{ \\
 \mbox{}\ \ \ \ \ \ \ \ ... \\
 \mbox{}\ \ \ \ \ \ \ \ IntLiteral:\ ...createIntType \\
+\mbox{}\ \ \ \ \ \ \ \ Plus\ :\ \textcolor{Black}{mostGeneral}(e.left.type,\ e.right.type) \\
 \mbox{}\ \ \ \ \ \ \ \ ... \\
 \mbox{} \\
+}
 \mbox{}\textbf{\textcolor{Plum}{def}}\ Type\ \textcolor{Black}{getExpectedType}(EObject\ e)\ \{ \\
+\onslide<3->{
 \mbox{}\ \ \ \ ... \\
 \mbox{}\ \ \ \ \textbf{\textcolor{Plum}{switch}}\ e\ \{ \\
 \mbox{}\ \ \ \ \ \ \ \ ... \\
-\mbox{}\ \ \ \ \ \ \ \ Plus\ :\ \ \textcolor{Black}{mostGeneral}(e.left.type,\ e.right.type).\textcolor{Black}{mostSpecific}(string) \\
-\mbox{}\ \ \ \ \ \ \ \ ...\ \ \ \ \ 
+\mbox{}\ \ \ \ \ \ \ \ Plus\ :\ \
+\textcolor{Black}{mostSpecific}(string, e.type) \\
+\mbox{}\ \ \ \ \ \ \ \ ...\ \ \ \ \
+} 
 \end{tabular}

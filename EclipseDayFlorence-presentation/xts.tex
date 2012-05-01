@@ -14,7 +14,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[allowframebreaks,fragile]
+\begin{frame}[fragile]
   \frametitle{The Plus Operator with XTS}
 
   \begin{itemize}
@@ -32,14 +32,28 @@
     \item type computation, \emph{ensure}\ldots clauses 
   \end{itemize}}
   
-\framebreak
-  Coercion of a number to a String
+\note{
+\begin{frame}[fragile]
+  \frametitle{The Plus Operator with XTS}
   \begin{itemize}
-    \item XTS will try custom coercion methods before throwing a type error 
+    \item Coercion of a number to a String
   \end{itemize}
 
   \begin{footnotesize}
     \input{listings/xts-typecoerce.java.tex}
   \end{footnotesize}
-	
+
+  \begin{itemize}
+    \item XTS will try custom coercion methods before throwing a type error
+    \item coercion methods use polymorphic dispatch 
+  \end{itemize}
+  public EObject typeCoerce( EObject candidateElement, FloatType candidate, 
+		StringType expected, TypeCalculationTrace trace ) {
+	if ( candidateElement instanceof NumberLiteral ) {
+			trace.add( candidateElement, "Number coerced to string.");
+			return create(lang.getStringType());
+	}
+	return null;
+}
+\end{frame}}	
 \end{frame}
