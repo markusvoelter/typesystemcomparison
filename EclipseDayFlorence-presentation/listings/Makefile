@@ -3,11 +3,11 @@ STAMP=stamp
 TOPROCESS = SimpleRules.xsemantics SimpleRules2.xsemantics \
 	Judgments.xsemantics \
 	intro.gui \
-	plain-typeconf.xtend \
 	xbase-gettype.xtend \
 	xts-typecoerce.java \
 	xts-plus.ts
 
+#	plain-typeconf.xtend \
 #	plain-gettype.xtend
 
 all: $(addsuffix .tex,$(TOPROCESS))

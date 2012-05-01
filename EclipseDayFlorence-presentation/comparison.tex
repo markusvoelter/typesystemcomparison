@@ -44,11 +44,11 @@ XTS & EMF feature access + specific syntax\\
 \framebreak
 \begin{tabularx}{\linewidth}{ l   X }
 \multicolumn{2}{c}{Verbosity/conciseness} \\ \hline
-Plain & \emph{TypeProvider}, \emph{TypeConformance}, validator: $\approx$11KB\\
-Xbase & \emph{JvmModelInferrer}, validator: $\approx$5KB
-\\
-Xsem & \emph{*.xsemantics} file, validator: $\approx$5KB\\
-XTS & \emph{*.ts} file, validator: $\approx$4KB\\
+Plain & $\approx$11KB \\% - \emph{TypeProvider}, \emph{TypeConformance},
+% validator \\
+Xbase &$\approx$5KB \\%- \emph{JvmModelInferrer}, validator\\
+Xsem & $\approx$5KB \\%- \emph{*.xsemantics} file, validator\\
+XTS & $\approx$4KB \\%- \emph{*.ts} file, validator\\
 \end{tabularx}
 
 \begin{itemize}
@@ -59,8 +59,8 @@ XTS & \emph{*.ts} file, validator: $\approx$4KB\\
 \framebreak
 \begin{tabularx}{\linewidth}{ l   X }
 \multicolumn{2}{c}{Customizability} \\ \hline
-Plain & no framework, change source \\
-Xbase & Xbase and Xtext framework \\
+Plain & - \\
+Xbase & Xbase framework \\
 Xsem & custom Java methods (generation gap pattern)\\
 XTS & custom Java methods (generation gap pattern) \\
 \end{tabularx}
