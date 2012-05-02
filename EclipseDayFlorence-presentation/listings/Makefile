@@ -2,6 +2,7 @@ STAMP=stamp
 
 TOPROCESS = SimpleRules.xsemantics SimpleRules2.xsemantics \
 	Judgments.xsemantics \
+	CheckRules.xsemantics \
 	intro.gui \
 	xbase-gettype.xtend \
 	xts-typecoerce.java \

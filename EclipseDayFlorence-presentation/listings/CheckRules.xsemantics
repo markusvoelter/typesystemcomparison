@@ -1,0 +1,12 @@
+checkrule ValidateMustBeBoolean for Widget widget
+from {
+	widget.validate == null
+	or 
+	'widgetcontent' <- widget.attr |- widget.validate : var BooleanType boolType
+}
+
+checkrule ValidateTextWidgetAttributeNotBoolean for TextWidget widget
+from {
+	'widgetcontent' <- widget.attr |- widget.attr : var Type attrType
+	!(attrType instanceof BooleanType)
+}
