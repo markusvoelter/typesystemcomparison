@@ -6,7 +6,7 @@
   Criteria to help in deciding which approach might be good for a particular use
   case:
   \begin{itemize}
-    \item Context: coupling of the DSL with Java
+    \item Context, e.g. coupling with Java
     \item Expressivity
     \item Verbosity/conciseness
     \item Customizability
@@ -18,16 +18,17 @@
   \end{itemize}
 
 \framebreak  
-\begin{tabularx}{\linewidth}{ l   X }
-\multicolumn{2}{c}{Context: coupling of the DSL with Java} \\ \hline
-Plain & DSL may refer to \emph{JavaVMTypes} as known from Xtext 1\\
-Xbase & Reuses Java Type System, DSL may link to Java classes \\
-Xsem & see \emph{Plain} \\
-XTS & see \emph{Plain} \\
+\begin{tabularx}{\linewidth}{ X   X }
+\multicolumn{2}{c}{Coupling of the DSL with Java} \\ \hline
+Java Type System & Other Type systems \\ \hline
+Xbase & Plain  \\
+& Xsem  \\
+& XTS  \\
 \end{tabularx}
 \begin{itemize}
-  \item \emph{JavaVMTypes}: use \emph{import
-  ``http://\-www.eclipse.org/\-xtext/\-common/\-JavaVMTypes'' \ldots}
+%  \item DSL may refer to \emph{JavaVMTypes} as known from Xtext 1
+%   \item \emph{JavaVMTypes}: use \emph{import
+%   ``http://\-www.eclipse.org/\-xtext/\-common/\-JavaVMTypes'' \ldots}
 %  \item All approaches allow custom Java methods for type computation
 % \item Xbase \emph{JvmModelInferrer} generates Java classes from DSL model
 % elements
