@@ -1,4 +1,5 @@
 include "java.lang"
 
 keyword = "subtype|base|characteristic|common",
-  "ensureType|ensureCompatibility|char|as|typeof|def|override|dispatch"
+  "ensureType|ensureCompatibility|char|as|typeof|def|override|dispatch",
+  "typesystem|ecore|file|language|package|section|javacode|clone|feature|ancestor"

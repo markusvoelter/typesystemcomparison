@@ -5,7 +5,14 @@ TOPROCESS = SimpleRules.xsemantics SimpleRules2.xsemantics \
 	intro.gui \
 	xbase-gettype.xtend \
 	xts-typecoerce.java \
-	xts-plus.ts
+	xts-plus.ts \
+	xts-settingup.ts \
+	xts-literals.ts \
+	xts-types.ts \
+	xts-types2.ts \
+	xts-types3.ts \
+	xts-attributeref.ts \
+	xts-characteristics.ts
 
 #	plain-typeconf.xtend \
 #	plain-gettype.xtend
