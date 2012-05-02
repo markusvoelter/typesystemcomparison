@@ -20,9 +20,8 @@
 \framebreak  
 \begin{tabularx}{\linewidth}{ l   X }
 \multicolumn{2}{c}{Context: coupling of the DSL with Java} \\ \hline
+Xbase & Reuses Java Type System, DSL may link to Java classes \\
 Plain & DSL may refer to \emph{JavaVMTypes} as known from Xtext 1\\
-Xbase & Tight coupling, DSL may link to Java classes, \emph{JvmModelInferrer}
-generates Java classes from DSL model elements\\
 Xsem & see \emph{Plain} \\
 XTS & see \emph{Plain} \\
 \end{tabularx}
@@ -30,6 +29,8 @@ XTS & see \emph{Plain} \\
   \item \emph{JavaVMTypes}: use \emph{import
   ``http://\-www.eclipse.org/\-xtext/\-common/\-JavaVMTypes'' \ldots}
 %  \item All approaches allow custom Java methods for type computation
+% \item Xbase \emph{JvmModelInferrer} generates Java classes from DSL model
+% elements
 \end{itemize}
 
 \framebreak
@@ -109,5 +110,14 @@ XTS & XTS documentation \\
 % Xsem & - \\
 % XTS & - \\
 % \end{tabularx}
+
+\note{
+TODO
+functional scalability: plain only has required features, not more
+may scale to function rich implementation, xbase was developed with this
+architecture, type inference and typesystem (generics) not possible with XTS
+
+footprint: learn language, additional editors and dependencies
+}
 
 \end{frame}
