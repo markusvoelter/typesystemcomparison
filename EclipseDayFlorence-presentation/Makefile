@@ -3,9 +3,7 @@ all:
 	make presentation.pdf
 
 presentation.pdf: presentation.tex presbody.tex preamble.tex \
-rules.tex \
-listings/stamp \
-	deleg.pdf consult.pdf
+listings/stamp
 	pdflatex presentation.tex # && pdflatex presentation.tex
 
 %.pdf: %.eps

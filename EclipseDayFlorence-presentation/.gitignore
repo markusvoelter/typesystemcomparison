@@ -11,3 +11,8 @@ handouts*.pdf
 *.tex.orig
 *.synctex.gz
 /tmp
+*.snm
+*.out
+*.toc
+*.nav
+*.vrb
