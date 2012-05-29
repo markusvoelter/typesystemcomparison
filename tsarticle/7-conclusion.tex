@@ -1,9 +1,116 @@
 \section{Comparison}
+Comparison criteria which may help in decding which approach to use
 
-Comparison Criteria
+Criteria to help in deciding which approach might be good for a particular use
+  case:
 
-Table
+  \begin{itemize}
+    \item Context, e.g. coupling with Java
+    \item Expressivity
+    \item Verbosity/conciseness
+    \item Customizability
+    \item Additional features
+    \item Target audience
+    \item Learning curve
+    \item Documentation
+    \item Support
+  \end{itemize}
 
-%Lines of Code added (Java, Xtend, DSL?)?
+\begin{tabularx}{\linewidth}{ X   X }
+\multicolumn{2}{c}{Coupling of the DSL with Java} \\ \hline
+Java Type System & Other Type Systems \\ \hline
+Xbase & Plain  \\
+& Xsem  \\
+& XTS  \\
+\end{tabularx}
 
-\section{Conclusion}
+\begin{itemize}
+  \item DSL may refer to \emph{JavaVMTypes} as known from Xtext 1
+   \item \emph{JavaVMTypes}: use \emph{import
+   ``http://\-www.eclipse.org/\-xtext/\-common/\-JavaVMTypes'' \ldots}
+  \item All approaches allow custom Java methods for type computation
+ \item Xbase \emph{JvmModelInferrer} generates Java classes from DSL model
+ elements
+\end{itemize}
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Expressivity} \\ \hline
+Plain & Java \\
+Xbase & Xbase library \\
+Xsem & similar to Xbase + specific syntax\\
+XTS & EMF feature access + specific syntax\\
+\end{tabularx}
+
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Verbosity/conciseness} \\ \hline
+Plain & $\approx$11KB \\% - \emph{TypeProvider}, \emph{TypeConformance},
+validator \\
+Xbase &$\approx$5KB \\%- \emph{JvmModelInferrer}, validator\\
+Xsem & $\approx$5KB \\%- \emph{*.xsemantics} file, validator\\
+XTS & $\approx$4KB \\%- \emph{*.ts} file, validator\\
+\end{tabularx}
+
+\begin{itemize}
+  \item Size is a potentially misleading metric! 
+\end{itemize}
+
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Customizability} \\ \hline
+Plain & - \\
+Xbase & Xbase framework \\
+Xsem & custom Java methods (generation gap pattern)\\
+XTS & custom Java methods (generation gap pattern) \\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Additional Features} \\ \hline
+Plain & - \\
+Xbase & generated Java classes for free \\
+Xsem & generic rules (not only typing), generates validators \\
+XTS & generates validators, recurrent typing patterns \\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Target audience} \\ \hline
+Plain & - \\
+Xbase & - \\
+Xsem & people familiar with formal systems \\
+XTS & - \\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Learning curve} \\ \hline
+Plain & Xtend \\
+Xbase & Xbase, \emph{JvmModelInferrer} methods \\
+Xsem & similar to rules written in commonly used type theory \\
+XTS & XTS documentation \\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Documentation} \\ \hline
+Plain & Xtext/Xtend in general \\
+Xbase & Xtext documentation \emph{JvmModelInferrer} \\
+Xsem & http://xsemantics.sourceforge.net/ \\
+XTS & http://code.google.com/a/eclipselabs.org/p/xtext-typesystem/ \\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{ l   X }
+\multicolumn{2}{c}{Support} \\ \hline
+Plain & - \\
+Xbase & - \\
+Xsem & - \\
+XTS & - \\
+\end{tabularx}
+
+\note{
+TODO
+functional scalability: plain only has required features, not more
+may scale to function rich implementation, xbase was developed with this
+architecture, type inference and typesystem (generics) not possible with XTS
+
+footprint: learn language, additional editors and dependencies
+}
+
+ \section{Conclusion}
