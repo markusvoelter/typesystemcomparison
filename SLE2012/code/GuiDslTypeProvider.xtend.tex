@@ -1,0 +1,83 @@
+class GuiDslTypeProvider {
+
+	@Inject extension TypeConformance conformance
+	
+	// declare the built-in types for easy use
+	Type bool = GuiDslFactory::eINSTANCE.createBooleanType
+	Type _float = GuiDslFactory::eINSTANCE.createFloatType
+	Type _int = GuiDslFactory::eINSTANCE.createIntType
+	Type number = GuiDslFactory::eINSTANCE.createNumberType
+	Type string = GuiDslFactory::eINSTANCE.createStringType
+	Type primitive = GuiDslFactory::eINSTANCE.createPrimitiveType
+	@Inject CyclicDependencyType cyclicType
+
+	def Type getType(EObject e) {
+		getType(e, newHashSet())
+	}
+	
+	def Type getType(EObject e, Collection<EObject> visited) {
+		if (visited.contains(e)) return cyclicType; // cycle detected
+		visited.add(e)
+		switch e {
+			Widget : e.attr.getType(visited)
+			Attribute case e.expr != null && e.type != null 
+			   && e.type.isAssignable(e.expr.getType(visited)) : e.type
+			Attribute case e.expr != null : e.expr.getType(visited)
+			Attribute case e.type != null : e.type
+			AttributeRef : e.attr.getType(visited)
+
+			AndOrExpression : bool 
+			Comparison : bool
+			Equality : bool
+			
+			// type is the most general, e.g. int + float => float
+			Plus : mostGeneral(e.left.getType(visited), e.right.getType(visited))
+			Minus : mostGeneral(e.left.getType(visited), e.right.getType(visited))
+			MultiOrDiv case e.op.equals("*"): mostGeneral(e.left.getType(visited),e.right.getType(visited))
+			// as in Java
+			MultiOrDiv case e.op.equals("/"): e.left.getType(visited)
+			
+			BooleanNegation : bool
+			ArithmeticSigned : number
+			
+			// return type of attribute referenced by the widget
+			FieldContent : return e.getContainerOfType(typeof(Widget))?.attr?.getType(visited)
+			LengthOf : _int
+			EntityType : e // type is itself
+			BooleanLiteral : bool
+			FloatLiteral : _float
+			IntLiteral: _int
+			StringLiteral : string
+
+			default: null
+		}
+	} 
+	def Type getExpectedType(EObject e) { 
+			internalGetExpectedType(e.eContainer, e.eContainingFeature) 
+	} 
+	
+	def protected Type internalGetExpectedType(EObject e, EStructuralFeature feature) {
+		switch e {
+			Widget case feature == GuiDslPackage$Literals::WIDGET__VALIDATE: bool
+			Form case feature == GuiDslPackage$Literals::FORM__WIDGETS: primitive
+			Attribute case e.type != null : e.type
+		
+			AndOrExpression : bool 
+			// an object contained (i.e. left or right side) 
+			// in the following operator is expected to always be a number 
+			Comparison : number
+			// the left side of the operator determines the expected type 
+			Equality : e.left.type
+			// everything can be added, it might end up as string
+			Plus :	mostGeneral(e.left.type, e.right.type).mostSpecific(string)
+			Minus      : number
+			MultiOrDiv : number
+
+			BooleanNegation : bool
+			ArithmeticSigned : number 
+			
+			LengthOf : string
+			
+			default : null
+		}
+	}

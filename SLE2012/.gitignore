@@ -1,0 +1,30 @@
+*.synctex.gz
+tempPartial*
+
+# LaTeX
+# =====
+*.pdf
+*.doc
+JabRef-2.7.jar
+lit.bib.bak
+*.aux
+*.bbl
+*.blg
+*.log
+*.tex.ini
+
+# Code / Eclipse
+# ==============
+.metadata
+xtend-gen/
+plugin.xml_gen
+bin
+*.class
+
+# Other
+# =====
+temp
+*~
+logs.zip
+*.orig
+rebel.xml

@@ -1,0 +1,48 @@
+\section{Evaluation}
+\label{sec:evaluation}
+
+The choice of which type system framework to use to implement the type system
+for a DSL in Xtext mainly depends on the context of the DSL itself.  In this
+section we try to summarize our experiences, and hint some strategies to pick
+the right framework.
+
+The ``plain Xtext'' strategy (Section~\ref{sec:plain-xtext}) is always feasible,
+and, by relying on the powerful features of Xtend2, it is even easier to deal
+with complex model visits.
+However, if the DSL has to rely on an involved type system, implementing such
+functionalities in plain Java/Xtend2 might still be a big effort.
+
+If the DSL has to be tightly coupled with Java, there is basically one single
+sensible choice: reuse Xbase.  By ``integration with Java'' we do not mean that
+the DSL must simply be translated into Java (this single requirement does not
+prevent from using the other frameworks).  Instead we mean that the DSL must
+reuse Java types not only in declarations but also in the actual operation code
+(for instance, it must create objects in a Java-like style and invoke methods on
+such instances).
+
+With Xbase the DSL ``inherits'' the complete Java type system, and, in
+particular, the Xbase expression parts of the DSL will be dealt with directly by
+Xbase itself, relieving the programmer from the big burden of having to
+reimplement typical type checks.  Note that it is still possible to customize
+several aspects of Xbase expressions, starting from the syntactic shape of the
+expressions (though it is not easy to change radically such syntax without
+experiencing grammar ambiguities) up to the typing and semantics of such
+expressions.  The latter scenario, though, might require some deeper knowledge
+of Xbase internals (for which, in most cases, the code of Xbase is the only
+documentation).  For instance, in Xsemantics, we use Xbase for the syntax of the
+premises of rules; however, single boolean Xbase expression statements in the
+premises of an Xsemantics rule have a different semantics: if the expression
+does not evaluate to true the whole rule must fail, while in Xbase a boolean
+expression used as a statement is instead not considered valid (like in Java, it
+would represent a statement with no side effect).  To deal with that, in
+Xsemantics, we had to implement a custom validator to ``intercept'' the checks
+in Xbase validator in order not to issue an error in these situations.
+Similarly, we had to implement a custom Xbase compiler in order to wrap the
+generated Java code for boolean expressions with appropriate Java code to deal
+with possible failures of such expressions.
+
+Thus, the most the DSL is similar to Java, the easiest it will be to reuse Xbase
+(the Domainmodel example which comes with Xtext is a demonstration).  Otherwise,
+things might get more complicated, though it is still possible to customize the
+typing and semantics of Xbase expressions.
+
