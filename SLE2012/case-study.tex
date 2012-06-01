@@ -75,18 +75,12 @@ form PersonForm edits Person {
 \begin{lstlisting}[language=xtext,float,label=lst:grammar-plain,caption=Grammar
 with plain Xtext.] 
 Model: (entities+=Entity | forms+=Form )*;
-
 Entity: "entity" name=ID ('extends' superType=[Entity])? "{" (attributes+=Attribute)* "}";
-
 Attribute: name=ID ( ((":" type=Type)? "=" expr=Expression) | (":" type=Type) )";";
-
 Form: "form" name=ID "edits" entity=[Entity] "{" (widgets+=Widget)* "}";
-
 Widget: TextWidget | CheckBoxWidget ;
-
 TextWidget:
 	"text" "(" length=Number ")" "->" attr=[Attribute] ("validate" validate=Expression)? ";";
-
 CheckBoxWidget: "checkbox" "->" attr=[Attribute] ("validate" validate=Expression)? ";" ;
 \end{lstlisting}
 
@@ -109,16 +103,13 @@ Type: PrimitiveType | EntityType;
 EntityType: ref=[Entity];
 PrimitiveType: NumberType | BooleanType | StringType;
 NumberType: FloatType | IntType;
-
 FloatType:   {FloatType}   "float";
 IntType:     {IntType}     "int";
 BooleanType: {BooleanType} "bool";
 StringType:	 {StringType}  "string";
 
 Expression: BooleanExpression;
-
 /* skipped full Expression grammar */
-
 Atomic returns Expression:
        '(' Expression ')' |
        ({FieldContent} "widgetcontent") |
