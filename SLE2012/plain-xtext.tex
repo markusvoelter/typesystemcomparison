@@ -4,79 +4,17 @@
 To infer types, the plain Xtext scenario implements operations which determine
 the actual type of an expression, the expected type (which depends on the
 context where the expression is used), and operations which check whether a type
-is assignable to another type (implemented in the classes
-\mytt{GuiDslTypeProvider}, Section~\ref{sec:rectypecomputation}, and
-\mytt{TypeConformance}, Section~\ref{sec:typeconformance}, respectively). The
-Xtext validator, partially shown in listing \ref{lst:validation-plain}, uses
-these operations.  The validation operating on text widgets checks that the type
-of attribute the widget refers to is not \emph{boolean}.  The validation on
-checkbox widgets, not shown in the listing, checks that the type is
-\emph{boolean} in a similar way.
-There is also a check which acts on any widget used to check whether the actual
-type is assignable to the expected type, for instance \emph{boolean} for the
-\emph{validate} clause of a widget. The expected type of an expression usually
-depends on the context where the expression is in.
-In case there is no expected type, for instance for an attribute whose type is
-only defined by the derivation expression, the check operation just returns.
-There is a similar check acting on any expression which basically makes sure
-that the expression can be typed.
+is assignable to another type.
 
-%\input{code/GuiDslTypeProvider.xtend}%linerange={15-23,31-42,49-57}
-%\lstinputlisting[label=lst:validation-plain,caption=Xtext
-% validator.,]{code/GuiDslJavaValidator.java}
-
-\begin{lstlisting}[float=tb,label=lst:validation-plain,caption=Xtext validator.] 
-public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
-	public final static String INCOMPATIBLE_TYPES = "incompatible_types";
-	@Inject private GuiDslTypeProvider guiDslTypeProvider;
-	@Inject private TypeConformance conformance;
-
-	@Check
-	public void check(TextWidget widget) {
-		Type type = guiDslTypeProvider.getType(widget.getAttr());
-		if (type.eClass() == GuiDslPackage.Literals.BOOLEAN_TYPE) {
-			error("A text widget may not refer to a boolean attribute.",
-					GuiDslPackage.Literals.WIDGET__ATTR, INCOMPATIBLE_TYPES);
-		}
-	}
-
-	@Check
-	void checkWidget(Widget widget) {
-		checkType(widget, GuiDslPackage.Literals.WIDGET__ATTR);
-	}
-	
-	@Check
-	public void check(Expression expr) {
-		checkType(expr, null);
-	}
-	
-	protected void checkType(EObject object, EStructuralFeature feature) {
-		Type expectedType = guiDslTypeProvider.getExpectedType(object);
-		Type actualType = guiDslTypeProvider.getType(object);
-		if (actualType instanceof CyclicDependencyType)
-			error("Type is part of a cyclic dependency.", feature, INCOMPATIBLE_TYPES); return;
-		if (expectedType == null) return;
-		if (!conformance.isAssignable(expectedType, actualType)) {
-			error("Incompatible types. Expected '" + expectedType
-					+ "' but was '" + actualType + "'", feature,
-					INCOMPATIBLE_TYPES);
-		}
-	}
-}
-\end{lstlisting}
-
-\subsection{Recursive type computation}
-\label{sec:rectypecomputation}
-
-Listing \ref{lst:plain-type-provider1} shows parts of the recursive computation
-of types, written in Xtend. The method \emph{getType()} determines the actual
-type of an expression. It avoids endless loops in case of cyclic dependencies
-(typically due to a malformed cyclic entity hierarchy) by caching already
-calculated types.  The type of a primitive type model element as well as the
-type of an entity is defined to be itself. The type of an attribute is its
-declared type or the type of its initialization expression.
-In case there are both an initialization expression and an explicit type, a
-conformance check is made before (Section~\ref{sec:typeconformance}). If that
+The first two tasks are implemented by \mytt{GuiDslTypeProvider}, partially
+shown in Listing~\ref{lst:plain-type-provider1}, written in Xtend. The method
+\emph{getType()} determines the actual type of an expression. It avoids endless
+loops in case of cyclic dependencies (typically due to a malformed cyclic entity
+hierarchy) by caching already calculated types.  The type of a primitive type
+model element as well as the type of an entity is defined to be itself. The type
+of an attribute is its declared type or the type of its initialization
+expression.  In case there are both an initialization expression and an explicit type, a
+conformance check is made before (shown later). If that
 check fails, the default (\verb|null|) of the switch statement is returned.
 References to attributes have the type of the referenced attribute, and the
 \emph{widgetcontent} used in validate clauses has the type of the attribute that
@@ -143,22 +81,20 @@ The expected type of a subtraction, multiplication and division is a
 type of the summands that is more specific. The method returns \emph{null} to
 indicate if there is no expected type.
 
-%\lstinputlisting[label=lst:plain-type-provider2,caption=Calculating the expected type.,linerange={96-98,114-146}]{../org.typesys.guidsl/src/org/typesys/guidsl/types/GuiDslTypeProvider.xtend}
-
-\subsection{Type conformance}
-\label{sec:typeconformance}
-
-An important part of type checking is whether another type can be provided where
-a certain type is expected.
-Listing \ref{lst:plain-type-conformance} shows the Xtend code to compute whether
-a type is assignable to another, using polymorphic dispatch. The method
+An important part of a type system is type conformance, i.e., whether another
+type can be provided where a certain type is expected.
+Listing~\ref{lst:plain-type-conformance} shows parts of the Xtend code to
+compute whether a type is assignable to another, using polymorphic dispatch, (this is used by
+the \mytt{GuiDslTypeProvider} shown above).
+The method
 \emph{isAssignable(left, right)} returns true if an element of type \emph{right}
 can be used where an element of type \emph{left} is expected.
-Polymorphic dispatch is used, which means that a call to \emph{isAssignable()}
-will be dispatched to the method with the most specific type parameters. The
-most ``general'' method has the arguments \emph{(Type, Type)} and specifies that
-a type can always be assigned to itself, or to one of its supertypes, using the
-type hierarchy of the EMF model generated by the Xtext Grammar.
+Thanks to polymorphic dispatch is used, a call to \emph{isAssignable()} will be
+dispatched to the method with the most specific type parameters for the run-time
+types of the arguments. The most ``general'' method has the arguments
+\emph{(Type, Type)} and specifies that a type can always be assigned to itself,
+or to one of its supertypes, using the type hierarchy of the EMF model generated
+by the Xtext Grammar.
 An entity can be assigned to another entity if it is of the same type (i.e., has
 the same EMF \emph{EClass}), or if the latter is a super entity of the former.
 Here, the reference \emph{superType} is not an EMF reference, but the one given
@@ -192,6 +128,52 @@ class TypeConformance {
 	}
 }
 \end{lstlisting}
+
+
+Finally, the validator, partially shown in listing \ref{lst:validation-plain},
+uses these classes shown above.  The validation operating on text widgets checks that
+the type of attribute the widget refers to is not \emph{boolean}.  The validation on
+checkbox widgets, not shown in the listing, checks that the type is
+\emph{boolean} in a similar way.
+There is also a check which acts on any widget used to check whether the actual
+type is assignable to the expected type, for instance \emph{boolean} for the
+\emph{validate} clause of a widget. The expected type of an expression usually
+depends on the context where the expression is in.
+In case there is no expected type, for instance for an attribute whose type is
+only defined by the derivation expression, the check operation just returns.
+There is a similar check acting on any expression which basically makes sure
+that the expression can be typed.
+
+%\input{code/GuiDslTypeProvider.xtend}%linerange={15-23,31-42,49-57}
+%\lstinputlisting[label=lst:validation-plain,caption=Xtext
+% validator.,]{code/GuiDslJavaValidator.java}
+
+\begin{lstlisting}[float=tb,label=lst:validation-plain,caption=Xtext validator.] 
+public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
+	@Check
+	public void check(TextWidget widget) {
+		Type type = guiDslTypeProvider.getType(widget.getAttr());
+		if (type.eClass() == GuiDslPackage.Literals.BOOLEAN_TYPE) {
+			error("A text widget may not refer to a boolean attribute.",
+					GuiDslPackage.Literals.WIDGET__ATTR, INCOMPATIBLE_TYPES);
+		}
+	}
+
+	protected void checkType(EObject object, EStructuralFeature feature) {
+		Type expectedType = guiDslTypeProvider.getExpectedType(object);
+		Type actualType = guiDslTypeProvider.getType(object);
+		if (actualType instanceof CyclicDependencyType)
+			error("Type is part of a cyclic dependency.", feature, INCOMPATIBLE_TYPES);
+		if (expectedType == null) return;
+		if (!conformance.isAssignable(expectedType, actualType)) {
+			error("Incompatible types. Expected '" + expectedType
+					+ "' but was '" + actualType + "'", feature,
+					INCOMPATIBLE_TYPES);
+		}
+	}
+}
+\end{lstlisting}
+
 
 %\lstinputlisting[language=xtend,label=lst:plain-type-conformance,caption=Type
 %conformance specification (Xtend code).]{code/TypeConformance.xtend}
