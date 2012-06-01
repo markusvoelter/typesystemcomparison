@@ -8,9 +8,9 @@ the right framework.
 
 The ``plain Xtext'' strategy (Section~\ref{sec:plain-xtext}) is always feasible,
 and, by relying on the powerful features of Xtend2, it is even easier to deal
-with complex model visits.
-However, if the DSL has to rely on an involved type system, implementing such
-functionalities in plain Java/Xtend2 might still be a big effort.
+with complex model visits.  However, if the DSL has to rely on an involved type
+system, implementing such functionalities in plain Java/Xtend2 might still be a
+big effort.
 
 If the DSL has to be tightly coupled with Java, there is basically one single
 sensible choice: reuse Xbase.  By ``integration with Java'' we do not mean that
@@ -46,3 +46,60 @@ Thus, the most the DSL is similar to Java, the easiest it will be to reuse Xbase
 things might get more complicated, though it is still possible to customize the
 typing and semantics of Xbase expressions.
 
+Xsemantics aims at providing a rich syntax for defining any kind of rules:
+relations among elements (e.g., \emph{subtyping}), \emph{static semantics}
+(i.e., type systems) and \emph{dynamic semantics} (i.e., reduction rules that
+can be used for interpreting a program); in particular, this syntax is close to
+the way deduction rules are written in a formal
+setting~\cite{hindley:1997a,Pierce02}.  Thus, Xsemantics can be a useful
+framework for implementing a language which has been formalized using standard
+meta-theory strategies: define the type system of the language, its semantics,
+and then prove that the language is sound by showing that the semantics is
+consistent with the type system.  In particular, having an implementation of the
+formal definition of type system and operational semantics in Xsemantics is
+pretty fast, since the gap between formal systems syntax and the actual
+implementation is reduced. Moreover, when implementing type systems in
+Xsemantics, the details of the original formal type system are not lost and
+spread through several lines of Java (or Xtend) code, and the programmer is
+relieved from many implementation details, thanks to the declarative style of
+Xsemantics rule syntax. It was used to implement the type system of
+\emph{Featherweight Java}~\cite{IgarashiPierceWadler:TOPLAS-2001} (a minimal
+Java core, used to prove properties of Java-like languages) which was previously
+implemented manually in Xtext~\cite{Bet10}, and to implement type inference with
+unification for computing the most general type for a simple \emph{lambda
+calculus} (see the examples in~\cite{lbts}).  Furthermore, it is being employed
+to re-engineer the implementation of other languages implemented in Xtext, which
+have a solid theoretical foundations (\cite{CompDelta,TraitRecordJ-SCP}).
+
+XTS offers its specific syntax for the most common tasks when defining type
+constraints. These include specifyng that the type of an element is itself,
+subtype relationships and compatibilty constraints, grouping several elements
+(\emph{characteristic}) to save constraint code, and access to EMF features of
+model elements which allows to specify that a model element has the type of one
+of its features.  Since XTS only targets type systems, the specification of a
+type system in XTS is more compact (and less verbose) than Xsemantics (where
+judgments for typing and subtyping have to defined explicitly).
+The Xtext type system has been used in several real-world Xtext DSLs and has
+proven to be useful and stable. While a few additional features would be worth
+adding to the DSL (e.g. instantiating structured types such as the
+\ic{EntityType}), the fact that a few types have to be calculated in Java is not
+a big problem in practice.
+
+An important feature that we believe type system frameworks should provide is
+the ability to keep a trace of the computation that brings to the derivation of
+a type (or of its failure).  This is crucial both for debugging and for testing
+the type system.  Both Xsemantics and XTS provide mechanisms for accessing such
+traces; instead, when using the direct approach or Xbase, keeping the traces of
+type computations must be implemented manually.  In particular, when using
+Xbase, this might not be possible since it would require modification of
+internal code.  In such cases, debugging the type system might be much harder.
+
+Both Xsemantics and XTS allow to provide custom Java code for specific type
+computations, by relying on the \emph{Generation Gap}~\cite{Vlissides:1996:GGS}
+pattern: there will be a class that encapsulates generated code and another one
+class that encapsulates modifications.  In Xsemantics the need of providing
+custom Java code is rare since it relies on Xbase for rule implementation, thus
+it already has a rich syntax; in XTS more involved type computations (like
+entity subtyping) can be delegated to Java code, especially when the access to
+EMF features is not directly sufficient to derive a type (or a subtyping
+relation).

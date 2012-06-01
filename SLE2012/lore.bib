@@ -3528,7 +3528,7 @@ note      = {Workshop USE, Malaga},
 @INPROCEEDINGS{FCA,
   title = {{A trait based re-engineering technique for Java hierarchies}},
   author = {Bettini, Lorenzo and Bono, Viviana and Naddeo, Marco},
-  booktitle = {Proc. of PPPJ},
+  booktitle = {PPPJ},
   pages = {149--158},
   abstract = {Traits are pure behavior components introduced in the Smalltalk
       community in order to integrate the traditional class inheritance
@@ -4227,8 +4227,8 @@ author = {Torbj\"orn Ekman and G\"orel Hedin},
 @INPROCEEDINGS{Bet11,
   title = {{A DSL for Writing Type Systems for Xtext Languages}},
   author = {Bettini, Lorenzo},
-  booktitle = {Proceedings of Principles and Practice of Programming in Java (PPPJ)},
-  editor = {Christian Wimmer and  Christian W. Probst},
+  booktitle = {PPPJ},
+  opteditor = {Christian Wimmer and  Christian W. Probst},
   pages = {31-40},
   year = {2011},
   url = {http://dl.acm.org/citation.cfm?doid=2093157.2093163},
@@ -4243,5 +4243,49 @@ author = {Torbj\"orn Ekman and G\"orel Hedin},
   address =	"Cambridge, England",
   xref = 	"Review: tiede:1999a.",
   topic =	"higher-order-logic;",
+}
+
+@ARTICLE{TraitRecordJ-SCP,
+  title = {{TraitRecordJ: A programming language with traits and records}},
+  author = {Bettini, Lorenzo and Damiani, Ferruccio and Schaefer, Ina and Strocco, Fabio},
+  journal = {Science of Computer Programming},
+  year = {2012},
+  note = {To appear},
+}
+
+@INPROCEEDINGS{CompDelta,
+  title = {{Compositional Type-Checking for Delta-oriented Programming}},
+  author = {Schaefer, Ina and Bettini, Lorenzo and Damiani, Ferruccio},
+  booktitle = {AOSD},
+  pages = {43--56},
+  abstract = {Delta-oriented programming is a compositional approach to flexibly
+      implement software product lines. A product line is represented
+      by a code base and a product line declaration. The code base consists
+      of a set of delta modules specifying modifications to object oriented
+      programs. The product line declaration provides the connection
+      of the delta modules with the product features. This separation
+      increases the reusability of delta modules.
+      In this paper, we provide a foundation for compositional type
+      checking of delta-oriented product lines of JAVA programs by presenting
+      a minimal core calculus for delta-oriented programming.
+      The calculus is equipped with a constraint-based type system that
+      allows analyzing each delta module in isolation, such that that also
+      the results of the analysis can be reused. By combining the analysis
+      results for the delta modules with the product line declaration it is
+      possible the establish that all the products of the product line are
+      well-typed according to the JAVA type system.},
+  year = {2011},
+  url = {http://doi.acm.org/10.1145/1960275.1960283},
+  publisher = {ACM},
+}
+
+@Article{Vlissides:1996:GGS,
+  author =	"J. Vlissides",
+  title =	"{Generation Gap} [software design pattern]",
+  journal =	"C++ Report",
+  volume =	"8",
+  number =	"10",
+  pages =	"12, 14--18",
+  year = 	"1996",
 }
 
