@@ -22,7 +22,7 @@ boilerplate code for validation and \emph{scoping}. The latter determines
 visibilities of variables and other referenceable elements.
 Type checking can occur at compile-time, or at run-time, for instance when types
 of variables may only be computed at run-time.   A developer of a language may
-arbitrarily define which of his model elements he considers to be typeable, what
+arbitrarily define which of his model elements he considers to be typable, what
 types exist and define arbitrary rules using these types for what he considers
 to be a system free of type errors.
 Besides type computation, \emph{type conformance} or \emph{subtyping}, i.e., the
@@ -44,9 +44,9 @@ as a case study, all the issues we deal with throughout the paper are typical of
 the task of implementing the type system of a programming language, thus the
 presented techniques can be reused in other DSL implementations.
 
-As a case study, we will use language for modelling entities and GUI forms to
+As a case study, we will use language for modeling entities and GUI forms to
 edit them (Section~\ref{sec:casestudy}); although this is a toy language, still
-it has many recurrent and interestiqng features to be dealt with in a type
+it has many recurrent and interesting features to be dealt with in a type
 system, like type inference, subtyping, entity inheritance, and requires some
 validation rules relying on types.  In particular we first present the
 implementation of the type system for this language in plain Java (by also using
@@ -56,7 +56,7 @@ with Xtext) (Section~\ref{sec:xbase}).
 Then, we implement the type system for our case study DSL in Xsemantics
 (Section~\ref{sec:xsemantics}) and in XTS (Xtext Type System)
 (Section~\ref{sec:xts}) two DSLs for implementing type systems for Xtext.
-We then evaluate all these mechanisms and hint contexts wqhere one approach
+We then evaluate all these mechanisms and hint contexts where one approach
 might be better (and easier to use) than the others
 (Section~\ref{sec:evaluation}).
 While this paper focuses on static type checking, although the type systems
