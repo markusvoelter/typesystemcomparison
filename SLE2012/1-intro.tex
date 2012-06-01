@@ -1,58 +1,66 @@
 \section{Introduction}
+\label{sec:introduction}
 
-Today's tools for domain specific languages (DSL) make it feasible to build
-complex languages. These usually include data structures, assignments and
-expressions which may contain, for instance, boolean comparison operators,
-arithmetic operators and function calls. A type system allows to assign
-\emph{types} to language elements and specify rules regarding which types are
-allowed where and under which conditions. Checking these rules may be
-non-trivial, and type systems may help to avoid boilerplate code for validation
-and \emph{scoping}. The latter determines visibilities of variables and other
-referenceable elements.
+Developing a compiler for a language and its integration in Eclipse is usually
+time consuming since it requires many phases, starting from parsing the program,
+checking that is correct, up to the generation.  Furthermore, these mechanisms
+have to integrated in the Eclipse IDE, which, in turn requires more manual
+programming in order to provide background parsing of the program, error marker
+generation, and all the tooling mechanisms to give the programmer a good
+experience.  Xtext~\cite{xtext} is a framework for the development of
+programming languages as well as other domain-specific languages (DSLs), which eases all
+these tasks: it provides high-level mechanisms that generate all the typical and
+recurrent artifacts necessary for a fully-fledged IDE on top of Eclipse.
 
-Type checking can occur at compile-time (static type checking), or
-at run-time, for instance when types of variables may only be computed at
-run-time. This paper focuses on static type checking, although the type systems
+Thus Xtext makes it easier to build DSLs.  However, for complex languages, the
+type checking phase still requires additional effort.
+A \emph{type system} allows to assign \emph{types} to language elements and
+specify rules regarding which types are allowed where and under which
+conditions.
+Checking these rules may be non-trivial, and type systems may help to avoid
+boilerplate code for validation and \emph{scoping}. The latter determines
+visibilities of variables and other referenceable elements.
+Type checking can occur at compile-time, or at run-time, for instance when types
+of variables may only be computed at run-time.   A developer of a language may
+arbitrarily define which of his model elements he considers to be typeable, what
+types exist and define arbitrary rules using these types for what he considers
+to be a system free of type errors.
+Besides type computation, \emph{type conformance} or \emph{subtyping}, i.e., the
+property that two types have to be in a generalization relationship in the type
+hierarchy or that the given type is convertible to the expected type, is another
+important issue in a type system.
+In summary, the most common tasks for type systems are:
+assigning fixed types to language elements, being able to tell whether a type is
+conformant to another type, i.e., whether a specific type can be given where
+another one is expected, and deriving the types of complex expressions, e.g.
+additions.
+
+Thus, the contribution of this paper is to show how a type system can be
+implemented in Xtext for languages which require non-trivial checks based on
+types, in particular, we highlight the features of some approaches, and present
+two DSLs which are specific for the task of implementing type systems and
+validation rules based on types.  While we concentrate on a language that we use
+as a case study, all the issues we deal with throughout the paper are typical of
+the task of implementing the type system of a programming language, thus the
+presented techniques can be reused in other DSL implementations.
+
+As a case study, we will use language for modelling entities and GUI forms to
+edit them (Section~\ref{sec:casestudy}); although this is a toy language, still
+it has many recurrent and interestiqng features to be dealt with in a type
+system, like type inference, subtyping, entity inheritance, and requires some
+validation rules relying on types.  In particular we first present the
+implementation of the type system for this language in plain Java (by also using
+Xtend2, a Java-like language shipped with Xtext) (Section~\ref{sec:plain-xtext})
+and using Xbase (a reusable expression language, integrated with Java, shipped
+with Xtext) (Section~\ref{sec:xbase}).
+Then, we implement the type system for our case study DSL in Xsemantics
+(Section~\ref{sec:xsemantics}) and in XTS (Xtext Type System)
+(Section~\ref{sec:xts}) two DSLs for implementing type systems for Xtext.
+We then evaluate all these mechanisms and hint contexts wqhere one approach
+might be better (and easier to use) than the others
+(Section~\ref{sec:evaluation}).
+While this paper focuses on static type checking, although the type systems
 presented here may be used beyond that, e.g. for reduction rules and
 interpreters.
 
-A developer of a (domain specific) language may arbitrarily define which of his
-model elements he considers to be typeable, what types exist and define
-arbitrary rules using these types for what he considers to be a system free of
-type errors.
-To illustrate the most common tasks of a type system, we use a language for
-defining explicitly typed and derived variables, with an expression specifying
-how to derive them. A more detailed example can be found in \cite{mvdsl}. The
-example shown in listing \ref{lst:tlex} defines a string variable called
-\emph{name}, an integer constant and a derived variable called \emph{greeting}
-of type string (which happens to be explicitly specified).
 
-\begin{lstlisting}[float,label=lst:tlex,caption=Example for a typed language.]
-name : string;
-num = 41 + 1;
-greeting : string = "Hi " + name + ", the answer is " + num + ".";
-\end{lstlisting}
-
-We define the type of the element \emph{string} to be itself, which is usual for
-type declarations. We then define the type of variables to be the type of the
-element after the colon (\verb|:|), if there is one. If no colon is there,
-it's the type of the expression after the equals symbol (\verb|=|).
-If there are both an explicit type specification and a derivation expression,
-the type of the derivation expression has to be conformant to the specified
-type. Conformance could mean that the two types have to be in a generalization
-relationship in the type hierarchy or that the given type is convertible to the
-expected type. We define the type of an addition to be the most general type of
-its summands and that a string is more general than a number, thus the
-derivation expression  of \verb|greeting| is of type string and conformant to
-the explicitly specified type \emph{string}. In summary, the most common
-tasks for type systems are:
-Assigning fixed types to language elements, being able to tell whether a
-type is conformant to another type, i.e., whether a specific type can be given
-where another one is expected, and deriving the types of complex expressions, e.g.
-additions.
-
-The rest of this paper is structured as follows. The next section introduces a
-common case study which will be implemented in plain Xtext, Xbase, which is
-shipped with Xtext 2, Xsemantics \cite{lbts}, and Xtext/TS \cite{mvts}. All of
-these are open source Eclipse plug-ins. Each implementation will be presented in
-its own section before comparing them in the final section.
