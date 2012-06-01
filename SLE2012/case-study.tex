@@ -4,20 +4,19 @@
 As a practial example where type inference and validation is useful, we present
 a language for modeling forms in a GUI to edit entities in a database.  The
 presented language is not intended to have all the features to be used in
-practice: it is only used as a case study to implement typesystems, thus we
+practice: it is only used as a case study to implement type systems, thus we
 will concentrate on the features that are more interesting to this aim.
 
-An entity
-may have attributes of base types like \emph{boolean}, \emph{string}, \emph{int} and \emph{float}, or entity types.
+An entity can have attributes of base types like \emph{boolean}, \emph{string},
+\emph{int} and \emph{float}, or entity types.
 Attributes can have an explicit type and an initialization expression.
 If the attribute has an explicit type and an initialization expression, we
 require that the (inferred) type of the expression is a subtype of the
-attribute's type. If the attribute has no explicit type then the 
-initialization expression is mandatory and used to infer the type of the attribute.
-
+attribute's type. If the attribute has no explicit type then the initialization
+expression is mandatory and used to infer the type of the attribute.
 Since entities can specify an entity to derive from, we also have a subtyping
-relation on entity types implied by the transitive closure of the \mykeyb{extends}
-relation.
+relation on entity types implied by the transitive closure of the
+\mykeyb{extends} relation.
 
 The forms are wired to entities and have widgets like text fields and
 checkboxes which refer to a specific attribute of the entity.
@@ -25,9 +24,7 @@ Widgets of forms may contain a \emph{validate} clause, which verifies, for
 example, the length of the input.
 In widgets' validate expressions, one can access the attribute by means of
 \mykeyb{widgetcontent}, which will then have the type of the corresponding
-attribute.
-
-Listing \ref{lst:example-plain} shows an example of the DSL with a \emph{Person}
+attribute.  Listing \ref{lst:example-plain} shows an example of the DSL with a \emph{Person}
 entity and a \emph{PersonForm} to edit it. Note that the attribute
 \emph{isAdult} has an explicit type, and its initialization expression
 comforms to that type; \emph{greeting} has no explicit type, and its type is
@@ -61,15 +58,15 @@ form PersonForm edits Person {
 \end{lstlisting}
 
 
-In order to compare the different approaches for type systems, the case study is
-implemented for each of the following variants.
-
-\begin{itemize}
-\item Plain Xtext/Xtend (Section~\ref{sec:plain-xtext})
-\item Xtext with Xbase (Section~\ref{sec:xbase})
-\item Xtext with XSemantics (Section~\ref{sec:xsemantics})
-\item Xtext with Xtext/TS (Section~\ref{sec:xts})
-\end{itemize}
+% In order to compare the different approaches for type systems, the case study is
+% implemented for each of the following variants.
+% 
+% \begin{itemize}
+% \item Plain Xtext/Xtend (Section~\ref{sec:plain-xtext})
+% \item Xtext with Xbase (Section~\ref{sec:xbase})
+% \item Xtext with XSemantics (Section~\ref{sec:xsemantics})
+% \item Xtext with Xtext/TS (Section~\ref{sec:xts})
+% \end{itemize}
 
 %\lstinputlisting[label=lst:grammar-plain,caption=Grammar with plain
 % Xtext,linerange={7-53}]{../org.typesys.guidsl/src/org/typesys/guidsl/GuiDsl.xtext}
@@ -79,35 +76,30 @@ implemented for each of the following variants.
 with plain Xtext.] 
 Model: (entities+=Entity | forms+=Form )*;
 
-Entity: "entity" name=ID ('extends' superType=[Entity])? "{"
-			(attributes+=Attribute)*
-		"}";
+Entity: "entity" name=ID ('extends' superType=[Entity])? "{" (attributes+=Attribute)* "}";
 
-Attribute: name=ID ( ((":" type=Type)? "=" expr=Expression) | 
-               (":" type=Type) )";";
+Attribute: name=ID ( ((":" type=Type)? "=" expr=Expression) | (":" type=Type) )";";
 
-Form: "form" name=ID "edits" entity=[Entity] "{"	
-		(widgets+=Widget)*
-	  "}";
+Form: "form" name=ID "edits" entity=[Entity] "{" (widgets+=Widget)* "}";
 
 Widget: TextWidget | CheckBoxWidget ;
 
 TextWidget:
-	"text" "(" length=Number ")" "->" attr=[Attribute] 
-	("validate" validate=Expression)? ";";
+	"text" "(" length=Number ")" "->" attr=[Attribute] ("validate" validate=Expression)? ";";
 
-CheckBoxWidget:
-	"checkbox" "->" attr=[Attribute] ("validate" validate=Expression)? ";" ;
+CheckBoxWidget: "checkbox" "->" attr=[Attribute] ("validate" validate=Expression)? ";" ;
 \end{lstlisting}
 
-The Xtext grammar part used by all variants is shown in listing
-\ref{lst:grammar-plain}. The type and expression definition part of the grammar
-is in listing \ref{lst:grammar-plain-types-and-ex} is the same for the the plain
+The Xtext grammar part used by all variants of type system implementation is
+shown in listing \ref{lst:grammar-plain}. The type and expression definition part of the grammar
+in listing~\ref{lst:grammar-plain-types-and-ex} is the same for the the plain
 Xtext grammar and the XSemantics and Xtext/TS grammars (for lack of space we
 do not show the complete grammar of expressions).
 The rule \mytt{Typable} is not called by any other rule of the grammar: it is
 only useful to create a common superclass for \mytt{Attribute} and
 \mytt{Expression} which are the elements we want to type.
+In the Xbase scenario, the rule \emph{Expression} is replaced with the Xbase
+\emph{XExpression} rule, which maps to Java types and expressions.
 
 \begin{lstlisting}[language=xtext,float,label=lst:grammar-plain-types-and-ex,caption=Types
 and Expressions.] 
@@ -143,29 +135,21 @@ Atomic returns Expression:
 % plain Xtext,linerange={54-120}]{../org.typesys.guidsl/src/org/typesys/guidsl/GuiDsl.xtext}
 
 
-The rule order reflects
-the precedence hierarchy of the operators, from lowest
-(\emph{BooleanExpression}) to highest (\emph{Atomic}). The rules use
-\emph{assigned actions} to produce an appropriate abstract syntax tree (cf.
-Xtext documentation \cite{xtextdoc}), which is used when checking types.
-In the Xbase scenario, the rule \emph{Expression} is replaced with the Xbase
-\emph{XExpression} rule, which maps to Java types and expressions.
+% The rule order reflects
+% the precedence hierarchy of the operators, from lowest
+% (\emph{BooleanExpression}) to highest (\emph{Atomic}). The rules use
+% \emph{assigned actions} to produce an appropriate abstract syntax tree (cf.
+% Xtext documentation \cite{xtextdoc}), which is used when checking types.
 % float,
 
 
-\subsection{Demonstration Tasks}
-To compare the different type system variants, each of them will show its type
-checking abilities by checking that
-
-\begin{enumerate}
-\item the attribute's initalization expression (if present) is conformant to the
-attribute declared type (if specified);
-\item the expression after the \emph{validate} clause is boolean;
-\item the text widgets do not refer to boolean entity attributes;
-\item the checkbox widgets refer only to boolean attributes.
-\end{enumerate}
-
+To compare the different type system variants, in each of them we implemented
+the following checkings: the attribute's initalization expression (if present)
+is conformant to the attribute declared type (if specified); the expression
+after the \emph{validate} clause is boolean; the text widgets do not refer to
+boolean entity attributes; the checkbox widgets refer only to boolean
+attributes.
 All tasks imply being able to infer the type of expressions: The \emph{validate}
-clause is an expression, and widgets and checkboxes may refer to
-attributes with initialization expressions. 
-%Test cases for the projects are online at []%TODO
+clause is an expression, and widgets and checkboxes may refer to attributes with
+initialization expressions.
+% Test cases for the projects are online at []%TODO
