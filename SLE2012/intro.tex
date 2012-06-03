@@ -1,48 +1,68 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Developing a compiler for a language and its integration in Eclipse is usually
-time consuming since it requires many phases, starting from parsing the program,
-checking that is correct, up to the generation.  Furthermore, these mechanisms
-have to integrated in the Eclipse IDE, which, in turn requires more manual
-programming in order to provide background parsing of the program, error marker
-generation, and all the tooling mechanisms to give the programmer a good
-experience.  Xtext~\cite{xtext} is a framework for the development of
-programming languages as well as other domain-specific languages (DSLs), which eases all
-these tasks: it provides high-level mechanisms that generate all the typical and
-recurrent artifacts necessary for a fully-fledged IDE on top of Eclipse.
+Developing a compiler for a language \mv{It is not just the compiler. The whole
+language definition must also be defined.} and its integration in Eclipse is
+usually time consuming since it requires many phases, starting from parsing the
+program, checking that is correct, up to the generation. Furthermore, these
+mechanisms have to be integrated in the Eclipse IDE, which, in turn requires
+more manual programming in order to provide background parsing of the program,
+error marker generation, and all the tooling mechanisms to give the programmer a
+good experience\mv{what is a good experience?}.  Xtext~\cite{xtext} is a
+framework for language development based on Eclipse. It has successfully been
+used for developing domain-specific languages (DSLs) as well as general-purpose
+programming languages. It provides high-level mechanisms that significantly
+simplify the development of the artifacts necessary for a fully-fledged IDE on
+top of Eclipse.
 
-Thus Xtext makes it easier to build DSLs.  However, for complex languages, the
-type checking phase still requires additional effort.
-A \emph{type system} allows to assign \emph{types} to language elements and
-specify rules regarding which types are allowed where and under which
-conditions.
-Checking these rules may be non-trivial, and type systems may help to avoid
-boilerplate code for validation and \emph{scoping}. The latter determines
-visibilities of variables and other referenceable elements.
-Type checking can occur at compile-time, or at run-time, for instance when types
-of variables may only be computed at run-time.   A developer of a language may
+Xtext makes it very easy to build simple DSLs. However, for more sophisticated
+languages, the type checking phase still requires a lot of manual implementation
+effort. A \emph{type system} allows to assign \emph{types} to language elements
+and specify rules regarding which types are allowed where and under which
+conditions\mv{We should introduce type systems more strictly and provide
+references}. Checking these rules may be non-trivial, and type systems may help
+to avoid boilerplate code for validation and \emph{scoping} \mv{We use the word
+type system to mean type systems in general and some kind of implementation
+framework that simplifies type checking. We should use it in only one way.}.
+The latter determines visibilities of variables and other referenceable
+elements. \mv{I would keep scoping out of the picture here. The type sys
+frameworks we discuss only look at actual type checks, right?} Type checking can
+occur at compile-time, or at run-time, for instance when types of variables may
+only be computed at run-time. \mv{yes, and??} A developer of a language may
 arbitrarily define which of his model elements he considers to be typable, what
 types exist and define arbitrary rules using these types for what he considers
-to be a system free of type errors.
+to be a system free of type errors.\mv{this last sentence sounds strange.}
 Besides type computation, \emph{type conformance} or \emph{subtyping}, i.e., the
 property that two types have to be in a generalization relationship in the type
 hierarchy or that the given type is convertible to the expected type, is another
-important issue in a type system.
+important issue in a type system.\mv{sentence too complicatd. Split up?}
 In summary, the most common tasks for type systems are:
 assigning fixed types to language elements, being able to tell whether a type is
 conformant to another type, i.e., whether a specific type can be given where
 another one is expected, and deriving the types of complex expressions, e.g.
-additions.
+additions.\mv{and: reporting errors in case a type check fails.}
+
+\mv{Before this contribution makes sense, don't we want to first explain that
+there are tools that help with type systems in Eclipse? Beyond coding it in
+Java?}
 
 Thus, the contribution of this paper is to show how a type system can be
-implemented in Xtext for languages which require non-trivial checks based on
-types, in particular, we highlight the features of some approaches, and present
-two DSLs which are specific for the task of implementing type systems and
-validation rules based on types.  While we concentrate on a language that we use
-as a case study, all the issues we deal with throughout the paper are typical of
-the task of implementing the type system of a programming language, thus the
-presented techniques can be reused in other DSL implementations.
+implemented in Xtext for languages \mv{``show how a TS can be implmeneted'' is
+not a scientific contribution, it is a tutorial. I am *sure* this is not enough
+for SLE!} which require non-trivial checks based on types. In particular, we
+highlight the features of some approaches, and present two DSLs which are
+specific for the task of implementing type systems and validation rules based on
+types. \mv{Don't we *compare* varios TS approaches?} \mv{And what is the goal?
+Just show the alternatives and compare, or do we have some deeper message?
+Maybe that DSLs can help with defining type systems? Or: traditionally, only
+the syntax of a language was implemented with a DSL, nothing else, and we
+argue, that DSLs are also useful to specify other aspects of DSLs, such as type
+systems?} While we concentrate on a language that we use as a case study, all the
+issues we deal with throughout the paper are typical of the task of implementing
+the type system of a programming language, thus the presented techniques can be
+reused in other DSL implementations. \mv{Strange Structure. I think the message
+should be that what we do *is* generally usable, and the case study merely
+illustrates it.}
 
 As a case study, we will use language for modeling entities and GUI forms to
 edit them (Section~\ref{sec:casestudy}); although this is a toy language, still
@@ -52,12 +72,13 @@ validation rules relying on types.  In particular we first present the
 implementation of the type system for this language in plain Java (by also using
 Xtend2, a Java-like language shipped with Xtext) (Section~\ref{sec:plain-xtext})
 and using Xbase (a reusable expression language, integrated with Java, shipped
-with Xtext) (Section~\ref{sec:xbase}).
-Then, we implement the type system for our case study DSL in Xsemantics
-(Section~\ref{sec:xsemantics}) and in XTS (Xtext Type System)
+with Xtext) (Section~\ref{sec:xbase}). \mv{Again, we should first say that the
+paper is a *comparison* of a set of Type Sys spec tools. We mention that in
+passing here.} Then, we implement the type system for our case study DSL in
+Xsemantics (Section~\ref{sec:xsemantics}) and in XTS (Xtext Type System)
 (Section~\ref{sec:xts}) two DSLs for implementing type systems for Xtext.
-We then evaluate all these mechanisms and hint contexts where one approach
-might be better (and easier to use) than the others
+We then evaluate all these mechanisms and hint contexts \mv{hint contexts?}
+where one approach might be better (and easier to use) than the others
 (Section~\ref{sec:evaluation}).
 While this paper focuses on static type checking, although the type systems
 presented here may be used beyond that, e.g. for reduction rules and
