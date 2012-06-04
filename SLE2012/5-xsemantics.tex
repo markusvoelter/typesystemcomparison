@@ -84,6 +84,9 @@ If one needs premises (or blocks of premises) in a \emph{logical or} relation,
 the operator \verb|or| can be used to separate blocks of premises.
 If a rule does not require any premise, we can use a special kind of rule,
 called \textit{axiom}, which only has a conclusion.
+In the premises you can assign values to the output parameters; and when you
+invoke another rule, upon return, the output arguments will have the values
+assigned in the invoked rule.
 
 Also the concept of rule environment is taken from the type theory (usually it
 is denoted by the $\g$).  It can be used to pass additional arguments to rules
@@ -91,14 +94,14 @@ is denoted by the $\g$).  It can be used to pass additional arguments to rules
 Furthermore, when passing an environment during a rule invocation, one
 can specify additional \emph{environment mappings}, using the syntax
 \lstinline[breakatwhitespace=false,breaklines=true]!key <- value!, 
-where you can use any Xbase expression;
-you can also pass an environment with additional
-mappings separated by a comma (or even build an environment from scratch
-by specifying all the mappings, still separated by a comma); for instance
-\lstinline[breakatwhitespace=false,breaklines=true]!G, x <- 'foo', y <- 10! 
-or
-\lstinline[breakatwhitespace=false,breaklines=true]!x <- o.eClass, y <- (o.eClass.name == 'foo')!, 
-etc.
+where you can use any Xbase expression.
+% you can also pass an environment with additional
+% mappings separated by a comma (or even build an environment from scratch
+% by specifying all the mappings, still separated by a comma); for instance
+% \lstinline[breakatwhitespace=false,breaklines=true]!G, x <- 'foo', y <- 10! 
+% or
+% \lstinline[breakatwhitespace=false,breaklines=true]!x <- o.eClass, y <- (o.eClass.name == 'foo')!, 
+% etc.
 Note that when you pass an environment to a rule with additional mappings,
 you actually pass a brand new environment, thus you will not modify the
 current rule environment; if a mapping already exists in the current rule
@@ -106,9 +109,7 @@ environment, in the brand new environment (and only there) the existing mapping
 will be overwritten.  Thus, the rule environment passed to a rule acts
 in a stack manner.
 
-In the premises you can assign values to the output parameters; and when you
-invoke another rule, upon return, the output arguments will have the values
-assigned in the invoked rule.
+
 
 \begin{lstlisting}[language=xsemantics,float,label=lst:xsem-firstrules,caption=Some
 examples of rules and axioms in Xsemantics.]
@@ -117,21 +118,15 @@ axiom BooleanLiteralType
 
 rule AttributeRefType
 	G |- AttributeRef attrRef : Type type
-from {
-	G |- attrRef.attr : type
-}
+from { G |- attrRef.attr : type }
 
 rule LengthOfType
 	G |- LenghtOf len : XsemGuiDslFactory::eINSTANCE.createIntType
-from {
-	G |- len.expr : var StringType stringType
-}
+from { G |- len.expr : var StringType stringType }
 
 rule FieldContentType
 	G |- FieldContent fieldContent : Type type
-from {
-	G |- env(G, 'widgetcontent', Attribute) : type
-}
+from { G |- env(G, 'widgetcontent', Attribute) : type }
 \end{lstlisting}
 
 In listing~\ref{lst:xsem-firstrules} we present some rules for the judgment
