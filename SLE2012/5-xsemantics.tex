@@ -152,7 +152,8 @@ In an hypothetic formal type system, we would probably write these typing rules
 as
 
 \begin{center}
-\begin{tabular}{c@{\hspace{.5cm}}c@{\hspace{.5cm}}c}
+\begin{scriptsize}
+\begin{tabular}{c@{\hspace{.5cm}}c@{\hspace{.5cm}}c@{\hspace{.5cm}}c}
 \inferrule
 {}
 {\g \f \mykeyb{true} : \mykeyb{boolean} }
@@ -160,8 +161,7 @@ as
 \inferrule
 {\g \f \mytt{attr} : \T}
 {\g \f \mykeyb{ref} \ \mytt{attr} : \T }
-\\
-\\
+&
 \inferrule
 {\g \f \mytt{exp} : \mykeyb{string}}
 {\g \f \mykeyb{lengthOf}(\mytt{exp}) : \mykeyb{int} }
@@ -170,6 +170,7 @@ as
 {\g \f \g(\mykeyb{widgetcontent}) : \T}
 {\g \f \mykeyb{widgetcontent} : \T }
 \end{tabular}
+\end{scriptsize}
 \end{center}
 
 \noindent
@@ -179,65 +180,59 @@ resemble the deduction rules typically used in formal type systems.
 At runtime, upon rule invocation, the generated Java system will select the most
 appropriate rule according to the runtime types of the passed argument (using
 the \textit{polymorphic dispatch} mechanism provided by Xtext).
-
 If one of the premises fails, then the whole rule will fail.
 % and in turn all the stack of rule invocation will fail
 In particular, if the premise is a boolean expression, it will fail if the
 expression evaluates to false.  If the premise is a rule invocation, it will
 fail if the invoked rule fails.
 
-As another example, we show in listing~\ref{lst:xsem-attribute} the rule for
-\mytt{Attribute}.  Recall (refer to listing~\ref{lst:grammar-plain}) that an
-attribute can have an explicit type and an initialization expression. The rule
-says that in case the type is not explicit the resulting type is the type of the
-initialization expression; otherwise, the resulting type is the explicit type of
-the attribute; however, in the latter case, if the initialization expression is
-specified, then we must make sure that the type of the expression is assignable
-to the declared type.
-
-\begin{lstlisting}[language=xsemantics,float,label=lst:xsem-attribute,caption=Type
-rule for \mytt{Attribute}.] 
-rule AttributeType 
-	G |- Attribute attr : Type attrType 
-from {
-	if (attr.type != null) {
-		if (attr.expr != null) {
-			G |- attr.expr : var Type expType
-			G |- attr.type <~ expType
-		}
-		attrType = attr.type
-	} else {
-		G |- attr.expr : attrType
-	}
-}
-\end{lstlisting}
-
-Thus, the rule in listing~\ref{lst:xsem-attribute} relies on rules of the
-judgment \mytt{isAssignable} (see listing~\ref{lst:xsem-judgments}); the rules
-of this judgment, which basically implements subtyping, do not have an output
-parameter, they accept two types as parameters; the intention of these rules is
-that they succeed if the right parameter is assignable to the left parameter.
+% As another example, we show in listing~\ref{lst:xsem-attribute} the rule for
+% \mytt{Attribute}.  Recall (refer to listing~\ref{lst:grammar-plain}) that an
+% attribute can have an explicit type and an initialization expression. The rule
+% says that in case the type is not explicit the resulting type is the type of the
+% initialization expression; otherwise, the resulting type is the explicit type of
+% the attribute; however, in the latter case, if the initialization expression is
+% specified, then we must make sure that the type of the expression is assignable
+% to the declared type.
+% 
+% \begin{lstlisting}[language=xsemantics,float,label=lst:xsem-attribute,caption=Type
+% rule for \mytt{Attribute}.] 
+% rule AttributeType 
+% 	G |- Attribute attr : Type attrType 
+% from {
+% 	if (attr.type != null) {
+% 		if (attr.expr != null) {
+% 			G |- attr.expr : var Type expType
+% 			G |- attr.type <~ expType
+% 		}
+% 		attrType = attr.type
+% 	} else {
+% 		G |- attr.expr : attrType
+% 	}
+% }
+% \end{lstlisting}
+% 
+% Thus, the rule in listing~\ref{lst:xsem-attribute} relies on rules of the
+% judgment \mytt{isAssignable} (see listing~\ref{lst:xsem-judgments}); 
 
 \begin{lstlisting}[language=xsemantics,float,label=lst:xsem-assignable,caption=Some
 rules for the \mytt{isAssignable} judgment.] 
 rule IsAssignableBase
 	G |- Type left <~ Type right
-from {
-	left.eClass == right.eClass
-}
+from { left.eClass == right.eClass }
 
-axiom BooleanAssignableToString
-	G |- StringType left <~ BooleanType right
-
-axiom IntAssignableToString
-	G |- StringType left <~ NumberType right
-
-axiom IntAssignableToFloat
-	G |- FloatType left <~ IntType right
+axiom BooleanAssignableToString    G |- StringType left <~ BooleanType right
+axiom IntAssignableToString    G |- StringType left <~ NumberType right
+axiom IntAssignableToFloat   G |- FloatType left <~ IntType right
 \end{lstlisting}
 
+The rules of the judgment \mytt{isAssignable}
+(see listing~\ref{lst:xsem-judgments}), which basically implements subtyping, do
+not have an output parameter, they accept two types as parameters; the intention of
+these rules is that they succeed if the right parameter is assignable to the
+left parameter.
 In listing~\ref{lst:xsem-assignable} we present some rules for the
-\mytt{isAssignable} judgment.  The first rule is the most general case, and says
+this judgment.  The first rule is the most general case, and says
 that types of the same kind are assignable to each other (in this context
 ``kind'' corresponds to EClass); moreover, we have some axioms saying that
 booleans and integers are assignable to strings (for instance, like in Java, by
