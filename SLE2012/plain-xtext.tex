@@ -28,7 +28,6 @@ the widget refers to.
 \begin{lstlisting}[language=xtend,float=tb,label=lst:plain-type-provider1,caption=Type provider in Xtend.] 
 class GuiDslTypeProvider {
 	@Inject extension TypeConformance conformance
-	
 	// declare the built-in types for easy use
 	Type bool = GuiDslFactory::eINSTANCE.createBooleanType
 	Type _float = GuiDslFactory::eINSTANCE.createFloatType
@@ -36,10 +35,9 @@ class GuiDslTypeProvider {
 	@Inject CyclicDependencyType cyclicType
 
 	def Type getType(EObject e) { getType(e, newHashSet()) }
-	
 	def Type getType(EObject e, Collection<EObject> visited) {
 		if (visited.contains(e)) return cyclicType; // cycle detected
-		visited.add(e)
+			visited.add(e)
 		switch e {
 			Widget : e.attr.getType(visited)
 			Attribute case e.expr != null && e.type != null 
@@ -49,16 +47,10 @@ class GuiDslTypeProvider {
 			AttributeRef : e.attr.getType(visited)
 			AndOrExpression : bool 
 			Comparison : bool
-			Equality : bool
 			// type is the most general, e.g. int + float => float
 			Plus : mostGeneral(e.left.getType(visited), e.right.getType(visited))
 			Minus : mostGeneral(e.left.getType(visited), e.right.getType(visited))
-			MultiOrDiv case e.op.equals("*"): mostGeneral(e.left.getType(visited),e.right.getType(visited))
-			// as in Java
-			MultiOrDiv case e.op.equals("/"): e.left.getType(visited)
-			
-			// similar for other expressions
-
+			// skipped similar for other expressions
 			default: null
 		}
 	} 

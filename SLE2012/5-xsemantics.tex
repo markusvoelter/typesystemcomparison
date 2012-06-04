@@ -4,12 +4,17 @@
 Xsemantics~\cite{lbts} (the successor of Xtypes~\cite{Bet11}) is a DSL (written
 in Xtext) for writing type systems, reduction rules, interpreters (and in
 general relation rules) for languages implemented in Xtext.
+In this paper, we will use it for writing the rules of the type system of the
+case study we are considering (Section~\ref{sec:casestudy}).
 A system definition in Xsemantics is a set of judgment rules which have a
 conclusion and a set of premises; these rules can act on any Java object,
 though, typically, they will act on EObjects which are elements of the metamodel
 of the language implemented in Xtext.  Indeed, Xsemantics relies on Xbase to
 provide a rich syntax for defining rules (and premises of rules), thus giving
 full access to Java types.
+Starting from the definitions of these rules, Xsemantics generates Java code
+that can be used in a language implemented in Xtext for scoping and validation
+(it also generates a validator in Java).
 
 Xsemantics is thought to be used by people who are at least a little familiar
 with formal type systems and operational semantics: it aims at providing
@@ -17,46 +22,25 @@ a syntax which is close to the way deduction rules are written in a formal
 setting~\cite{hindley:1997a,Pierce02}.
 Actually, Xsemantics rules are written in the other direction with respect
 to standard deduction rules: the conclusion comes before the premises; this is
-just to make the IDE tooling work better, and to give a more "programming"-like
+just to make the IDE tooling work better, and to give a more ``programming''-like
 style to rules.
 
-Starting from the definitions of these rules, Xsemantics generates Java code
-that can be used in your language implemented in Xtext for scoping and
-validation (it also generates a validator in Java).  Xsemantics aims at
-providing a rich syntax for defining any kind of rules: relations among elements
-(e.g., \emph{subtyping}), \emph{static semantics} (i.e., type systems) and
-\emph{dynamic semantics} (i.e., reduction rules that can be used for
-interpreting a program).  In this paper, we will use it for writing the rules of
-the type system of the case study we are considering
-(Section~\ref{sec:casestudy}).
 
-\subsection{Type System Specification}
+% Xsemantics aims at
+% providing a rich syntax for defining any kind of rules: relations among elements
+% (e.g., \emph{subtyping}), \emph{static semantics} (i.e., type systems) and
+% \emph{dynamic semantics} (i.e., reduction rules that can be used for
+% interpreting a program).  In this paper, we will use it for writing the rules of
+% the type system of the case study we are considering
+% (Section~\ref{sec:casestudy}).
 
-The first thing to do in a system defined in Xsemantics, after giving it a name,
-is to declare the \emph{judgments} of your system; a judgment consists of
-
-\begin{itemize}
-\item 
-a name, which has to be unique in the system;
-\item 
-a \textit{judgment symbol} that can be chosen from some predefined symbols;
-\item 
-the \textit{parameters} of the judgment; parameters of a judgments are separated by
-	a \textit{relation symbol} that can be chosen from some predefined symbols;
-\end{itemize}
-
-\noindent
-The parameters can be
-
-\begin{itemize}
-\item 
-input parameters, in that case they are declared as Java parameters;
-\item 
-output parameters, in that case you use the keyword
-\verb|output| followed by the Java
-type of the output parameter.
-\end{itemize}
-
+A Xsemantics judgment consists of a name, which has to be unique in the system;
+a \textit{judgment symbol} that can be chosen from some predefined symbols; the
+\textit{parameters} of the judgment; parameters of a judgments are separated by
+a \textit{relation symbol} that can be chosen from some predefined symbols.
+The parameters can be either input parameters (in that case they are declared as
+Java parameters) or output parameters (in that case you use the keyword
+\verb|output| followed by the Java type of the output parameter).
 Judgments can have any number of input parameters (though they must have at
 least one input parameter) and at most two output parameters.\footnote{In our
 experience, we never needed more than two output parameters; the extension of
@@ -64,47 +48,24 @@ more than two output parameters is however straightforward.}
 
 \begin{lstlisting}[language=xsemantics,float,label=lst:xsem-judgments,caption=Judgment
 definitions in Xsemantics]
-system org.typesys.xsem.guidsl.xsemantics.TypeSystem
-
 import org.typesys.xsem.guidsl.xsemGuiDsl.*
 
 judgments {
-	type |- Typable typable : output Type
-	// whether {@code right} is assignable to {@code left}
-	isAssignable |- Type left <~ Type right
-	// computes the most general type between {@code first} and {@code second}
-	mostGeneral |- Type first ~~  Type second |> output Type
+	type |- Typable typable : output Type 
+	isAssignable |- Type left <~ Type right // whether right is assignable to left
+	mostGeneral |- Type first ~~  Type second |> output Type // the most general type between first and second
 }
 \end{lstlisting}
 
-\noindent
 The judgment definitions for our case study are shown in
 listing~\ref{lst:xsem-judgments}.
-
-Once the judgments of the system are declared, we can start declaring the
-rules.  Each rule consists of
-
-\begin{itemize}
-\item
-a name, which has to be unique in the system;
-\item
-a \textit{rule conclusion};
-\item
-the \textit{premises} of the rule;
-\end{itemize}
-
-\noindent
-The rule conclusion consists of
-
-\begin{itemize}
-\item
-the name of the \textit{environment} of a rule;
-\item
-a \textit{judgment symbol};
-\item
-the \textit{parameters} of the rules, which are separated by
-a \textit{relation symbol} that can be chosen from some predefined symbols;
-\end{itemize}
+Once the judgments of the system are declared, we can start declaring the rules.
+ Each rule consists ofa name, which has to be unique in the system; a
+\textit{rule conclusion}; the \textit{premises} of the rule.  The rule
+conclusion consists of the name of the \textit{environment} of a rule; a
+\textit{judgment symbol}; the \textit{parameters} of the rules, which are
+separated by a \textit{relation symbol} that can be chosen from some predefined
+symbols.
 
 The things that make a rule belong to a specific judgment are the judgment
 symbol and the relation symbols (which separate the parameters); moreover the
@@ -113,23 +74,20 @@ of the judgment (or exactly the same Java types).  Two rules belonging to the
 same judgment must differ for at least one input parameter's type.
 
 The premises of a rule which are specified in a \verb|from| block can be any
-Xbase expression, or a \emph{rule invocation}.  If you think of a rule
+Xbase expression, or a \emph{rule invocation}.  If one thinks of a rule
 declaration as a function declaration, then a rule invocation corresponds to a
 function invocation, thus you must specify the environment to pass to the rule,
 and the arguments, both input and output arguments.
 The premises of an Xsemantics rule are considered to be in a \emph{logical and}
 relation and are verified in the same order they are specified in the block.
-If we need premises (or blocks of premises) in a \emph{logical or} relation, we
-can use the operator \verb|or|, which separates blocks of premises; if (and only
-if) one of the premises of the first block fails, the premises of the second
-block are inspected, etc.
+If one needs premises (or blocks of premises) in a \emph{logical or} relation,
+the operator \verb|or| can be used to separate blocks of premises.
 If a rule does not require any premise, we can use a special kind of rule,
 called \textit{axiom}, which only has a conclusion.
 
 Also the concept of rule environment is taken from the type theory (usually it
-is denoted by the $\g$).  It can be used to pass additional arguments to rules.
-If you want to be sure to pass an empty environment when invoking a rule you can
-use the keyword \mykeyb{empty}.
+is denoted by the $\g$).  It can be used to pass additional arguments to rules
+(an empty environment can be passed using the keyword \mykeyb{empty}).
 Furthermore, when passing an environment during a rule invocation, one
 can specify additional \emph{environment mappings}, using the syntax
 \lstinline[breakatwhitespace=false,breaklines=true]!key <- value!, 
