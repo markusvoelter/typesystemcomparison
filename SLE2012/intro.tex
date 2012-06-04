@@ -1,6 +1,70 @@
 \section{Introduction}
 \label{sec:introduction}
 
+Developing languages is hard. Language developers have to define grammars,
+parsers, constraints, type systems and generators or interpreters, plus an IDE
+for the language users. With the rising popularity of domain-specific languages
+(DSLs), there is increased need for better tool support for building languages
+and their IDEs. Tradidional parser generators have only helped with the concrete
+and abstract syntax of a languge. Modern language workbenches generate editors,
+complete with syntax highlighting, code completion and static error highlighting
+from a grammar definition, significantly reducing the effort for implementing a
+language and its IDE.
+
+Xtext is currently one of the most popular tools for implementing languages. It
+is based on Eclipse, and, from a grammar definition, generates an Eclipse-based
+editor plus a parser and an abstract syntax tree based on EMF Ecore. 
+
+However, language definition entails more than just the syntax and the
+structure. In particular, the static semantics and the execution semantics have
+to be defined. Execution semantics are typically defined via a generator or an
+interpreter. In context of Xtext, both can be effectively implemented with
+Xtend, a Java-like language that also provides functional abstractions (useful
+for building interpreters) and so-called template expressions (very useful for
+building generators). Xtext, however, provides no support for defining the
+static semantics, or type system, for a language beyond impementing typing rules
+in Java as part of the validation aspect. As languages become more
+sophisticated, this lack of support for efficiently implementing type systems
+turns out to be a major issue.
+
+
+\textbf{Contribution} Our primary contribution is a comparison between various
+approaches for implementing type systems for Xtext based languges. We start out
+by showingq how to implement type systems with Xtext only and then compare three
+alternative approaches: XSemantics, Xtext Type System and the type system introduced 
+by Xbase. We will conclude that using DSLs for defining type systems for DSLs is
+a very worthwhile approach. Our secondary contribution is a brief look
+at other language development tools and the ways they defined type systems for
+DSLs.
+
+\textbf{Structure} The remainder of the introduction introduces the notion of
+type systems and outlines how a type system definition relates to Xtext's way of
+defining languages and IDEs. We also introduce a case study used compare the
+various type system definition approaches discussed in this paper. We then
+present the implementation of the type system for this language using the
+default way suggested by Xtext, and implementation in plain Java 
+in Section~\ref{sec:plain-xtext}. Second, we will show how to integrate a DSL
+type system with Xbase, a reusable expression language, integrated
+with Java, and shipped with Xtext in Section~\ref{sec:xbase}. Then, we implement
+the type system for our case study DSL in Xsemantics (Section~\ref{sec:xsemantics}) and 
+in XTS (Xtext Type System) (Section~\ref{sec:xts}) two DSLs for implementing type
+systems for Xtext. In Section~\ref{sec:evaluation} we evaluate and comapre
+the approaches introduced so far based on a set of criteria introduced in
+\todo{where?}. We also provide recommendation on when to use which approach. We
+conclude the paper with related work \todo{ref} and a summary \todo{ref}.
+
+
+\subsection{Type Systems}
+
+
+
+
+
+
+\endinput
+
+%% old stuff 
+
 Developing a compiler for a language \mv{It is not just the compiler. The whole
 language definition must also be defined.} and its integration in Eclipse is
 usually time consuming since it requires many phases, starting from parsing the
