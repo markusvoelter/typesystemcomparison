@@ -1,18 +1,18 @@
 \section{Introduction}
 \label{sec:introduction}
  
-Developing languages is hard. Language developers have to define grammars,
-parsers, constraints, type systems and generators or interpreters, plus an IDE
+Developing languages is a time consuming task: language developers have to
+define grammars, parsers, constraints, type systems and generators or interpreters, plus an IDE
 for the language users. With the rising popularity of domain-specific languages
-(DSLs), there is increased need for better tool support for building languages
-and their IDEs. Tradidional parser generators have only helped with the concrete
-and abstract syntax of a languge. Modern language workbenches generate editors,
+(DSLs), there is an increasing need for better tool support for building
+languages and their IDEs. Traditional parser generators have only helped with the concrete
+and abstract syntax of a language. Modern language workbenches generate editors,
 complete with syntax highlighting, code completion and static error highlighting
 from a grammar definition, significantly reducing the effort for implementing a
 language and its IDE. 
-
-Xtext is currently one of the most popular tools for implementing languages. It
-is based on Eclipse, and, from a grammar definition, generates an Eclipse-based
+Xtext~\cite{xtext} is currently one of the most popular tools for implementing
+languages.
+It is based on Eclipse, and, from a grammar definition, generates an Eclipse-based
 editor plus a parser and an abstract syntax tree based on EMF Ecore. 
 
 However, language definition entails more than just the syntax and the
@@ -22,15 +22,15 @@ interpreter. In context of Xtext, both can be effectively implemented with
 Xtend, a Java-like language that also provides functional abstractions (useful
 for building interpreters) and so-called template expressions (very useful for
 building generators). Xtext, however, provides no support for defining the
-static semantics, or type system, for a language beyond impementing typing rules
-in Java as part of the validation aspect. As languages become more
+static semantics, or \emph{type system}, for a language beyond implementing
+typing rules in Java as part of the validation aspect. As languages become more
 sophisticated, this lack of support for efficiently implementing type systems
 turns out to be a major issue.
 
 
 \textbf{Contribution} Our primary contribution is a comparison between various
-approaches for implementing type systems for Xtext based languges. We start out
-by showingq how to implement type systems with Xtext only and then compare three
+approaches for implementing type systems for Xtext based languages. We start out
+by showing how to implement type systems with Xtext only and then compare three
 alternative approaches: XSemantics, Xtext Type System and the type system introduced 
 by Xbase. We will conclude that using DSLs for defining type systems for DSLs is
 a very worthwhile approach. Our secondary contribution is a brief look
@@ -39,19 +39,19 @@ DSLs.
 
 \textbf{Structure} The remainder of the introduction introduces the notion of
 type systems and outlines how a type system definition relates to Xtext's way of
-defining languages and IDEs. We also introduce a case study used compare the
-various type system definition approaches discussed in this paper. We then
+defining languages and IDEs. We also introduce a case study that we will use to
+compare the various type system definition approaches discussed in this paper. We then
 present the implementation of the type system for this language using the
-default way suggested by Xtext, and implementation in plain Java 
+default way suggested by Xtext: an implementation in plain Java/Xtend 
 in Section~\ref{sec:plain-xtext}. Second, we will show how to integrate a DSL
 type system with Xbase, a reusable expression language, integrated
 with Java, and shipped with Xtext in Section~\ref{sec:xbase}. Then, we implement
 the type system for our case study DSL in Xsemantics (Section~\ref{sec:xsemantics}) and 
 in XTS (Xtext Type System) (Section~\ref{sec:xts}) two DSLs for implementing type
-systems for Xtext. In Section~\ref{sec:evaluation} we evaluate and comapre
+systems for Xtext. In Section~\ref{sec:evaluation} we evaluate and compare
 the approaches introduced so far based on a set of criteria introduced in
-\todo{where?}. We also provide recommendation on when to use which approach. We
-conclude the paper with related work \todo{ref} and a summary \todo{ref}.
+\mv{where?}. We also provide recommendation on when to use which approach. We
+conclude the paper with some related work (Section~\ref{sec:conclusion}).
 
 
 \subsection{Type Systems}
@@ -62,9 +62,9 @@ of a model. For the model to be valid, all constraints applicable to a model
 must evaluate to \emph{true}. Type checking, however, is more than simple
 constraint checks. In order to using constraints to check if a type is valid,
 that type (and all other types in the model) first have to be calculated. For
-non-trivial languges, type computation can be quite elaborate. The main
+non-trivial languages, type computation can be quite elaborate. The main
 contribution of type system implementation tools hence is the computation of the
-type of program elemnts. The type system is then integrated with the constraint
+type of program elements. The type system is then integrated with the constraint
 checking facilities to perform the actual type checks. More specifically, a type
 system facility has to support the following functions:
 
@@ -77,12 +77,12 @@ system facility has to support the following functions:
   element from the type of one of its properties and the computation of common (super-)types.
   \item[F3] The framework must be robust in the sense that it reports on
   incomplete type specifications or the specification of types for AST concepts
-  that don't exist (anymore).
+  that do not exist (anymore).
   \item[F4] The framework must be able to compute the types for all typed
   elements in a program. 
   \item[F5]  The framework must integrate with the validation framework of the
   language development tool so typing errors can be reported together with other
-  constraint erros detected in the model
+  constraint errors detected in the model
 \end{description}
 
 % We can use F1 - F5 to refer to these when describing the various tools
@@ -127,7 +127,7 @@ to be a system free of type errors.\mv{this last sentence sounds strange.}
 Besides type computation, \emph{type conformance} or \emph{subtyping}, i.e., the
 property that two types have to be in a generalization relationship in the type
 hierarchy or that the given type is convertible to the expected type, is another
-important issue in a type system.\mv{sentence too complicatd. Split up?}
+important issue in a type system.\mv{sentence too complicated. Split up?}
 In summary, the most common tasks for type systems are:
 assigning fixed types to language elements, being able to tell whether a type is
 conformant to another type, i.e., whether a specific type can be given where
@@ -139,12 +139,12 @@ there are tools that help with type systems in Eclipse? Beyond coding it in
 Java?}
 
 Thus, the contribution of this paper is to show how a type system can be
-implemented in Xtext for languages \mv{``show how a TS can be implmeneted'' is
+implemented in Xtext for languages \mv{``show how a TS can be implemented'' is
 not a scientific contribution, it is a tutorial. I am *sure* this is not enough
 for SLE!} which require non-trivial checks based on types. In particular, we
 highlight the features of some approaches, and present two DSLs which are
 specific for the task of implementing type systems and validation rules based on
-types. \mv{Don't we *compare* varios TS approaches?} \mv{And what is the goal?
+types. \mv{Don't we *compare* various TS approaches?} \mv{And what is the goal?
 Just show the alternatives and compare, or do we have some deeper message?
 Maybe that DSLs can help with defining type systems? Or: traditionally, only
 the syntax of a language was implemented with a DSL, nothing else, and we
