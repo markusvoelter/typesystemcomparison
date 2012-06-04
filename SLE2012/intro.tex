@@ -1,6 +1,6 @@
 \section{Introduction}
 \label{sec:introduction}
-
+ 
 Developing languages is hard. Language developers have to define grammars,
 parsers, constraints, type systems and generators or interpreters, plus an IDE
 for the language users. With the rising popularity of domain-specific languages
@@ -9,7 +9,7 @@ and their IDEs. Tradidional parser generators have only helped with the concrete
 and abstract syntax of a languge. Modern language workbenches generate editors,
 complete with syntax highlighting, code completion and static error highlighting
 from a grammar definition, significantly reducing the effort for implementing a
-language and its IDE.
+language and its IDE. 
 
 Xtext is currently one of the most popular tools for implementing languages. It
 is based on Eclipse, and, from a grammar definition, generates an Eclipse-based
@@ -56,8 +56,36 @@ conclude the paper with related work \todo{ref} and a summary \todo{ref}.
 
 \subsection{Type Systems}
 
+Every language development environment comes with a facility for checking
+constraints. A \emph{constraint} is essentially a Boolean expression over parts
+of a model. For the model to be valid, all constraints applicable to a model
+must evaluate to \emph{true}. Type checking, however, is more than simple
+constraint checks. In order to using constraints to check if a type is valid,
+that type (and all other types in the model) first have to be calculated. For
+non-trivial languges, type computation can be quite elaborate. The main
+contribution of type system implementation tools hence is the computation of the
+type of program elemnts. The type system is then integrated with the constraint
+checking facilities to perform the actual type checks. More specifically, a type
+system facility has to support the following functions:
 
+\begin{description}
+  \item[F1] The framework must come with a facility to express arbitrary typing
+  rules in a concise way. 
+  \item[F2] There are a few very common cases for typing rules for which a
+  concise expression of typing rules is especially important. These include the 
+  assignment of fixed types to program elements, the derivation of the type of one 
+  element from the type of one of its properties and the computation of common (super-)types.
+  \item[F3] The framework must be robust in the sense that it reports on
+  incomplete type specifications or the specification of types for AST concepts
+  that don't exist (anymore).
+  \item[F4] The framework must be able to compute the types for all typed
+  elements in a program. 
+  \item[F5]  The framework must integrate with the validation framework of the
+  language development tool so typing errors can be reported together with other
+  constraint erros detected in the model
+\end{description}
 
+% We can use F1 - F5 to refer to these when describing the various tools
 
 
 
