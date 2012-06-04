@@ -9,17 +9,16 @@ simply generates the Java code that had to be written before.
 If no suitable declarative abstraction is available, either in the framework or
 in the DSL, procedural Java code can still be added manually.
 
-At the center of XTS is the \ic{ITypesystem} interface. It has various methods for
+XTS features the \ic{ITypesystem} interface. It has various methods for
 calculating the type of model elements, and for comparing types for
-compatibility and subtyping relationships. In principle, you can implement this
-interface any way you like. However, to benefit from the framework, you should
-use the declarative APIs used in the \ic{DefaultTypesystem} implementation.
+compatibility and subtyping relationships. To benefit from the framework, it is
+recommended to use the declarative APIs from in the \ic{DefaultTypesystem}
+implementation.
 
 \subsection{Hooking up the type checker}
 
-To enable type checks, you have to hook up the type system framework  with the
-validation  framework provided by Xtext. Here is the code you have to write in
-the validator:
+To enable type checks, the type system framework  has to be hooked up with the
+validation  framework provided by Xtext. Here is the validator code:
 
 \begin{lstlisting}[language=Java] 
 @Inject private ITypesystem ts;
@@ -31,8 +30,8 @@ public void validateTypes( EObject m ) {
 \end{lstlisting}
 
 The type system can be used in any other place in an Xtext DSL implementation.
-For example it has been used as part of scope implementations. In this case, you
-simply inject the type system into the scope provider and use it from there.
+For example it has been used as part of scope implementations, in which case the
+type system may be reused by injecting it into the scope provider as a field.
 
 \subsection{Setting up}
 
