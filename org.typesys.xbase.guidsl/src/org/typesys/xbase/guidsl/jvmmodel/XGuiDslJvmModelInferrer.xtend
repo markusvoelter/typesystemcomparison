@@ -43,13 +43,13 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 				superTypes += element.superType.cloneWithProxies
 		    for (attribute : element.attributes) {
 					val getter = attribute.toGetter(attribute.name, attribute.getJvmType)
-					members += getter
 		    	if (attribute.expr != null) {
 					getter.body = attribute.expr
 		        } else  {
 		            members += attribute.toField(attribute.name, attribute.getJvmType)
 			        members += attribute.toSetter(attribute.name, attribute.getJvmType)
 		        }
+				members += getter
 		    }
    		]
    	}
