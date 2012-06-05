@@ -58,7 +58,7 @@ judgments {
 \end{lstlisting}
 
 The judgment definitions for our case study are shown in
-listing~\ref{lst:xsem-judgments}.
+Listing~\ref{lst:xsem-judgments}.
 Once the judgments of the system are declared, we can start declaring the rules.
  Each rule consists of a name, which has to be unique in the system; a
 \textit{rule conclusion}; the \textit{premises} of the rule.  The rule
@@ -129,22 +129,22 @@ rule FieldContentType
 from { G |- env(G, 'widgetcontent', Attribute) : type }
 \end{lstlisting}
 
-In listing~\ref{lst:xsem-firstrules} we present some rules for the judgment
-\mytt{type} (see listing~\ref{lst:xsem-judgments}, recall that in the rules of
+In Listing~\ref{lst:xsem-firstrules} we present some rules for the judgment
+\mytt{type} (see Listing~\ref{lst:xsem-judgments}, recall that in the rules of
 these judgments the second parameter is an output parameter).
 For typing a literal (in the example a boolean literal) we write an axiom (since
 there is no premise) and the result is a \mytt{BooleanType} (created through the
 EMF factory for our language).  The rule for typing an \mytt{AttributeRef} can
 be read as follows: the type of an \mytt{AttributeRef} is the type resulting
 from typing the corresponding referred attribute (the feature \mytt{attr}, refer
-to listing~\ref{lst:grammar-plain}). The type of a \mytt{LenghtOf} expression is
+to Listing~\ref{lst:grammar-plain}). The type of a \mytt{LenghtOf} expression is
 an integer type, provided that the expression argument of \mytt{LenghtOf} has
 string type.  Finally, for typing \mykeyb{widgetcontent} we make use of the
 rule environment: we access the environment with the predefined function
 \mykeyb{env}, by specifying the key and the expected Java type of the
 corresponding value.  If no key is found in the environment or the value cannot
 be assigned to the specified Java type the premise will fail.  We will show
-how an environment is passed later in listing~\ref{lst:xsem-validator}.  Thus,
+how an environment is passed later in Listing~\ref{lst:xsem-validator}.  Thus,
 this rule will type \mykeyb{widgetcontent} with the type of the corresponding
 attribute. 
 
@@ -174,7 +174,7 @@ as
 \end{center}
 
 \noindent
-Note how the rules in Xsemantics (see listing~\ref{lst:xsem-firstrules})
+Note how the rules in Xsemantics (see Listing~\ref{lst:xsem-firstrules})
 resemble the deduction rules typically used in formal type systems.
 
 At runtime, upon rule invocation, the generated Java system will select the most
@@ -186,8 +186,8 @@ In particular, if the premise is a boolean expression, it will fail if the
 expression evaluates to false.  If the premise is a rule invocation, it will
 fail if the invoked rule fails.
 
-% As another example, we show in listing~\ref{lst:xsem-attribute} the rule for
-% \mytt{Attribute}.  Recall (refer to listing~\ref{lst:grammar-plain}) that an
+% As another example, we show in Listing~\ref{lst:xsem-attribute} the rule for
+% \mytt{Attribute}.  Recall (refer to Listing~\ref{lst:grammar-plain}) that an
 % attribute can have an explicit type and an initialization expression. The rule
 % states that in case the type is not explicit the resulting type is the type of the
 % initialization expression; otherwise, the resulting type is the explicit type of
@@ -212,8 +212,8 @@ fail if the invoked rule fails.
 % }
 % \end{lstlisting}
 % 
-% Thus, the rule in listing~\ref{lst:xsem-attribute} relies on rules of the
-% judgment \mytt{isAssignable} (see listing~\ref{lst:xsem-judgments}); 
+% Thus, the rule in Listing~\ref{lst:xsem-attribute} relies on rules of the
+% judgment \mytt{isAssignable} (see Listing~\ref{lst:xsem-judgments}); 
 
 \begin{lstlisting}[language=xsemantics,float,label=lst:xsem-assignable,caption=Some
 rules for the \mytt{isAssignable} judgment.] 
@@ -235,11 +235,11 @@ from {
 \end{lstlisting}
 
 The rules of the judgment \mytt{isAssignable} (see
-listing~\ref{lst:xsem-judgments}), which basically implements subtyping, do not
+Listing~\ref{lst:xsem-judgments}), which basically implements subtyping, do not
 have an output parameter, they accept two types as parameters; the intention of
 these rules is that they succeed if the right parameter is assignable to the
 left parameter.
-In listing~\ref{lst:xsem-assignable} we present some rules for the this
+In Listing~\ref{lst:xsem-assignable} we present some rules for the this
 judgment.  The first rule is the most general case, and states that types of the
 same kind are assignable to each other (in this context ``kind'' corresponds to
 EClass); moreover, we have some axioms saying that booleans and integers are
@@ -251,7 +251,7 @@ can be assigned to \mytt{left} either if they are the same type (entity
 subtyping is reflexive) or if \mytt{left} is a ``super entity'' (possibly
 indirectly) for \mytt{right} (entity subtyping is transitive).
 To avoid dealing with possible malformed cyclic hierarchies, like in the manual
-implementation of the type system (see listings~\ref{lst:plain-type-provider1}
+implementation of the type system (see Listings~\ref{lst:plain-type-provider1}
 and~\ref{lst:plain-type-conformance}) we use a predefined function of
 Xsemantics, to compute the ``closure'' of a graph:
 
@@ -264,7 +264,7 @@ getAll(eObject, feature to collect, feature to follow, expected type)
 % specified ``eObject'', and recursively collecting such elements by following the
 % feature ``feature to follow'', but avoid possible loops in the EMF graph
 % representing the AST.
-In listing~\ref{lst:xsem-assignable}, it will return all
+In Listing~\ref{lst:xsem-assignable}, it will return all
 the superclasses of \mytt{right}.  Similarly, we can get all the attributes of
 an entity, including the inherited ones, by simply calling
 
@@ -287,10 +287,10 @@ getAll(entity,
 % }
 % \end{lstlisting}
 % 
-% The judgment \mytt{mostGeneral} (listing~\ref{lst:xsem-judgments}) takes two
+% The judgment \mytt{mostGeneral} (Listing~\ref{lst:xsem-judgments}) takes two
 % types as input parameters and returns as output the most general between the
 % two; this judgment has one simple rule, shown in
-% listing~\ref{lst:xsem-mostgeneral}.
+% Listing~\ref{lst:xsem-mostgeneral}.
 
 \begin{lstlisting}[language=xsemantics,float,label=lst:xsem-binaryexp,caption=Some
 rules for binary expressions.] 
@@ -355,7 +355,7 @@ from {
 
 
 The rules for \mytt{Minus} and \mytt{Plus} are shown in
-listing~\ref{lst:xsem-binaryexp} (the rules for \mytt{mostGeneral} are not
+Listing~\ref{lst:xsem-binaryexp} (the rules for \mytt{mostGeneral} are not
 shown).
 The typing rule for \mytt{Minus} requires that the two subexpressions have a
 numeric type (recall that since we specify a \mytt{NumberType} as the output
@@ -369,7 +369,7 @@ subexpression is a string, the whole expression is considered as a string
 concatenation.  Thus, the rule for \mytt{Plus} computes the types of the two
 subexpressions, and then gets the most general; if one of them is a string type,
 the whole expression will have string type (see also subtyping rules in
-listing~\ref{lst:xsem-assignable}).
+Listing~\ref{lst:xsem-assignable}).
 
 % \subsection{Rules for the Validator}
 % \label{sec:xsem-validation}
@@ -406,7 +406,7 @@ checkrule ValidateCheckBoxWidgetAttributeBoolean for CheckBoxWidget widget
 from { 'widgetcontent' <- widget.attr |- widget.attr : var BooleanType attrType }
 \end{lstlisting}
 
-In listing~\ref{lst:xsem-validator} we present some checkrules for validating
+In Listing~\ref{lst:xsem-validator} we present some checkrules for validating
 the elements of our language (see Section~\ref{sec:casestudy}).  The first
 checkrule basically states that an Attribute is correct if we can give it a type
 (in the empty environment).  The second one accepts a Widget and ensures that
@@ -414,7 +414,7 @@ either its validate part is not specified or it has a boolean type; note that in
 this case we pass to the type rule invocation an explicit environment so that we
 are able to type possible occurrences of \mykeyb{widgetcontent}.  These first
 two rules also show an important use of the environment: since the rule for
-typing \mykeyb{widgetcontent} (listing~\ref{lst:xsem-firstrules}) requires that
+typing \mykeyb{widgetcontent} (Listing~\ref{lst:xsem-firstrules}) requires that
 the string `widgetcontent' is bound to an attribute in the environment, and
 since when typing an attribute we provide an empty environment, then a possible
 occurrence of \mykeyb{widgetcontent} in an attribute's initialization expression

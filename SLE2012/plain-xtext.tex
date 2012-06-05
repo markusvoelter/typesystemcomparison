@@ -60,7 +60,7 @@ class GuiDslTypeProvider {
 }
 \end{lstlisting}
 
-The operation \emph{getExpectedType()} in listing \ref{lst:plain-type-provider1}
+The operation \emph{getExpectedType()} in Listing~\ref{lst:plain-type-provider1}
 returns the expected type of an EObject by checking its container. It calls
 another operation (not shown here) with the container of the EObject and the
 feature of the container pointing to it. For instance, if the container of an
@@ -122,7 +122,7 @@ class TypeConformance {
 \end{lstlisting}
 
 
-Finally, the validator, partially shown in listing \ref{lst:validation-plain},
+Finally, the validator, partially shown in Listing~\ref{lst:validation-plain},
 uses these classes shown above.  The validation operating on text widgets checks that
 the type of attribute the widget refers to is not \emph{boolean}.  The validation on
 checkbox widgets, not shown in the listing, checks that the type is

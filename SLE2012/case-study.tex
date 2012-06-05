@@ -24,8 +24,8 @@ Widgets of forms may contain a \emph{validate} clause, which verifies, for
 example, the length of the input.
 In widgets' validate expressions, one can access the attribute by means of
 \mykeyb{widgetcontent}, which will then have the type of the corresponding
-attribute.  Listing \ref{lst:example-plain} shows an example of the DSL with a \emph{Person}
-entity and a \emph{PersonForm} to edit it. Note that the attribute
+attribute.  Listing~\ref{lst:example-plain} shows an example of the DSL with a
+\emph{Person} entity and a \emph{PersonForm} to edit it. Note that the attribute
 \emph{isAdult} has an explicit type, and its initialization expression
 conforms to that type; \emph{greeting} has no explicit type, and its type is
 inferred from its initialization expression.
@@ -85,9 +85,9 @@ CheckBoxWidget: "checkbox" "->" attr=[Attribute] ("validate" validate=Expression
 \end{lstlisting}
 
 The Xtext grammar part used by all variants of type system implementation is
-shown in listing \ref{lst:grammar-plain}. The type and expression definition part of the grammar
-in listing~\ref{lst:grammar-plain-types-and-ex} is the same for the the plain
-Xtext grammar and the XSemantics and Xtext/TS grammars (for lack of space we
+shown in Listing~\ref{lst:grammar-plain}. The type and expression definition
+part of the grammar in Listing~\ref{lst:grammar-plain-types-and-ex} is the same
+for the the plain Xtext grammar and the XSemantics and Xtext/TS grammars (for lack of space we
 do not show the complete grammar of expressions).
 The rule \mytt{Typable} is not called by any other rule of the grammar: it is
 only useful to create a common superclass for \mytt{Attribute} and
