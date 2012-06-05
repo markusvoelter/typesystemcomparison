@@ -1,0 +1,9 @@
+rule PlusType
+	G |- Plus plus : Type type
+from {
+	// deal with any type
+	G |- plus.left : var Type leftType
+	G |- plus.right : var Type rightType
+	// get the most general (which can also be string)
+	G |- leftType ~~ rightType |> type
+}
