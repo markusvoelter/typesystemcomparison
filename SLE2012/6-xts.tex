@@ -1,41 +1,14 @@
 \section{XTS}
 \label{sec:xts}
 
-\subsection{Introduction}
-
 XTS was originally developed as a framework with a Java API to declaratively
 specify type system rules. Later, a DSL was put on top of the framework which
 simply generates the Java code that had to be written before.
 If no suitable declarative abstraction is available, either in the framework or
 in the DSL, procedural Java code can still be added manually.
 
-XTS features the \ic{ITypesystem} interface. It has various methods for
-calculating the type of model elements, and for comparing types for
-compatibility and subtyping relationships. To benefit from the framework, it is
-recommended to use the declarative APIs from in the \ic{DefaultTypesystem}
-implementation.
-
-\subsection{Hooking up the type checker}
-
-To enable type checks, the type system framework  has to be hooked up with the
-validation  framework provided by Xtext. Here is the validator code:
-
-\begin{lstlisting}[language=Java] 
-@Inject private ITypesystem ts;
-
-@Check(CheckType.NORMAL)
-public void validateTypes( EObject m ) {
-    ts.checkTypesystemConstraints( m, this );
-}    
-\end{lstlisting}
-
-The type system can be used in any other place in an Xtext DSL implementation.
-For example it has been used as part of scope implementations, in which case the
-type system may be reused by injecting it into the scope provider as a field.
-
-\subsection{Setting up}
-
-We start with the header of the type system file.
+In order to define the type system for an Xtext DSL in XTS we need to define a
+header; for our case study it is:
 
 \begin{lstlisting}[language=xts] 
 typesystem org.typesys.xts.guidsl.typesys.GuiDlsTypesystem 
@@ -51,16 +24,12 @@ which we want to specify the type system rules (the one generated from the Xtext
 grammar). Finally, we have to provide the the fully qualified name of the
 package class generated from that Ecore file.
 
-\subsection{The type of types}
-
-Type system specifications  are structured into sections. They have no meaning
-beyond structuring the overall file. Inside sections we can define \ic{typeof}
-clauses. A \ic{typeof} clause defines how the type for a given metaclass is
+Type system specifications  are structured into sections. Inside sections we can define \ic{typeof}
+clauses. A \ic{typeof} clause defines how the type for a given EClass is
 calculated, and can optionally specify constraints on the types of properties of
 these metaclasses.
-
-In the following piece of code we specify  that the type
-of the \ic{Type} metaclass and all its subclasses (hence the \ic{+}) is a clone of itself.
+For instance, we specify that
+the \ic{Type} metaclass and all its subclasses (hence the \ic{+}) is a clone of itself.
 In other words, types are their own types.
 
 \begin{lstlisting}[language=xts] 
@@ -71,12 +40,10 @@ section "Types"
 
 We also specify the subtyping relationship between \ic{FloatType} and \ic{IntType}. This
 means that, wherever a \ic{FloatType} is expected, an \ic{IntType} can also be
-used as well.  But not the other way around. In other words, \ic{IntType} is more
-specialized.
+used as well (but not the other way around). In other words, \ic{IntType} is
+more specialized.
 
-\subsection{Literals}
-
-The type of string literals and Boolean literals is always the same, so it can
+The type of string and boolean literals is always the same, so it can
 be fixed to a specific type.
 However, for number literals it is more complicated:
 whether it is an integer or float type depends on the value and this cannot be
@@ -96,16 +63,13 @@ subclass. The corresponding method looks as follows:
  
 \begin{lstlisting}[language=Java] 
 public EObject type( NumberLiteral s, TypeCalculationTrace trace ) {
-    if ( s.getValue().equals(s.getValue().intValue())) {
+    if ( s.getValue().equals(s.getValue().intValue()))
         return create(cl.getIntType());
-    }
     return create(cl.getFloatType());
 } 
 \end{lstlisting}
 
 
-
-\subsection{Expressions}
 
 Before we define the type system rules for the various expressions,  we first
 define two characteristics. A \emph{characteristic} is essentially a set of
@@ -113,13 +77,9 @@ types. Instead of listing the set of types over and over again, we can use the
 characteristic the shortcut.
 
 \begin{lstlisting}[language=xts] 
-characteristic COMPARABLE {
-    IntType, FloatType, BooleanType, StringType
-}  
+characteristic COMPARABLE { IntType, FloatType, BooleanType, StringType }  
   
-characteristic NUMERIC {
-    IntType, FloatType
-} 
+characteristic NUMERIC { IntType, FloatType } 
 \end{lstlisting}
 
 Then we define the type for the abstract \ic{Expression} class: it 
@@ -161,11 +121,6 @@ typeof Equality -> BooleanType {
     ensureCompatibility left :<=>: right
 }
 
-typeof AndOrExpression -> BooleanType {
-    ensureType left :<=: BooleanType
-    ensureType right :<=: BooleanType 
-}   
-
 typeof Plus -> common left right {
     ensureType left :<=: StringType, char(NUMERIC)
     ensureType right :<=: StringType, char(NUMERIC)
@@ -177,19 +132,11 @@ typeof Minus -> common left right {
     ensureType right :<=: char(NUMERIC)
     ensureCompatibility left :<=>: right
 } 
-
-typeof MultiOrDiv -> common left right { 
-    ensureType left :<=: char(NUMERIC)
-    ensureType right :<=: char(NUMERIC)
-} 
-
-typeof BooleanNegation -> BooleanType {
-    ensureType expression :<=: BooleanType
-}
 \end{lstlisting}
 
-The remainder of specifications for the binary expressions is essentially more
-of the same (Listing~\ref{lst:xts-binaryexpressions}).
+We show the most interesting
+specifications for the binary expressions
+in Listing~\ref{lst:xts-binaryexpressions}.
 The only thing worth mentioning is the \ic{common} keyword. Using \ic{common} in the
 type for a meta class means that the type is going to be the common supertype of the two
 arguments. This only works, if the two types are either the same or part of a
@@ -204,9 +151,8 @@ typeof AttributeRef -> feature attr
 \end{lstlisting}
 
 The type of the widgets (they are not expressions, but as we will see below, it
-is useful if they have a type) should also be relatively straightforward. This
-is also where  the type system rules for our test case are finally implemented
-(Listing~\ref{lst:xts-widgets}).
+is useful if they have a type) are shown in Listing~\ref{lst:xts-widgets}.
+They implement the checks for our case study (Section~\ref{sec:casestudy}).
 
 \begin{lstlisting}[language=xts,float,label=lst:xts-widgets,caption=Rules
 for widgets.] 
@@ -237,31 +183,32 @@ we can now use the following type specification for \ic{FieldContent}:
 typeof FieldContent -> ancestor Widget
 \end{lstlisting}
 
-The type of \ic{NewExpr} is the type of the \ic{new}'ed entity:
+% The type of \ic{NewExpr} is the type of the \ic{new}'ed entity:
+% 
+% \begin{lstlisting}[language=xts]
+%     typeof NewExpr -> feature entity
+% \end{lstlisting}
 
-\begin{lstlisting}[language=xts]
-    typeof NewExpr -> feature entity
-\end{lstlisting}
-
- Finally, the type of an \ic{Entity} also has to be calculated with Java code, because
- it has to be an \ic{EntityType} that references the corresponding entity:
+Finally, the type of an \ic{Entity} also has to be calculated with Java code, because
+it has to be an \ic{EntityType} that references the corresponding entity:
 
 \begin{lstlisting}[language=Java]
-    protected EObject type(Entity element, TypeCalculationTrace trace) {
-        EntityType et = (EntityType)create(cl.getEntityType());
-        et.setRef(element);
-        return et;
-    }
+protected EObject type(Entity element, TypeCalculationTrace trace) {
+    EntityType et = (EntityType)create(cl.getEntityType());
+    et.setRef(element);
+    return et;
+}
 \end{lstlisting}
 
 There is one more interesting open issue. We have to implement the subtyping
 relationship between entities. This is not so simple, because we compare
 \ic{EntityType}s, and the subtyping depends on whether their corresponding
 referenced entities are subtypes of each other. So instead of declaring a
-subtype relationship in the DSL, we can implement a type comparison function in
-Java. The method \emph{internalCompareTypesOrdered()} checks the entity subtype
-relation with cycle detection as seen in the plain Xtext case in listing
-\ref{lst:plain-type-conformance}, operation \emph{internalIsAssignable()}.
+subtype relationship directly in the XTS specification, we implement a type
+comparison function in Java. The method \emph{internalCompareTypesOrdered()} checks the entity subtype
+relation with cycle detection as seen in the plain Xtext case
+(listing~\ref{lst:plain-type-conformance}, operation
+\emph{internalIsAssignable()}).
 
 
 \begin{lstlisting}[language=Java]
