@@ -35,24 +35,24 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 	 * 
 	 */
 //tex
-   	def dispatch void infer(Entity element, IJvmDeclaredTypeAcceptor acceptor, 
-   			boolean preIndexingPhase) {
-   		acceptor.accept(element.toClass(element.fullyQualifiedName)).initializeLater [
+	def dispatch void infer(Entity element, IJvmDeclaredTypeAcceptor acceptor, 
+		boolean preIndexingPhase) {
+		acceptor.accept(element.toClass(element.fullyQualifiedName)).initializeLater [
 			documentation = element.documentation
 			if (element.superType != null)
 				superTypes += element.superType.cloneWithProxies
-		    for (attribute : element.attributes) {
+			for (attribute : element.attributes) {
 					val getter = attribute.toGetter(attribute.name, attribute.getJvmType)
-		    	if (attribute.expr != null) {
+				if (attribute.expr != null) {
 					getter.body = attribute.expr
-		        } else  {
-		            members += attribute.toField(attribute.name, attribute.getJvmType)
-			        members += attribute.toSetter(attribute.name, attribute.getJvmType)
-		        }
+				} else {
+					members += attribute.toField(attribute.name, attribute.getJvmType)
+					members += attribute.toSetter(attribute.name, attribute.getJvmType)
+				}
 				members += getter
-		    }
-   		]
-   	}
+			}
+		]
+	}
 
 //tex
 
