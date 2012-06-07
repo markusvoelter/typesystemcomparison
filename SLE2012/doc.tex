@@ -35,7 +35,7 @@
 
 
 \usepackage{listings} % http://en.wikibooks.org/wiki/LaTeX/Packages/Listings
-\usepackage{subfig}
+\usepackage{multicol}
 
 \usepackage{color}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -76,6 +76,12 @@
   escapeinside={\%*}{*)}%,            % if you want to add a comment within your code
   %morekeywords={*,...}               % if you want to add more keywords to the set
 }
+
+\newcommand{\listingcaption}[1]%
+{%
+\refstepcounter{lstlisting}\hfill%
+Listing \thelstlisting -- #1\hfill%\hfill%
+}%
 
 \usepackage{verbatim}
 \newenvironment{code} 

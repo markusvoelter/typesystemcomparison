@@ -2,7 +2,7 @@
 \label{sec:casestudy}
 
 As a practical example where type inference and validation is useful, we present
-a language for modeling forms in a GUI to edit entities in a database.  The
+a language for modeling forms in a GUI to edit entities.  The
 presented language is not intended to have all the features to be used in
 practice: it is only used as a case study to implement type systems, thus we
 will concentrate on the features that are more interesting to this aim.
@@ -35,8 +35,8 @@ inferred from its initialization expression.
 % Entities DSL,linerange={1-16}]{..//exampleCode/src/plain-xtext.gui}
 
 %float,
-\begin{lstlisting}[language=guidsl,float,label=lst:example-plain,caption=Forms
-and Entities DSL.] 
+\begin{lstlisting}[language=guidsl,float=*tb,multicols=2,label=lst:example-plain,caption=Forms
+and Entities DSL.\ \ \ \ \ \ \ \ \ \ \ ] 
 entity Person {
 	name      : string;
 	firstName : string;
@@ -46,6 +46,7 @@ entity Person {
 	isAdult : bool = age > 18;
 	greeting = "Hello " + firstName + " " + name + "!";
 }
+
 
 form PersonForm edits Person {
 	text (20) -> name validate lengthOf(widgetcontent) >= 2;
@@ -73,7 +74,7 @@ form PersonForm edits Person {
 
 %float
 \begin{lstlisting}[language=xtext,float,label=lst:grammar-plain,caption=Grammar
-with plain Xtext.] 
+of case study DSL.] 
 Model: (entities+=Entity | forms+=Form )*;
 Entity: "entity" name=ID ('extends' superType=[Entity])? "{" (attributes+=Attribute)* "}";
 Attribute: name=ID ( ((":" type=Type)? "=" expr=Expression) | (":" type=Type) )";";
@@ -98,7 +99,6 @@ In the Xbase scenario, the rule \emph{Expression} is replaced with the Xbase
 \begin{lstlisting}[language=xtext,float,label=lst:grammar-plain-types-and-ex,caption=Types
 and Expressions.] 
 Typable: Attribute | Expression;
-
 Type: PrimitiveType | EntityType;
 EntityType: ref=[Entity];
 PrimitiveType: NumberType | BooleanType | StringType;
@@ -110,16 +110,10 @@ StringType:	 {StringType}  "string";
 
 Expression: BooleanExpression;
 /* skipped full Expression grammar */
-Atomic returns Expression:
-       '(' Expression ')' |
-       ({FieldContent} "widgetcontent") |
-       ({LengthOf} "lengthOf" "(" expr=Expression ")" ) |
-       ({EntityType} "new" ref=[Entity]) | 
-       ({BooleanLiteral} value=("true"|"false")) |
-       ({FloatLiteral} value=Float) |
-       ({IntLiteral} value=INT) |
-       ({StringLiteral} value=STRING) |
-       ({AttributeRef} attr=[Attribute|ID]);
+Atomic returns Expression: '(' Expression ')' | {FieldContent} "widgetcontent" |
+		{LengthOf} "lengthOf" "(" expr=Expression ")" | {EntityType} "new" ref=[Entity] | 
+		{BooleanLiteral} value=("true"|"false") | {FloatLiteral} value=Float | {IntLiteral} value=INT |
+		{StringLiteral} value=STRING | {AttributeRef} attr=[Attribute|ID];
 \end{lstlisting}
 
 %\lstinputlisting[label=lst:grammar-plain-types-and-ex,caption=Grammar with
