@@ -134,8 +134,11 @@ is conformant to the attribute declared type (if specified); the expression
 after the \emph{validate} clause is boolean; the text widgets do not refer to
 boolean entity attributes; the checkbox widgets refer only to boolean
 attributes.
-All tasks imply being able to infer the type of expressions: The \emph{validate}
-clause is an expression, and widgets and checkboxes may refer to attributes with
+Concerning the types of expressions, the operator $+$ can be used both as the
+arithmetic sum (in this case the sum expression will have numeric type) and as
+string concatenation: if one of the operands is a string, the sum will have type
+string.  All tasks imply being able to infer the type of expressions:
+The \emph{validate} clause is an expression, and widgets and checkboxes may refer to attributes with
 initialization expressions.  Due to lack of space we cannot show all the code of
 the different implementations; we refer the interested reader to the complete
 implementations source code:
