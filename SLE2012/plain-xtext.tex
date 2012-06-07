@@ -10,7 +10,7 @@ The first two tasks are implemented by \mytt{GuiDslTypeProvider}, partially
 shown in Listing~\ref{lst:plain-type-provider1}, written in Xtend. The method
 \emph{getType()} determines the actual type of an expression. It avoids endless
 loops in case of cyclic dependencies (typically due to a malformed cyclic entity
-hierarchy) by caching already calculated types.  The type of a primitive type
+hierarchy) by caching already visited elements.  The type of a primitive type
 model element as well as the type of an entity is defined to be itself. The type
 of an attribute is its declared type or the type of its initialization
 expression.  In case there are both an initialization expression and an explicit type, a
@@ -37,7 +37,7 @@ class GuiDslTypeProvider {
 	def Type getType(EObject e) { getType(e, newHashSet()) }
 	def Type getType(EObject e, Collection<EObject> visited) {
 		if (visited.contains(e)) return cyclicType; // cycle detected
-			visited.add(e)
+		visited.add(e)
 		switch e {
 			Widget : e.attr.getType(visited)
 			Attribute case e.expr != null && e.type != null 
@@ -74,14 +74,14 @@ type of the summands that is more specific. The method returns \emph{null} to
 indicate if there is no expected type.
 
 An important part of a type system is type conformance, i.e., whether another
-type can be provided where a certain type is expected.
+type can be provided where a certain type is expected (\emph{subtyping}).
 Listing~\ref{lst:plain-type-conformance} shows parts of the Xtend code to
 compute whether a type is assignable to another, using polymorphic dispatch, (this is used by
 the \mytt{GuiDslTypeProvider} shown above).
 The method
 \emph{isAssignable(left, right)} returns true if an element of type \emph{right}
 can be used where an element of type \emph{left} is expected.
-Thanks to polymorphic dispatch is used, a call to \emph{isAssignable()} will be
+Thanks to polymorphic dispatch, a call to \emph{isAssignable()} will be
 dispatched to the method with the most specific type parameters for the run-time
 types of the arguments. The most ``general'' method has the arguments
 \emph{(Type, Type)} and specifies that a type can always be assigned to itself,
@@ -91,9 +91,10 @@ An entity can be assigned to another entity if it is of the same type (i.e., has
 the same EMF \emph{EClass}), or if the latter is a super entity of the former.
 Here, the reference \emph{superType} is not an EMF reference, but the one given
 in the grammar for \emph{Entity}. Other special cases are dealt with the
-following methods. As \emph{IntType} and \emph{FloatType} are on the same EMF
-model inheritance hierarchy level, an assignment rule has to be explicitly
-specified.
+other methods. 
+% As \emph{IntType} and \emph{FloatType} are on the same EMF
+% model inheritance hierarchy level, an assignment rule has to be explicitly
+% specified.
 
 \begin{lstlisting}[language=xtend,float=tb,label=lst:plain-type-conformance,caption=Type
 conformance specification (Xtend code).] 
@@ -101,32 +102,29 @@ class TypeConformance {
 	def dispatch isAssignable(Type left, Type right) {
 		left.eClass == right.eClass || right.eClass.EAllSuperTypes.contains(left.eClass) 
 	}
-
 	def dispatch isAssignable(EntityType left, EntityType right) {
 		internalIsAssignable(left.ref, right.ref, newHashSet())
 	}
 	def internalIsAssignable(Entity left, Entity right, Collection<Entity> visited) {
 		if (visited.contains(right)) return false; // cycle detected
 		visited.add(right)
-		left == right || (right.superType != null && 
-			internalIsAssignable(left, right.superType, visited) )
+		left == right || (right.superType != null && internalIsAssignable(left, right.superType, visited) )
 	}
-	
 	def dispatch isAssignable(FloatType left, IntType right) { true }
 	def dispatch isAssignable(StringType left, NumberType right) { true }
 
-	def Type mostGeneral(Type one, Type two) {
-		if (isAssignable(one, two)) one else two
-	}
+	def Type mostGeneral(Type one, Type two) { if (isAssignable(one, two)) one else two }
 }
 \end{lstlisting}
 
 
 Finally, the validator, partially shown in Listing~\ref{lst:validation-plain},
-uses these classes shown above.  The validation operating on text widgets checks that
-the type of attribute the widget refers to is not \emph{boolean}.  The validation on
-checkbox widgets, not shown in the listing, checks that the type is
-\emph{boolean} in a similar way.
+uses the classes shown above to implement the checks on the widgets (see
+Section~\ref{sec:casestudy}).
+% uses these classes shown above.  The validation operating on text widgets checks that
+% the type of attribute the widget refers to is not \emph{boolean}.  The validation on
+% checkbox widgets, not shown in the listing, checks that the type is
+% \emph{boolean} in a similar way.
 There is also a check which acts on any widget used to check whether the actual
 type is assignable to the expected type, for instance \emph{boolean} for the
 \emph{validate} clause of a widget. The expected type of an expression usually
@@ -150,18 +148,15 @@ public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 					GuiDslPackage.Literals.WIDGET__ATTR, INCOMPATIBLE_TYPES);
 		}
 	}
-
 	protected void checkType(EObject object, EStructuralFeature feature) {
 		Type expectedType = guiDslTypeProvider.getExpectedType(object);
 		Type actualType = guiDslTypeProvider.getType(object);
 		if (actualType instanceof CyclicDependencyType)
 			error("Type is part of a cyclic dependency.", feature, INCOMPATIBLE_TYPES);
 		if (expectedType == null) return;
-		if (!conformance.isAssignable(expectedType, actualType)) {
-			error("Incompatible types. Expected '" + expectedType
-					+ "' but was '" + actualType + "'", feature,
+		if (!conformance.isAssignable(expectedType, actualType))
+			error("Incompatible types. Expected '" + expectedType + "' but was '" + actualType + "'", feature,
 					INCOMPATIBLE_TYPES);
-		}
 	}
 }
 \end{lstlisting}
