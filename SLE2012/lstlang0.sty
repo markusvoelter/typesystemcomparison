@@ -56,3 +56,25 @@
    morestring=[b]",%
    morestring=[b]',%
   }[keywords,comments,strings]
+
+\lst@definelanguage{MPS}%
+  {morekeywords={typesystem,ecore,file,language,package,%
+  	section,typeof,subtype,base,clone,javacode,characteristic,%
+  	abstract,ensureType,ensureCompatibility,char,common,feature,ancestor,
+  	type,var,foreach,new},%
+   sensitive,% 
+   morecomment=[l]//,% 
+   morecomment=[s]{/*}{*/},%
+   morestring=[b]",%
+   morestring=[b]',%
+  }[keywords,comments,strings]
+
+\lst@definelanguage{Spoofax}%
+  {alsoletter={-},
+   morekeywords={type-of,where},%
+   sensitive,% 
+   morecomment=[l]//,% 
+   morecomment=[s]{/*}{*/},%
+   morestring=[b]",%
+   morestring=[b]',%
+  }[keywords,comments,strings]
