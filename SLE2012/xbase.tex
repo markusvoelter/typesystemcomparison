@@ -14,8 +14,8 @@ which delegates to the built-in Xbase type provider.
 %\lstinputlisting[language=xtend,label=lst:xbase-validator,caption=Xtext
 %validator in the Xbase scenario.]	{code/XGuiDslJavaValidatorx.xtend}
 
-\begin{lstlisting}[language=xtend,float=tb,label=lst:xbase-validator,caption=Xtext
-validator in the Xbase scenario.] 
+\begin{listing}[tb]
+\begin{lstlisting}[language=xtend] 
 class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 	@Inject private extension GuiTypeProvider typeProvider;
 
@@ -29,6 +29,9 @@ class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 	}
 }
 \end{lstlisting}
+\caption{Xtext validator in the Xbase scenario.}
+\label{lst:xbase-validator}
+\end{listing}
 
 The specification of how to infer Java types from the DSL is shown in the
 \emph{JvmModelInferrer} in Listing~\ref{lst:xbase-jvm-inferrer}.  For each
@@ -50,8 +53,8 @@ attribute's type.
 %\lstinputlisting[language=xtend,label=lst:xbase-jvm-inferrer,caption=JvmModelInferrer
 % written in Xtend.]	{code/XGuiDslJvmModelInferrer.xtend}
 
-\begin{lstlisting}[language=xtend,float=tb,label=lst:xbase-jvm-inferrer,caption=JvmModelInferrer
-written in Xtend.] 
+\begin{listing}[tb]
+\begin{lstlisting}[language=xtend] 
 class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 	@Inject extension JvmTypesBuilder
 	@Inject extension IQualifiedNameProvider
@@ -87,6 +90,9 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
    	}
 }
 \end{lstlisting}
+\caption{JvmModelInferrer written in Xtend.}
+\label{lst:xbase-jvm-inferrer}
+\end{listing}
 
 % \subsection{Summary}
 % The Xbase approach uses the \emph{JvmModelInferrer} to infer and generate Java

@@ -90,33 +90,14 @@ of \ic{Expression} are actually covered by their own type system rules.
 typeof Expression -> abstract
 \end{lstlisting}
 
-We can now take a look at some of the more interesting cases. For comparisons,
-the type will be \ic{BooleanType} and the \ic{left} and \ic{right} arguments
-have to be \ic{COMPARABLE} (see the characteristic above). In addition, they
-also have to be \emph{compatible}. For instance, while boolean and string types are
-both \ic{COMPARABLE}, they cannot be compared \emph{to each other}. This is why
-we need this explicit compatibility check:
-
-\begin{lstlisting}[language=xts]
- typeof Comparison -> BooleanType {
+\begin{listing}[tb]
+\begin{lstlisting}[language=xts] 
+typeof Comparison -> BooleanType {
      ensureType left :<=: char(COMPARABLE)
      ensureType right :<=: char(COMPARABLE)
      ensureCompatibility left :<=>: right
- } 
-\end{lstlisting}
-
-
-The \verb|:<=:| operator represents \emph{ordered} compatibility. It means that
-the type on the left must be the same or a subtype of the type specified on the
-right. The symbol \verb|:<=>:| represents \emph{unordered} compatibility: the
-left must be the same or a subtype of the right, or vice versa. The operator is
-illustrated in the code below. Notice the type fo the \ic{Plus} expression.
-Using \ic{common} means that the type is the common supertype of the two
-arguments. This only works if the two types are either the same or part of a
-subtype relationship (such as \ic{FloatType} and \ic{IntType}).
-
-
-\begin{lstlisting}[language=xts,float,label=lst:xts-binaryexpressions] 
+}
+ 
 typeof Equality -> BooleanType {
     ensureType left :<=: char(COMPARABLE), BooleanType
     ensureType right :<=: char(COMPARABLE), BooleanType
@@ -129,6 +110,26 @@ typeof Plus -> common left right {
     ensureCompatibility left :<=>: right
 } 
 \end{lstlisting}
+\caption{Some rules for binary expressions.}
+\label{lst:xts-binaryexpressions}
+\end{listing}
+
+We can now take a look at some of the more interesting cases
+(Listing~\ref{lst:xts-binaryexpressions}).
+For comparisons, the type will be \ic{BooleanType} and the \ic{left} and \ic{right} arguments
+have to be \ic{COMPARABLE} (see the characteristic above). In addition, they
+also have to be \emph{compatible}. For instance, while boolean and string types are
+both \ic{COMPARABLE}, they cannot be compared \emph{to each other}. This is why
+we need this explicit compatibility check.
+The \verb|:<=:| operator represents \emph{ordered} compatibility. It means that
+the type on the left must be the same or a subtype of the type specified on the
+right. The symbol \verb|:<=>:| represents \emph{unordered} compatibility: the
+left must be the same or a subtype of the right, or vice versa. The operator is
+illustrated in the code below. Notice the type fo the \ic{Plus} expression.
+Using \ic{common} means that the type is the common supertype of the two
+arguments. This only works if the two types are either the same or part of a
+subtype relationship (such as \ic{FloatType} and \ic{IntType}).
+
 
 
 Let us now look at some more special cases: the type of the \ic{AttributeRef}
@@ -140,10 +141,11 @@ typeof AttributeRef -> feature attr
 \end{lstlisting}
 
 The type of the widgets (they are not expressions, but as we will see below, it
-is useful for them to have a type) are shown below. They implement the checks
-for our case study (Section~\ref{sec:casestudy}).
+is useful for them to have a type) are shown in Listing~\ref{lst:xts-widgets}.
+They implement the checks for our case study (Section~\ref{sec:casestudy}).
 
-\begin{lstlisting}[language=xts,float,label=lst:xts-widgets] 
+\begin{listing}[tb]
+\begin{lstlisting}[language=xts] 
 // 1) the expression after "validate" must be boolean
 typeof Widget -> abstract
 
@@ -160,7 +162,9 @@ typeof CheckBoxWidget -> feature attr {
     ensureType validate :<=: BooleanType
 }
 \end{lstlisting}
-
+\caption{Types for widgets.}
+\label{lst:xts-widgets}
+\end{listing}
 
 We can now calculate the type of the \ic{FieldContent} expression, which has the
 same type as the \ic{Attribute} to which the parent widget points. Since we have
@@ -187,8 +191,7 @@ protected EObject type(Entity element, TypeCalculationTrace trace) {
 There is one more interesting open issue. We have to implement the subtyping
 relationship between entities. This is not so simple, because we compare
 \ic{EntityType}s, and the subtyping depends on whether their corresponding
-referenced entities are subtypes of each other \todo{Is this an example of
-covariant subtyping?}. So instead of declaring a subtype relationship directly
+referenced entities are subtypes of each other. So instead of declaring a subtype relationship directly
 in the XTS specification, we implement a type comparison method in Java. The
 method \emph{internalCompareTypesOrdered()} checks the entity subtype relation
 with cycle detection as seen in the plain Xtext case

@@ -46,8 +46,8 @@ Java parameters) or output parameters (in that case you use the keyword
 % experience, we never needed more than two output parameters; the extension of
 % more than two output parameters is however straightforward.}
 
-\begin{lstlisting}[language=xsemantics,float,label=lst:xsem-judgments,caption=Judgment
-definitions in Xsemantics]
+\begin{listing}[tb]
+\begin{lstlisting}[language=xsemantics]
 import org.typesys.xsem.guidsl.xsemGuiDsl.*
 
 judgments {
@@ -56,6 +56,9 @@ judgments {
 	mostGeneral |- Type first ~~  Type second |> output Type // the most general type between first and second
 }
 \end{lstlisting}
+\caption{Judgment definitions in Xsemantics.}
+\label{lst:xsem-judgments}
+\end{listing}
 
 The judgment definitions for our case study are shown in
 Listing~\ref{lst:xsem-judgments}.
@@ -110,9 +113,8 @@ will be overwritten.  Thus, the rule environment passed to a rule acts
 in a stack manner.
 
 
-
-\begin{lstlisting}[language=xsemantics,float,label=lst:xsem-firstrules,caption=Some
-examples of rules and axioms in Xsemantics.]
+\begin{listing}[tb]
+\begin{lstlisting}[language=xsemantics]
 axiom BooleanLiteralType
 	G |- BooleanLiteral lit : XsemGuiDslFactory::eINSTANCE.createBooleanType
 
@@ -128,6 +130,9 @@ rule FieldContentType
 	G |- FieldContent fieldContent : Type type
 from { G |- env(G, 'widgetcontent', Attribute) : type }
 \end{lstlisting}
+\caption{Some examples of rules and axioms in Xsemantics.}
+\label{lst:xsem-firstrules}
+\end{listing}
 
 In Listing~\ref{lst:xsem-firstrules} we present some rules for the judgment
 \mytt{type} (see Listing~\ref{lst:xsem-judgments}, recall that in the rules of
@@ -215,8 +220,8 @@ fail if the invoked rule fails.
 % Thus, the rule in Listing~\ref{lst:xsem-attribute} relies on rules of the
 % judgment \mytt{isAssignable} (see Listing~\ref{lst:xsem-judgments}); 
 
-\begin{lstlisting}[language=xsemantics,float,label=lst:xsem-assignable,caption=Some
-rules for the \mytt{isAssignable} judgment.] 
+\begin{listing}[tb]
+\begin{lstlisting}[language=xsemantics] 
 rule IsAssignableBase
 	G |- Type left <~ Type right
 from { left.eClass == right.eClass }
@@ -233,6 +238,9 @@ from {
 	getAll(right.ref, XsemGuiDslPackage::eINSTANCE.entity_SuperType, XsemGuiDslPackage::eINSTANCE.entity_SuperType, typeof(Entity)).contains(left.ref)
 }
 \end{lstlisting}
+\caption{Some rules for the \mytt{isAssignable} judgment.}
+\label{lst:xsem-assignable}
+\end{listing}
 
 The rules of the judgment \mytt{isAssignable} (see
 Listing~\ref{lst:xsem-judgments}), which basically implements subtyping, do not
@@ -292,8 +300,33 @@ getAll(entity,
 % two; this judgment has one simple rule, shown in
 % Listing~\ref{lst:xsem-mostgeneral}.
 
-\begin{lstlisting}[language=xsemantics,float,label=lst:xsem-binaryexp,caption=Some
-rules for binary expressions.] 
+% \begin{lstlisting}[language=xsemantics,float,label=lst:xsem-binaryexp,caption=Some
+% rules for binary expressions.] 
+% rule MinusType
+% 	G |- Minus minus : NumberType type
+% from {
+% 	// require number types
+% 	G |- minus.left : var NumberType leftType
+% 	G |- minus.right : var NumberType rightType
+% 	// get the most general
+% 	G |- leftType ~~ rightType |> type
+% }
+% 
+% rule PlusType
+% 	G |- Plus plus : Type type
+% from {
+% 	// deal with any type
+% 	G |- plus.left : var Type leftType
+% 	G |- plus.right : var Type rightType
+% 	// get the most general (which can also be string)
+% 	G |- leftType ~~ rightType |> type
+% }
+% \end{lstlisting}
+
+\begin{listing}[tb]
+\begin{multicols}{2}
+\centering
+\begin{lstlisting}[language=xsemantics] 
 rule MinusType
 	G |- Minus minus : NumberType type
 from {
@@ -314,6 +347,10 @@ from {
 	G |- leftType ~~ rightType |> type
 }
 \end{lstlisting}
+\end{multicols}
+  \caption{Some rules for binary expressions.}
+  \label{lst:xsem-binaryexp}
+\end{listing}
 
 % \begin{figure}
 % \subfloat{\lstinputlisting[language=xsemantics,resetmargins=true]{code/MinusType.xsem}}
@@ -384,8 +421,8 @@ Xsemantics will generate a Java validator with a \checkm{} method for each
 \mytt{checkrule}; just like in Java validators for Xtext languages, you can have
 many checkrules for the same JavaType (provided the rule name is unique).
 
-\begin{lstlisting}[language=xsemantics,float,label=lst:xsem-validator,caption=Some
-checkrules for the Validator.] 
+\begin{listing}[tb]
+\begin{lstlisting}[language=xsemantics] 
 checkrule AttributeTypeChecks for Attribute attribute
 from { empty |- attribute : var Type type }
 
@@ -405,6 +442,9 @@ from {
 checkrule ValidateCheckBoxWidgetAttributeBoolean for CheckBoxWidget widget
 from { 'widgetcontent' <- widget.attr |- widget.attr : var BooleanType attrType }
 \end{lstlisting}
+\caption{Some checkrules for the Validator.}
+\label{lst:xsem-validator}
+\end{listing}
 
 In Listing~\ref{lst:xsem-validator} we present some checkrules for validating
 the elements of our language (see Section~\ref{sec:casestudy}).  The first

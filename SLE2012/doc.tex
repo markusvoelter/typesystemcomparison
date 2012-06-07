@@ -17,12 +17,6 @@
 
 \usepackage{datetime} % for the date in the draft versions
 
-% \usepackage{float}
-% \floatstyle{boxed}
-% 
-% \newfloat{listing}{tbp}{lol}
-% \floatname{listing}{Listing}
-
 % \usepackage[T1]{fontenc}
 % \newcommand{\changefont}[3]{\fontfamily{#1}\fontseries{#2}\fontshape{#3}\selectfont}
 % \newcommand{\ic}[1]{\changefont{cmtt}{m}{n}{#1}\normalfont} %keyword font
@@ -77,11 +71,16 @@
   %morekeywords={*,...}               % if you want to add more keywords to the set
 }
 
-\newcommand{\listingcaption}[1]%
-{%
-\refstepcounter{lstlisting}\hfill%
-Listing \thelstlisting -- #1\hfill%\hfill%
-}%
+\usepackage{float}
+%\floatstyle{boxed}
+\floatstyle{plaintop}
+
+\newfloat{listing}{tbp}{lol}
+\floatname{listing}{Listing}
+
+% \makeatletter
+% \let\c@listing\c@lstlisting
+% \makeatother
 
 \usepackage{verbatim}
 \newenvironment{code} 
@@ -95,6 +94,9 @@ Listing \thelstlisting -- #1\hfill%\hfill%
 	 \rule{\textwidth}{0.7pt}
 	 \vspace{0mm}
 	 }
+
+\setlength{\floatsep}{.5em}
+\setlength{\textfloatsep}{.5em}
 
 \input{macros}
 

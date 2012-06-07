@@ -25,7 +25,8 @@ the widget refers to.
 %\lstinputlisting[language=xtend,label=lst:plain-type-provider1,caption=Type
 %provider in Xtend.]{code/GuiDslTypeProvider.xtend}
 
-\begin{lstlisting}[language=xtend,float=tb,label=lst:plain-type-provider1,caption=Type provider in Xtend.] 
+\begin{listing}[tb]
+\begin{lstlisting}[language=xtend] 
 class GuiDslTypeProvider {
 	@Inject extension TypeConformance conformance
 	// declare the built-in types for easy use
@@ -59,6 +60,9 @@ class GuiDslTypeProvider {
 	} 
 }
 \end{lstlisting}
+\label{lst:plain-type-provider1}
+\caption{Type provider in Xtend.}
+\end{listing}
 
 The operation \emph{getExpectedType()} in Listing~\ref{lst:plain-type-provider1}
 returns the expected type of an EObject by checking its container. It calls
@@ -96,8 +100,8 @@ other methods.
 % model inheritance hierarchy level, an assignment rule has to be explicitly
 % specified.
 
-\begin{lstlisting}[language=xtend,float=tb,label=lst:plain-type-conformance,caption=Type
-conformance specification (Xtend code).] 
+\begin{listing}[tb]
+\begin{lstlisting}[language=xtend] 
 class TypeConformance {
 	def dispatch isAssignable(Type left, Type right) {
 		left.eClass == right.eClass || right.eClass.EAllSuperTypes.contains(left.eClass) 
@@ -116,7 +120,9 @@ class TypeConformance {
 	def Type mostGeneral(Type one, Type two) { if (isAssignable(one, two)) one else two }
 }
 \end{lstlisting}
-
+\caption{Type conformance specification (Xtend code).}
+\label{lst:plain-type-conformance}
+\end{listing}
 
 Finally, the validator, partially shown in Listing~\ref{lst:validation-plain},
 uses the classes shown above to implement the checks on the widgets (see
@@ -138,7 +144,8 @@ that the expression can be typed.
 %\lstinputlisting[label=lst:validation-plain,caption=Xtext
 % validator.,]{code/GuiDslJavaValidator.java}
 
-\begin{lstlisting}[float=tb,label=lst:validation-plain,caption=Xtext validator.] 
+\begin{listing}[tb]
+\begin{lstlisting} 
 public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 	@Check
 	public void check(TextWidget widget) {
@@ -160,6 +167,9 @@ public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 	}
 }
 \end{lstlisting}
+\caption{Xtext validator.}
+\label{lst:validation-plain}
+\end{listing}
 
 
 %\lstinputlisting[language=xtend,label=lst:plain-type-conformance,caption=Type

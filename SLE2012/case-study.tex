@@ -34,9 +34,9 @@ inferred from its initialization expression.
 %\lstinputlisting[language=bash,label=lst:example-plain,caption=Forms and
 % Entities DSL,linerange={1-16}]{..//exampleCode/src/plain-xtext.gui}
 
-%float,
-\begin{lstlisting}[language=guidsl,float=*tb,multicols=2,label=lst:example-plain,caption=Forms
-and Entities DSL.\ \ \ \ \ \ \ \ \ \ \ ] 
+\begin{listing}[tb]
+\begin{multicols}{2}
+\begin{lstlisting}[language=guidsl] 
 entity Person {
 	name      : string;
 	firstName : string;
@@ -47,7 +47,6 @@ entity Person {
 	greeting = "Hello " + firstName + " " + name + "!";
 }
 
-
 form PersonForm edits Person {
 	text (20) -> name validate lengthOf(widgetcontent) >= 2;
 	text (20) -> firstName;
@@ -57,6 +56,33 @@ form PersonForm edits Person {
 	text (30) -> greeting;
 }
 \end{lstlisting}
+\end{multicols}
+\caption{Forms and Entities DSL.}
+\label{lst:example-plain}
+\end{listing}
+
+% \begin{lstlisting}[language=guidsl,float=*tb,multicols=2,label=lst:example-plain,caption=Forms
+% and Entities DSL.\ \ \ \ \ \ \ \ \ \ \ ] 
+% entity Person {
+% 	name      : string;
+% 	firstName : string;
+% 	age       : int; 
+% 	weight    : float;
+% 	likesCake : bool; 
+% 	isAdult : bool = age > 18;
+% 	greeting = "Hello " + firstName + " " + name + "!";
+% }
+% 
+% 
+% form PersonForm edits Person {
+% 	text (20) -> name validate lengthOf(widgetcontent) >= 2;
+% 	text (20) -> firstName;
+% 	text (5) -> age validate 12.5 > widgetcontent;
+% 	text (5) -> weight validate 0 < widgetcontent;
+% 	checkbox -> isAdult;
+% 	text (30) -> greeting;
+% }
+% \end{lstlisting}
 
 
 % In order to compare the different approaches for type systems, the case study is
@@ -73,8 +99,8 @@ form PersonForm edits Person {
 % Xtext,linerange={7-53}]{../org.typesys.guidsl/src/org/typesys/guidsl/GuiDsl.xtext}
 
 %float
-\begin{lstlisting}[language=xtext,float,label=lst:grammar-plain,caption=Grammar
-of case study DSL.] 
+\begin{listing}[tb]
+\begin{lstlisting}[language=xtext] 
 Model: (entities+=Entity | forms+=Form )*;
 Entity: "entity" name=ID ('extends' superType=[Entity])? "{" (attributes+=Attribute)* "}";
 Attribute: name=ID ( ((":" type=Type)? "=" expr=Expression) | (":" type=Type) )";";
@@ -83,21 +109,7 @@ Widget: TextWidget | CheckBoxWidget ;
 TextWidget:
 	"text" "(" length=Number ")" "->" attr=[Attribute] ("validate" validate=Expression)? ";";
 CheckBoxWidget: "checkbox" "->" attr=[Attribute] ("validate" validate=Expression)? ";" ;
-\end{lstlisting}
 
-The Xtext grammar part used by all variants of type system implementation is
-shown in Listing~\ref{lst:grammar-plain}. The type and expression definition
-part of the grammar in Listing~\ref{lst:grammar-plain-types-and-ex} is the same
-for the the plain Xtext grammar and the XSemantics and Xtext/TS grammars (for lack of space we
-do not show the complete grammar of expressions).
-The rule \mytt{Typable} is not called by any other rule of the grammar: it is
-only useful to create a common superclass for \mytt{Attribute} and
-\mytt{Expression} which are the elements we want to type.
-In the Xbase scenario, the rule \emph{Expression} is replaced with the Xbase
-\emph{XExpression} rule, which maps to Java types and expressions.
-
-\begin{lstlisting}[language=xtext,float,label=lst:grammar-plain-types-and-ex,caption=Types
-and Expressions.] 
 Typable: Attribute | Expression;
 Type: PrimitiveType | EntityType;
 EntityType: ref=[Entity];
@@ -115,6 +127,21 @@ Atomic returns Expression: '(' Expression ')' | {FieldContent} "widgetcontent" |
 		{BooleanLiteral} value=("true"|"false") | {FloatLiteral} value=Float | {IntLiteral} value=INT |
 		{StringLiteral} value=STRING | {AttributeRef} attr=[Attribute|ID];
 \end{lstlisting}
+\caption{Grammar of case study DSL.}
+\label{lst:grammar-plain}
+\end{listing}
+
+The Xtext grammar part used by all variants of type system implementation is
+shown in Listing~\ref{lst:grammar-plain}. The type and expression definition
+part of the grammar is the same
+for the the plain Xtext grammar and the XSemantics and Xtext/TS grammars (for lack of space we
+do not show the complete grammar of expressions).
+The rule \mytt{Typable} is not called by any other rule of the grammar: it is
+only useful to create a common superclass for \mytt{Attribute} and
+\mytt{Expression} which are the elements we want to type.
+In the Xbase scenario, the rule \emph{Expression} is replaced with the Xbase
+\emph{XExpression} rule, which maps to Java types and expressions.
+
 
 %\lstinputlisting[label=lst:grammar-plain-types-and-ex,caption=Grammar with
 % plain Xtext,linerange={54-120}]{../org.typesys.guidsl/src/org/typesys/guidsl/GuiDsl.xtext}
