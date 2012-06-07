@@ -5,7 +5,7 @@ To leverage type checking and scoping of Xbase in this scenario, the
 \emph{Expression} rule in the grammar is replaced with the Xbase
 \emph{XExpression} and \emph{JvmTypes} are inferred for \emph{Entities} and
 \emph{Forms}.
-The validator in the Xbase scenario is shown in
+The validator in the Xbase scenario, written in Xtend, is shown in
 Listing~\ref{lst:xbase-validator}. The validation methods (e.g. the one for a
 \emph{TextWidget}) look similar to the plain Xtext scenario, with the difference
 that now \emph{JvmTypes} are compared, which are supplied by a type provider
@@ -18,16 +18,14 @@ which delegates to the built-in Xbase type provider.
 validator in the Xbase scenario.] 
 class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 	@Inject private extension GuiTypeProvider typeProvider;
-	@Inject TypeConformanceComputer typeConformanceComputer;
 
 	@Check
 	def void checkTextWidgetForNonBoolean(TextWidget widget) {
 		val jvmTypeReference = widget.attr.getJvmType
 		if (jvmTypeReference == null) return;
-		if (jvmTypeReference.getQualifiedName().equals(Boolean::TYPE.getName())) {
+		if (jvmTypeReference.getQualifiedName().equals(Boolean::TYPE.getName()))
 			error("Textbox may NOT refer to boolean attributes.",
 					XGuiDslPackage$Literals::WIDGET__ATTR, IssueCodes::INCOMPATIBLE_TYPES);
-		}
 	}
 }
 \end{lstlisting}
