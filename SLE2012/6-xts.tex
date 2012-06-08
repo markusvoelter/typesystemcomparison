@@ -91,25 +91,30 @@ typeof Expression -> abstract
 \end{lstlisting}
 
 \begin{listing}[tb]
-\begin{lstlisting}[language=xts] 
+\begin{tabular}{ll}
+\begin{lstlisting}[language=xts,boxpos=t] 
 typeof Comparison -> BooleanType {
-     ensureType left :<=: char(COMPARABLE)
-     ensureType right :<=: char(COMPARABLE)
-     ensureCompatibility left :<=>: right
-}
- 
-typeof Equality -> BooleanType {
-    ensureType left :<=: char(COMPARABLE), BooleanType
-    ensureType right :<=: char(COMPARABLE), BooleanType
-    ensureCompatibility left :<=>: right
+  ensureType left :<=: char(COMPARABLE)
+  ensureType right :<=: char(COMPARABLE)
+  ensureCompatibility left :<=>: right
 }
 
+typeof Equality -> BooleanType {
+  ensureType left :<=: char(COMPARABLE), BooleanType
+  ensureType right :<=: char(COMPARABLE), BooleanType
+  ensureCompatibility left :<=>: right
+}
+\end{lstlisting}
+&
+\begin{lstlisting}[language=xts,boxpos=t] 
 typeof Plus -> common left right {
-    ensureType left :<=: StringType, char(NUMERIC)
-    ensureType right :<=: StringType, char(NUMERIC)
-    ensureCompatibility left :<=>: right
+  ensureType left :<=: StringType, char(NUMERIC)
+  ensureType right :<=: StringType, char(NUMERIC)
+  ensureCompatibility left :<=>: right
 } 
 \end{lstlisting}
+\end{tabular}
+\vspace{-3.5ex}
 \caption{Some rules for binary expressions.}
 \label{lst:xts-binaryexpressions}
 \end{listing}
@@ -145,7 +150,8 @@ is useful for them to have a type) are shown in Listing~\ref{lst:xts-widgets}.
 They implement the checks for our case study (Section~\ref{sec:casestudy}).
 
 \begin{listing}[tb]
-\begin{lstlisting}[language=xts] 
+\begin{tabular}{l@{\hspace{.5cm}}l}
+\begin{lstlisting}[language=xts,boxpos=t] 
 // 1) the expression after "validate" must be boolean
 typeof Widget -> abstract
 
@@ -155,13 +161,17 @@ typeof TextWidget -> feature attr {
     ensureType attr :<=: StringType, IntType, FloatType
     ensureType validate :<=: BooleanType
 }  
-
+\end{lstlisting}
+&
+\begin{lstlisting}[language=xts,boxpos=t] 
 // 3) checkbox widgets may only refer to boolean attributes
 typeof CheckBoxWidget -> feature attr {
     ensureType attr :<=: BooleanType
     ensureType validate :<=: BooleanType
 }
 \end{lstlisting}
+\end{tabular}
+\vspace{-3.5ex}
 \caption{Types for widgets.}
 \label{lst:xts-widgets}
 \end{listing}
