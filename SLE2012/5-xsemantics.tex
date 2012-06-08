@@ -113,33 +113,59 @@ will be overwritten.  Thus, the rule environment passed to a rule acts
 in a stack manner.
 
 
-\begin{listing}[tb]
+\begin{table}[tb]
+\scriptsize
+\begin{tabular}{l@{\hspace{.5cm}}c}
 \begin{lstlisting}[language=xsemantics]
 axiom BooleanLiteralType
 	G |- BooleanLiteral lit : XsemGuiDslFactory::eINSTANCE.createBooleanType
-
+\end{lstlisting}
+&
+\inferrule
+{}
+{\g \f \mykeyb{true} : \mykeyb{boolean} }
+\\ [-2.5ex]
+\begin{lstlisting}[language=xsemantics]
 rule AttributeRefType
 	G |- AttributeRef attrRef : Type type
 from { G |- attrRef.attr : type }
-
+\end{lstlisting}
+&
+\inferrule
+{\g \f \mytt{attr} : \T}
+{\g \f \mykeyb{ref} \ \mytt{attr} : \T }
+\\ [-2.5ex]
+\begin{lstlisting}[language=xsemantics]
 rule LengthOfType
 	G |- LenghtOf len : XsemGuiDslFactory::eINSTANCE.createIntType
 from { G |- len.expr : var StringType stringType }
-
+\end{lstlisting}
+&
+\inferrule
+{\g \f \mytt{exp} : \mykeyb{string}}
+{\g \f \mykeyb{lengthOf}(\mytt{exp}) : \mykeyb{int} }
+\\ [-2.5ex]
+\begin{lstlisting}[language=xsemantics]
 rule FieldContentType
 	G |- FieldContent fieldContent : Type type
 from { G |- env(G, 'widgetcontent', Attribute) : type }
 \end{lstlisting}
+&
+\inferrule
+{\g \f \g(\mykeyb{widgetcontent}) : \T}
+{\g \f \mykeyb{widgetcontent} : \T }
+\end{tabular}
 \caption{Some examples of rules and axioms in Xsemantics.}
 \label{lst:xsem-firstrules}
-\end{listing}
+\end{table}
 
-In Listing~\ref{lst:xsem-firstrules} we present some rules for the judgment
+In Table~\ref{lst:xsem-firstrules} we present some rules for the judgment
 \mytt{type} (see Listing~\ref{lst:xsem-judgments}, recall that in the rules of
 these judgments the second parameter is an output parameter).
-For typing a literal (in the example a boolean literal) we write an axiom (since
-there is no premise) and the result is a \mytt{BooleanType} (created through the
-EMF factory for our language).  The rule for typing an \mytt{AttributeRef} can
+In the table we also show on the right the possible type deduction rules in a
+possible formalization of our case study, to show how the specifications are
+similar.  For typing a literal (in the example a boolean literal) we write an
+axiom (since there is no premise) and the result is a \mytt{BooleanType} (created through the EMF factory for our language).  The rule for typing an \mytt{AttributeRef} can
 be read as follows: the type of an \mytt{AttributeRef} is the type resulting
 from typing the corresponding referred attribute (the feature \mytt{attr}, refer
 to Listing~\ref{lst:grammar-plain}). The type of a \mytt{LenghtOf} expression is
@@ -151,36 +177,36 @@ corresponding value.  If no key is found in the environment or the value cannot
 be assigned to the specified Java type the premise will fail.  We will show
 how an environment is passed later in Listing~\ref{lst:xsem-validator}.  Thus,
 this rule will type \mykeyb{widgetcontent} with the type of the corresponding
-attribute. 
+attribute.
 
-In an hypothetical formal type system, we would probably write these typing rules
-as
-
-\begin{center}
-\begin{scriptsize}
-\begin{tabular}{c@{\hspace{.5cm}}c@{\hspace{.5cm}}c@{\hspace{.5cm}}c}
-\inferrule
-{}
-{\g \f \mykeyb{true} : \mykeyb{boolean} }
-&
-\inferrule
-{\g \f \mytt{attr} : \T}
-{\g \f \mykeyb{ref} \ \mytt{attr} : \T }
-&
-\inferrule
-{\g \f \mytt{exp} : \mykeyb{string}}
-{\g \f \mykeyb{lengthOf}(\mytt{exp}) : \mykeyb{int} }
-&
-\inferrule
-{\g \f \g(\mykeyb{widgetcontent}) : \T}
-{\g \f \mykeyb{widgetcontent} : \T }
-\end{tabular}
-\end{scriptsize}
-\end{center}
-
-\noindent
-Note how the rules in Xsemantics (see Listing~\ref{lst:xsem-firstrules})
-resemble the deduction rules typically used in formal type systems.
+% In an hypothetical formal type system, we would probably write these typing rules
+% as
+% 
+% \begin{center}
+% \begin{scriptsize}
+% \begin{tabular}{c@{\hspace{.5cm}}c@{\hspace{.5cm}}c@{\hspace{.5cm}}c}
+% \inferrule
+% {}
+% {\g \f \mykeyb{true} : \mykeyb{boolean} }
+% &
+% \inferrule
+% {\g \f \mytt{attr} : \T}
+% {\g \f \mykeyb{ref} \ \mytt{attr} : \T }
+% &
+% \inferrule
+% {\g \f \mytt{exp} : \mykeyb{string}}
+% {\g \f \mykeyb{lengthOf}(\mytt{exp}) : \mykeyb{int} }
+% &
+% \inferrule
+% {\g \f \g(\mykeyb{widgetcontent}) : \T}
+% {\g \f \mykeyb{widgetcontent} : \T }
+% \end{tabular}
+% \end{scriptsize}
+% \end{center}
+% 
+% \noindent
+% Note how the rules in Xsemantics (see Listing~\ref{lst:xsem-firstrules})
+% resemble the deduction rules typically used in formal type systems.
 
 At runtime, upon rule invocation, the generated Java system will select the most
 appropriate rule according to the runtime types of the passed argument (using
@@ -348,6 +374,7 @@ from {
 }
 \end{lstlisting}
 \end{multicols}
+\vspace{-2.5ex}
   \caption{Some rules for binary expressions.}
   \label{lst:xsem-binaryexp}
 \end{listing}
