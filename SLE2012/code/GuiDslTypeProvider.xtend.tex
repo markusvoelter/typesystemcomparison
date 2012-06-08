@@ -41,7 +41,7 @@ class GuiDslTypeProvider {
 			ArithmeticSigned : number
 			
 			// return type of attribute referenced by the widget
-			FieldContent : return e.getContainerOfType(typeof(Widget))?.attr?.getType(visited)
+			WidgetContent : return e.getContainerOfType(typeof(Widget))?.attr?.getType(visited)
 			LengthOf : _int
 			EntityType : e // type is itself
 			BooleanLiteral : bool

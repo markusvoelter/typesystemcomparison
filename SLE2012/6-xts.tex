@@ -176,13 +176,13 @@ typeof CheckBoxWidget -> feature attr {
 \label{lst:xts-widgets}
 \end{listing}
 
-We can now calculate the type of the \ic{FieldContent} expression, which has the
+We can now calculate the type of the \ic{WidgetContent} expression, which has the
 same type as the \ic{Attribute} to which the parent widget points. Since we have
 defined the type of the \ic{Widget} to be the type of the reference \ic{Attribute}, we can
-now use the following type specification for \ic{FieldContent}:
+now use the following type specification for \ic{WidgetContent}:
 
 \begin{lstlisting}[language=xts]
-typeof FieldContent -> ancestor Widget
+typeof WidgetContent -> ancestor Widget
 \end{lstlisting}
 
 Finally, the type of an \ic{Entity} also has to be calculated with Java code, because

@@ -146,8 +146,8 @@ from { G |- len.expr : var StringType stringType }
 {\g \f \mykeyb{lengthOf}(\mytt{exp}) : \mykeyb{int} }
 \\ [-2.5ex]
 \begin{lstlisting}[language=xsemantics]
-rule FieldContentType
-	G |- FieldContent fieldContent : Type type
+rule WidgetContentType
+	G |- WidgetContent widgetContent : Type type
 from { G |- env(G, 'widgetcontent', Attribute) : type }
 \end{lstlisting}
 &

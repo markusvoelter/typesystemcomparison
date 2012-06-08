@@ -123,7 +123,7 @@ StringType:	 {StringType}  "string";
 
 Expression: BooleanExpression;
 /* skipped full Expression grammar */
-Atomic returns Expression: '(' Expression ')' | {FieldContent} "widgetcontent" |
+Atomic returns Expression: '(' Expression ')' | {WidgetContent} "widgetcontent" |
 		{LengthOf} "lengthOf" "(" expr=Expression ")" | {EntityType} "new" ref=[Entity] | 
 		{BooleanLiteral} value=("true"|"false") | {FloatLiteral} value=Float | {IntLiteral} value=INT |
 		{StringLiteral} value=STRING | {AttributeRef} attr=[Attribute|ID];
