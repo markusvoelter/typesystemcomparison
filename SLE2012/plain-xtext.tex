@@ -6,9 +6,9 @@ the actual type of an expression, the expected type (which depends on the
 context where the expression is used), and operations which check whether a type
 is assignable to another type.
 
-The first two tasks are implemented by \mytt{GuiDslTypeProvider}, partially
+The first two tasks are implemented by \ic{GuiDslTypeProvider}, partially
 shown in Listing~\ref{lst:plain-type-provider1}, written in Xtend. The method
-\emph{getType()} determines the actual type of an expression. It avoids endless
+\ic{getType()} determines the actual type of an expression. It avoids endless
 loops in case of cyclic dependencies (typically due to a malformed cyclic entity
 hierarchy) by caching already visited elements.  The type of a primitive type
 model element as well as the type of an entity is defined to be itself. The type
@@ -17,10 +17,10 @@ expression.  In case there are both an initialization expression and an explicit
 conformance check is made before (shown later). If that
 check fails, the default (\verb|null|) of the switch statement is returned.
 References to attributes have the type of the referenced attribute, and the
-\emph{widgetcontent} used in validate clauses has the type of the attribute that
+\ic{widgetcontent} used in validate clauses has the type of the attribute that
 the widget refers to.
 
-%Note that \verb|e.type| is the reference to a (primitive) type while \verb|e.expr.type| and \verb|e.attr.type| recursively call \emph{getType()}. They use the Xtend 2 syntax shortcut to \verb|getType(e.expr.type)| and \verb|getType(e.attr.type)|. 
+%Note that \verb|e.type| is the reference to a (primitive) type while \verb|e.expr.type| and \verb|e.attr.type| recursively call \ic{getType()}. They use the Xtend 2 syntax shortcut to \verb|getType(e.expr.type)| and \verb|getType(e.attr.type)|. 
 
 %\lstinputlisting[language=xtend,label=lst:plain-type-provider1,caption=Type
 %provider in Xtend.]{code/GuiDslTypeProvider.xtend}
@@ -64,17 +64,17 @@ class GuiDslTypeProvider {
 \caption{Type provider in Xtend.}
 \end{listing}
 
-The operation \emph{getExpectedType()} in Listing~\ref{lst:plain-type-provider1}
+The operation \ic{getExpectedType()} in Listing~\ref{lst:plain-type-provider1}
 returns the expected type of an EObject by checking its container. It calls
 another operation (not shown here) with the container of the EObject and the
 feature of the container pointing to it. For instance, if the container of an
-expression is a \emph{Widget} and the feature of the widget containing the
-expression is the \emph{validate} clause, the expected type is boolean. If the
-container is a \emph{Form} and the EObject a \emph{Widget}, the expected type
+expression is a \ic{Widget} and the feature of the widget containing the
+expression is the \ic{validate} clause, the expected type is boolean. If the
+container is a \ic{Form} and the EObject a \ic{Widget}, the expected type
 must be primitive (i.e., a widget cannot directly edit an entity).
 The expected type of a subtraction, multiplication and division is a
-\emph{NumberType}. For an addition, it is a string, unless there is a common
-type of the summands that is more specific. The method returns \emph{null} to
+\ic{NumberType}. For an addition, it is a string, unless there is a common
+type of the summands that is more specific. The method returns \ic{null} to
 indicate if there is no expected type.
 
 An important part of a type system is type conformance, i.e., whether another
@@ -83,20 +83,20 @@ Listing~\ref{lst:plain-type-conformance} shows parts of the Xtend code to
 compute whether a type is assignable to another, using polymorphic dispatch, (this is used by
 the \mytt{GuiDslTypeProvider} shown above).
 The method
-\emph{isAssignable(left, right)} returns true if an element of type \emph{right}
-can be used where an element of type \emph{left} is expected.
-Thanks to polymorphic dispatch, a call to \emph{isAssignable()} will be
+\ic{isAssignable(left, right)} returns true if an element of type \ic{right}
+can be used where an element of type \ic{left} is expected.
+Thanks to polymorphic dispatch, a call to \ic{isAssignable()} will be
 dispatched to the method with the most specific type parameters for the run-time
 types of the arguments. The most ``general'' method has the arguments
-\emph{(Type, Type)} and specifies that a type can always be assigned to itself,
+\ic{(Type, Type)} and specifies that a type can always be assigned to itself,
 or to one of its supertypes, using the type hierarchy of the EMF model generated
 by the Xtext Grammar.
 An entity can be assigned to another entity if it is of the same type (i.e., has
-the same EMF \emph{EClass}), or if the latter is a super entity of the former.
-Here, the reference \emph{superType} is not an EMF reference, but the one given
-in the grammar for \emph{Entity}. Other special cases are dealt with the
+the same EMF \ic{EClass}), or if the latter is a super entity of the former.
+Here, the reference \ic{superType} is not an EMF reference, but the one given
+in the grammar for \ic{Entity}. Other special cases are dealt with the
 other methods. 
-% As \emph{IntType} and \emph{FloatType} are on the same EMF
+% As \ic{IntType} and \ic{FloatType} are on the same EMF
 % model inheritance hierarchy level, an assignment rule has to be explicitly
 % specified.
 
@@ -128,12 +128,12 @@ Finally, the validator, partially shown in Listing~\ref{lst:validation-plain},
 uses the classes shown above to implement the checks on the widgets (see
 Section~\ref{sec:casestudy}).
 % uses these classes shown above.  The validation operating on text widgets checks that
-% the type of attribute the widget refers to is not \emph{boolean}.  The validation on
+% the type of attribute the widget refers to is not \ic{boolean}.  The validation on
 % checkbox widgets, not shown in the listing, checks that the type is
-% \emph{boolean} in a similar way.
+% \ic{boolean} in a similar way.
 There is also a check which acts on any widget used to check whether the actual
-type is assignable to the expected type, for instance \emph{boolean} for the
-\emph{validate} clause of a widget. The expected type of an expression usually
+type is assignable to the expected type, for instance \ic{boolean} for the
+\ic{validate} clause of a widget. The expected type of an expression usually
 depends on the context where the expression is in.
 In case there is no expected type, for instance for an attribute whose type is
 only defined by the derivation expression, the check operation just returns.
@@ -177,7 +177,7 @@ public class GuiDslJavaValidator extends AbstractGuiDslJavaValidator {
 
 % \subsection{Summary}
 % The plain Xtext approach makes use of polymorphic dispatch and the Xtend syntax
-% to keep the code concise, for instance with the Xtend \emph{switch} statement.
+% to keep the code concise, for instance with the Xtend \ic{switch} statement.
 % It consists of four main parts:
 % \begin{itemize}
 % \item Xtend code to compute actual types recursively,

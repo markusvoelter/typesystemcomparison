@@ -178,7 +178,7 @@ typeof CheckBoxWidget -> feature attr {
 
 We can now calculate the type of the \ic{FieldContent} expression, which has the
 same type as the \ic{Attribute} to which the parent widget points. Since we have
-defined the type of the \emph{Widget} to be the type of the reference \ic{Attribute}, we can
+defined the type of the \ic{Widget} to be the type of the reference \ic{Attribute}, we can
 now use the following type specification for \ic{FieldContent}:
 
 \begin{lstlisting}[language=xts]
@@ -203,10 +203,10 @@ relationship between entities. This is not so simple, because we compare
 \ic{EntityType}s, and the subtyping depends on whether their corresponding
 referenced entities are subtypes of each other. So instead of declaring a subtype relationship directly
 in the XTS specification, we implement a type comparison method in Java. The
-method \emph{internalCompareTypesOrdered()} checks the entity subtype relation
-with cycle detection as seen in the plain Xtext case
+method \ic{in\-ternal\-Com\-pare\-Types\-Ordered()} checks the entity subtype
+relation with cycle detection as seen in the plain Xtext case
 (Listing~\ref{lst:plain-type-conformance}, method
-\emph{internalIsAssignable()}).
+\ic{internalIsAssignable()}).
 
 
 \begin{lstlisting}[language=Java]
