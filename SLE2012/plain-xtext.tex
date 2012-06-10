@@ -77,14 +77,12 @@ The expected type of a subtraction, multiplication and division is a
 type of the summands that is more specific. The method returns \ic{null} to
 indicate if there is no expected type.
 
-An important part of a type system is type conformance, i.e., whether another
-type can be provided where a certain type is expected (\emph{subtyping}).
-Listing~\ref{lst:plain-type-conformance} shows parts of the Xtend code to
-compute whether a type is assignable to another, using polymorphic dispatch, (this is used by
-the \mytt{GuiDslTypeProvider} shown above).
-The method
-\ic{isAssignable(left, right)} returns true if an element of type \ic{right}
-can be used where an element of type \ic{left} is expected.
+The \mytt{GuiDslTypeProvider} makes use of the Xtend code in
+Listing~\ref{lst:plain-type-conformance} to compute whether another type can be
+provided where a certain type is expected, also known as type conformance,
+which is an important part of a type system. 
+The method \ic{is}- \ic{Assignable(left, right)} returns true if an element of
+type \ic{right} can be used where an element of type \ic{left} is expected.
 Thanks to polymorphic dispatch, a call to \ic{isAssignable()} will be
 dispatched to the method with the most specific type parameters for the run-time
 types of the arguments. The most ``general'' method has the arguments

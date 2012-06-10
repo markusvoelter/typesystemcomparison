@@ -5,7 +5,7 @@ Xsemantics~\cite{lbts} (the successor of Xtypes~\cite{Bet11}) is a DSL (written
 in Xtext) for writing type systems, reduction rules, interpreters (and in
 general relation rules) for languages implemented in Xtext.
 In this paper, we will use it for writing the rules of the type system of the
-case study we are considering (Section~\ref{sec:casestudy}).
+case study (Section~\ref{sec:casestudy}).
 A system definition in Xsemantics is a set of judgment rules which have a
 conclusion and a set of premises; these rules can act on any Java object,
 though, typically, they will act on EObjects which are elements of the metamodel
@@ -20,11 +20,9 @@ Xsemantics is thought to be used by people who are at least a little familiar
 with formal type systems and operational semantics: it aims at providing
 a syntax which is close to the way deduction rules are written in a formal
 setting~\cite{hindley:1997a,Pierce02}.
-Actually, Xsemantics rules are written in the other direction with respect
-to standard deduction rules: the conclusion comes before the premises; this is
-just to make the IDE tooling work better, and to give a more ``programming''-like
-style to rules.
-
+For a better IDE tooling and a more ``programming''-like style for
+rules, Xsemantics rules are written in the other direction with respect
+to standard deduction rules: the conclusion comes before the premises.
 
 % Xsemantics aims at
 % providing a rich syntax for defining any kind of rules: relations among elements
@@ -39,8 +37,8 @@ a \textit{judgment symbol} that can be chosen from some predefined symbols; the
 \textit{parameters} of the judgment; parameters of a judgments are separated by
 a \textit{relation symbol} that can be chosen from some predefined symbols.
 The parameters can be either input parameters (in that case they are declared as
-Java parameters) or output parameters (in that case you use the keyword
-\verb|output| followed by the Java type of the output parameter).
+Java parameters) or output parameters (in that case the keyword
+\verb|output| followed by the Java type of the output parameter can be used).
 % Judgments can have any number of input parameters (though they must have at
 % least one input parameter) and at most two output parameters.\footnote{In our
 % experience, we never needed more than two output parameters; the extension of
@@ -71,7 +69,7 @@ separated by a \textit{relation symbol} that can be chosen from some predefined
 symbols.
 
 The things that make a rule belong to a specific judgment are the judgment
-symbol and the relation symbols (which separate the parameters); moreover the
+symbol and the relation symbols (which separate the parameters); moreover, the
 types of the parameters of a rule must be (Java) subtypes of the corresponding types
 of the judgment (or exactly the same Java types).  Two rules belonging to the
 same judgment must differ for at least one input parameter's type.
@@ -79,7 +77,7 @@ same judgment must differ for at least one input parameter's type.
 The premises of a rule which are specified in a \verb|from| block can be any
 Xbase expression, or a \emph{rule invocation}.  If one thinks of a rule
 declaration as a function declaration, then a rule invocation corresponds to a
-function invocation, thus you must specify the environment to pass to the rule,
+function invocation, thus one must specify the environment to pass to the rule,
 and the arguments, both input and output arguments.
 The premises of an Xsemantics rule are considered to be in a \emph{logical and}
 relation and are verified in the same order they are specified in the block.
@@ -87,8 +85,8 @@ If one needs premises (or blocks of premises) in a \emph{logical or} relation,
 the operator \verb|or| can be used to separate blocks of premises.
 If a rule does not require any premise, we can use a special kind of rule,
 called \textit{axiom}, which only has a conclusion.
-In the premises you can assign values to the output parameters; and when you
-invoke another rule, upon return, the output arguments will have the values
+In the premises one can assign values to the output parameters; and when 
+another rule is invoked, upon return, the output arguments will have the values
 assigned in the invoked rule.
 
 Also the concept of rule environment is taken from the type theory (usually it
@@ -97,7 +95,7 @@ is denoted by the $\g$).  It can be used to pass additional arguments to rules
 Furthermore, when passing an environment during a rule invocation, one
 can specify additional \emph{environment mappings}, using the syntax
 \lstinline[breakatwhitespace=false,breaklines=true]!key <- value!, 
-where you can use any Xbase expression.
+where one can use any Xbase expression.
 % you can also pass an environment with additional
 % mappings separated by a comma (or even build an environment from scratch
 % by specifying all the mappings, still separated by a comma); for instance
@@ -105,10 +103,10 @@ where you can use any Xbase expression.
 % or
 % \lstinline[breakatwhitespace=false,breaklines=true]!x <- o.eClass, y <- (o.eClass.name == 'foo')!, 
 % etc.
-Note that when you pass an environment to a rule with additional mappings,
-you actually pass a brand new environment, thus you will not modify the
-current rule environment; if a mapping already exists in the current rule
-environment, in the brand new environment (and only there) the existing mapping
+Note that when an environment is passed to a rule with additional mappings,
+actually a brand new environment is passed, thus the
+current rule environment will not be modified; if a mapping already exists in
+the current rule environment, in the brand new environment (and only there) the existing mapping
 will be overwritten.  Thus, the rule environment passed to a rule acts
 in a stack manner.
 
@@ -446,7 +444,7 @@ Xsemantics to generate a Java validator for the Xtext language.  A
 be checked by the validator) and the premises (but no rule environment).  The
 syntax of the premises of a \mytt{checkrule} is the same of standard rules.
 Xsemantics will generate a Java validator with a \checkm{} method for each
-\mytt{checkrule}; just like in Java validators for Xtext languages, you can have
+\mytt{checkrule}; just like in Java validators for Xtext languages, one can have
 many checkrules for the same JavaType (provided the rule name is unique).
 
 \begin{listing}[tb]

@@ -1,7 +1,7 @@
 \section{Related Work}
 \label{sec:related}
 
-In this Section we overview some related work
+In this Section we present some related work
 concerning Xtext (we also refer to \cite{PP08} for a wider comparison)
 and other language frameworks dealing with type system implementations.
 
@@ -49,13 +49,13 @@ typeof(arrInitExpr) :==: new ArrayType(T);
 % Since MPS focusses on language extension and embedding, it is crucial that type
 % systems are easily extensible as well.
 
-Spoofax, relies on Stratego~\cite{Stratego2008}, a term transformation language
+Spoofax relies on Stratego~\cite{Stratego2008}, a term transformation language
 for defining almost all language aspects beyond the grammar. For type computation,
 Spoofax predefines a transformation rule \ic{type-of} which returns the type of
 a program element passed in as an argument. To define the type for a
 particular language concept, the \ic{type-of} rule has to be overridden for that
-concept. Below are the that that assigns an \ic{IntType} to the
-\ic{Int} literal and also assigns \ic{IntType} to the \ic{Add} expression:
+concept. Below are the rules that assign an \ic{IntType} to the
+\ic{Int} literal and also assign \ic{IntType} to the \ic{Add} expression:
 
 \begin{lstlisting}[language=Spoofax]
   type-of: Int(value) -> IntType()
@@ -87,7 +87,8 @@ just \emph{adding} additional cases.
 
 OCL~\cite{WarmerKleppe99,OCLOMG} is an expression language for declaring
 constraints on metamodels; while OCL is suitable for specifying constraints, it
-might be harder to use it to perform type computations than Xsemantics and XTS.
+might be harder to use it compared to Xsemantics and XTS to perform type
+computations.
 
 EriLex~\cite{EriLex} is a software tool for embedded DSLs and it supports
 specifying syntax, type rules, and dynamic semantics of such languages but it
@@ -95,7 +96,7 @@ does not generate any artifact for IDE functionalities.
 On the contrary, \xtext{} shares with older tools (like
 \emph{Synthesizer}~\cite{Synthesizer} and \emph{Centaur}~\cite{Centaur}) the
 philosophy that the editing tooling is crucial for the programming (in
-particular the immediate feedback about problems in the program being editing)
+particular the immediate feedback about problems in the program being edited)
 and thus a framework for implementing languages should address also this
 functionality; with this respect Xsemantics and XTS aim at providing a
 specification language for type systems in Xtext, to speed up the

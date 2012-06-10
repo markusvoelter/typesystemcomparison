@@ -32,8 +32,7 @@ abstractions (useful for building interpreters) and so-called template expressio
 building generators). Xtext, however, provides no support for defining the
 static semantics, or \emph{type system}, for a language beyond implementing
 typing rules in Java as part of the validation aspect. As languages become more
-sophisticated, this lack of support for efficiently implementing type systems
-turns out to be a major issue.
+sophisticated, there is a need for efficiently implementing type systems.
 
 The main mechanism of type system implementation tools hence should be the
 computation of the type of program elements. The type system is then integrated
@@ -44,8 +43,8 @@ functionalities:
 \begin{description}
   \item[F1] The framework must come with a facility to express arbitrary typing
   rules in a concise way. 
-  \item[F2] There are a few very common cases for typing rules for which a
-  concise expression of typing rules is especially important. These include the 
+  \item[F2] The framework must support common cases for typing rules for
+  which a concise expression is especially important. These include the 
   assignment of fixed types to program elements, the derivation of the type of one 
   element from the type of one of its properties and the computation of common (super-)types.
   \item[F3] The framework must be robust in the sense that it reports on

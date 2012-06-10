@@ -42,8 +42,8 @@ body of the getter Java method.  To get scoping and type checking of the
 each validate clause. The method's name is derived from the attribute's name the
 widget refers to. The case study requires that the keyword \verb|widgetcontent|
 in the \emph{validate} clause must refer to the attribute the widget refers to.
-This is done in Xbase by adding a parameter with the same name of the
-attribute's type. 
+This is done in Xbase by adding a parameter \verb|widgetcontent| with the
+attribute's type.
 % Though not required in the case study, the entity's attributes
 % are also on the scope by adding a parameter of the entity's type. The parameter
 % name \emph{it} has a special meaning in Xtend - it may be omitted in an
@@ -66,13 +66,13 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 				superTypes += element.superType.cloneWithProxies
 			for (attribute : element.attributes) {
 				val getter = attribute.toGetter(attribute.name, attribute.getJvmType)
-				members += getter
 				if (attribute.expr != null) {
 					getter.body = attribute.expr
 				} else  {
 					members += attribute.toField(attribute.name, attribute.getJvmType)
 					members += attribute.toSetter(attribute.name, attribute.getJvmType)
 				}
+				members += getter
 			}
 		]
 	}
