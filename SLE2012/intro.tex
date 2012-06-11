@@ -23,7 +23,7 @@ interpreter.  Static semantics typically involves checking constraints on the
 program.
 \emph{Type checking} is a specific case of constraint checking. In order to use
 constraints to check if a type is valid, that type (and all other types in the
-model) first have to be calculated. For non-trivial languages, type computation
+model) first has to be calculated. For non-trivial languages, type computation
 can be quite elaborate.
 
 In the context of Xtext, both the static semantics and the dynamic semantics can
@@ -31,17 +31,18 @@ be effectively implemented in Java and Xtend, a Java-like language that also pro
 abstractions (useful for building interpreters) and so-called template expressions (useful for
 building generators). Xtext, however, provides no support for defining the
 static semantics, or \emph{type system}, for a language beyond implementing
-typing rules in Java as part of the validation aspect. As languages become more
-sophisticated, there is a need for efficiently implementing type systems.
+typing rules in Java/Xtend as part of the validation aspect. As languages become
+more sophisticated, there is a need for efficiently implementing type systems
+with a dedicated DSL to write the type system rules in a compact form.
 
 The main mechanism of type system implementation tools hence should be the
-computation of the type of program elements. The type system is then integrated
-with the constraint checking facilities to perform the actual type checks. More
-specifically, a type system facility has to support the following
+computation of the type of program elements. The type system should then be
+integrated with the constraint checking facilities to perform the actual type checks. More
+specifically, a type system framework has to support the following
 functionalities:
 
 \begin{description}
-  \item[F1] The framework must come with a facility to express arbitrary typing
+  \item[F1] The framework must come with a DSL to express arbitrary typing
   rules in a concise way. 
   \item[F2] The framework must support common cases for typing rules for
   which a concise expression is especially important. These include the 
@@ -64,10 +65,13 @@ functionalities:
 approaches for implementing type systems for Xtext based languages. We start out
 by showing how to implement type systems with Xtext only and then compare three
 alternative approaches: XSemantics, Xtext Type System (XTS) and the type system
-introduced by Xbase. We will conclude that using DSLs for defining type systems for DSLs is
-a very worthwhile approach. Our secondary contribution is a brief look
-at other language development tools and the ways they defined type systems for
-DSLs.
+introduced by Xbase. We will conclude that using DSLs for defining type systems
+for DSLs is a very worthwhile approach. Our secondary contribution is a brief
+look at other language development tools and the ways they defined type systems
+for DSLs.
+All the issues we deal with throughout the paper are typical of the task of
+implementing the type system of a programming language, thus the presented
+techniques can be reused in other DSL implementations.
 
 The paper is structured as follows: in Section~\ref{sec:casestudy} we
 introduce a case study that we will use to compare the various type system definition approaches discussed in this paper.
@@ -77,11 +81,11 @@ default way suggested by Xtext: an implementation in plain Java/Xtend
 in Section~\ref{sec:plain-xtext}. In Section~\ref{sec:xbase} we will show how to
 integrate a DSL type system with Xbase, a reusable expression language, integrated
 with Java, and shipped with Xtext. Then, we implement
-the type system for our case study DSL in Xsemantics (Section~\ref{sec:xsemantics}) and 
+the type system for our case study in Xsemantics (Section~\ref{sec:xsemantics}) and 
 in XTS (Xtext Type System) (Section~\ref{sec:xts}), two DSLs for implementing
 type systems for Xtext. In Section~\ref{sec:evaluation} we evaluate and compare
-the approaches introduced so far based on a set of criteria introduced above and
-provide recommendations on when to use which approach.  We conclude the paper
+the approaches introduced so far based on the set of criteria introduced above
+and provide recommendations on when to use which approach.  We conclude the paper
 with related work (Section~\ref{sec:related}).
 The
 code of the implementations presented in this paper is available at \\
