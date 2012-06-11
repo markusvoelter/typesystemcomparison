@@ -75,12 +75,12 @@ must be primitive (i.e., a widget cannot directly edit an entity).
 The expected type of a subtraction, multiplication and division is a
 \ic{NumberType}. For an addition, it is a string, unless there is a common
 type of the summands that is more specific. The method returns \ic{null} to
-indicate if there is no expected type.
+indicate that there is no expected type.
 
 The \mytt{GuiDslTypeProvider} makes use of the Xtend code in
 Listing~\ref{lst:plain-type-conformance} to compute whether another type can be
-provided where a certain type is expected, also known as type conformance,
-which is an important part of a type system. 
+provided where a certain type is expected, also known as type conformance or
+subtyping, which is an important part of a type system. 
 The method \ic{is\-Assignable(left, right)} returns true if an element of
 type \ic{right} can be used where an element of type \ic{left} is expected.
 Thanks to polymorphic dispatch, a call to \ic{isAssignable()} will be
@@ -93,7 +93,8 @@ An entity can be assigned to another entity if it is of the same type (i.e., has
 the same EMF \ic{EClass}), or if the latter is a super entity of the former.
 Here, the reference \ic{superType} is not an EMF reference, but the one given
 in the grammar for \ic{Entity}. Other special cases are dealt with the
-other methods. 
+other methods.  As in Listing~\ref{lst:plain-type-provider1}, we must cache the
+visited enities to avoid endless loops in case of malformed cyclic hierarchies.
 % As \ic{IntType} and \ic{FloatType} are on the same EMF
 % model inheritance hierarchy level, an assignment rule has to be explicitly
 % specified.

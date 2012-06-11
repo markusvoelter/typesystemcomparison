@@ -94,7 +94,7 @@ is denoted by the $\g$).  It can be used to pass additional arguments to rules
 (an empty environment can be passed using the keyword \mykeyb{empty}).
 Furthermore, when passing an environment during a rule invocation, one
 can specify additional \emph{environment mappings}, using the syntax
-\lstinline[breakatwhitespace=false,breaklines=true]!key <- value!, 
+\verb!key <- value!, 
 where one can use any Xbase expression.
 % you can also pass an environment with additional
 % mappings separated by a comma (or even build an environment from scratch
@@ -161,10 +161,10 @@ from { G |- env(G, 'widgetcontent', Attribute) : type }
 In Table~\ref{lst:xsem-firstrules} we present some rules for the judgment
 \mytt{type} (see Listing~\ref{lst:xsem-judgments}, recall that in the rules of
 these judgments the second parameter is an output parameter).
-In the table we also show on the right the possible type deduction rules in a
+In the table we also show on the right the typical type deduction rules in a
 possible formalization of our case study, to show how the specifications are
-similar.  For typing a literal (in the example a boolean literal) we write an
-axiom (since there is no premise) and the result is a \mytt{BooleanType} (created through the EMF factory for our language).  The rule for typing an \mytt{AttributeRef} can
+similar (apart from the order of the conclusion and the premises).  For typing a
+literal (in the example a boolean literal) we write an axiom (since there is no premise) and the result is a \mytt{BooleanType} (created through the EMF factory for our language).  The rule for typing an \mytt{AttributeRef} can
 be read as follows: the type of an \mytt{AttributeRef} is the type resulting
 from typing the corresponding referred attribute (the feature \mytt{attr}, refer
 to Listing~\ref{lst:grammar-plain}). The type of a \mytt{LenghtOf} expression is
@@ -288,7 +288,7 @@ implementation of the type system (see Listings~\ref{lst:plain-type-provider1}
 and~\ref{lst:plain-type-conformance}) we use a predefined function of
 Xsemantics, to compute the ``closure'' of a graph:
 
-\begin{lstlisting}[language=xsemantics] 
+\begin{lstlisting}[language=Java] 
 getAll(eObject, feature to collect, feature to follow, expected type)
 \end{lstlisting}
 

@@ -2,13 +2,13 @@
 \label{sec:xbase}
 
 To leverage type checking and scoping of Xbase in this scenario, the
-\emph{Expression} rule in the grammar is replaced with the Xbase
-\emph{XExpression} and \emph{JvmTypes} are inferred for \emph{Entities} and
+\ic{Expression} rule in the grammar is replaced with the Xbase
+\ic{XExpression} and \ic{JvmTypes} are inferred for \emph{Entities} and
 \emph{Forms}.
 The validator in the Xbase scenario, written in Xtend, is shown in
 Listing~\ref{lst:xbase-validator}. The validation methods (e.g. the one for a
-\emph{TextWidget}) look similar to the plain Xtext scenario, with the difference
-that now \emph{JvmTypes} are compared, which are supplied by a type provider
+\ic{TextWidget}) look similar to the plain Xtext scenario, with the difference
+that now \ic{JvmTypes} are compared, which are supplied by a type provider
 which delegates to the built-in Xbase type provider.
 
 %\lstinputlisting[language=xtend,label=lst:xbase-validator,caption=Xtext
@@ -16,7 +16,7 @@ which delegates to the built-in Xbase type provider.
 
 \begin{listing}[tb]
 \begin{lstlisting}[language=xtend] 
-class XGuiDslJavaValidatorx extends XbaseJavaValidator {
+class XGuiDslJavaValidator extends XbaseJavaValidator {
 	@Inject private extension GuiTypeProvider typeProvider;
 
 	@Check
@@ -34,20 +34,20 @@ class XGuiDslJavaValidatorx extends XbaseJavaValidator {
 \end{listing}
 
 The specification of how to infer Java types from the DSL is shown in the
-\emph{JvmModelInferrer} in Listing~\ref{lst:xbase-jvm-inferrer}.  For each
+\ic{Jvm\-Model\-Inferrer} in Listing~\ref{lst:xbase-jvm-inferrer}.  For each
 entity, a Java class is inferred with fields, getters and setters.
 If an initialization expression for an attribute is given it will become the
 body of the getter Java method.  To get scoping and type checking of the
-\emph{validate} clause inside a \emph{Form} from Xbase, a method with return type \emph{boolean} is inferred for
+\ic{validate} clause inside a \ic{Form} from Xbase, a method with return type \emph{boolean} is inferred for
 each validate clause. The method's name is derived from the attribute's name the
 widget refers to. The case study requires that the keyword \verb|widgetcontent|
-in the \emph{validate} clause must refer to the attribute the widget refers to.
+in the \ic{validate} clause must refer to the attribute the widget refers to.
 This is done in Xbase by adding a parameter \verb|widgetcontent| with the
 attribute's type.
 % Though not required in the case study, the entity's attributes
 % are also on the scope by adding a parameter of the entity's type. The parameter
-% name \emph{it} has a special meaning in Xtend - it may be omitted in an
-% expression, so that in a \emph{validate} clause, one could either write
+% name \ic{it} has a special meaning in Xtend - it may be omitted in an
+% expression, so that in a \ic{validate} clause, one could either write
 % \lstinline[basicstyle=\ttfamily]{it.name.length > 2} or \verb|name.length > 2|.
 
 %\lstinputlisting[language=xtend,label=lst:xbase-jvm-inferrer,caption=JvmModelInferrer
@@ -95,8 +95,8 @@ class XGuiDslJvmModelInferrer extends AbstractModelInferrer {
 \end{listing}
 
 % \subsection{Summary}
-% The Xbase approach uses the \emph{JvmModelInferrer} to infer and generate Java
+% The Xbase approach uses the \ic{JvmModelInferrer} to infer and generate Java
 % classes with appropriate operations for entities and forms so that it can make
-% use of Xbase for scoping and validation (e.g. for the \emph{validate} clause of
+% use of Xbase for scoping and validation (e.g. for the \ic{validate} clause of
 % a widget). Types are inferred using the built-in Xbase type provider, for
 % example in the validator.
