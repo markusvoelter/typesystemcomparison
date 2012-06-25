@@ -1,3 +1,0 @@
-include "java.lang"
-
-keyword = "as|typeof|def|override|dispatch"

@@ -1,8 +1,0 @@
-axiom BooleanLiteralType
-	G |- BooleanLiteral lit : XsemGuiDslFactory::eINSTANCE.createBooleanType
-
-rule AttributeRefType
-	G |- AttributeRef attrRef : Type type
-from {
-	G |- attrRef.attr : type
-}

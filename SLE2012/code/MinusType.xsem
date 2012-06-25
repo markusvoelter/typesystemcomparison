@@ -1,9 +1,0 @@
-rule MinusType
-	G |- Minus minus : NumberType type
-from {
-	// require number types
-	G |- minus.left : var NumberType leftType
-	G |- minus.right : var NumberType rightType
-	// get the most general
-	G |- leftType ~~ rightType |> type
-}
