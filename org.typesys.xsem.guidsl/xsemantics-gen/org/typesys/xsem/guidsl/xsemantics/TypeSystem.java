@@ -29,7 +29,7 @@ import org.typesys.xsem.guidsl.xsemGuiDsl.Expression;
 import org.typesys.xsem.guidsl.xsemGuiDsl.FieldContent;
 import org.typesys.xsem.guidsl.xsemGuiDsl.FloatType;
 import org.typesys.xsem.guidsl.xsemGuiDsl.IntType;
-import org.typesys.xsem.guidsl.xsemGuiDsl.LenghtOf;
+import org.typesys.xsem.guidsl.xsemGuiDsl.LengthOf;
 import org.typesys.xsem.guidsl.xsemGuiDsl.Minus;
 import org.typesys.xsem.guidsl.xsemGuiDsl.MultiOrDiv;
 import org.typesys.xsem.guidsl.xsemGuiDsl.NumberLiteral;
@@ -110,7 +110,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
   
   public Result<Type> type(final Typable typable) {
     return type(new RuleEnvironment(), null, typable);
-  } 
+  }
   
   public Result<Type> type(final RuleEnvironment _environment_, final Typable typable) {
     return type(_environment_, null, typable);
@@ -546,7 +546,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
     return new Result<Type>(newEntity);
   }
   
-  protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final LenghtOf len) throws RuleFailedException {
+  protected Result<Type> typeImpl(final RuleEnvironment G, final RuleApplicationTrace _trace_, final LengthOf len) throws RuleFailedException {
     try {
       RuleApplicationTrace _subtrace_ = newTrace(_trace_);
       Result<Type> _result_ = applyRuleLengthOfType(G, _subtrace_, len);
@@ -560,7 +560,7 @@ public class TypeSystem extends XsemanticsRuntimeSystem {
     }
   }
   
-  protected Result<Type> applyRuleLengthOfType(final RuleEnvironment G, final RuleApplicationTrace _trace_, final LenghtOf len) throws RuleFailedException {
+  protected Result<Type> applyRuleLengthOfType(final RuleEnvironment G, final RuleApplicationTrace _trace_, final LengthOf len) throws RuleFailedException {
     
     /* G |- len.expr : var StringType stringType */
     Expression _expr = len.getExpr();

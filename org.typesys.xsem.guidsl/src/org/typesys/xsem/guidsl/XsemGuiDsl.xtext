@@ -117,7 +117,7 @@ Prefixed returns Expression:
 Atomic returns Expression:
 	'(' Expression ')' |
 	({FieldContent} "widgetcontent") |
-	({LenghtOf} "lengthOf" "(" expr=Expression ")" ) |
+	({LengthOf} "lengthOf" "(" expr=Expression ")" ) |
 	({EntityType} "new" ref=[Entity]) | 
 	({BooleanLiteral} value=("true"|"false")) |
 	({NumberLiteral} value=DECIMAL_NUMBER) |
