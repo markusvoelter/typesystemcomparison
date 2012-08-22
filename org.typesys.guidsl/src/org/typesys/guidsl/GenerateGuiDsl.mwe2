@@ -130,10 +130,6 @@ Workflow {
             }
         }
       }
-        
-      component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
-    	genModel = "platform:/resource/org.typesys.guidsl/src-gen/org/typesys/guidsl/GuiDsl.genmodel"
-    	srcPath = "platform:/resource/org.typesys.guidsl/src"
-      }
+
     
 }

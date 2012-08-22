@@ -1,0 +1,28 @@
+module org.typesys.guidsl.GenerateGuiDsl
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.xtext.generator.*
+import org.eclipse.xtext.ui.generator.*
+
+var projectName = "org.typesys.guidsl"
+var runtimeProject = "../${projectName}"
+
+Workflow {
+    bean = StandaloneSetup {
+        scanClassPath = true
+        platformUri = "${runtimeProject}/.."
+    }
+
+
+// =======================
+// Custom Ecore Implementation Classes
+//
+// Run this after the language has been generated
+// ======================= 
+       
+      component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
+    	genModel = "platform:/resource/org.typesys.guidsl/src-gen/org/typesys/guidsl/GuiDsl.genmodel"
+    	srcPath = "platform:/resource/org.typesys.guidsl/src"
+      }
+    
+}
