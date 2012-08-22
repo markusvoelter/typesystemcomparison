@@ -15,4 +15,9 @@ public class GuiDslRuntimeModule extends org.typesys.guidsl.AbstractGuiDslRuntim
 		return GuiDslNameProvider.class;
 	}
 	
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends org.typesys.guidsl.validation.GuiDslValidator> bindGuiDslValidator() {
+		return org.typesys.guidsl.validation.GuiDslValidator.class;
+	}
+
+	
 }

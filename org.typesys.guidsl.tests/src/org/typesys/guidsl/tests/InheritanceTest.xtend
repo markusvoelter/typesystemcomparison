@@ -10,7 +10,7 @@ import org.junit.runner.RunWith
 import org.typesys.guidsl.GuiDslInjectorProvider
 import org.typesys.guidsl.guiDsl.Model
 import org.typesys.guidsl.guiDsl.GuiDslPackage
-import org.typesys.guidsl.validation.GuiDslJavaValidator
+import org.typesys.guidsl.validation.GuiDslValidator
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(GuiDslInjectorProvider))
@@ -59,7 +59,7 @@ class InheritanceTest {
 					janitor: Person = new Gym; // error 
 				}
 		'''.parse
-		model.assertError(GuiDslPackage$Literals::EXPRESSION, GuiDslJavaValidator::INCOMPATIBLE_TYPES, "Person", "Gym")
+		model.assertError(GuiDslPackage$Literals::EXPRESSION, GuiDslValidator::INCOMPATIBLE_TYPES, "Person", "Gym")
 	}
 	
 	@Test
@@ -73,7 +73,7 @@ class InheritanceTest {
 		text(10) -> gym; // error
 		}
 		'''.parse
-	 model.assertError(GuiDslPackage$Literals::WIDGET, GuiDslJavaValidator::INCOMPATIBLE_TYPES, "Primitive", "Gym")
+	 model.assertError(GuiDslPackage$Literals::WIDGET, GuiDslValidator::INCOMPATIBLE_TYPES, "Primitive", "Gym")
 	}
 	
 	
@@ -89,7 +89,7 @@ class InheritanceTest {
 			text(10) -> name validate gym;
 		}
 		'''.parse
-	    model.assertError(GuiDslPackage$Literals::EXPRESSION, GuiDslJavaValidator::INCOMPATIBLE_TYPES, "bool", "Gym")
+	    model.assertError(GuiDslPackage$Literals::EXPRESSION, GuiDslValidator::INCOMPATIBLE_TYPES, "bool", "Gym")
 	}
 
 }

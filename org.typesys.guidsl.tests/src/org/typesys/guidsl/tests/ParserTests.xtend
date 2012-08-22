@@ -10,7 +10,7 @@ import org.eclipse.xtext.junit4.util.ParseHelper
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.typesys.guidsl.guiDsl.Model
 import org.typesys.guidsl.guiDsl.GuiDslPackage
-import org.typesys.guidsl.validation.GuiDslJavaValidator
+import org.typesys.guidsl.validation.GuiDslValidator
 
 @RunWith(typeof(XtextRunner))
 @InjectWith(typeof(GuiDslInjectorProvider))
@@ -55,7 +55,7 @@ class ParserTests {
 			}
 			
 		'''.parse
-		model.assertError(GuiDslPackage$Literals::EXPRESSION, GuiDslJavaValidator::INCOMPATIBLE_TYPES, 'bool','string')
+		model.assertError(GuiDslPackage$Literals::EXPRESSION, GuiDslValidator::INCOMPATIBLE_TYPES, 'bool','string')
 	}
 	
 	@Test
@@ -70,7 +70,7 @@ class ParserTests {
 			}
 			
 		'''.parse
-		model.assertError(GuiDslPackage$Literals::CHECK_BOX_WIDGET, GuiDslJavaValidator::INCOMPATIBLE_TYPES, 'boolean')
+		model.assertError(GuiDslPackage$Literals::CHECK_BOX_WIDGET, GuiDslValidator::INCOMPATIBLE_TYPES, 'boolean')
 	}
 	
 	@Test
@@ -85,6 +85,6 @@ class ParserTests {
 			}
 			
 		'''.parse
-		model.assertError(GuiDslPackage$Literals::TEXT_WIDGET, GuiDslJavaValidator::INCOMPATIBLE_TYPES, 'boolean')
+		model.assertError(GuiDslPackage$Literals::TEXT_WIDGET, GuiDslValidator::INCOMPATIBLE_TYPES, 'boolean')
 	}
 }
