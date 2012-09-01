@@ -53,7 +53,12 @@ class GuiDslTypeProvider {
 	}
 	
 	def Type getType(EObject e, Collection<EObject> visited) {
-		if (visited.contains(e)) return cyclicType; // cycle detected
+		if (visited.contains(e)) {
+			// Example when this is triggered:
+			// entity A extends B, B extends A, attribute a : A,
+			// getType() on "a + a"
+			return cyclicType; 
+		}// cycle detected
 		visited.add(e)
 		switch e {
 			Widget : e.attr.getType(visited)

@@ -64,8 +64,8 @@ class GuiDslValidator extends AbstractGuiDslJavaValidator {
 	}
 	
 	@Check
-	def void checkWidget(Widget widget) {
-		checkType(widget, GuiDslPackage$Literals::WIDGET__ATTR);
+	def void checkWidget(Widget it) {
+		checkType(it, GuiDslPackage$Literals::WIDGET__ATTR);
 	}
 	
 	def protected void checkType(EObject object) {
